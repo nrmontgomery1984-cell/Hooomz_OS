@@ -1,0 +1,16 @@
+{
+  "id": "PT-01",
+  "phase": 0,
+  "slug": "permits-testing-overview",
+  "title": "Permits & Testing Overview",
+  "category": "Permits & Testing",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

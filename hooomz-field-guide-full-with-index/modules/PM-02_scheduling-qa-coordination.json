@@ -1,0 +1,16 @@
+{
+  "id": "PM-02",
+  "phase": 0,
+  "slug": "scheduling-qa-coordination",
+  "title": "Scheduling, QA & Coordination",
+  "category": "Project Management",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

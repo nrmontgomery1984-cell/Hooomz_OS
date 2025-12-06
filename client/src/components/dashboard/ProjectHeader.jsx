@@ -1,0 +1,183 @@
+import { MapPin, Calendar, FileText, MessageSquare, Plus, Home, Hammer } from 'lucide-react';
+import { Card, Button } from '../ui';
+import { HealthIndicator } from './HealthIndicator';
+import { PhaseIndicator, PhaseChip } from './PhaseIndicator';
+import { PhaseTransitionButton, PhaseSelector } from './PhaseTransitionModal';
+import { formatDate } from '../../lib/dashboardHelpers';
+import { usePermissions } from '../../hooks/usePermissions';
+
+/**
+ * ProjectHeader - Status bar with project name, address, phase indicator
+ *
+ * @param {Object} header - Header data from dashboard
+ * @param {Object} project - Full project object for phase transitions
+ * @param {Function} onAction - Action handler
+ * @param {Function} onPhaseTransition - Handler for initiating phase transitions
+ */
+export function ProjectHeader({ header, project, onAction, onPhaseTransition }) {
+  const { isContractor } = usePermissions();
+  const isNewConstruction = header.projectType === 'new_construction';
+
+  // Check if estimate exists (has saved line items or calculated totals)
+  const hasEstimate =
+    project?.estimate_line_items?.length > 0 ||
+    project?.estimate_high > 0 ||
+    project?.estimate_low > 0;
+
+  // Determine button label based on phase and user role
+  // Contractors can edit, homeowners can only view
+  const getEstimateButtonLabel = () => {
+    const phase = header.phase?.toLowerCase();
+    if (!hasEstimate) return 'Create Estimate';
+
+    const action = isContractor ? 'Edit' : 'View';
+
+    if (phase === 'estimate' || phase === 'estimating' || phase === 'intake') {
+      return `${action} Estimate`;
+    } else if (phase === 'quoted' || phase === 'quote') {
+      return `${action} Quote`;
+    } else if (phase === 'contract' || phase === 'contracted' || phase === 'active' || phase === 'complete' || phase === 'punch_list') {
+      return 'View Contract';
+    }
+    return `${action} Estimate`;
+  };
+
+  return (
+    <Card className="p-4 mb-4">
+      {/* Top row: Name, type badge, health */}
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-start gap-3">
+          {/* Project type icon */}
+          <div className={`
+            p-2 rounded-lg
+            ${isNewConstruction ? 'bg-blue-100' : 'bg-amber-100'}
+          `}>
+            {isNewConstruction ? (
+              <Home className="w-5 h-5 text-blue-600" />
+            ) : (
+              <Hammer className="w-5 h-5 text-amber-600" />
+            )}
+          </div>
+
+          <div>
+            <h1 className="text-lg font-semibold text-charcoal">{header.projectName}</h1>
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <MapPin className="w-3.5 h-3.5" />
+              {header.address}
+            </div>
+          </div>
+        </div>
+
+        <HealthIndicator
+          status={header.healthStatus}
+          reason={header.healthReason}
+          size="md"
+        />
+      </div>
+
+      {/* Phase progress */}
+      <div className="mb-4 py-3 border-t border-b border-gray-100">
+        <PhaseIndicator currentPhase={header.phase} healthStatus={header.healthStatus} />
+      </div>
+
+      {/* Bottom row: Phase info + quick actions */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-2">
+            <PhaseChip phase={header.phase} />
+            <span className="text-gray-500">
+              {header.daysInPhase} days in phase
+            </span>
+          </div>
+          {header.phaseStartDate && (
+            <div className="flex items-center gap-1 text-gray-400">
+              <Calendar className="w-3.5 h-3.5" />
+              Started {formatDate(header.phaseStartDate)}
+            </div>
+          )}
+          {/* Phase selector for manual transitions */}
+          {project && onPhaseTransition && (
+            <PhaseSelector project={project} onSelect={onPhaseTransition} />
+          )}
+        </div>
+
+        {/* Quick Actions */}
+        <div className="flex items-center gap-2">
+          <Button
+            variant={hasEstimate ? 'secondary' : 'primary'}
+            size="sm"
+            onClick={() => onAction?.('view_estimate')}
+          >
+            <FileText className="w-4 h-4 mr-1" />
+            {getEstimateButtonLabel()}
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => onAction?.('message_client')}
+          >
+            <MessageSquare className="w-4 h-4 mr-1" />
+            Message
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => onAction?.('add_note')}
+          >
+            <Plus className="w-4 h-4 mr-1" />
+            Log Activity
+          </Button>
+          {/* Primary phase transition action */}
+          {project && onPhaseTransition && (
+            <PhaseTransitionButton
+              project={project}
+              onTransition={onPhaseTransition}
+              size="sm"
+            />
+          )}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+/**
+ * ProjectHeaderCompact - Smaller version for nested views
+ */
+export function ProjectHeaderCompact({ header }) {
+  const isNewConstruction = header.projectType === 'new_construction';
+
+  return (
+    <div className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg mb-4">
+      <div className="flex items-center gap-3">
+        <div className={`
+          p-1.5 rounded-lg
+          ${isNewConstruction ? 'bg-blue-100' : 'bg-amber-100'}
+        `}>
+          {isNewConstruction ? (
+            <Home className="w-4 h-4 text-blue-600" />
+          ) : (
+            <Hammer className="w-4 h-4 text-amber-600" />
+          )}
+        </div>
+        <div>
+          <h2 className="font-medium text-charcoal">{header.projectName}</h2>
+          <div className="flex items-center gap-2 text-xs text-gray-500">
+            <MapPin className="w-3 h-3" />
+            {header.address}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <PhaseIndicator currentPhase={header.phase} healthStatus={header.healthStatus} compact />
+        <HealthIndicator
+          status={header.healthStatus}
+          reason={header.healthReason}
+          size="sm"
+          showLabel={false}
+        />
+      </div>
+    </div>
+  );
+}

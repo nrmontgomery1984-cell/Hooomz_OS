@@ -1,0 +1,301 @@
+{
+  "id": "OH-02",
+  "phase": 1,
+  "slug": "tool-safety-maintenance",
+  "title": "Tool Safety & Maintenance",
+  "category": "Tools & Equipment",
+  "level": "Apprentice",
+  "priority": 4,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01"],
+  "estimated_study_hours": 5,
+  "status": "complete",
+  "tags": ["tools", "safety", "maintenance", "power-tools", "hand-tools", "cordless", "inspection"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Tool safety and maintenance encompasses the knowledge, skills, and discipline required to operate hand tools, power tools, and equipment safely while maintaining them in optimal working condition.",
+      "content_md": "## What is Tool Safety & Maintenance?\n\nTool safety and maintenance encompasses the knowledge, skills, and discipline required to operate hand tools, power tools, and equipment safely while maintaining them in optimal working condition through regular inspection, cleaning, adjustment, and repair.\n\nProfessional tool management demands mastering six critical elements:\n\n1. **Pre-use inspection** - Identifying damage, wear, defects before operation\n2. **Safe operation techniques** - Proper grip, stance, body position, feed rate, speed selection\n3. **Guards and safety features** - Understanding function, never bypassing, maintaining properly\n4. **Preventive maintenance** - Cleaning after use, lubrication schedules, blade/bit replacement, calibration\n5. **Proper storage** - Organized, dry, secure storage prevents damage, theft, deterioration\n6. **Troubleshooting** - Recognizing abnormal operation, diagnosing problems, knowing when professional repair needed\n\n## Tool Categories\n\n### Hand Tools (Manual Power):\n- **Measuring:** Tape measure, speed square, level, chalk line\n- **Cutting:** Hand saw, utility knife, snips, chisel\n- **Fastening:** Hammer, screwdriver, wrench, pliers\n- **Shaping:** Plane, rasp, file, sander block\n\n### Power Tools - Corded (Electric):\n- **Cutting:** Circular saw, miter saw, jigsaw, reciprocating saw\n- **Drilling:** Drill, hammer drill, rotary hammer\n- **Fastening:** Impact driver, screw gun\n- **Shaping:** Router, grinder, sander\n\n### Power Tools - Cordless (Battery):\n- Same categories as corded but battery-powered\n- Battery maintenance critical\n- Generally less power than corded equivalents\n\n### Power Tools - Pneumatic (Air):\n- **Nailers:** Framing, finish, brad\n- **Staplers:** Roofing, upholstery\n\n## Why Does It Matter?\n\n### Injury Prevention (Most Critical):\n\n**The Reality of Tool Accidents:**\n- **Severity:** High - power tool injuries are severe (amputations, deep lacerations, eye damage, hearing loss)\n- **Permanence:** Often irreversible - lost finger doesn't grow back\n- **Speed:** Instantaneous - circular saw blade at 5,000 RPM gives no reaction time\n- **Preventability:** 90%+ of accidents are avoidable with proper technique and maintained tools\n\n**Common Tool Injuries:**\n- Lacerations from circular saws, utility knives\n- Impact injuries from nail guns\n- Crush injuries from dropped tools, pinch points\n- Eye injuries from flying debris\n- Hearing loss from cumulative noise exposure\n- Respiratory issues from dust exposure\n\n### Economic Impact:\n\n**Maintained Tools:**\n- Lifespan: 20-40 years\n- Career cost: $4,200-17,600 (initial investment + one replacement)\n- Better performance, reliability\n\n**Neglected Tools:**\n- Lifespan: 3-5 years\n- Career cost: $33,600-70,400 (buying tools 8-13 times)\n- Poor performance, frequent failures\n\n### NB Climate Considerations:\n\n**Humidity & Rust (Coastal Climate):**\n- Humidity: 60-80% typical in summer\n- Salt air near coast accelerates corrosion\n- Temperature swings cause condensation in cold tool storage\n\n**Protection Required:**\n- Tool boxes sealed with desiccant (silica gel packs)\n- Light oil coating on hand tools\n- Climate-controlled storage ideal\n- Immediate cleaning after wet work"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Covers hand tool safety, power tool safety, cordless tool battery management, pneumatic tool operation, and guards/safety features.",
+      "content_md": "## 2.1 Hand Tool Safety\n\n### General Principles:\n\n1. **Inspect before use** - Check for cracks, chips, loose handles, mushroomed heads\n2. **Use the right tool** - Don't use screwdriver as pry bar, pliers as hammer\n3. **Keep sharp tools sharp** - Dull tools require more force, slip more easily\n4. **Cut away from body** - Direct blade/force away from hands and body\n5. **Secure workpiece** - Use clamps, vise, or helper - don't hold with hand while cutting\n\n### Specific Tool Safety:\n\n**Utility Knife:**\n- Always retract blade when not cutting\n- Cut away from body\n- Replace dull blades immediately (dull = dangerous)\n- Use straight edge for long cuts\n- Never leave blade exposed on bench\n\n**Hammer:**\n- Check handle secure before use\n- Strike squarely (glancing blows = flying hammer)\n- Wear safety glasses (nail heads can shatter)\n- Don't use claw for heavy prying\n- Replace if head is mushroomed or chipped\n\n**Chisel:**\n- Keep sharp (hone regularly)\n- Cut away from body\n- Use mallet, not metal hammer on wood handles\n- Secure workpiece firmly\n- Never carry in pocket with edge exposed\n\n**Hand Saw:**\n- Start cut with pulling stroke (establishes kerf)\n- Let saw do work (don't force)\n- Support cut-off piece (prevents binding)\n- Store with teeth protected\n\n## 2.2 Power Tool Safety\n\n### Universal Power Tool Rules:\n\n1. **Read the manual** - Every tool is different\n2. **Inspect before use** - Cord, housing, guards, blade/bit\n3. **Wear appropriate PPE** - Safety glasses minimum, hearing protection for loud tools\n4. **Secure workpiece** - Clamps, saw horses, helper\n5. **Maintain proper stance** - Balanced, stable, clear of kickback path\n6. **Let tool reach full speed** - Before contacting material\n7. **Don't force** - Let tool do work at appropriate feed rate\n8. **Wait for stop** - Before setting down or adjusting\n9. **Unplug for adjustments** - Blade changes, depth adjustments\n10. **Keep guards in place** - Never remove or disable\n\n### Circular Saw Safety:\n\n**Before Use:**\n- Check blade sharpness (dull blades bind, kick back)\n- Verify guard retracts and returns freely\n- Set depth to 1/4\" below material thickness\n- Check cord for damage\n- Wear safety glasses and hearing protection\n\n**During Use:**\n- Support material on both sides of cut\n- Stand to side of blade (not behind)\n- Allow blade to reach full speed before cutting\n- Don't force - steady, consistent feed\n- Watch for binding (causes kickback)\n- Keep cord behind you\n\n**Kickback Prevention:**\n- Support material properly (prevents pinching blade)\n- Don't cut warped or twisted lumber\n- Don't start cut with blade in contact with material\n- Keep blade sharp\n- Set proper depth\n\n### Miter Saw Safety:\n\n**Setup:**\n- Secure saw to stable surface\n- Verify blade guard operates freely\n- Check blade for damage, missing teeth\n- Ensure fence is square (verify with speed square)\n- Clear work area of debris\n\n**Operation:**\n- Hold workpiece firmly against fence and table\n- Keep hands minimum 6\" from blade path\n- Let blade reach full speed before lowering\n- Lower smoothly (don't slam)\n- Wait for blade to stop before raising\n- Never reach across blade path\n\n### Table Saw Safety:\n\n**Critical Safety Features:**\n- Blade guard with anti-kickback pawls\n- Riving knife (prevents kickback)\n- Push sticks for narrow pieces\n- Featherboards for consistent pressure\n\n**Never Do:**\n- Remove blade guard for through-cuts\n- Stand directly behind blade (kickback zone)\n- Cut freehand (always use fence or miter gauge)\n- Cut warped material\n- Reach over running blade\n\n### Grinder Safety:\n\n**Before Use:**\n- Inspect disc for cracks (ring test)\n- Verify guard is in place\n- Check disc rating matches grinder RPM\n- Wear face shield OVER safety glasses\n- Wear hearing protection\n\n**During Use:**\n- Allow to reach full speed before contact\n- Use proper angle (15-30° for grinding)\n- Don't apply excessive pressure\n- Keep sparks directed away from self and flammables\n- Never remove guard\n\n## 2.3 Cordless Tool Battery Management\n\n### Battery Safety:\n\n**Charging:**\n- Use manufacturer's charger only\n- Don't charge damaged batteries\n- Charge in ventilated area (batteries produce gas)\n- Don't leave on charger indefinitely (most modern chargers auto-stop)\n- Store between 40-80% charge for long-term storage\n\n**Temperature Sensitivity:**\n- Cold reduces capacity (warm battery before heavy use in winter)\n- Heat damages cells (don't leave in hot vehicle)\n- Optimal range: 50-85°F (10-30°C)\n- NB winter: Bring batteries inside overnight\n\n**Storage:**\n- Remove from tool when not in use\n- Store in dry location at room temperature\n- Keep contacts clean\n- Check monthly (charge if below 20%)\n\n### Battery Platform Strategy:\n\n**Henderson Standard: Milwaukee M18**\n- Single platform = battery compatibility\n- Professional grade tools\n- Parts and service available locally\n- Batteries work across all M18 tools\n\n## 2.4 Pneumatic Tool Safety\n\n### Compressor Safety:\n\n- Check oil level (oil-lubricated compressors)\n- Drain moisture from tank daily (prevents rust, inconsistent pressure)\n- Verify pressure relief valve works\n- Don't exceed rated pressure\n- Position intake away from dust/debris\n\n### Nail Gun Safety:\n\n**Critical Rules:**\n1. **Treat like a firearm** - Never point at anyone\n2. **Finger off trigger** - Until ready to fire\n3. **Sequential trigger preferred** - Contact + trigger = fire (safer than bump fire)\n4. **Never disable safety** - Contact element must work\n5. **Disconnect when not in use** - Especially for clearing jams\n6. **Wear safety glasses** - Always\n\n**Nail Gun Injuries:**\n- Penetrating wounds (hands, legs, feet most common)\n- Double-fire injuries (recoil causes second fire)\n- Ricochet injuries (nail deflects off knot, metal)\n\n**Safe Firing Zones:**\n- Never fire at surfaces that may have hidden hazards (wiring, plumbing)\n- Don't fire through material (nail can exit and injure)\n- Be aware of what's behind target\n\n## 2.5 Guards and Safety Features\n\n### Why Guards Exist:\n\n- **Blade guards:** Prevent contact with spinning blade, deflect debris\n- **Riving knife:** Prevents material from closing on blade (kickback)\n- **Anti-kickback pawls:** Grip material if kicked back\n- **Electric brake:** Stops blade quickly when trigger released\n- **Blade guard springs:** Return guard to closed position\n\n### Never Bypass Guards:\n\n**Common Excuses (All Wrong):**\n- \"Guard blocks my view\" - Position differently, use laser guide\n- \"Guard slows me down\" - Injury slows you down more\n- \"Guard doesn't work right\" - Fix it or don't use tool\n- \"Professional doesn't need it\" - Professionals need all 10 fingers\n\n**If Guard Doesn't Work:**\n1. Stop using tool immediately\n2. Tag out (\"Do Not Use - Guard Defective\")\n3. Repair or replace before next use\n4. Never operate without functioning guard"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Daily inspection procedures, cleaning and maintenance routines, blade/bit replacement, and calibration procedures.",
+      "content_md": "## 3.1 Daily Tool Inspection Procedure\n\n### Before Each Use:\n\n**Step 1: Visual Inspection**\n- Housing intact (no cracks, missing parts)\n- Cord undamaged (no cuts, exposed wire, bent prongs)\n- Guard present and moves freely\n- Blade/bit secure and sharp\n- All fasteners tight\n\n**Step 2: Functional Check**\n- Trigger operates smoothly (no sticking)\n- Guard returns to closed position\n- Speed control works (if applicable)\n- Lock-off switch functions (if applicable)\n- Electric brake works (if applicable)\n\n**Step 3: Safety Feature Verification**\n- Guard covers blade at rest\n- Anti-kickback pawls move freely\n- Riving knife aligned with blade\n- Depth stop holds setting\n- Fence locks securely\n\n### After Each Use:\n\n**Step 1: Power Down Safely**\n- Release trigger\n- Wait for complete stop\n- Unplug (corded) or remove battery (cordless)\n\n**Step 2: Clean**\n- Blow out dust with compressed air (wear eye protection)\n- Wipe housing with dry cloth\n- Clean blade/bit if necessary\n- Clear sawdust from guard mechanism\n\n**Step 3: Inspect for New Damage**\n- Blade condition (chips, dull spots)\n- Cord condition (did it get cut during work?)\n- Housing (any new cracks or damage?)\n\n**Step 4: Store Properly**\n- Retract blade (circular saw)\n- Return to case or designated spot\n- Coil cord loosely (tight coils damage wire)\n- Store batteries separately at room temperature\n\n## 3.2 Weekly Maintenance Routine\n\n### Circular Saw:\n\n1. **Remove blade** (unplug first!)\n2. **Clean blade** with blade cleaner or Simple Green\n3. **Inspect blade** for damaged/missing teeth, warping\n4. **Clean guard mechanism** - remove sawdust buildup\n5. **Lubricate guard pivot** with light machine oil\n6. **Check shoe** for damage, adjust if bent\n7. **Inspect cord** entire length\n8. **Reinstall blade** with teeth pointing forward/up\n9. **Verify depth adjustment** moves freely\n10. **Test guard return** - should snap closed\n\n### Miter Saw:\n\n1. **Clean blade** (remove for thorough cleaning monthly)\n2. **Blow out dust** from motor housing, blade guard\n3. **Check fence alignment** with speed square\n4. **Verify 90° stop** with combination square\n5. **Clean miter scale** and detent mechanism\n6. **Lubricate pivot points** with dry lubricant\n7. **Check cord and plug**\n8. **Clean work surface** of embedded debris\n\n### Cordless Drill/Impact Driver:\n\n1. **Clean chuck** with compressed air\n2. **Check chuck grip** (should hold bit firmly)\n3. **Inspect battery contacts** (clean if corroded)\n4. **Test all speeds** and clutch settings\n5. **Lubricate chuck** (light oil on jaws)\n6. **Check battery** for damage, swelling\n7. **Verify charger** light indicators work\n\n### Nail Gun:\n\n1. **Disconnect air supply**\n2. **Clear magazine** of all nails\n3. **Blow out debris** with compressed air\n4. **Oil per manufacturer** (2-3 drops pneumatic tool oil in air inlet)\n5. **Inspect nose piece** for damage\n6. **Check safety mechanism** (contact element)\n7. **Verify trigger** operation\n8. **Test fire** into scrap (after reconnecting air)\n\n## 3.3 Blade and Bit Replacement\n\n### Circular Saw Blade Change:\n\n1. **Unplug saw** (or remove battery)\n2. **Engage spindle lock** (button near blade)\n3. **Loosen arbor bolt** (reverse thread - turn clockwise to loosen)\n4. **Retract lower guard** by hand\n5. **Remove old blade**\n6. **Clean arbor and washers**\n7. **Install new blade** - teeth pointing UP at front\n8. **Replace outer washer** and arbor bolt\n9. **Tighten firmly** (turn counter-clockwise)\n10. **Release spindle lock**\n11. **Test guard return**\n12. **Plug in and test** (brief trigger pull, listen for wobble)\n\n### Miter Saw Blade Change:\n\n1. **Unplug saw**\n2. **Raise blade guard**\n3. **Press spindle lock**\n4. **Remove arbor bolt** (check thread direction - usually reverse)\n5. **Remove outer flange**\n6. **Remove blade**\n7. **Clean flanges** and arbor\n8. **Install new blade** - teeth pointing DOWN at front (cutting into table)\n9. **Reinstall flange and bolt**\n10. **Tighten securely**\n11. **Lower guard, test operation**\n\n### Drill/Driver Bit Change:\n\n**Keyed Chuck:**\n1. Insert chuck key\n2. Rotate counter-clockwise to open\n3. Remove old bit\n4. Insert new bit (straight, centered)\n5. Tighten with chuck key (all three holes)\n6. Remove key before operating\n\n**Keyless Chuck:**\n1. Hold collar, rotate rear portion counter-clockwise\n2. Remove old bit\n3. Insert new bit\n4. Tighten by hand (rotate clockwise while holding collar)\n5. Verify bit is centered and secure\n\n## 3.4 Calibration Procedures\n\n### Miter Saw Calibration:\n\n**90° Fence Alignment:**\n1. Place combination square against fence and blade (teeth, not body)\n2. Blade should be square to fence\n3. If not: adjust fence per manufacturer instructions\n4. Re-verify after adjustment\n\n**0° Miter Calibration:**\n1. Set miter to 0°\n2. Make test cut on scrap\n3. Flip one piece, place cut ends together\n4. Gap indicates error (double the actual angle)\n5. Adjust miter detent if needed\n\n**Bevel Calibration:**\n1. Set bevel to 0°\n2. Use square against blade and table\n3. Adjust bevel stop if not square\n\n### Speed Square Verification:\n\n1. Place against factory edge of plywood\n2. Draw line along blade\n3. Flip square, align with same point\n4. If lines don't align, square is off\n5. Replace if not accurate (don't try to adjust)\n\n### Tape Measure Verification:\n\n1. Hook end of tape on edge of material\n2. Mark at 12\" (or any measurement)\n3. Burn 1\" - measure from 1\" mark to 13\"\n4. Both should give same result\n5. If different: hook is bent or tape is stretched\n6. Replace if more than 1/32\" off\n\n### Level Verification:\n\n1. Place level on flat surface\n2. Note bubble position\n3. Rotate level 180° (end for end)\n4. Bubble should read same\n5. If not, level is off\n6. Some levels are adjustable; others need replacement"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Tool inspection checklists, common defects, and troubleshooting guide.",
+      "content_md": "## 4.1 Tool Inspection Checklists\n\n### Circular Saw Checklist:\n- [ ] Cord intact (no cuts, exposed wire)\n- [ ] Plug prongs straight, not burnt\n- [ ] Housing intact (no cracks)\n- [ ] Upper guard secure\n- [ ] Lower guard retracts and returns freely\n- [ ] Blade sharp, no missing teeth\n- [ ] Blade tight on arbor\n- [ ] Shoe flat, not bent\n- [ ] Depth adjustment works, locks\n- [ ] Bevel adjustment works, locks\n- [ ] Trigger operates smoothly\n- [ ] Electric brake functions (if equipped)\n\n### Miter Saw Checklist:\n- [ ] Cord intact\n- [ ] Blade guard operates freely\n- [ ] Blade sharp, no damage\n- [ ] Fence straight and aligned\n- [ ] 90° cut verified with square\n- [ ] Miter detents engage positively\n- [ ] Bevel locks at 0°\n- [ ] Dust collection port clear\n- [ ] Work clamp functions (if equipped)\n- [ ] Laser aligned (if equipped)\n\n### Drill/Impact Driver Checklist:\n- [ ] Chuck holds bit securely\n- [ ] Chuck opens/closes smoothly\n- [ ] Battery fully charged\n- [ ] Battery contacts clean\n- [ ] Trigger operates smoothly\n- [ ] Forward/reverse switch works\n- [ ] Speed settings function\n- [ ] Clutch settings engage properly (drill)\n- [ ] LED light works (if equipped)\n\n### Nail Gun Checklist:\n- [ ] Air fitting secure, not leaking\n- [ ] Trigger operates smoothly\n- [ ] Contact safety moves freely\n- [ ] Magazine opens/closes properly\n- [ ] Nail pusher advances smoothly\n- [ ] Exhaust port clear\n- [ ] No air leaks (listen when pressurized)\n- [ ] Nose piece not damaged\n- [ ] Safety glasses on\n\n## 4.2 Common Tool Defects\n\n### Circular Saw Issues:\n\n| Problem | Cause | Solution |\n|---------|-------|----------|\n| Burning wood | Dull blade, too slow feed | Replace blade, maintain steady feed |\n| Blade binding | Material pinching, dull blade | Support material both sides, replace blade |\n| Rough cut | Dull blade, wrong blade for material | Replace blade, use appropriate tooth count |\n| Guard sticking | Sawdust buildup, bent guard | Clean and lubricate, straighten or replace |\n| Motor straining | Dull blade, too fast feed | Replace blade, slow down |\n| Kickback | Binding, improper support | Support material, don't force cut |\n\n### Miter Saw Issues:\n\n| Problem | Cause | Solution |\n|---------|-------|----------|\n| Cuts not square | Fence misaligned, blade wobble | Recalibrate fence, check blade arbor |\n| Tear-out on bottom | Dull blade, zero-clearance insert | Replace blade, install fresh insert |\n| Motor overheating | Dull blade, dirty vents | Replace blade, clean motor vents |\n| Miter won't lock | Debris in mechanism, worn parts | Clean detent mechanism, replace if worn |\n| Excessive vibration | Blade imbalance, loose arbor | Replace blade, tighten arbor |\n\n### Cordless Tool Issues:\n\n| Problem | Cause | Solution |\n|---------|-------|----------|\n| Short run time | Old battery, extreme temperature | Replace battery, warm before use |\n| Won't charge | Dirty contacts, bad charger | Clean contacts, test with known-good charger |\n| Chuck slips | Worn chuck jaws | Replace chuck |\n| Clutch won't hold | Worn clutch mechanism | Service or replace |\n| Battery won't hold charge | Cell degradation | Replace battery |\n\n### Nail Gun Issues:\n\n| Problem | Cause | Solution |\n|---------|-------|----------|\n| Misfires | Low pressure, dirty mechanism | Increase pressure, clean and oil |\n| Double fires | Worn trigger valve | Service or replace trigger |\n| Nails not flush | Wrong pressure, wrong nail angle | Adjust pressure, check technique |\n| Jams frequently | Wrong nail size, damaged magazine | Use correct nails, replace magazine |\n| Air leaks | Worn O-rings | Replace O-ring kit |\n\n## 4.3 Troubleshooting Guide\n\n### Motor Won't Start:\n\n1. **Check power source** - Outlet working? Battery charged?\n2. **Check cord** - Visible damage? Plug fully inserted?\n3. **Check switch** - Lock-off engaged? Trigger moves freely?\n4. **Check brushes** (if accessible) - Worn down?\n5. **Smell for burning** - Indicates electrical failure\n6. **If none of above** - Motor likely failed, professional repair needed\n\n### Motor Runs But Won't Cut:\n\n1. **Check blade/bit** - Installed? Tight? Sharp?\n2. **Check clutch** (drill) - Set too low?\n3. **Check drive belt** (some saws) - Broken or slipping?\n4. **Check gear engagement** - Grinding noise indicates gear failure\n\n### Excessive Vibration:\n\n1. **Check blade** - Bent? Damaged teeth? Buildup on blade?\n2. **Check arbor** - Tight? Bent spindle?\n3. **Check bearings** - Grinding noise? Rough rotation?\n4. **Check mounting** (stationary tools) - Bolts tight?\n\n### When to Seek Professional Repair:\n\n- Electrical issues (sparking, burning smell)\n- Motor failure\n- Gear or bearing replacement\n- Electronic control issues\n- Anything beyond your comfort level\n\n> **Cost-Benefit Analysis:** If repair cost > 50% of replacement cost, consider replacing with new tool."
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "Tool maintenance schedule, blade selection guide, and tool amperage reference.",
+      "content_md": "## APPENDIX A: TOOL MAINTENANCE SCHEDULE\n\n### Daily:\n- Visual inspection before use\n- Clean after use (blow out dust, wipe down)\n- Store properly\n\n### Weekly:\n- Detailed inspection (guards, cords, blades)\n- Clean blade/bit\n- Lubricate moving parts (guards, chucks)\n- Check battery condition\n- Drain compressor tank moisture\n\n### Monthly:\n- Deep clean (remove blade, clean housing)\n- Check calibration (squares, levels, saw angles)\n- Inspect all cords thoroughly\n- Clean/replace air filters\n- Check all safety features\n\n### Quarterly:\n- Replace blades (if heavy use)\n- Replace worn brushes\n- Professional service (if needed)\n- Inventory and replace missing tools\n\n### Annually:\n- Complete tool inventory\n- Replace worn tools\n- Professional calibration (laser levels, etc.)\n- Review and update tool list\n\n## APPENDIX B: BLADE SELECTION GUIDE\n\n### Circular Saw Blades:\n\n| Tooth Count | Use | Material |\n|-------------|-----|----------|\n| 18-24 teeth | Fast rough cuts | Framing lumber |\n| 40 teeth | General purpose | Plywood, dimensional lumber |\n| 60+ teeth | Fine finish cuts | Hardwood, trim, plywood (no tear-out) |\n\n### Miter Saw Blades:\n\n| Tooth Count | Use | Material |\n|-------------|-----|----------|\n| 40 teeth | General framing | 2x lumber |\n| 60 teeth | Trim work | Baseboards, casing, crown |\n| 80-100 teeth | Ultra-fine | Hardwood, finished cuts |\n\n### Specialty Blades:\n\n| Type | Use |\n|------|-----|\n| Carbide-tipped | Standard - stays sharp longest |\n| Diamond | Tile, masonry, concrete |\n| Bi-metal | Metal cutting (reciprocating saw) |\n| Abrasive | Metal cut-off (grinder) |\n\n## APPENDIX C: TOOL AMPERAGE REFERENCE\n\n| Tool | Typical Amps | Notes |\n|------|--------------|-------|\n| Circular Saw 7-1/4\" | 13-15A | Dedicated circuit recommended |\n| Miter Saw 10\" | 13-15A | Dedicated circuit recommended |\n| Miter Saw 12\" | 15A | Dedicated circuit required |\n| Table Saw (portable) | 15A | Dedicated circuit required |\n| Table Saw (cabinet) | 20-30A | 240V circuit usually |\n| Router | 10-15A | Variable by model |\n| Grinder 4-1/2\" | 6-10A | Can share circuit |\n| Jigsaw | 5-7A | Can share circuit |\n| Reciprocating Saw | 10-12A | Can share circuit |\n| Drill (corded) | 5-8A | Can share circuit |\n| Shop Vacuum | 10-12A | Consider dedicated |\n| Air Compressor | 15-20A | Dedicated circuit required |\n\n## APPENDIX D: PPE BY TOOL\n\n| Tool | Safety Glasses | Hearing | Respirator | Gloves |\n|------|---------------|---------|------------|--------|\n| Circular Saw | Required | Required | Dust work | NO |\n| Miter Saw | Required | Required | Dust work | NO |\n| Table Saw | Required | Required | Dust work | NO |\n| Grinder | Face Shield | Required | Recommended | NO |\n| Router | Required | Required | Dust work | NO |\n| Drill | Required | Optional | Dust work | NO |\n| Nail Gun | Required | Recommended | Optional | Optional |\n| Hand Tools | Recommended | N/A | Task-dependent | Optional |\n\n**Key:** NO = Never wear (entanglement hazard with rotating tools)"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "daily-inspection",
+      "title": "Daily Tool Inspection Checklist",
+      "items": [
+        "Visual inspection - housing intact, no cracks",
+        "Cord undamaged - no cuts, exposed wire, bent prongs",
+        "Guard present and moves freely",
+        "Blade/bit secure and sharp",
+        "All fasteners tight",
+        "Trigger operates smoothly",
+        "Safety features functional"
+      ]
+    },
+    {
+      "id": "circular-saw",
+      "title": "Circular Saw Inspection Checklist",
+      "items": [
+        "Cord intact (no cuts, exposed wire)",
+        "Plug prongs straight, not burnt",
+        "Housing intact (no cracks)",
+        "Upper guard secure",
+        "Lower guard retracts and returns freely",
+        "Blade sharp, no missing teeth",
+        "Blade tight on arbor",
+        "Shoe flat, not bent",
+        "Depth adjustment works and locks",
+        "Bevel adjustment works and locks",
+        "Trigger operates smoothly",
+        "Electric brake functions (if equipped)"
+      ]
+    },
+    {
+      "id": "miter-saw",
+      "title": "Miter Saw Inspection Checklist",
+      "items": [
+        "Cord intact",
+        "Blade guard operates freely",
+        "Blade sharp, no damage",
+        "Fence straight and aligned",
+        "90 degree cut verified with square",
+        "Miter detents engage positively",
+        "Bevel locks at 0 degrees",
+        "Dust collection port clear",
+        "Work clamp functions (if equipped)"
+      ]
+    },
+    {
+      "id": "nail-gun",
+      "title": "Nail Gun Safety Checklist",
+      "items": [
+        "Air fitting secure, not leaking",
+        "Trigger operates smoothly",
+        "Contact safety moves freely",
+        "Magazine opens/closes properly",
+        "Nail pusher advances smoothly",
+        "Exhaust port clear",
+        "No air leaks when pressurized",
+        "Nose piece not damaged",
+        "Safety glasses on"
+      ]
+    },
+    {
+      "id": "cordless-tools",
+      "title": "Cordless Tool Checklist",
+      "items": [
+        "Chuck holds bit securely",
+        "Chuck opens/closes smoothly",
+        "Battery fully charged",
+        "Battery contacts clean",
+        "Trigger operates smoothly",
+        "Forward/reverse switch works",
+        "Speed settings function",
+        "Clutch settings engage properly"
+      ]
+    },
+    {
+      "id": "weekly-maintenance",
+      "title": "Weekly Maintenance Checklist",
+      "items": [
+        "Detailed inspection of guards, cords, blades",
+        "Clean blade/bit with blade cleaner",
+        "Lubricate moving parts (guards, chucks, pivots)",
+        "Check battery condition and contacts",
+        "Drain compressor tank moisture",
+        "Test all safety features",
+        "Verify calibration of squares and levels"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What should you ALWAYS do before changing a blade on any power saw?",
+        "type": "mcq",
+        "choices": ["A) Put on gloves", "B) Unplug the saw or remove the battery", "C) Engage the spindle lock", "D) Lower the blade guard"],
+        "answer": "B",
+        "explanation": "Always disconnect power (unplug corded tools or remove battery from cordless) before changing blades. This prevents accidental startup which could cause severe injury."
+      },
+      {
+        "id": "q2",
+        "question": "When using a circular saw, where should you position yourself?",
+        "type": "mcq",
+        "choices": ["A) Directly behind the blade", "B) To the side of the blade, out of the kickback path", "C) In front of the blade", "D) It doesn't matter as long as you hold it firmly"],
+        "answer": "B",
+        "explanation": "Always stand to the side of the blade, never behind it. If kickback occurs, the saw will travel backward in line with the blade - standing behind puts you directly in the danger zone."
+      },
+      {
+        "id": "q3",
+        "question": "What is the primary cause of circular saw kickback?",
+        "type": "mcq",
+        "choices": ["A) Dull blade", "B) Material pinching the blade", "C) Cutting too fast", "D) All of the above can cause kickback"],
+        "answer": "D",
+        "explanation": "All of these can cause kickback. Dull blades bind more easily, material closing on the blade pinches it, and cutting too fast can cause the blade to bind. Proper material support, sharp blades, and appropriate feed rate all help prevent kickback."
+      },
+      {
+        "id": "q4",
+        "question": "How should you treat a pneumatic nail gun regarding safety?",
+        "type": "mcq",
+        "choices": ["A) Like any other power tool", "B) Like a firearm - never point at anyone", "C) Casually, since they have safety mechanisms", "D) Only carefully when it's loaded"],
+        "answer": "B",
+        "explanation": "Nail guns should be treated like firearms - never point at anyone, keep finger off trigger until ready to fire, and always be aware of what's behind your target. Safety mechanisms can fail."
+      },
+      {
+        "id": "q5",
+        "question": "What is the proper way to coil an extension cord for storage?",
+        "type": "mcq",
+        "choices": ["A) Wrap tightly around your elbow", "B) Coil loosely in large loops", "C) Fold back and forth accordion-style", "D) Just stuff it in a bucket"],
+        "answer": "B",
+        "explanation": "Coil cords loosely in large loops. Tight coils stress and damage the internal wires, leading to shorts and potential fire hazards. Loose coils preserve cord life."
+      },
+      {
+        "id": "q6",
+        "question": "When should you wear gloves while operating power tools?",
+        "type": "mcq",
+        "choices": ["A) Always for protection", "B) Never with rotating tools like saws, drills, or grinders", "C) Only with corded tools", "D) Only in cold weather"],
+        "answer": "B",
+        "explanation": "Never wear gloves with rotating power tools. Gloves can catch on spinning blades, bits, or discs and pull your hand into the tool, causing severe injury."
+      },
+      {
+        "id": "q7",
+        "question": "How often should moisture be drained from an air compressor tank?",
+        "type": "mcq",
+        "choices": ["A) Monthly", "B) Weekly", "C) Daily (after each use)", "D) Only when you notice problems"],
+        "answer": "C",
+        "explanation": "Drain the compressor tank daily after use. Moisture accumulates from compressed air and causes rust inside the tank, which can lead to inconsistent pressure and eventual tank failure."
+      },
+      {
+        "id": "q8",
+        "question": "What indicates a utility knife blade needs replacement?",
+        "type": "mcq",
+        "choices": ["A) It's been used for one week", "B) It requires more pressure to cut", "C) The handle feels loose", "D) It makes a clicking sound"],
+        "answer": "B",
+        "explanation": "A dull blade requires more pressure, which increases the risk of slipping and causing injury. Replace blades immediately when they don't cut easily - dull blades are dangerous blades."
+      },
+      {
+        "id": "q9",
+        "question": "What is the ideal storage charge level for lithium-ion batteries during long-term storage?",
+        "type": "mcq",
+        "choices": ["A) 100% (fully charged)", "B) 0% (fully discharged)", "C) 40-80%", "D) It doesn't matter"],
+        "answer": "C",
+        "explanation": "Store lithium-ion batteries at 40-80% charge. Storing fully charged or fully discharged can damage cells and reduce battery lifespan. Check and recharge monthly if stored long-term."
+      },
+      {
+        "id": "q10",
+        "question": "What should you do if a tool's guard doesn't work properly?",
+        "type": "mcq",
+        "choices": ["A) Use the tool carefully without the guard", "B) Remove the guard to prevent it from jamming", "C) Stop using the tool, tag it out, and repair before next use", "D) Continue using it if you're experienced"],
+        "answer": "C",
+        "explanation": "Never use a tool with a defective guard. Stop immediately, tag the tool 'Do Not Use - Guard Defective', and repair or replace before using again. Guards are critical safety features."
+      },
+      {
+        "id": "q11",
+        "question": "What is the proper depth setting for a circular saw blade when cutting through material?",
+        "type": "mcq",
+        "choices": ["A) Blade fully exposed for maximum cutting", "B) About 1/4 inch below the material thickness", "C) Exactly the same as material thickness", "D) 1 inch below material thickness"],
+        "answer": "B",
+        "explanation": "Set blade depth to approximately 1/4 inch below the material. This minimizes exposed blade (reducing injury risk), reduces binding, and provides cleaner cuts with less kickback potential."
+      },
+      {
+        "id": "q12",
+        "question": "On a circular saw, which direction should the blade teeth point?",
+        "type": "mcq",
+        "choices": ["A) Backward (toward the operator)", "B) Forward and upward at the front of the saw", "C) It doesn't matter", "D) Downward at the front"],
+        "answer": "B",
+        "explanation": "Circular saw teeth should point forward and upward at the front. The blade cuts on the upstroke at the front, pulling the saw into the material and providing proper chip ejection."
+      },
+      {
+        "id": "q13",
+        "question": "How do you verify that a speed square is accurate?",
+        "type": "mcq",
+        "choices": ["A) Measure it with a tape measure", "B) Draw a line, flip the square, and see if lines align", "C) Compare it to another speed square", "D) Speed squares are always accurate from the factory"],
+        "answer": "B",
+        "explanation": "To verify: place against a factory edge, draw a line, flip the square 180 degrees, and draw another line from the same point. If lines don't align, the square is inaccurate and should be replaced."
+      },
+      {
+        "id": "q14",
+        "question": "What type of trigger mechanism is considered safer for nail guns?",
+        "type": "mcq",
+        "choices": ["A) Bump fire (contact trigger)", "B) Sequential trigger (contact + trigger required)", "C) Hair trigger for speed", "D) They're all equally safe"],
+        "answer": "B",
+        "explanation": "Sequential trigger is safer - requires both contact with the surface AND pulling the trigger to fire. Bump fire (contact trigger) can cause accidental double-fires from recoil or unintended contact."
+      },
+      {
+        "id": "q15",
+        "question": "What PPE is required when operating a grinder?",
+        "type": "mcq",
+        "choices": ["A) Safety glasses only", "B) Face shield only", "C) Face shield OVER safety glasses, plus hearing protection", "D) Gloves and safety glasses"],
+        "answer": "C",
+        "explanation": "Grinders require a face shield worn OVER safety glasses (for debris and disc failure protection) plus hearing protection. Never wear gloves with grinders as they can get caught in the spinning disc."
+      },
+      {
+        "id": "q16",
+        "question": "When is professional tool repair recommended over DIY repair?",
+        "type": "mcq",
+        "choices": ["A) For any problem", "B) For electrical issues, motor failure, and gear/bearing replacement", "C) Only for warranty claims", "D) Never - all repairs can be done DIY"],
+        "answer": "B",
+        "explanation": "Seek professional repair for electrical issues (sparking, burning smell), motor failure, gear or bearing replacement, and electronic control problems. These require specialized knowledge and tools."
+      },
+      {
+        "id": "q17",
+        "question": "In New Brunswick's climate, what special consideration is needed for tool storage?",
+        "type": "mcq",
+        "choices": ["A) No special considerations needed", "B) Store in direct sunlight to prevent mold", "C) Protect from humidity and use desiccants, keep dry", "D) Store outside for ventilation"],
+        "answer": "C",
+        "explanation": "NB's coastal humidity (60-80%) and salt air accelerate rust. Protect tools with sealed storage, desiccant packs, light oil coatings, and ideally climate-controlled storage."
+      },
+      {
+        "id": "q18",
+        "question": "What is the purpose of a riving knife on a table saw?",
+        "type": "mcq",
+        "choices": ["A) To guide the wood straight", "B) To prevent material from closing on the blade (prevents kickback)", "C) To hold the wood down", "D) To make the cut smoother"],
+        "answer": "B",
+        "explanation": "A riving knife prevents the material from closing on the back of the blade, which is a primary cause of kickback. It's a critical safety feature that should never be removed."
+      },
+      {
+        "id": "q19",
+        "question": "How do you test if a grinder disc is safe to use?",
+        "type": "mcq",
+        "choices": ["A) Visual inspection only", "B) Ring test - tap disc and listen for clear ring (not dull thud)", "C) Spin it by hand", "D) Just check the expiration date"],
+        "answer": "B",
+        "explanation": "Perform a ring test: suspend the disc and tap it lightly. A good disc produces a clear ring; a cracked disc produces a dull thud. Also visually inspect for cracks and verify RPM rating matches grinder."
+      },
+      {
+        "id": "q20",
+        "question": "At what point should you consider replacing a tool rather than repairing it?",
+        "type": "mcq",
+        "choices": ["A) When it's more than 5 years old", "B) When repair cost exceeds 50% of replacement cost", "C) When any part breaks", "D) Never - always repair"],
+        "answer": "B",
+        "explanation": "If repair cost exceeds 50% of replacement cost, it's generally more economical to replace. New tools come with warranties and current safety features, making replacement the better value."
+      }
+    ]
+  }
+}

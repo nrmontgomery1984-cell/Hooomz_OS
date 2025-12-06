@@ -1,0 +1,347 @@
+{
+  "id": "FF-05",
+  "phase": 2,
+  "slug": "structural-connections",
+  "title": "Structural Connections & Hardware",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-01", "FF-02", "FF-03", "FF-04"],
+  "estimated_study_hours": 5,
+  "status": "complete",
+  "tags": ["structural connections", "joist hangers", "hurricane ties", "hold-downs", "anchor bolts", "straps", "fasteners", "NBC 2020", "Simpson Strong-Tie"],
+  "sections": [
+    {
+      "id": "FF-05-01",
+      "title": "Introduction to Structural Connections",
+      "summary": "Overview of connection types, load paths, and NB-specific requirements",
+      "content_md": "## Connection Fundamentals\n\nStructural connections are critical elements that transfer loads between building components. A building is only as strong as its weakest connection.\n\n### Why Connections Matter\n\n1. **Load transfer** - Move forces from one member to another\n2. **Continuity** - Maintain structural integrity through transitions\n3. **Resistance** - Handle gravity, wind, and seismic forces\n4. **Safety** - Prevent progressive collapse\n5. **Code compliance** - Meet NBC 2020 requirements\n\n### Load Path Concept\n\n**Gravity Loads (Downward)**\n```\nRoof → Rafters/Trusses → Top Plates → Studs → \nBottom Plates → Floor System → Foundation → Soil\n```\n\n**Lateral Loads (Wind/Seismic)**\n```\nWind on walls → Sheathing → Framing → \nDiaphragm → Shear walls → Hold-downs → Foundation\n```\n\n**Uplift Loads (Wind)**\n```\nRoof sheathing → Rafters → Hurricane ties → \nWall plates → Anchor bolts → Foundation\n```\n\n### Connection Types\n\n| Type | Function | Example |\n|------|----------|--------|\n| Bearing | Direct gravity load | Beam on post |\n| Shear | Resist sliding | Nails in sheathing |\n| Tension | Resist pulling apart | Hold-downs |\n| Moment | Resist rotation | Rigid frame joint |\n\n### NBC 2020 Connection Requirements\n\n**Section 9.23 - Wood-Frame Construction**\n\n- All connections must provide continuous load path\n- Fastener schedules specify type and quantity\n- Metal connectors where standard nailing insufficient\n- Engineering required for non-prescriptive solutions\n\n### NB Climate Considerations\n\n**Wind Loads**\n- Coastal areas have higher wind speeds\n- Uplift connections critical\n- Hurricane ties mandatory\n\n**Snow Loads**\n- Heavy snow increases gravity loads\n- Connections sized for peak loads\n- Drift areas need enhanced connections\n\n**Temperature Cycling**\n- Freeze-thaw affects fastener pull-out\n- Hot-dip galvanized minimum for exterior\n- Stainless steel in severe exposure\n\n### Connection Categories\n\n**Fasteners**\n- Nails (common, box, ring-shank)\n- Screws (structural, deck)\n- Bolts (anchor, carriage, through)\n- Lag screws\n\n**Connectors**\n- Joist hangers\n- Hurricane/rafter ties\n- Post bases and caps\n- Hold-downs\n- Straps\n- Anchor bolts"
+    },
+    {
+      "id": "FF-05-02",
+      "title": "Fasteners and Nailing Schedules",
+      "summary": "Nail types, sizes, schedules, and proper installation techniques",
+      "content_md": "## Fastener Specifications\n\n### Nail Types and Uses\n\n**Common Nails**\n- Thickest shank for size\n- Highest shear and withdrawal strength\n- Standard for framing connections\n- Sizes: 8d, 10d, 16d most common\n\n**Box Nails**\n- Thinner shank than common\n- Less splitting in thin/dry lumber\n- Lower strength than common\n- Used where splitting is concern\n\n**Ring-Shank Nails**\n- Deformed shank increases withdrawal\n- 2-3x withdrawal resistance vs. common\n- Used for sheathing, subflooring\n- Difficult to remove\n\n**Spiral (Screw) Shank**\n- Helical thread pattern\n- Better withdrawal than smooth\n- Used in high-withdrawal applications\n\n### Nail Sizes\n\n| Designation | Length | Diameter | Common Uses |\n|-------------|--------|----------|------------|\n| 6d | 2\" | 0.113\" | Light sheathing |\n| 8d | 2-1/2\" | 0.131\" | Sheathing, blocking |\n| 10d | 3\" | 0.148\" | General framing |\n| 12d | 3-1/4\" | 0.148\" | Heavy framing |\n| 16d | 3-1/2\" | 0.162\" | Structural framing |\n| 20d | 4\" | 0.192\" | Heavy connections |\n\n### NBC 2020 Nailing Schedule\n\n**Floor Framing**\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Joist to sill (toenail) | 8d | 3 |\n| Joist to sill (face nail) | 16d | 3 |\n| Bridging to joist | 8d | 2 each end |\n| Subfloor to joist | 8d ring-shank | 6\" edge, 12\" field |\n| Rim joist to joist | 16d | 3 |\n\n**Wall Framing**\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Stud to plate (toenail) | 8d | 4 |\n| Stud to plate (end nail) | 16d | 2 |\n| Double top plate | 10d | 16\" o.c. |\n| Header to stud | 16d | 4 each end |\n| Wall sheathing edge | 8d | 6\" o.c. |\n| Wall sheathing field | 8d | 12\" o.c. |\n\n**Roof Framing**\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Rafter to plate (toenail) | 8d | 3 |\n| Collar tie to rafter | 10d | 4 each end |\n| Roof sheathing edge | 8d | 6\" o.c. |\n| Roof sheathing field | 8d | 12\" o.c. |\n\n### Proper Nailing Techniques\n\n**Toenailing**\n- Drive at 30° angle\n- Start nail 1\" from joint\n- Stagger nails on opposite sides\n- Avoid splitting end grain\n\n**End Nailing**\n- Perpendicular through face\n- Minimum 3/4\" from edge\n- Stagger to avoid splitting\n\n**Face Nailing**\n- Perpendicular to grain\n- Adequate edge distance\n- Consistent spacing\n\n### Pneumatic Nailing\n\n**Advantages**\n- Speed and consistency\n- Reduced fatigue\n- Better penetration\n\n**Critical Adjustments**\n- Pressure for flush driving\n- Avoid overdriving (penetrates surface)\n- Avoid underdriving (proud heads)\n\n**Overdriven Nail Correction**\n- Do not remove\n- Add properly driven nail within 2\"\n- Adjust pressure before continuing\n\n### Screw Fasteners\n\n**Structural Screws**\n- Higher shear strength than nails\n- Excellent withdrawal resistance\n- More expensive\n- Use where specified\n\n**Common Structural Screws**\n- Simpson Strong-Drive SD\n- GRK RSS Rugged Structural\n- SPAX PowerLag\n\n**When to Use Screws**\n- Ledger connections\n- Deck framing\n- Engineered wood products\n- High-withdrawal applications"
+    },
+    {
+      "id": "FF-05-03",
+      "title": "Metal Connectors - Hangers and Ties",
+      "summary": "Joist hangers, hurricane ties, straps, and proper installation",
+      "content_md": "## Metal Connector Systems\n\n### Joist Hangers\n\n**When Required**\n- Joist to beam connections\n- Joist to ledger (deck/addition)\n- Where toenailing insufficient\n- Specified by engineer\n\n**Common Types**\n\n| Hanger | Use | Load Capacity |\n|--------|-----|---------------|\n| LUS26 | 2×6 joist | ~1,500 lbs |\n| LUS28 | 2×8 joist | ~2,000 lbs |\n| LUS210 | 2×10 joist | ~2,500 lbs |\n| LUS212 | 2×12 joist | ~3,000 lbs |\n| HUS26 | 2×6 (heavy) | ~2,500 lbs |\n|DERA | Adjustable | Varies |\n\n*Capacities approximate - verify with manufacturer*\n\n**Installation Requirements**\n\n1. Correct hanger for lumber size\n2. All nail holes filled\n3. Proper nail type (specified by manufacturer)\n4. Joist tight to bottom of hanger\n5. Flanges tight to supporting member\n6. No gaps at bearing\n\n**Nails for Hangers**\n- Use ONLY specified nails\n- Simpson 10d x 1-1/2\" or as specified\n- Never substitute regular nails\n- Nail count is critical\n\n### Hurricane/Rafter Ties\n\n**Purpose**\n- Connect rafters/trusses to wall plates\n- Resist wind uplift forces\n- Provide continuous load path\n- Required at every rafter/truss\n\n**Common Types**\n\n| Tie | Description | Uplift Capacity |\n|-----|-------------|----------------|\n| H2.5A | Single sided | ~500 lbs |\n| H10 | Embedded type | ~700 lbs |\n| H1 | Twist strap | ~600 lbs |\n| META20 | Embedded | ~1,000 lbs |\n| MST | Multi-purpose strap | ~1,400 lbs |\n\n**Installation**\n\n```\n1. Position tie against rafter and plate\n2. Fasten to rafter first\n3. Fasten to plate/stud below\n4. Use ALL specified fasteners\n5. Bend only at designated points\n```\n\n### Strap Ties\n\n**Applications**\n- Wall-to-wall connections at corners\n- Plate-to-plate continuity\n- Joist-to-joist connections\n- Holdowns for shear walls\n\n**Common Straps**\n\n| Strap | Width | Use |\n|-------|-------|-----|\n| ST22 | 1-1/4\" | Light-duty connections |\n| ST66 | 1-1/4\" | Plate tie, joist connection |\n| MSTA | 1-1/4\" | Multi-purpose |\n| LSTA | 1-1/4\" | Long strap (up to 36\") |\n| CMST | 1-3/8\" | Coiled strap (custom length) |\n\n### Post Connectors\n\n**Post Bases**\n- Connect posts to concrete\n- Elevated types resist moisture\n- Hot-dip galvanized minimum\n\n| Base | Post Size | Capacity |\n|------|-----------|----------|\n| ABU44 | 4×4 | ~2,500 lbs |\n| ABU46 | 4×6 | ~3,200 lbs |\n| ABA44 | 4×4 adjustable | ~2,200 lbs |\n| EPB44 | 4×4 (elevated) | ~2,300 lbs |\n| CB44 | 4×4 (column base) | ~5,500 lbs |\n\n**Post Caps**\n- Connect beams to posts\n- Prevent lateral movement\n- Transfer loads continuously\n\n### Connector Materials\n\n**Galvanizing Requirements**\n\n| Exposure | Minimum Protection |\n|----------|-------------------|\n| Interior dry | G90 galvanized |\n| Protected exterior | G185 galvanized |\n| Exposed exterior | Hot-dip galvanized |\n| Salt/chemical | Stainless steel |\n| Pressure-treated contact | G185 or SS |\n\n### Installation Quality\n\n**Common Errors to Avoid**\n\n- [ ] Wrong size hanger for lumber\n- [ ] Missing nails in hanger\n- [ ] Wrong nail type/size\n- [ ] Gaps between joist and hanger\n- [ ] Hanger not tight to beam\n- [ ] Hurricane tie missing fasteners\n- [ ] Field-bending connectors"
+    },
+    {
+      "id": "FF-05-04",
+      "title": "Anchor Bolts and Hold-Downs",
+      "summary": "Foundation-to-frame connections and shear wall hold-down systems",
+      "content_md": "## Foundation Connections\n\n### Anchor Bolts\n\n**Purpose**\n- Connect sill plate to foundation\n- Resist lateral sliding\n- Resist uplift at plate level\n- First link in continuous load path\n\n**NBC 2020 Requirements**\n\n| Parameter | Requirement |\n|-----------|------------|\n| Minimum diameter | 1/2\" |\n| Embedment in concrete | 7\" minimum |\n| Spacing | 6' maximum |\n| From plate ends | Within 12\" |\n| Edge distance (concrete) | 3\" minimum |\n| Washer | Required under nut |\n\n**Bolt Types**\n\n**Cast-in-Place (J-Bolts)**\n- Set during pour\n- Best grip in concrete\n- Requires template/layout\n- Most common method\n\n**Wedge Anchors**\n- Drilled after pour\n- For retrofit/repair\n- Follow manufacturer specs\n- Less capacity than cast-in\n\n**Epoxy Anchors**\n- Highest retrofit capacity\n- Chemical bond to concrete\n- Temperature sensitive during cure\n- Follow mixing instructions\n\n### Sill Plate Installation\n\n```\nStep 1: Mark Bolt Locations\n- Transfer bolt positions to plate\n- Drill 5/8\" holes for 1/2\" bolts\n- Accuracy is critical\n\nStep 2: Set Plate\n- Position over bolts\n- Align with foundation edge\n- Check for level\n\nStep 3: Secure\n- Install washers and nuts\n- Tighten firmly (not over-torque)\n- Verify plate is flat\n\nStep 4: Verify\n- All bolts have washers and nuts\n- Plate not cracked at bolts\n- Gasket/sill seal in place\n```\n\n### Hold-Down Systems\n\n**Purpose**\n- Resist overturning at shear walls\n- Transfer uplift to foundation\n- Critical for lateral force resistance\n\n**When Required**\n- Ends of shear wall segments\n- Per engineering calculations\n- High wind/seismic zones\n- Tall/narrow wall panels\n\n**Common Hold-Downs**\n\n| Model | Capacity | Rod Size | Use |\n|-------|----------|----------|-----|\n| HDU2 | 3,700 lbs | 5/8\" | Light residential |\n| HDU4 | 4,800 lbs | 5/8\" | Standard residential |\n| HDU8 | 9,300 lbs | 7/8\" | Heavy-duty |\n| HHDQ | 14,000 lbs | 1\" | Commercial/multi-story |\n| PHD | Varies | Per design | Post hold-down |\n\n### Hold-Down Installation\n\n**Embedded Type**\n1. Set anchor bolt in concrete (per specs)\n2. Install hold-down on anchor\n3. Attach to post/stud with specified fasteners\n4. Install all bolts/screws\n\n**Strap Type**\n1. Embed strap in concrete or attach to anchor\n2. Run strap up face of stud\n3. Fasten with all specified nails\n4. Do not bend strap sharply\n\n### Continuous Rod Systems\n\n**Multi-Story Connections**\n- Continuous rod from foundation to roof\n- Coupler nuts at each floor\n- Bearing plates at each level\n- Shrinkage compensating devices\n\n**Components**\n- Threaded rod (all-thread)\n- Coupler nuts\n- Bearing plates\n- Take-up devices\n- Anchor at foundation\n\n### Connection to Pressure-Treated Wood\n\n**Corrosion Concerns**\n- ACQ/CA treatments corrosive to hardware\n- Minimum G185 galvanizing required\n- Stainless steel preferred\n- Inspect regularly\n\n**Required Protection**\n| Treatment | Connector Requirement |\n|-----------|----------------------|\n| ACQ | G185 or stainless |\n| CA-C | G185 or stainless |\n| Borate | G90 acceptable |\n| Untreated | G90 minimum |\n\n### Inspection Points\n\n- [ ] Anchor bolts at correct spacing\n- [ ] Bolts within 12\" of plate ends\n- [ ] Proper embedment depth\n- [ ] Washers under all nuts\n- [ ] Nuts properly tightened\n- [ ] Sill seal installed\n- [ ] Hold-downs at shear wall ends\n- [ ] All hold-down fasteners installed"
+    },
+    {
+      "id": "FF-05-05",
+      "title": "Inspection and Quality Control",
+      "summary": "Verification procedures, common defects, and documentation requirements",
+      "content_md": "## Connection Inspection\n\n### Inspection Timing\n\n**Foundation Connections**\n- Before framing begins\n- After sill plate installation\n- Before subfloor installation\n\n**Framing Connections**\n- During framing inspection\n- Before insulation/cover\n- Special inspection if engineered\n\n### Visual Inspection Checklist\n\n#### Fastener Verification\n\n| Item | What to Check |\n|------|---------------|\n| Nail type | Correct size and style |\n| Nail quantity | Per schedule/drawing |\n| Nail placement | Edge distance, spacing |\n| Nail condition | Flush, not overdriven |\n| Screw type | Structural where specified |\n\n#### Metal Connector Verification\n\n| Item | What to Check |\n|------|---------------|\n| Correct model | Matches plan/schedule |\n| Proper installation | Per manufacturer |\n| All fasteners | Every hole filled |\n| Fastener type | Per manufacturer |\n| No damage | No bent/cracked connectors |\n| Tight fit | No gaps at bearing |\n\n### Common Defects\n\n#### Fastener Issues\n\n**Missing Nails**\n- *Cause*: Oversight, production pressure\n- *Fix*: Add required nails\n- *Prevention*: Systematic inspection\n\n**Wrong Nail Size**\n- *Cause*: Wrong nails in gun\n- *Fix*: Add correct nails (don't remove)\n- *Prevention*: Verify nail stock\n\n**Overdriven Nails**\n- *Cause*: Excessive air pressure\n- *Fix*: Add nail within 2\" of overdriven\n- *Prevention*: Adjust compressor\n\n**Nails in Wrong Location**\n- *Cause*: Misalignment, haste\n- *Fix*: Add nails in correct location\n- *Prevention*: Mark before nailing\n\n#### Connector Issues\n\n**Wrong Hanger Size**\n- *Cause*: Not checking lumber size\n- *Fix*: Replace with correct size\n- *Prevention*: Match hanger to lumber\n\n**Missing Fasteners in Connectors**\n- *Cause*: Not filling all holes\n- *Fix*: Install missing fasteners\n- *Prevention*: Check every hole\n\n**Wrong Fastener Type**\n- *Cause*: Using regular nails\n- *Fix*: May need replacement\n- *Prevention*: Use only specified nails\n\n**Gaps at Bearing**\n- *Cause*: Joist not seated properly\n- *Fix*: Reinstall or add support\n- *Prevention*: Check fit before fastening\n\n### Engineering Required\n\n**Situations Requiring Engineering**\n- Non-standard load conditions\n- Connections not in code tables\n- Modified or combined connectors\n- Heavy point loads\n- Unusual geometry\n\n**Documentation for Engineer**\n- Applied loads\n- Member sizes\n- Species and grade\n- Connection geometry\n- Environmental exposure\n\n### Quality Control Process\n\n**Pre-Work**\n1. Review connection schedule\n2. Verify correct materials on-site\n3. Confirm worker understanding\n4. Check tools calibrated\n\n**During Work**\n1. Spot-check installations\n2. Correct defects immediately\n3. Document unusual conditions\n4. Maintain material traceability\n\n**Post-Work**\n1. Systematic inspection\n2. Document defects and corrections\n3. Photo documentation if required\n4. Sign-off on inspection form\n\n### Documentation Requirements\n\n**Required Records**\n- Connector product data sheets\n- Fastener specifications\n- Special inspection reports\n- Correction documentation\n- Final inspection approval\n\n**Photo Documentation**\n- Hold-down installations\n- Special connections\n- Corrections/repairs\n- Hidden connections (before cover)\n\n### NB-Specific Considerations\n\n**Coastal Wind Exposure**\n- Enhanced uplift connections may be required\n- Verify connector ratings for wind speed\n- Document exposure category\n\n**Moisture Exposure**\n- Confirm galvanizing adequate\n- Special attention to deck connections\n- Inspect treated wood contact areas"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "FF-05-CL01",
+      "title": "Anchor Bolt Checklist",
+      "items": [
+        "Bolt diameter correct (1/2\" minimum)",
+        "Embedment depth verified (7\" minimum)",
+        "Spacing within 6' maximum",
+        "Bolts within 12\" of plate ends",
+        "Edge distance adequate (3\" minimum)",
+        "Bolts plumb and aligned",
+        "Template used for accuracy",
+        "Bolts protected during pour"
+      ]
+    },
+    {
+      "id": "FF-05-CL02",
+      "title": "Sill Plate Installation Checklist",
+      "items": [
+        "Sill seal/gasket installed",
+        "Plate holes drilled accurately",
+        "Plate positioned and aligned",
+        "Washers installed under all nuts",
+        "Nuts tightened properly",
+        "Plate not cracked at bolt locations",
+        "Pressure-treated lumber used",
+        "Grade stamp visible"
+      ]
+    },
+    {
+      "id": "FF-05-CL03",
+      "title": "Joist Hanger Checklist",
+      "items": [
+        "Correct hanger model for joist size",
+        "Hanger tight to supporting member",
+        "Joist fully seated in hanger",
+        "All nail holes filled",
+        "Correct nail type used (per manufacturer)",
+        "No gaps at bottom of hanger",
+        "Flanges not bent or damaged",
+        "Double hangers where required"
+      ]
+    },
+    {
+      "id": "FF-05-CL04",
+      "title": "Hurricane Tie Checklist",
+      "items": [
+        "Ties at every rafter/truss location",
+        "Correct tie model for application",
+        "All fastener holes filled",
+        "Fasteners correct type (per manufacturer)",
+        "Tie tight to rafter and plate",
+        "Not bent except at designated points",
+        "Visible and accessible for inspection",
+        "Installed on both sides where specified"
+      ]
+    },
+    {
+      "id": "FF-05-CL05",
+      "title": "Hold-Down Checklist",
+      "items": [
+        "Hold-downs at all shear wall ends",
+        "Correct model per engineering",
+        "Anchor bolt properly embedded",
+        "All bolts/screws installed",
+        "Nut tightened to spec",
+        "No gaps at base or post",
+        "Continuous load path verified",
+        "Documentation complete"
+      ]
+    },
+    {
+      "id": "FF-05-CL06",
+      "title": "Framing Nailing Checklist",
+      "items": [
+        "Correct nail size being used",
+        "Nail quantity per schedule",
+        "Nails not overdriven",
+        "Edge distance adequate",
+        "Toenails at correct angle",
+        "No splitting at connections",
+        "Sheathing nailing verified",
+        "Pneumatic pressure adjusted"
+      ]
+    },
+    {
+      "id": "FF-05-CL07",
+      "title": "Pre-Cover Inspection Checklist",
+      "items": [
+        "All connectors installed per plan",
+        "All fastener counts verified",
+        "Correct fastener types used",
+        "No damaged or bent connectors",
+        "Hold-downs complete",
+        "Hurricane ties at all locations",
+        "Straps installed where specified",
+        "Photo documentation complete",
+        "Defects corrected and re-inspected"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "FF-05-Q01",
+        "question": "What is the minimum embedment depth for anchor bolts in concrete per NBC 2020?",
+        "type": "multiple_choice",
+        "choices": [
+          "4 inches",
+          "5 inches",
+          "7 inches",
+          "9 inches"
+        ],
+        "answer": "7 inches",
+        "explanation": "NBC 2020 requires anchor bolts to be embedded a minimum of 7 inches into the concrete foundation to develop adequate holding strength."
+      },
+      {
+        "id": "FF-05-Q02",
+        "question": "What is the maximum spacing for anchor bolts along the sill plate?",
+        "type": "multiple_choice",
+        "choices": [
+          "4 feet",
+          "6 feet",
+          "8 feet",
+          "10 feet"
+        ],
+        "answer": "6 feet",
+        "explanation": "Anchor bolts must be spaced no more than 6 feet apart along the sill plate to adequately resist lateral forces and prevent uplift."
+      },
+      {
+        "id": "FF-05-Q03",
+        "question": "What should be done when a sheathing nail is overdriven?",
+        "type": "multiple_choice",
+        "choices": [
+          "Remove it and drive a new one in the same hole",
+          "Leave it as is",
+          "Add a properly driven nail within 2 inches",
+          "Fill the hole with caulk"
+        ],
+        "answer": "Add a properly driven nail within 2 inches",
+        "explanation": "Overdriven nails lose holding capacity because they break through the panel face. The solution is to add a properly driven nail within 2 inches, not remove the original."
+      },
+      {
+        "id": "FF-05-Q04",
+        "question": "What type of galvanizing is required for connectors in contact with ACQ pressure-treated lumber?",
+        "type": "multiple_choice",
+        "choices": [
+          "G60",
+          "G90",
+          "G185 or stainless steel",
+          "Any galvanizing is acceptable"
+        ],
+        "answer": "G185 or stainless steel",
+        "explanation": "ACQ and similar pressure treatments are corrosive to metal. Connectors in contact with ACQ-treated lumber require G185 (heavy) galvanizing or stainless steel to resist corrosion."
+      },
+      {
+        "id": "FF-05-Q05",
+        "question": "What is the primary purpose of hurricane ties in residential construction?",
+        "type": "multiple_choice",
+        "choices": [
+          "To connect wall studs to the foundation",
+          "To resist wind uplift on the roof",
+          "To strengthen floor joists",
+          "To prevent walls from racking"
+        ],
+        "answer": "To resist wind uplift on the roof",
+        "explanation": "Hurricane ties connect rafters or trusses to wall top plates to resist wind uplift forces that could lift the roof off the walls during high winds."
+      },
+      {
+        "id": "FF-05-Q06",
+        "question": "What happens if regular nails are used in a joist hanger instead of the specified connector nails?",
+        "type": "multiple_choice",
+        "choices": [
+          "The connection is acceptable if same size",
+          "The connection capacity is significantly reduced",
+          "It improves the connection",
+          "There is no difference"
+        ],
+        "answer": "The connection capacity is significantly reduced",
+        "explanation": "Joist hanger capacity ratings are based on specific connector nails. Regular nails may have different shank diameter, length, or strength, significantly reducing the rated capacity of the connection."
+      },
+      {
+        "id": "FF-05-Q07",
+        "question": "How close to the end of a sill plate must an anchor bolt be located?",
+        "type": "multiple_choice",
+        "choices": [
+          "Within 6 inches",
+          "Within 12 inches",
+          "Within 18 inches",
+          "Within 24 inches"
+        ],
+        "answer": "Within 12 inches",
+        "explanation": "Anchor bolts must be located within 12 inches of the ends of sill plates to prevent the plate ends from lifting or sliding under lateral loads."
+      },
+      {
+        "id": "FF-05-Q08",
+        "question": "What is the purpose of hold-downs at shear walls?",
+        "type": "multiple_choice",
+        "choices": [
+          "To resist horizontal sliding",
+          "To prevent overturning under lateral loads",
+          "To connect floor joists",
+          "To attach the roof"
+        ],
+        "answer": "To prevent overturning under lateral loads",
+        "explanation": "Hold-downs resist the overturning (uplift) forces at the ends of shear walls. When lateral forces try to overturn the wall, the hold-down keeps the end post anchored to the foundation."
+      },
+      {
+        "id": "FF-05-Q09",
+        "question": "What is the correct angle for toenailing studs to plates?",
+        "type": "multiple_choice",
+        "choices": [
+          "15 degrees",
+          "30 degrees",
+          "45 degrees",
+          "60 degrees"
+        ],
+        "answer": "30 degrees",
+        "explanation": "Toenails should be driven at approximately 30 degrees to the face of the stud. This angle provides optimal holding power while allowing the nail to properly penetrate both members."
+      },
+      {
+        "id": "FF-05-Q10",
+        "question": "What size nail is designated as '16d'?",
+        "type": "multiple_choice",
+        "choices": [
+          "2-1/2\" long",
+          "3\" long",
+          "3-1/2\" long",
+          "4\" long"
+        ],
+        "answer": "3-1/2\" long",
+        "explanation": "A 16d (sixteen penny) common nail is 3-1/2 inches long with a 0.162\" diameter shank. This is the standard nail for structural framing connections."
+      },
+      {
+        "id": "FF-05-Q11",
+        "question": "What must be installed under every anchor bolt nut?",
+        "type": "multiple_choice",
+        "choices": [
+          "Lock washer",
+          "Spring washer",
+          "Flat washer",
+          "Nothing is required"
+        ],
+        "answer": "Flat washer",
+        "explanation": "A flat washer must be installed under every anchor bolt nut to distribute the clamping force over a larger area of the sill plate and prevent the nut from pulling into the wood."
+      },
+      {
+        "id": "FF-05-Q12",
+        "question": "Why are ring-shank nails preferred for sheathing applications?",
+        "type": "multiple_choice",
+        "choices": [
+          "They are cheaper",
+          "They have higher withdrawal resistance",
+          "They are easier to remove",
+          "They don't split wood"
+        ],
+        "answer": "They have higher withdrawal resistance",
+        "explanation": "Ring-shank nails have deformed shanks that grip the wood fibers, providing 2-3 times the withdrawal resistance of smooth shank nails. This is critical for sheathing that must resist wind and racking forces."
+      },
+      {
+        "id": "FF-05-Q13",
+        "question": "What is the minimum nail edge distance to prevent splitting?",
+        "type": "multiple_choice",
+        "choices": [
+          "1/4 inch",
+          "3/8 inch",
+          "1/2 inch",
+          "3/4 inch"
+        ],
+        "answer": "3/4 inch",
+        "explanation": "Nails should be placed at least 3/4 inch from the edge of framing lumber to minimize the risk of splitting, especially near the end grain."
+      },
+      {
+        "id": "FF-05-Q14",
+        "question": "When a joist doesn't fully seat in a joist hanger, what should be done?",
+        "type": "multiple_choice",
+        "choices": [
+          "Force it down with extra nails",
+          "Leave it and install the nails",
+          "Reinstall properly or add support below",
+          "Cut the joist shorter"
+        ],
+        "answer": "Reinstall properly or add support below",
+        "explanation": "A joist that doesn't fully seat in the hanger creates a gap that prevents proper load transfer. The connection must be reinstalled correctly or additional support provided to ensure the joist bears fully."
+      },
+      {
+        "id": "FF-05-Q15",
+        "question": "What documentation should be maintained for special structural connections?",
+        "type": "multiple_choice",
+        "choices": [
+          "Only the building permit",
+          "Photo documentation and inspection reports",
+          "Just the engineer's stamp",
+          "No documentation is required"
+        ],
+        "answer": "Photo documentation and inspection reports",
+        "explanation": "Special structural connections should be documented with photographs (especially before covering) and inspection reports. This provides a record of compliance and is valuable for future reference or inspections."
+      }
+    ]
+  }
+}

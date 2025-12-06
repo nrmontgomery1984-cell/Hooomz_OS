@@ -1,0 +1,301 @@
+{
+  "id": "EW-04",
+  "title": "Window & Door Installation",
+  "category": "Exterior & Weather",
+  "level": "Intermediate",
+  "estimated_study_hours": 4,
+  "tags": [
+    "windows",
+    "doors",
+    "flashing",
+    "weatherproofing",
+    "installation"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "EW-02"
+  ],
+  "sections": [
+    {
+      "id": "ew04-s1",
+      "title": "Window Types & Selection",
+      "summary": "Understanding window styles, performance ratings, and selection criteria for NB Zone 6.",
+      "content_md": "## Window Types & Selection for Zone 6\n\n### Common Window Styles\n\n| Style | Operation | Advantages | Best Use |\n|-------|-----------|------------|----------|\n| **Casement** | Crank-out hinged | Best air sealing, full ventilation | Bedrooms, living areas |\n| **Awning** | Top-hinged, opens out | Rain protection when open | Basements, bathrooms |\n| **Double-Hung** | Both sashes slide | Easy cleaning, traditional look | Traditional homes |\n| **Fixed** | Non-operable | Best thermal, lowest cost | Picture windows |\n| **Slider** | Horizontal sliding | Easy operation | Wide openings |\n\n### Performance Ratings (Zone 6 Requirements)\n\n**Energy Star Zone 6 Minimums:**\n- U-Factor: ≤0.27 (lower is better)\n- SHGC: ≥0.32 (higher for passive solar gain)\n- Air Leakage: ≤0.30 cfm/ft²\n\n**Recommended for NB Zone 6:**\n- Triple-pane with argon/krypton fill\n- U-Factor: ≤0.20 for optimal performance\n- Low-E coatings (soft coat preferred)\n- Warm-edge spacers (reduce condensation)\n\n### Frame Materials\n\n| Material | R-Value | Maintenance | Durability | Cost |\n|----------|---------|-------------|------------|------|\n| **Vinyl** | Good | Low | 25-40 yrs | $ |\n| **Fiberglass** | Excellent | Low | 40+ yrs | $$ |\n| **Wood** | Good | High | 30+ yrs (if maintained) | $$$ |\n| **Aluminum** | Poor (thermal bridge) | Low | 40+ yrs | $$ |\n| **Wood-Clad** | Good | Low exterior | 40+ yrs | $$$$ |\n\n> **Zone 6 Tip:** Fiberglass frames expand/contract at same rate as glass, reducing seal failures in extreme temperatures."
+    },
+    {
+      "id": "ew04-s2",
+      "title": "Rough Opening Preparation",
+      "summary": "Proper sizing, flashing, and preparation of window and door openings.",
+      "content_md": "## Rough Opening Preparation\n\n### Sizing the Rough Opening\n\n**Standard Clearances:**\n- Width: Window width + 1/2\" each side (1\" total)\n- Height: Window height + 1/2\" top + 3/8\" bottom (7/8\" total)\n- Check manufacturer specs - may vary\n\n**Measuring Protocol:**\n1. Measure width at top, middle, and bottom\n2. Measure height at left, center, and right\n3. Check diagonals for square (≤1/8\" difference)\n4. Use smallest dimension for ordering\n\n### Sill Pan Installation\n\n**Critical for Water Management:**\n\n1. **Back Dam:** Minimum 1\" tall at interior\n2. **End Dams:** Seal at jambs to prevent lateral water flow\n3. **Slope:** 5-15° toward exterior for drainage\n4. **Materials:** Peel-and-stick membrane or formed metal\n\n**Installation Steps:**\n\n| Step | Action | Why It Matters |\n|------|--------|----------------|\n| 1 | Cut sill membrane 12\" wider than opening | Allows proper jamb laps |\n| 2 | Create back dam with folded membrane | Prevents interior water entry |\n| 3 | Install sill piece first | Water sheds over this layer |\n| 4 | Lap jamb pieces over sill | Water on jambs drains to sill |\n| 5 | Head flashing goes last, under WRB | Shingle principle protection |\n\n### Pre-Installation Checklist\n\n- [ ] Rough opening is plumb and square\n- [ ] Structural header properly sized\n- [ ] King studs and jack studs secure\n- [ ] Sill plate level within 1/8\"\n- [ ] No protruding fasteners or debris\n- [ ] WRB properly installed to opening\n- [ ] Sill pan complete with dams"
+    },
+    {
+      "id": "ew04-s3",
+      "title": "Window Installation",
+      "summary": "Step-by-step window installation with proper shimming, fastening, and sealing.",
+      "content_md": "## Window Installation Process\n\n### Tools Required\n- Level (4' preferred)\n- Tape measure\n- Shims (composite, not wood - no rot)\n- Low-expansion foam (window/door rated)\n- Caulk gun with quality sealant\n- Drill/driver with appropriate bits\n- Pry bar for adjustments\n\n### Step-by-Step Installation\n\n**1. Dry Fit the Window**\n- Set window in opening without fasteners\n- Check operation of all sashes\n- Verify adequate shim space all around\n- Remove and make adjustments if needed\n\n**2. Apply Sealant Bed**\n- Continuous bead on sill pan\n- Sealant on back of nailing flange (flanged windows)\n- Creates primary water seal\n\n**3. Set Window in Opening**\n- Tip window into opening\n- Center in rough opening\n- Press firmly into sealant bed\n\n**4. Shim and Level**\n\n| Location | Shim Points | Check |\n|----------|-------------|-------|\n| Sill | Every 12\" and at jamb shims | Level |\n| Jambs | 2\" from corners, then every 12\" | Plumb |\n| Head | Only if needed for square | Level |\n\n**5. Fasten Window**\n- Nail through flange at corners first\n- Verify operation before completing\n- Fasten every 6-8\" around perimeter\n- Don't over-drive nails (distorts frame)\n\n**6. Insulate and Seal**\n\n> **CRITICAL:** Use only low-expansion foam labeled for windows and doors. Standard foam can bow frames and void warranties.\n\n**Foam Application:**\n- Fill 50-70% of cavity (foam expands)\n- Apply in lifts if deep cavity\n- Allow full cure before trimming\n\n### Flanged vs. Flangeless Windows\n\n| Type | Sealing Method | Common Use |\n|------|----------------|------------|\n| **Flanged** | Flange tape over nailing fin | New construction |\n| **Flangeless** | Interior sealed, exterior trim | Replacement, masonry |"
+    },
+    {
+      "id": "ew04-s4",
+      "title": "Door Installation",
+      "summary": "Exterior door installation including pre-hung units, thresholds, and weatherstripping.",
+      "content_md": "## Exterior Door Installation\n\n### Pre-Hung Door Components\n\n- **Door slab:** The door itself\n- **Jamb:** Frame surrounding door (typically 4-9/16\" or 6-9/16\")\n- **Threshold/sill:** Bottom component, water management critical\n- **Weatherstripping:** Compression or magnetic seals\n- **Hinges:** Minimum 3 per door, 4 for heavy doors\n- **Brickmould/casing:** Exterior trim\n\n### Rough Opening for Doors\n\n**Standard Sizing:**\n- Width: Door width + jamb thickness x2 + 1\" (shim space)\n- Height: Door height + threshold + 1/2\" to 3/4\"\n\n**Example for 36\" x 80\" door:**\n- RO Width: 38-1/2\" to 39\"\n- RO Height: 82-1/4\" to 82-1/2\"\n\n### Installation Process\n\n**1. Prepare Opening**\n- Level subfloor/sill area\n- Install sill pan flashing\n- Dry-fit door unit\n\n**2. Set Door Unit**\n- Apply sealant to back of brickmould\n- Tip unit into opening\n- Center in rough opening\n\n**3. Shim and Secure**\n\n| Priority | Location | Method |\n|----------|----------|--------|\n| 1 | Hinge side | Shim behind each hinge |\n| 2 | Lock side top | Shim and check operation |\n| 3 | Lock side bottom | Shim for consistent reveal |\n| 4 | Threshold | Shim level, no bounce |\n\n**4. Fasten Properly**\n- Drive screws through hinges into framing (3\" screws)\n- Secure jamb at shim points only\n- Anchor threshold to subfloor\n\n**5. Threshold Sealing**\n- Caulk under threshold (back dam)\n- Verify weatherstrip contact all around\n- Check door swing for proper latching\n\n### Common Door Problems\n\n| Issue | Cause | Solution |\n|-------|-------|----------|\n| Door swings open/closed | Jamb not plumb | Adjust hinge-side shims |\n| Sticks at top | Jamb twisted | Adjust shims, check level |\n| Air gaps | Poor weatherstrip contact | Adjust strike, replace weatherstrip |\n| Water entry | Threshold not sealed | Re-caulk, check sill pan |"
+    },
+    {
+      "id": "ew04-s5",
+      "title": "Flashing & Weatherproofing",
+      "summary": "Complete flashing sequences and integration with the building envelope.",
+      "content_md": "## Flashing & Weatherproofing\n\n### The Shingle Principle\n\n**Golden Rule:** Water flows downhill. Every layer must overlap the one below.\n\n**Proper Sequence (Bottom to Top):**\n1. Sill pan/membrane installed\n2. Window/door set and fastened\n3. Jamb flashing tape applied\n4. Head flashing tape applied\n5. WRB lapped over head flashing\n6. Exterior trim installed with sealant\n\n### Flashing Tape Application\n\n**Material Selection:**\n| Type | Temperature Range | Adhesion | Use |\n|------|-------------------|----------|-----|\n| **Butyl-based** | Wide (-40°F to 200°F) | Excellent | All-purpose, preferred for Zone 6 |\n| **Asphalt-based** | Limited (40°F+) | Good | Warm weather only |\n| **Acrylic** | Moderate | Good | Secondary flashing |\n\n**Application Requirements:**\n- Surface must be clean, dry, primed if needed\n- Apply above 25°F for most products\n- Minimum 3\" overlap at all seams\n- Roll firmly with J-roller for full adhesion\n- No wrinkles or fish-mouths\n\n### Head Flashing Detail\n\n**Critical for Water Management:**\n\n1. Flashing tape extends minimum 6\" past jambs\n2. Top edge tucked under WRB\n3. Mechanically fasten metal drip cap if required\n4. Sealant behind any horizontal trim\n\n### Integration with Cladding\n\n**Vinyl/Aluminum Siding:**\n- J-channel or window trim creates drainage plane\n- Maintain 1/4\" gap from window frame\n- Caulk only at head, not jambs/sill (allow drainage)\n\n**Wood/Fiber Cement:**\n- Back-caulk all trim pieces\n- Leave 1/4\" gap at sill, caulk at head\n- Prime all cut edges before installation\n\n**Stucco/EIFS:**\n- Casing bead at window perimeter\n- Sealant joint between bead and frame\n- Control joint placement critical\n\n### Common Failures\n\n> **Field Observation:** 90% of window leaks occur at sill corners. Take extra care with corner flashing details.\n\n| Failure | Cause | Prevention |\n|---------|-------|------------|\n| Sill corner leaks | Inadequate corner wrap | Fully wrap membrane at corners |\n| Head leaks | WRB not lapped over flashing | Follow shingle principle |\n| Jamb streaking | Caulk failure | Use quality sealant, back-caulk trim |\n| Condensation | Poor thermal break | Specify thermally broken frames |"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew04-c1",
+      "title": "Window Selection Checklist",
+      "items": [
+        "Verify Energy Star Zone 6 certification",
+        "Check U-Factor meets or exceeds 0.27 (lower better)",
+        "Confirm appropriate SHGC for orientation",
+        "Verify air leakage rating ≤0.30 cfm/ft²",
+        "Select frame material suitable for climate",
+        "Confirm triple-pane with argon/krypton fill",
+        "Specify Low-E coating and warm-edge spacers",
+        "Verify window style matches ventilation needs",
+        "Check rough opening dimensions match specifications",
+        "Confirm delivery lead time and availability"
+      ]
+    },
+    {
+      "id": "ew04-c2",
+      "title": "Rough Opening Preparation Checklist",
+      "items": [
+        "Measure width at top, middle, and bottom",
+        "Measure height at left, center, and right",
+        "Check diagonals for square (≤1/8\" difference)",
+        "Verify structural header is properly sized",
+        "Confirm king studs and jack studs are secure",
+        "Check sill plate is level within 1/8\"",
+        "Remove protruding fasteners and debris",
+        "Install sill pan with back and end dams",
+        "Verify sill slopes toward exterior",
+        "Cut and prepare WRB at opening edges"
+      ]
+    },
+    {
+      "id": "ew04-c3",
+      "title": "Window Installation Checklist",
+      "items": [
+        "Dry-fit window and verify operation",
+        "Apply continuous sealant bead on sill pan",
+        "Apply sealant to back of nailing flange",
+        "Center window in rough opening",
+        "Check window is level and plumb",
+        "Install shims at sill, jambs, and head as needed",
+        "Fasten corners first, verify operation",
+        "Complete fastening every 6-8\" around perimeter",
+        "Apply low-expansion window/door foam",
+        "Do not over-fill foam cavities (50-70%)"
+      ]
+    },
+    {
+      "id": "ew04-c4",
+      "title": "Flashing Completion Checklist",
+      "items": [
+        "Sill pan properly installed with dams",
+        "Window/door fully secured and operational",
+        "Jamb flashing tape applied and rolled",
+        "Head flashing tape extends 6\" past jambs",
+        "WRB lapped over head flashing tape",
+        "All tape seams have minimum 3\" overlap",
+        "No wrinkles or fish-mouths in tape",
+        "Metal drip cap installed if required",
+        "Exterior trim back-caulked before installation",
+        "Appropriate gaps left for drainage at sill"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew04-q1",
+        "question": "What is the maximum U-Factor for Energy Star windows in Zone 6?",
+        "options": [
+          "0.35",
+          "0.30",
+          "0.27",
+          "0.22"
+        ],
+        "correct": 2,
+        "explanation": "Energy Star Zone 6 requires a U-Factor of 0.27 or lower. Lower U-Factor means better insulating performance."
+      },
+      {
+        "id": "ew04-q2",
+        "question": "Which frame material expands and contracts at the same rate as glass?",
+        "options": [
+          "Vinyl",
+          "Wood",
+          "Aluminum",
+          "Fiberglass"
+        ],
+        "correct": 3,
+        "explanation": "Fiberglass has a similar coefficient of expansion to glass, reducing seal failures in extreme temperatures."
+      },
+      {
+        "id": "ew04-q3",
+        "question": "What is the standard width clearance added to window rough openings?",
+        "options": [
+          "1/4\" each side",
+          "1/2\" each side",
+          "3/4\" each side",
+          "1\" each side"
+        ],
+        "correct": 1,
+        "explanation": "Standard rough opening clearance is 1/2\" on each side (1\" total width), though manufacturer specs should be verified."
+      },
+      {
+        "id": "ew04-q4",
+        "question": "What is the minimum height for a sill pan back dam?",
+        "options": [
+          "1/4\"",
+          "1/2\"",
+          "1\"",
+          "2\""
+        ],
+        "correct": 2,
+        "explanation": "Sill pan back dams should be a minimum of 1\" tall to prevent water from flowing toward the interior."
+      },
+      {
+        "id": "ew04-q5",
+        "question": "When installing flashing, which piece should be installed first?",
+        "options": [
+          "Head flashing",
+          "Jamb flashing",
+          "Sill pan",
+          "WRB"
+        ],
+        "correct": 2,
+        "explanation": "The sill pan is installed first following the shingle principle - water flows down, so lower pieces go first."
+      },
+      {
+        "id": "ew04-q6",
+        "question": "What type of foam should be used around window frames?",
+        "options": [
+          "High-expansion foam",
+          "Low-expansion window/door foam",
+          "Spray polyurethane foam",
+          "Standard gap filler foam"
+        ],
+        "correct": 1,
+        "explanation": "Low-expansion foam rated for windows and doors must be used. Standard foam can bow frames and void warranties."
+      },
+      {
+        "id": "ew04-q7",
+        "question": "How much should window foam cavities be filled?",
+        "options": [
+          "25-40%",
+          "50-70%",
+          "80-90%",
+          "100%"
+        ],
+        "correct": 1,
+        "explanation": "Fill foam cavities 50-70% as foam expands. Overfilling can distort window frames."
+      },
+      {
+        "id": "ew04-q8",
+        "question": "What is the minimum diagonal difference tolerance for a square rough opening?",
+        "options": [
+          "1/16\"",
+          "1/8\"",
+          "1/4\"",
+          "1/2\""
+        ],
+        "correct": 1,
+        "explanation": "Diagonal measurements should be within 1/8\" of each other to ensure the opening is square."
+      },
+      {
+        "id": "ew04-q9",
+        "question": "How far should head flashing tape extend past the jambs?",
+        "options": [
+          "2\"",
+          "4\"",
+          "6\"",
+          "8\""
+        ],
+        "correct": 2,
+        "explanation": "Head flashing tape should extend a minimum of 6\" past the jambs on each side for proper water management."
+      },
+      {
+        "id": "ew04-q10",
+        "question": "What percentage of window leaks occur at sill corners?",
+        "options": [
+          "50%",
+          "70%",
+          "80%",
+          "90%"
+        ],
+        "correct": 3,
+        "explanation": "90% of window leaks occur at sill corners, making proper corner flashing critical."
+      },
+      {
+        "id": "ew04-q11",
+        "question": "When using composite shims, why are they preferred over wood?",
+        "options": [
+          "Lower cost",
+          "Easier to cut",
+          "No rot or decay",
+          "Better compression"
+        ],
+        "correct": 2,
+        "explanation": "Composite shims don't rot or decay, making them ideal for window and door installation."
+      },
+      {
+        "id": "ew04-q12",
+        "question": "What is the minimum temperature for applying most flashing tapes?",
+        "options": [
+          "0°F",
+          "25°F",
+          "40°F",
+          "50°F"
+        ],
+        "correct": 1,
+        "explanation": "Most butyl-based flashing tapes can be applied at 25°F or higher, though check product specifications."
+      },
+      {
+        "id": "ew04-q13",
+        "question": "What is the recommended nailing spacing for window flanges?",
+        "options": [
+          "4-6\"",
+          "6-8\"",
+          "8-10\"",
+          "10-12\""
+        ],
+        "correct": 1,
+        "explanation": "Fasten window flanges every 6-8\" around the perimeter for secure installation."
+      },
+      {
+        "id": "ew04-q14",
+        "question": "Where should you apply caulk when installing vinyl siding around windows?",
+        "options": [
+          "All four sides",
+          "Head only",
+          "Sill only",
+          "Jambs only"
+        ],
+        "correct": 1,
+        "explanation": "With vinyl siding, caulk only at the head. Leave jambs and sill open for drainage."
+      },
+      {
+        "id": "ew04-q15",
+        "question": "What is the minimum flashing tape overlap at seams?",
+        "options": [
+          "1\"",
+          "2\"",
+          "3\"",
+          "4\""
+        ],
+        "correct": 2,
+        "explanation": "All flashing tape seams require a minimum 3\" overlap for proper water protection."
+      }
+    ]
+  }
+}

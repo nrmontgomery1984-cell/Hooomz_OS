@@ -1,0 +1,352 @@
+{
+  "id": "FF-04",
+  "phase": 2,
+  "slug": "ceiling-roof-framing",
+  "title": "Ceiling & Roof Framing Systems",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 4,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-01", "FF-02", "FF-03"],
+  "estimated_study_hours": 10,
+  "status": "complete",
+  "tags": ["roof framing", "ceiling joists", "rafters", "trusses", "ridge board", "collar ties", "birdsmouth", "snow loads", "NBC 2020", "roof sheathing"],
+  "sections": [
+    {
+      "id": "FF-04-01",
+      "title": "Introduction to Roof Systems",
+      "summary": "Overview of roof framing systems, load considerations, and NB-specific requirements",
+      "content_md": "## Roof Framing Fundamentals\n\nThe roof system is one of the most complex structural assemblies in residential construction, requiring careful consideration of loads, geometry, and connections.\n\n### Roof System Functions\n\n1. **Structural support** - Transfers snow, wind, and dead loads to walls\n2. **Weather protection** - Primary defense against precipitation\n3. **Thermal envelope** - Critical insulation location\n4. **Ventilation** - Moisture and heat management\n5. **Aesthetic form** - Defines building character\n\n### Load Considerations for NB Zone 6\n\n**Snow Loads (Critical for NB)**\n\n| Location | Ground Snow Load | Roof Snow Load |\n|----------|------------------|----------------|\n| Moncton area | 2.6 kPa (54 psf) | Per NBC calc |\n| Saint John | 2.4 kPa (50 psf) | Per NBC calc |\n| Fredericton | 2.8 kPa (58 psf) | Per NBC calc |\n| Northern NB | 3.0-4.0 kPa | Per NBC calc |\n\n**Roof slope affects snow load:**\n- Steep roofs (>45°) shed snow\n- Low slopes accumulate drifts\n- Valleys and dormers create drift zones\n\n**Wind Loads**\n- Coastal areas: Higher wind exposure\n- Uplift forces critical at eaves\n- Hurricane ties required\n\n### Roof Framing Methods\n\n#### Conventional (Stick) Framing\n- Built on-site piece by piece\n- Rafters, ceiling joists, ridge boards\n- Maximum flexibility for complex designs\n- Higher labor, lower material cost\n- Skilled carpenter required\n\n#### Truss Framing\n- Factory-manufactured assemblies\n- Engineered for specific loads\n- Faster installation\n- Less on-site waste\n- Limited field modification\n\n### Common Roof Styles\n\n| Style | Complexity | NB Suitability |\n|-------|-----------|----------------|\n| Gable | Low | Excellent - sheds snow well |\n| Hip | Medium | Good - wind resistant |\n| Gambrel | Medium | Good - attic space |\n| Mansard | High | Good - living space |\n| Shed | Low | Limited applications |\n| Flat | Low | Poor - snow accumulation |\n\n### NBC 2020 Key Requirements\n\n**Section 9.23 - Roof Framing**\n\n- Minimum rafter/joist sizes per span tables\n- Connection requirements at bearing points\n- Collar tie or rafter tie requirements\n- Ventilation ratios (1:150 or 1:300)\n- Sheathing grades and nailing\n\n### Climate-Specific Considerations\n\n**NB Winter Challenges**\n- Ice dam prevention (insulation + ventilation)\n- Snow load accumulation\n- Freeze-thaw cycling on connections\n- Attic condensation control\n\n**Recommended Roof Pitch for NB**\n- Minimum 4:12 for standard shingles\n- 6:12 or steeper preferred for snow shedding\n- Low-slope requires membrane roofing"
+    },
+    {
+      "id": "FF-04-02",
+      "title": "Ceiling Joists and Rafters",
+      "summary": "Specifications and installation procedures for conventional roof framing members",
+      "content_md": "## Conventional Roof Framing Components\n\n### Ceiling Joists\n\n**Functions**\n- Support ceiling finish (drywall)\n- Resist rafter thrust (tie walls together)\n- Support attic insulation\n- May support attic storage loads\n\n**Sizing (NBC 2020 Tables)**\n\n| Span | Spacing | Minimum Size | Notes |\n|------|---------|--------------|-------|\n| 10' | 16\" o.c. | 2×6 SPF #2 | No attic storage |\n| 12' | 16\" o.c. | 2×8 SPF #2 | No attic storage |\n| 14' | 16\" o.c. | 2×8 SPF #2 | No attic storage |\n| 16' | 16\" o.c. | 2×10 SPF #2 | No attic storage |\n\n*Add one size for attic storage loads*\n\n**Installation**\n1. Layout on wall plates (16\" o.c.)\n2. Crown up for all joists\n3. Nail to plate: (3) 8d toenails or (2) 16d end nails\n4. Lap at center bearing: minimum 3\" overlap\n5. Face nail lapped joists: (3) 10d\n\n### Rafters\n\n**Rafter Components**\n- **Plumb cut** - Vertical cut at ridge\n- **Seat cut (birdsmouth)** - Notch at wall plate\n- **Tail** - Overhang past wall\n- **Common rafter** - Runs perpendicular to ridge\n- **Hip rafter** - Diagonal at hip corners\n- **Valley rafter** - Diagonal at valleys\n- **Jack rafter** - Shortened rafters at hips/valleys\n\n**Rafter Sizing for NB Snow Loads**\n\n| Span | Pitch | Spacing | Minimum Size |\n|------|-------|---------|---------------|\n| 10' | 4:12 | 16\" o.c. | 2×6 SPF #2 |\n| 12' | 4:12 | 16\" o.c. | 2×8 SPF #2 |\n| 14' | 4:12 | 16\" o.c. | 2×8 SPF #2 |\n| 16' | 4:12 | 16\" o.c. | 2×10 SPF #2 |\n| 18' | 4:12 | 16\" o.c. | 2×10 SPF #2 |\n| 20' | 4:12 | 16\" o.c. | 2×12 SPF #2 |\n\n*Verify with current NBC tables for specific snow load zone*\n\n### Birdsmouth Cut\n\n**Critical Dimensions**\n- Seat cut depth: Maximum 1/3 of rafter depth\n- Seat cut length: Full bearing on plate\n- Level cut: Perpendicular to plumb cut\n\n**Example for 2×8 Rafter**\n```\nMaximum seat cut depth: 2-1/2\" (1/3 of 7-1/4\")\nMinimum bearing: 1-1/2\" (wall plate width)\nTypical seat cut: 3-1/2\" horizontal × 2-1/2\" vertical\n```\n\n### Ridge Board\n\n**Requirements**\n- Minimum 1\" nominal thickness\n- Depth equal to or greater than rafter plumb cut\n- Continuous or spliced at rafter locations\n- Provides bearing and alignment for rafters\n\n**Sizing**\n| Rafter Size | Ridge Board |\n|-------------|------------|\n| 2×6 rafters | 1×8 or 2×8 |\n| 2×8 rafters | 1×10 or 2×10 |\n| 2×10 rafters | 1×12 or 2×12 |\n| 2×12 rafters | 2×12 or LVL |\n\n### Collar Ties and Rafter Ties\n\n**Collar Ties**\n- Located in upper 1/3 of rafter length\n- Resist rafter spreading under load\n- Minimum 1×6 at every other rafter\n- Nail with (4) 10d each end\n\n**Rafter Ties**\n- Same function as ceiling joists\n- Must connect opposite rafters\n- Located near wall plate level\n- Critical when ceiling joists don't align with rafters\n\n### Nailing Schedule\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Rafter to plate (toenail) | 8d common | 3 |\n| Rafter to plate (hurricane tie) | As specified | Per mfr |\n| Rafter to ridge (toenail) | 10d common | 4 |\n| Rafter to rafter at ridge | 10d common | 3 face nail |\n| Ceiling joist to plate | 8d common | 3 toenail |\n| Collar tie to rafter | 10d common | 4 each end |"
+    },
+    {
+      "id": "FF-04-03",
+      "title": "Truss Systems",
+      "summary": "Factory-built truss specifications, handling, installation, and bracing requirements",
+      "content_md": "## Engineered Roof Trusses\n\n### Advantages of Trusses\n\n1. **Engineered design** - Calculated for specific loads\n2. **Speed of installation** - One component vs. multiple cuts\n3. **Material efficiency** - Uses smaller lumber optimally\n4. **Long spans** - Clear span entire building width\n5. **Consistency** - Factory quality control\n6. **Cost effective** - Lower installed cost typically\n\n### Common Truss Types\n\n| Type | Use | Clear Span |\n|------|-----|------------|\n| Fink (W) | Standard residential | Up to 40' |\n| Howe | Moderate spans | Up to 30' |\n| Scissor | Cathedral ceilings | Up to 35' |\n| Attic | Living/storage space | Up to 32' |\n| Mono | Shed additions | Up to 24' |\n| Hip | Hip roof corners | Varies |\n\n### Truss Components\n\n**Top Chord**\n- Forms roof slope\n- Sized for span and loads\n- Typically 2×4 or 2×6\n\n**Bottom Chord**\n- Forms ceiling plane\n- May be flat or have slope (scissor)\n- Carries ceiling/attic loads\n\n**Webs**\n- Interior diagonal/vertical members\n- Transfer loads between chords\n- Never cut or modify\n\n**Gusset Plates**\n- Metal connector plates\n- Join members at nodes\n- Sized by engineer\n\n### Ordering Trusses for NB\n\n**Information Required**\n1. Building dimensions and span\n2. Roof pitch\n3. Overhang dimensions\n4. Ceiling finish (flat/vaulted)\n5. Snow load (per location)\n6. Wind exposure category\n7. Special loads (HVAC, solar, etc.)\n\n### Handling and Storage\n\n**Critical Rules**\n- **Never** lay trusses flat - store vertically\n- Support at panel points only\n- Brace during storage\n- Protect from weather\n- Handle with tag lines when lifting\n\n**Lifting**\n- Use spreader bars for crane lifts\n- Minimum 2 pick points for long trusses\n- Never lift by peak only\n- Position workers at both ends\n\n### Installation Procedure\n\n```\nStep 1: Prepare Bearing Walls\n- Mark truss layout on plates (24\" o.c. typical)\n- Verify walls are straight and level\n- Install temporary bracing posts\n\nStep 2: Set First (Gable End) Truss\n- Position at building end\n- Brace plumb in both directions\n- Nail to plate per schedule\n\nStep 3: Set Remaining Trusses\n- Install in sequence toward opposite end\n- Install temporary lateral bracing immediately\n- Check spacing at each truss\n\nStep 4: Install Permanent Bracing\n- Continuous lateral brace at ridge\n- Diagonal bracing per engineered drawings\n- Bottom chord bracing if specified\n\nStep 5: Install Gable End\n- Set opposite gable truss\n- Install gable studs (balloon or ladder)\n- Brace gable against wind\n```\n\n### Truss Bracing Requirements\n\n**Temporary Bracing (During Installation)**\n- Ground brace first truss immediately\n- Lateral brace within 8' of peak\n- Diagonal braces every 20'\n- Do not remove until sheathing installed\n\n**Permanent Bracing**\n- Per truss engineer's drawings\n- Continuous lateral bracing at web points\n- T-bracing at long web members\n- Required by truss design\n\n### Connection Requirements\n\n**Truss to Wall Plate**\n\n| Method | Requirement |\n|--------|-------------|\n| Toenailing | (3) 8d each side |\n| Hurricane ties | Per mfr specs |\n| Hold-downs | Engineered locations |\n\n**NB Wind Requirements**\n- Hurricane ties at all trusses\n- Coastal areas may require enhanced ties\n- Verify with truss drawings\n\n### Modifications - WARNING\n\n**Never modify trusses without engineer approval:**\n- No cutting of any member\n- No drilling through chords\n- No adding loads not in design\n- No removing bracing\n\n**If modifications needed:**\n1. Contact truss manufacturer\n2. Get engineered repair/modification\n3. Document all changes\n4. Inspect after modification"
+    },
+    {
+      "id": "FF-04-04",
+      "title": "Roof Sheathing and Ventilation",
+      "summary": "Sheathing installation, ventilation requirements, and ice dam prevention for NB climate",
+      "content_md": "## Roof Sheathing Systems\n\n### Sheathing Materials\n\n| Material | Thickness | Span Rating | Use |\n|----------|-----------|-------------|-----|\n| OSB | 7/16\" | 24/16 | Standard residential |\n| OSB | 1/2\" | 32/16 | 24\" truss spacing |\n| Plywood | 1/2\" | 32/16 | Preferred for durability |\n| Plywood | 5/8\" | 40/20 | Heavy snow loads |\n\n**For NB Snow Loads**\n- Minimum 1/2\" for 24\" truss spacing\n- 5/8\" recommended for heavy snow areas\n- Verify span rating matches framing spacing\n\n### Installation Procedure\n\n**Panel Layout**\n```\n1. Start at lower corner (eave)\n2. Long edge perpendicular to rafters/trusses\n3. Stagger end joints by 4' minimum\n4. Leave 1/8\" gap at all panel edges\n5. Maintain H-clips at unsupported edges (or blocking)\n```\n\n**Nailing Schedule**\n\n| Location | Nail | Spacing |\n|----------|------|--------|\n| Panel edges | 8d common | 6\" o.c. |\n| Intermediate supports | 8d common | 12\" o.c. |\n| High wind zones | 8d common | 4\" edges, 8\" field |\n\n**Critical Details**\n- Nails minimum 3/8\" from panel edge\n- Drive flush - no overdriving\n- All edges must be supported\n- H-clips or blocking at unsupported edges\n\n### Roof Ventilation\n\n**Why Ventilation Matters in NB**\n- Removes moisture from attic\n- Prevents ice dam formation\n- Extends shingle life\n- Reduces cooling loads (summer)\n\n**Ventilation Ratios (NBC 2020)**\n\n| Condition | Ratio (Vent:Ceiling) |\n|-----------|---------------------|\n| With vapor barrier | 1:300 |\n| Without vapor barrier | 1:150 |\n| Unbalanced (all high) | 1:150 |\n\n**Balanced Ventilation**\n- 50% intake (soffit vents)\n- 50% exhaust (ridge/roof vents)\n- Net Free Area (NFA) calculation required\n\n**Example Calculation**\n```\nAttic floor area: 1,200 sq ft\nRequired NFA (1:300): 1,200 ÷ 300 = 4 sq ft = 576 sq in\nSoffit vents: 288 sq in (50%)\nRidge vent: 288 sq in (50%)\n```\n\n### Ventilation Components\n\n**Soffit Vents**\n- Continuous strip vents (best)\n- Individual vents (16\" to 24\" spacing)\n- Must have insulation baffles\n- Keep clear of insulation\n\n**Ridge Vents**\n- Continuous ridge vent (best)\n- Shingle-over type blends with roof\n- Filter/baffle to prevent weather intrusion\n- Nail through sheathing into ridge\n\n**Other Exhaust Options**\n- Roof louvers (static)\n- Power ventilators (with controls)\n- Gable vents (less effective)\n- Turbine vents\n\n### Ice Dam Prevention\n\n**Ice Dam Formation**\n1. Heat escapes into attic\n2. Snow melts on warm roof\n3. Water runs to cold eave\n4. Ice forms at overhang\n5. Water backs up under shingles\n\n**Prevention Strategies**\n\n| Strategy | Method |\n|----------|--------|\n| Air sealing | Seal all ceiling penetrations |\n| Insulation | R-60 minimum for NB |\n| Ventilation | Balanced soffit/ridge |\n| Ice & water shield | 36\" up from eave minimum |\n| Proper overhang | 12\" to 24\" typical |\n\n**Insulation Baffles**\n- Install at every rafter bay\n- Extend from soffit to above insulation\n- Maintain 2\" clear ventilation channel\n- Polystyrene or cardboard type\n\n### Cold Roof Assembly\n\nFor problem areas or cathedral ceilings:\n\n```\nAssembly (bottom to top):\n1. Interior finish\n2. Vapor retarder\n3. Insulation (full cavity + continuous)\n4. Air barrier/sheathing\n5. Ventilation space (2\" minimum)\n6. Roof sheathing\n7. Underlayment\n8. Roofing material\n```\n\n### Inspection Points\n\n- [ ] Sheathing grade and thickness correct\n- [ ] Proper nailing pattern\n- [ ] 1/8\" gaps at panel edges\n- [ ] H-clips installed where required\n- [ ] Ventilation openings clear\n- [ ] Insulation baffles installed\n- [ ] Ridge vent details correct"
+    },
+    {
+      "id": "FF-04-05",
+      "title": "Inspection and Quality Control",
+      "summary": "Pre-cover inspection requirements, common defects, and compliance verification",
+      "content_md": "## Roof Framing Inspection\n\n### Inspection Timing\n\n**Framing Inspection Required Before:**\n- Sheathing installation (for conventional)\n- Insulation installation\n- Roofing material installation\n\n**Sheathing Inspection Before:**\n- Underlayment application\n- Roofing installation\n\n### Conventional Framing Checklist\n\n#### Rafter/Ceiling Joist Verification\n\n- [ ] Sizes match approved plans\n- [ ] Spacing correct (16\" or 24\" o.c.)\n- [ ] Crown orientation up\n- [ ] Bearing adequate at walls\n- [ ] Birdsmouth cuts within limits (max 1/3 depth)\n\n#### Ridge Verification\n\n- [ ] Ridge board size adequate\n- [ ] Continuous or properly spliced\n- [ ] Level along length\n- [ ] Rafters properly connected\n\n#### Connection Verification\n\n- [ ] Collar ties installed per code\n- [ ] Rafter ties where ceiling joists not aligned\n- [ ] Hurricane ties installed\n- [ ] Proper nailing throughout\n\n### Truss Inspection Checklist\n\n#### Pre-Installation\n\n- [ ] Trusses match approved drawings\n- [ ] No damage from shipping/handling\n- [ ] Gusset plates fully embedded\n- [ ] Bearing locations marked\n\n#### Installation\n\n- [ ] Spacing per layout (24\" o.c. typical)\n- [ ] Plumb and aligned\n- [ ] Bearing on full plate width\n- [ ] Connections per truss drawings\n\n#### Bracing\n\n- [ ] Temporary bracing in place\n- [ ] Permanent bracing per drawings\n- [ ] Lateral bracing continuous\n- [ ] Diagonal bracing at intervals\n\n### Sheathing Inspection\n\n| Item | Requirement | Check |\n|------|-------------|-------|\n| Panel grade | Span rated for spacing | Stamp visible |\n| Thickness | Per plans/code | Measure |\n| Nailing edges | 6\" o.c. | Random sample |\n| Nailing field | 12\" o.c. | Random sample |\n| Edge gaps | 1/8\" | Visual |\n| H-clips | At unsupported edges | Visual |\n\n### Common Defects\n\n#### Structural Issues\n\n**Undersized Members**\n- *Cause*: Incorrect span table use, snow load underestimate\n- *Fix*: Sister rafters or replace\n- *Prevention*: Verify calculations for NB loads\n\n**Inadequate Birdsmouth**\n- *Cause*: Over-cutting seat\n- *Fix*: Install rafter support or replace\n- *Prevention*: Template for all cuts\n\n**Missing Hurricane Ties**\n- *Cause*: Oversight or cost-cutting\n- *Fix*: Install before sheathing\n- *Prevention*: Include in framing checklist\n\n#### Assembly Issues\n\n**Rafters Not Aligned with Ceiling Joists**\n- *Cause*: Layout error\n- *Fix*: Add rafter ties to resist thrust\n- *Prevention*: Coordinate layouts before cutting\n\n**Truss Damage**\n- *Cause*: Improper handling/storage\n- *Fix*: Engineer assessment and repair\n- *Prevention*: Follow handling guidelines\n\n**Missing Collar Ties**\n- *Cause*: Oversight\n- *Fix*: Install before sheathing\n- *Prevention*: Install during rafter installation\n\n### Ventilation Verification\n\n- [ ] Soffit vents installed and clear\n- [ ] Ridge vent properly installed\n- [ ] Insulation baffles at each bay\n- [ ] Ventilation ratio achieved\n- [ ] No blocked vent paths\n\n### Documentation Required\n\n**For Permit File**\n1. Framing inspection approval\n2. Truss engineering drawings (if applicable)\n3. Connection hardware verification\n4. Special inspection reports (if required)\n\n### NB-Specific Red Flags\n\n**Requiring Engineering Review**\n- Rafters spanning over 20'\n- Unusual roof geometry\n- Point loads on trusses\n- Modifications to trusses\n- Snow load uncertainty\n- Coastal wind exposure\n\n### Post-Inspection Checklist\n\n1. All deficiencies corrected\n2. Re-inspection completed if required\n3. Sheathing inspection scheduled\n4. Roofing materials ordered\n5. Ice & water shield ready for installation"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "FF-04-CL01",
+      "title": "Rafter Layout Checklist",
+      "items": [
+        "Roof pitch verified against plans",
+        "Rafter length calculated (run, rise, overhang)",
+        "Birdsmouth dimensions determined (max 1/3 rafter depth)",
+        "Ridge board size selected (matches rafter depth)",
+        "Layout marks transferred to plates (16\" or 24\" o.c.)",
+        "Pattern rafter cut and tested",
+        "All rafters cut from pattern",
+        "Crown marked (up) on all rafters"
+      ]
+    },
+    {
+      "id": "FF-04-CL02",
+      "title": "Ceiling Joist Installation Checklist",
+      "items": [
+        "Joist sizes verified for span",
+        "Layout marked on plates to align with rafters",
+        "Joists installed crown up",
+        "Proper bearing at walls (minimum 1-1/2\")",
+        "Lap joints at center bearing (minimum 3\")",
+        "Lapped joists face-nailed (3×10d)",
+        "Joists nailed to plates (3×8d toenail or 2×16d)",
+        "Strongback installed for long spans if required"
+      ]
+    },
+    {
+      "id": "FF-04-CL03",
+      "title": "Rafter Installation Checklist",
+      "items": [
+        "Ridge board set level and braced",
+        "First rafter pair installed and plumbed",
+        "Rafters installed in opposing pairs",
+        "Birdsmouth seated fully on plate",
+        "Rafters nailed to ridge (4×10d toenail)",
+        "Rafters nailed to plate (3×8d toenail)",
+        "Hurricane ties installed at each rafter",
+        "Collar ties installed per code (upper 1/3)"
+      ]
+    },
+    {
+      "id": "FF-04-CL04",
+      "title": "Truss Installation Checklist",
+      "items": [
+        "Trusses inspected for damage before installation",
+        "Wall plates marked for truss layout (24\" o.c.)",
+        "First truss set plumb and braced to ground",
+        "Temporary lateral bracing installed within 8' of peak",
+        "Trusses installed in sequence",
+        "Spacing verified at each truss",
+        "Trusses connected to plates (hurricane ties)",
+        "Permanent bracing installed per drawings",
+        "Gable end framing complete"
+      ]
+    },
+    {
+      "id": "FF-04-CL05",
+      "title": "Roof Sheathing Checklist",
+      "items": [
+        "Sheathing grade verified (span rating)",
+        "Panels started at eave corner",
+        "Long edge perpendicular to framing",
+        "End joints staggered minimum 4'",
+        "1/8\" gaps at all panel edges",
+        "H-clips installed at unsupported edges",
+        "Edge nailing at 6\" o.c.",
+        "Field nailing at 12\" o.c.",
+        "No overdriven nails",
+        "Openings framed (skylights, vents)"
+      ]
+    },
+    {
+      "id": "FF-04-CL06",
+      "title": "Ventilation System Checklist",
+      "items": [
+        "Ventilation ratio calculated (1:300 minimum)",
+        "Soffit vent NFA verified",
+        "Ridge vent NFA verified",
+        "Insulation baffles installed at each rafter bay",
+        "Baffles extend above insulation level",
+        "2\" clear ventilation channel maintained",
+        "Soffit vents not blocked by insulation",
+        "Ridge vent installed per manufacturer",
+        "Balanced intake/exhaust achieved"
+      ]
+    },
+    {
+      "id": "FF-04-CL07",
+      "title": "Pre-Inspection Checklist",
+      "items": [
+        "All framing members properly sized",
+        "Connections complete with proper nails/hardware",
+        "Hurricane ties at all rafter/truss locations",
+        "Collar ties or rafter ties installed",
+        "Truss bracing per engineered drawings",
+        "Sheathing properly nailed",
+        "Ventilation system complete",
+        "No damaged or modified trusses",
+        "All penetrations properly framed",
+        "Ready for insulation/roofing installation"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "FF-04-Q01",
+        "question": "What is the maximum depth for a birdsmouth seat cut on a 2×8 rafter?",
+        "type": "multiple_choice",
+        "choices": [
+          "1-1/2\" (half the depth)",
+          "2-7/16\" (one-third the depth)",
+          "3-5/8\" (half the depth)",
+          "The full depth of the rafter"
+        ],
+        "answer": "2-7/16\" (one-third the depth)",
+        "explanation": "The birdsmouth seat cut should never exceed 1/3 of the rafter depth. For a 2×8 (actual 7-1/4\"), maximum seat cut is approximately 2-7/16\". Deeper cuts weaken the rafter at the critical bearing point."
+      },
+      {
+        "id": "FF-04-Q02",
+        "question": "What is the primary function of collar ties in roof framing?",
+        "type": "multiple_choice",
+        "choices": [
+          "To support the ridge board",
+          "To prevent rafter spreading under load",
+          "To provide attic floor support",
+          "To attach the ceiling finish"
+        ],
+        "answer": "To prevent rafter spreading under load",
+        "explanation": "Collar ties connect opposing rafters in the upper third of the roof to prevent the rafters from spreading apart under snow and dead loads. They work in tension to keep the ridge from dropping."
+      },
+      {
+        "id": "FF-04-Q03",
+        "question": "How should roof trusses be stored on site?",
+        "type": "multiple_choice",
+        "choices": [
+          "Flat on the ground",
+          "Stacked horizontally on blocks",
+          "Vertically with bracing",
+          "Any position is acceptable"
+        ],
+        "answer": "Vertically with bracing",
+        "explanation": "Trusses must be stored vertically to prevent damage to gusset plates and chord members. Laying trusses flat can cause permanent damage from self-weight. They must be braced to prevent falling."
+      },
+      {
+        "id": "FF-04-Q04",
+        "question": "What is the minimum ventilation ratio for an attic with a vapor barrier?",
+        "type": "multiple_choice",
+        "choices": [
+          "1:150",
+          "1:300",
+          "1:450",
+          "1:600"
+        ],
+        "answer": "1:300",
+        "explanation": "With a vapor barrier installed on the warm side of the ceiling insulation, the minimum ventilation ratio is 1:300 (1 square foot of NFA per 300 square feet of ceiling area). Without a vapor barrier, 1:150 is required."
+      },
+      {
+        "id": "FF-04-Q05",
+        "question": "What causes ice dams on roofs in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "Too much ventilation",
+          "Heat escaping into attic melting snow that refreezes at cold eaves",
+          "Rain freezing on the roof",
+          "Snow sliding and piling at the eave"
+        ],
+        "answer": "Heat escaping into attic melting snow that refreezes at cold eaves",
+        "explanation": "Ice dams form when heat from the living space escapes into the attic, warming the roof deck. Snow melts and runs down to the cold eave overhang where it refreezes, creating a dam that backs water under shingles."
+      },
+      {
+        "id": "FF-04-Q06",
+        "question": "What is the nail spacing requirement for roof sheathing at panel edges?",
+        "type": "multiple_choice",
+        "choices": [
+          "4\" on center",
+          "6\" on center",
+          "8\" on center",
+          "12\" on center"
+        ],
+        "answer": "6\" on center",
+        "explanation": "Roof sheathing requires 8d nails at 6\" on center at panel edges and 12\" on center at intermediate supports (field nailing). High wind zones may require 4\" edge spacing."
+      },
+      {
+        "id": "FF-04-Q07",
+        "question": "Why are hurricane ties required in NB residential construction?",
+        "type": "multiple_choice",
+        "choices": [
+          "They are optional in NB",
+          "To resist roof uplift from wind forces",
+          "Only for coastal properties",
+          "To strengthen the ridge connection"
+        ],
+        "answer": "To resist roof uplift from wind forces",
+        "explanation": "Hurricane ties (also called rafter ties) connect rafters or trusses to wall plates and resist uplift forces from wind. They are required at every rafter/truss location per NBC 2020 for all residential construction."
+      },
+      {
+        "id": "FF-04-Q08",
+        "question": "What is the purpose of H-clips between roof sheathing panels?",
+        "type": "multiple_choice",
+        "choices": [
+          "To maintain the required gap between panels",
+          "To support unsupported panel edges and prevent differential deflection",
+          "To provide a nailing surface for shingles",
+          "To improve ventilation under sheathing"
+        ],
+        "answer": "To support unsupported panel edges and prevent differential deflection",
+        "explanation": "H-clips are placed at panel edges between supports to prevent differential deflection between adjacent panels. They keep panel edges aligned and prevent one panel from deflecting more than its neighbor under load."
+      },
+      {
+        "id": "FF-04-Q09",
+        "question": "What is the typical spacing for roof trusses in residential construction?",
+        "type": "multiple_choice",
+        "choices": [
+          "12\" on center",
+          "16\" on center",
+          "24\" on center",
+          "32\" on center"
+        ],
+        "answer": "24\" on center",
+        "explanation": "Standard roof trusses are typically spaced at 24\" on center, as opposed to 16\" for conventional rafters. This is possible because trusses are engineered as complete structural systems and use thicker sheathing."
+      },
+      {
+        "id": "FF-04-Q10",
+        "question": "What should you do if a truss is damaged during installation?",
+        "type": "multiple_choice",
+        "choices": [
+          "Add extra bracing and continue",
+          "Repair with additional lumber and gussets",
+          "Contact the truss manufacturer for engineered repair",
+          "Replace with site-built rafters"
+        ],
+        "answer": "Contact the truss manufacturer for engineered repair",
+        "explanation": "Damaged trusses must never be field-repaired without engineering approval. Contact the truss manufacturer or a structural engineer for an approved repair detail. Unauthorized modifications can compromise the entire roof system."
+      },
+      {
+        "id": "FF-04-Q11",
+        "question": "Where should collar ties be located on the rafter?",
+        "type": "multiple_choice",
+        "choices": [
+          "At the bottom third, near the wall plate",
+          "At the middle of the rafter",
+          "At the upper third, near the ridge",
+          "Anywhere along the rafter length"
+        ],
+        "answer": "At the upper third, near the ridge",
+        "explanation": "Collar ties must be located in the upper third of the rafter length, near the ridge. This position provides the most effective resistance to rafter spreading. Rafter ties at the bottom third serve a different function."
+      },
+      {
+        "id": "FF-04-Q12",
+        "question": "What is the minimum recommended roof pitch for standard asphalt shingles in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "2:12",
+          "3:12",
+          "4:12",
+          "6:12"
+        ],
+        "answer": "4:12",
+        "explanation": "Standard asphalt shingles require a minimum 4:12 pitch in NB. Lower pitches require special low-slope roofing methods or enhanced underlayment. Steeper pitches (6:12+) are preferred for better snow shedding."
+      },
+      {
+        "id": "FF-04-Q13",
+        "question": "What is the purpose of insulation baffles in the attic?",
+        "type": "multiple_choice",
+        "choices": [
+          "To hold insulation in place",
+          "To maintain a clear ventilation channel from soffit to ridge",
+          "To prevent ice dams directly",
+          "To increase the R-value of insulation"
+        ],
+        "answer": "To maintain a clear ventilation channel from soffit to ridge",
+        "explanation": "Insulation baffles create a 2\" clear channel from the soffit vents up past the insulation, allowing air to flow from intake to exhaust vents. Without baffles, insulation blocks ventilation at the eaves."
+      },
+      {
+        "id": "FF-04-Q14",
+        "question": "What is the ground snow load for the Moncton area in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "1.5 kPa (31 psf)",
+          "2.0 kPa (42 psf)",
+          "2.6 kPa (54 psf)",
+          "3.5 kPa (73 psf)"
+        ],
+        "answer": "2.6 kPa (54 psf)",
+        "explanation": "The Moncton area has a ground snow load of approximately 2.6 kPa (54 psf). This is used to calculate roof snow loads and determines rafter/truss sizing. Northern NB has higher values (3.0-4.0 kPa)."
+      },
+      {
+        "id": "FF-04-Q15",
+        "question": "When installing roof sheathing, what gap should be left between panels?",
+        "type": "multiple_choice",
+        "choices": [
+          "No gap - tight fit required",
+          "1/16\" gap",
+          "1/8\" gap",
+          "1/4\" gap"
+        ],
+        "answer": "1/8\" gap",
+        "explanation": "A 1/8\" gap should be left at all panel edges to allow for expansion from moisture and temperature changes. Without this gap, panels may buckle when they absorb moisture."
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "PL-01",
+  "phase": 5,
+  "slug": "plumbing-rough-in-fundamentals",
+  "title": "Plumbing Rough-In Fundamentals",
+  "category": "Plumbing",
+  "level": "Journeyman",
+  "priority": 5,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

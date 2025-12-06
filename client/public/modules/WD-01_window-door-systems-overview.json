@@ -1,0 +1,16 @@
+{
+  "id": "WD-01",
+  "phase": 3,
+  "slug": "window-door-systems-overview",
+  "title": "Window & Door Systems Overview",
+  "category": "Windows & Doors",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

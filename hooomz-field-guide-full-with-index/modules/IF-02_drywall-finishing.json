@@ -1,0 +1,296 @@
+{
+  "id": "IF-02",
+  "title": "Drywall Finishing",
+  "category": "Interior Finish",
+  "level": "Intermediate",
+  "estimated_study_hours": 4.5,
+  "tags": [
+    "drywall",
+    "taping",
+    "mudding",
+    "finishing",
+    "texture"
+  ],
+  "prerequisites": [
+    "IF-01"
+  ],
+  "sections": [
+    {
+      "id": "if02-s1",
+      "title": "Finishing Levels & Materials",
+      "summary": "Understanding drywall finish levels and selecting appropriate joint compounds.",
+      "content_md": "## Finishing Levels & Materials\n\n### Drywall Finish Levels\n\n| Level | Description | Applications |\n|-------|-------------|-------------|\n| **Level 0** | No finishing | Temporary construction, concealed areas |\n| **Level 1** | Tape embedded in compound | Plenum areas, above ceilings |\n| **Level 2** | Tape + one coat | Garages, warehouses, tile substrate |\n| **Level 3** | Tape + two coats | Areas receiving heavy texture |\n| **Level 4** | Tape + three coats | Standard paint finish |\n| **Level 5** | Level 4 + skim coat | Gloss paint, critical lighting |\n\n> **Residential Standard:** Level 4 is the minimum for painted walls and ceilings. Level 5 is recommended for areas with gloss paint or angled/natural lighting.\n\n### Joint Compound Types\n\n**Setting-Type (Hot Mud):**\n- Sets by chemical reaction\n- Available in 5, 20, 45, 90 minute sets\n- Harder, more shrink-resistant\n- Good for: First coat, filling gaps, repairs\n\n**Drying-Type (Pre-Mixed):**\n- Dries by evaporation\n- Easier to sand\n- Three formulations:\n\n| Type | Use | Characteristics |\n|------|-----|----------------|\n| **Taping** | Embedding tape | Strong adhesion, harder |\n| **Topping** | Final coats | Easy sanding, smooth finish |\n| **All-Purpose** | Any coat | Compromise of both |\n\n### Tape Selection\n\n| Type | Pros | Cons | Best For |\n|------|------|------|----------|\n| **Paper Tape** | Strongest, thin | Requires embedding | Flat joints, inside corners |\n| **Mesh Tape** | Self-adhesive, easy | Weaker, needs hot mud | Quick repairs |\n| **Metal Corner Bead** | Straight corners | Visible if damaged | Outside corners |\n| **Paper-Faced Bead** | Blends better | Slightly weaker | Outside corners |\n| **Flex Bead** | Curves possible | More expensive | Arches, curved corners |"
+    },
+    {
+      "id": "if02-s2",
+      "title": "Taping Techniques",
+      "summary": "Proper techniques for embedding tape in flat joints, inside corners, and butt joints.",
+      "content_md": "## Taping Techniques\n\n### Tools Required\n\n- 4-6\" taping knife\n- 10-12\" finishing knife\n- Corner knife or trowel\n- Mud pan\n- Banjo or tape dispenser (optional)\n- Sanding pole and screens/paper\n- Hawk (for larger jobs)\n\n### Flat Joint Taping (Factory Edges)\n\n**Step 1: Apply Bed Coat**\n- Load knife with compound\n- Apply 4-6\" wide band centered on joint\n- Consistent thickness, no gaps\n- Slightly overfill\n\n**Step 2: Embed Tape**\n1. Center tape over joint\n2. Press lightly into compound\n3. Start at one end, work to other\n4. Pull knife at 45° angle\n5. Squeeze out excess compound (leave thin layer)\n6. No bubbles, wrinkles, or dry spots\n\n**Step 3: Cover Coat**\n- Immediately apply thin coat over tape\n- Feather edges outward\n- Fill recessed area created by tapered edges\n\n### Butt Joint Taping\n\n**The Challenge:** No recess at butt joints - must create flat finish over raised joint.\n\n**Technique:**\n1. Apply compound, embed tape as above\n2. Feather WIDE - 12-16\" minimum each side\n3. Build up very thin layers\n4. Sand carefully to blend\n\n> **Pro Tip:** Use a \"skim coating\" technique - apply very thin layers over wide area to hide the hump.\n\n### Inside Corner Taping\n\n**Method 1: Paper Tape**\n1. Fold tape along crease\n2. Apply compound to both sides\n3. Press tape into corner\n4. Run corner knife to embed\n5. Finish one side at a time (let dry between)\n\n**Method 2: Corner Bead**\n- Paper-faced corner bead\n- Embed with compound\n- Easier to get straight corner\n\n### Common Taping Mistakes\n\n| Mistake | Problem | Fix |\n|---------|---------|-----|\n| Dry tape edges | Will peel | Re-embed with compound |\n| Too much compound | Hard to sand, shows through | Scrape off, re-apply thin |\n| Bubbles under tape | Tape failure | Cut out, re-tape |\n| Wrinkled tape | Visible through paint | Remove, re-tape |"
+    },
+    {
+      "id": "if02-s3",
+      "title": "Coating & Feathering",
+      "summary": "Applying second and third coats with proper feathering technique.",
+      "content_md": "## Coating & Feathering\n\n### Second Coat (Block Coat)\n\n**Purpose:** Fill tape edges, begin feathering\n\n**Procedure:**\n1. Wait for first coat to dry completely (24 hours typical)\n2. Knock down any ridges with knife (don't sand yet)\n3. Apply compound wider than first coat\n4. Feather edges to nothing\n5. Cover all visible tape edges\n\n**Width Progression:**\n- First coat: 4-6\" wide\n- Second coat: 8-10\" wide\n- Third coat: 12-14\" wide\n\n### Third Coat (Finish Coat)\n\n**Purpose:** Final smoothing, complete feathering\n\n**Procedure:**\n1. Wait for second coat to dry\n2. Light sand or knock down ridges\n3. Apply thin coat, feather to 12-14\" wide\n4. Focus on smoothness and blend\n5. Use topping compound for easiest sanding\n\n### Feathering Technique\n\n**The Key to Invisible Joints:**\n\n1. Hold knife at low angle (15-20°)\n2. Gradually lift handle as you pull\n3. Edge should taper to nothing\n4. No compound \"ridges\" at edges\n5. Wipe knife frequently\n\n**Checking Your Work:**\n- Side-light the wall (flashlight at angle)\n- Look for shadows from ridges\n- Imperfections visible now will show worse with paint\n\n### Screw Spots\n\n**Three-Coat Minimum:**\n1. First coat: Fill dimple flush\n2. Second coat: Slight overfill, feather\n3. Third coat: Final blend\n\n**Application:**\n- Wipe in one direction\n- Then perpendicular\n- Creates X pattern coverage\n\n### Inside Corners\n\n**Alternating Technique:**\n- First coat: Both sides\n- Second coat: One side only\n- Third coat: Other side only\n- Prevents building up corner\n\n### Drying Time Guide\n\n| Conditions | Drying Time |\n|------------|-------------|\n| Warm, dry, ventilated | 12-24 hours |\n| Cool or humid | 24-48 hours |\n| Hot mud (setting type) | Per product (20-90 min) |\n\n> **Test Before Coating:** Compound should be uniformly white/light color when dry. Dark spots indicate moisture."
+    },
+    {
+      "id": "if02-s4",
+      "title": "Corner Bead Installation",
+      "summary": "Installing and finishing metal and paper-faced corner beads.",
+      "content_md": "## Corner Bead Installation\n\n### Metal Corner Bead\n\n**Types:**\n- Standard metal: Most durable\n- Vinyl-covered metal: Dent resistant\n- Bullnose: Rounded corner profile\n\n**Installation Methods:**\n\n**Clinch-On (Crimper Tool):**\n1. Cut bead to length (snips)\n2. Position on corner\n3. Crimp flanges into drywall\n4. Check for plumb/straight\n\n**Nail-On:**\n1. Position bead on corner\n2. Nail through holes, 6\" apart\n3. Alternate sides\n4. Don't overdrive nails\n\n**Adhesive/Compound:**\n1. Apply compound to corner\n2. Press bead into compound\n3. Squeeze out excess\n4. Staple to hold while drying\n\n### Paper-Faced Corner Bead\n\n**Advantages:**\n- Better blend with wall\n- Less visible if damaged\n- Compound keys to paper\n\n**Installation:**\n1. Apply compound to corner (both sides)\n2. Position bead, press into compound\n3. Wipe down both sides\n4. Embed paper fully in compound\n5. Remove excess compound\n\n### Finishing Corner Bead\n\n**Three-Coat Process:**\n\n| Coat | Width | Focus |\n|------|-------|-------|\n| First | 4\" | Fill to metal nose |\n| Second | 6-8\" | Feather and blend |\n| Third | 8-10\" | Final smoothness |\n\n**Technique:**\n- Knife rides on metal nose and wall\n- Creates smooth transition\n- Don't fill over metal nose\n- Feather outer edge to wall\n\n### Specialty Beads\n\n**L-Bead (Reveal):**\n- Creates shadow line at transitions\n- No finishing required\n- Used at windows, ceilings\n\n**J-Bead:**\n- Finished edge where drywall ends\n- Around openings, panels\n\n**Archway Bead:**\n- Flexible for curved corners\n- Cut flanges for tight curves\n- Install like standard bead"
+    },
+    {
+      "id": "if02-s5",
+      "title": "Sanding & Final Prep",
+      "summary": "Sanding techniques and final preparation for paint or texture.",
+      "content_md": "## Sanding & Final Prep\n\n### When to Sand\n\n**Between Coats:**\n- Not always necessary\n- Knock down ridges with knife\n- Light sand if needed\n- Remove dust before next coat\n\n**Final Sanding:**\n- After last coat fully dry\n- Required for smooth finish\n- Use proper grit progression\n\n### Sanding Tools\n\n| Tool | Best For | Notes |\n|------|----------|-------|\n| **Sanding Pole** | Large areas, ceilings | Reduces fatigue |\n| **Hand Block** | Detail work, corners | Better control |\n| **Sponge** | Final smoothing | Wet or dry, no dust |\n| **Power Sander** | Large areas | Creates lots of dust |\n\n### Grit Selection\n\n| Grit | Use |\n|------|-----|\n| 80-100 | Heavy buildup removal |\n| 120-150 | Standard sanding |\n| 180-220 | Final smoothing, Level 5 |\n\n**Progression:**\n- Don't skip more than one grit\n- Finer grit removes scratches from coarser\n- End with 150 minimum for paint\n\n### Sanding Technique\n\n**For Flat Joints:**\n1. Long, even strokes\n2. Follow joint direction\n3. Feather at edges\n4. Don't over-sand (exposes tape)\n\n**For Screw Spots:**\n- Circular motion\n- Light pressure\n- Don't create dish\n\n**For Corners:**\n- Use folded sandpaper or corner tool\n- One side at a time\n- Don't round the corner\n\n### Dust Control\n\n**Options:**\n- Dust-control compound (less dust when sanding)\n- Vacuum-attached sander\n- Wet sanding with sponge\n- Seal off area, use air scrubber\n\n### Final Inspection\n\n**Check with side light:**\n- Position light at 10-15° angle\n- Look for shadows, imperfections\n- Mark problems with pencil\n- Touch up and re-sand\n\n**Checklist:**\n- [ ] All joints invisible under side light\n- [ ] Screw spots completely blended\n- [ ] Corners straight and smooth\n- [ ] No ridges or tool marks\n- [ ] Surface uniformly smooth\n- [ ] All dust removed\n\n### Priming\n\n**Why Prime Drywall:**\n- Seals compound (different porosity than paper)\n- Ensures uniform paint absorption\n- Reveals remaining imperfections\n- Required before paint\n\n**Primer Selection:**\n- PVA primer: Standard, economical\n- High-build primer: Fills minor imperfections\n- Shellac-based: Blocks stains, odors"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "if02-c1",
+      "title": "First Coat (Taping) Checklist",
+      "items": [
+        "All flat joints taped with paper tape",
+        "Tape fully embedded, no bubbles or wrinkles",
+        "Inside corners taped and embedded",
+        "Corner bead installed on all outside corners",
+        "Screw spots filled flush",
+        "No dry tape edges visible",
+        "Compound coverage extends 4-6\" wide",
+        "Excess compound wiped away",
+        "Work area cleaned of debris"
+      ]
+    },
+    {
+      "id": "if02-c2",
+      "title": "Second Coat Checklist",
+      "items": [
+        "First coat completely dry",
+        "Ridges knocked down before coating",
+        "Flat joints coated 8-10\" wide",
+        "Butt joints coated 12-16\" wide",
+        "Inside corners coated (one side if alternating)",
+        "Corner bead coated and blended",
+        "Screw spots re-coated",
+        "All edges feathered to nothing",
+        "No tool marks or ridges"
+      ]
+    },
+    {
+      "id": "if02-c3",
+      "title": "Final Coat Checklist",
+      "items": [
+        "Second coat completely dry",
+        "Light sanding or knock-down complete",
+        "Topping compound used for final coat",
+        "Flat joints feathered 12-14\" wide",
+        "Butt joints feathered 18-24\" wide",
+        "All corners finished and smooth",
+        "Screw spots final-coated",
+        "Edges completely blended to wall",
+        "Ready for final sanding"
+      ]
+    },
+    {
+      "id": "if02-c4",
+      "title": "Final Inspection Checklist",
+      "items": [
+        "Side-light inspection completed",
+        "All joints invisible under angled light",
+        "Screw spots completely blended",
+        "Inside corners straight and smooth",
+        "Outside corners straight and damage-free",
+        "No ridges, tool marks, or scratches",
+        "Surface uniformly smooth",
+        "All dust vacuumed/wiped",
+        "Ready for primer application"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "if02-q1",
+        "question": "What finish level is standard for residential painted walls?",
+        "options": [
+          "Level 2",
+          "Level 3",
+          "Level 4",
+          "Level 5"
+        ],
+        "correct": 2,
+        "explanation": "Level 4 (tape + three coats) is the standard minimum for painted residential walls."
+      },
+      {
+        "id": "if02-q2",
+        "question": "When should Level 5 finish be used?",
+        "options": [
+          "Garages",
+          "Textured walls",
+          "Gloss paint or critical lighting",
+          "All residential"
+        ],
+        "correct": 2,
+        "explanation": "Level 5 (skim coat over Level 4) is used for gloss paint or areas with angled/natural lighting that reveals imperfections."
+      },
+      {
+        "id": "if02-q3",
+        "question": "What type of joint compound is best for the final coat?",
+        "options": [
+          "Setting-type (hot mud)",
+          "Taping compound",
+          "Topping compound",
+          "All-purpose"
+        ],
+        "correct": 2,
+        "explanation": "Topping compound is formulated for easy sanding and smooth finish, ideal for final coats."
+      },
+      {
+        "id": "if02-q4",
+        "question": "How wide should the third coat be on flat joints?",
+        "options": [
+          "4-6\"",
+          "8-10\"",
+          "12-14\"",
+          "18-24\""
+        ],
+        "correct": 2,
+        "explanation": "The third coat on flat joints should be feathered to 12-14\" wide for proper blending."
+      },
+      {
+        "id": "if02-q5",
+        "question": "What is the main challenge with butt joints?",
+        "options": [
+          "They crack easily",
+          "No recess to hide tape",
+          "Tape won't stick",
+          "They require more coats"
+        ],
+        "correct": 1,
+        "explanation": "Butt joints have no tapered recess, so the tape and compound create a raised area that must be feathered very wide."
+      },
+      {
+        "id": "if02-q6",
+        "question": "What indicates joint compound is fully dry?",
+        "options": [
+          "Warm to touch",
+          "Hard surface",
+          "Uniformly white/light color",
+          "24 hours passed"
+        ],
+        "correct": 2,
+        "explanation": "Dry compound is uniformly white/light colored. Dark spots indicate moisture still present."
+      },
+      {
+        "id": "if02-q7",
+        "question": "What causes bubbles under drywall tape?",
+        "options": [
+          "Wrong compound type",
+          "Insufficient compound under tape",
+          "Tape too old",
+          "Room too warm"
+        ],
+        "correct": 1,
+        "explanation": "Bubbles occur when there isn't enough compound under the tape to fully embed it."
+      },
+      {
+        "id": "if02-q8",
+        "question": "When finishing inside corners, what technique prevents buildup?",
+        "options": [
+          "Using mesh tape",
+          "Alternating sides between coats",
+          "Applying thinner coats",
+          "Using setting compound"
+        ],
+        "correct": 1,
+        "explanation": "Finishing one side of the corner per coat (alternating) prevents compound buildup in the corner."
+      },
+      {
+        "id": "if02-q9",
+        "question": "What is the proper knife angle when embedding tape?",
+        "options": [
+          "90° (vertical)",
+          "60°",
+          "45°",
+          "20°"
+        ],
+        "correct": 2,
+        "explanation": "A 45° angle is ideal for embedding tape - it squeezes out excess compound while leaving enough behind."
+      },
+      {
+        "id": "if02-q10",
+        "question": "What grit sandpaper is typically used for final drywall sanding?",
+        "options": [
+          "80 grit",
+          "100 grit",
+          "150 grit",
+          "220 grit"
+        ],
+        "correct": 2,
+        "explanation": "150 grit is the standard minimum for final sanding before paint. 180-220 may be used for Level 5."
+      },
+      {
+        "id": "if02-q11",
+        "question": "Why is priming drywall before paint important?",
+        "options": [
+          "Hides imperfections",
+          "Seals different porosities of compound and paper",
+          "Makes paint dry faster",
+          "Required by code"
+        ],
+        "correct": 1,
+        "explanation": "Primer seals the different porosities of compound and paper, ensuring uniform paint absorption."
+      },
+      {
+        "id": "if02-q12",
+        "question": "How should screw spots be coated?",
+        "options": [
+          "One thick coat",
+          "Two coats in same direction",
+          "Three coats with X-pattern",
+          "One coat then sand"
+        ],
+        "correct": 2,
+        "explanation": "Screw spots need three coats minimum, with application in perpendicular directions (X-pattern) for complete coverage."
+      },
+      {
+        "id": "if02-q13",
+        "question": "What is setting-type compound best used for?",
+        "options": [
+          "Final coats only",
+          "First coat, filling gaps, repairs",
+          "Texture application",
+          "Skim coating"
+        ],
+        "correct": 1,
+        "explanation": "Setting-type (hot mud) is best for first coats, filling gaps, and repairs due to its strength and shrink resistance."
+      },
+      {
+        "id": "if02-q14",
+        "question": "How do you check for drywall finish imperfections?",
+        "options": [
+          "Rub with hand",
+          "Side-light at 10-15° angle",
+          "Spray with water",
+          "Look from across room"
+        ],
+        "correct": 1,
+        "explanation": "Side-lighting at a low angle reveals shadows from ridges and imperfections that will show through paint."
+      },
+      {
+        "id": "if02-q15",
+        "question": "What happens if you over-sand a joint?",
+        "options": [
+          "Creates dust",
+          "Exposes the tape",
+          "Compound becomes shiny",
+          "Nothing - sand as much as needed"
+        ],
+        "correct": 1,
+        "explanation": "Over-sanding can expose the tape, which will show through paint and may cause adhesion problems."
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "EL-01",
+  "phase": 5,
+  "slug": "electrical-rough-in-fundamentals",
+  "title": "Electrical Rough-In Fundamentals",
+  "category": "Electrical",
+  "level": "Journeyman",
+  "priority": 5,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

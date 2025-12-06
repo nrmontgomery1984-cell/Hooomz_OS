@@ -1,0 +1,356 @@
+{
+  "id": "FF-08",
+  "phase": 2,
+  "slug": "structural-repairs-reinforcement",
+  "title": "Structural Repairs & Reinforcement",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 4,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-01", "FF-02", "FF-03", "FF-04", "FF-05"],
+  "estimated_study_hours": 5,
+  "status": "complete",
+  "tags": ["structural repairs", "sistering", "reinforcement", "joist repair", "beam repair", "rot repair", "sagging floors", "load-bearing walls", "NBC 2020"],
+  "sections": [
+    {
+      "id": "FF-08-01",
+      "title": "Introduction to Structural Repairs",
+      "summary": "Overview of common structural issues, assessment procedures, and when engineering is required",
+      "content_md": "## Structural Repair Fundamentals\n\nStructural repairs address damage, deterioration, or inadequacy in a building's load-bearing components. Proper assessment and repair methods are critical for safety.\n\n### Common Causes of Structural Damage\n\n**NB Climate-Related Issues:**\n- Freeze-thaw cycles on foundations\n- Ice dam moisture infiltration\n- Snow load damage\n- Frost heave\n\n**Moisture/Biological:**\n- Water infiltration and rot\n- Termite damage (less common in NB)\n- Carpenter ant damage\n- Mold and fungal decay\n\n**Age/Loading:**\n- Settlement over time\n- Overloaded members\n- Inadequate original construction\n- Modifications without proper support\n\n**Physical Damage:**\n- Impact damage\n- Fire damage\n- Previous improper repairs\n- Removal of load-bearing elements\n\n### When Engineering Is Required\n\n**Always Consult an Engineer For:**\n\n| Situation | Reason |\n|-----------|--------|\n| Load-bearing wall removal | Load path must be maintained |\n| Beam or column replacement | Size calculations required |\n| Foundation repairs | Structural integrity |\n| Roof structure repairs | Snow/wind load capacity |\n| Unusual damage patterns | May indicate systemic issues |\n| Insurance claims | Documentation required |\n| Permit requirements | Code compliance |\n\n**May Not Need Engineering:**\n- Minor joist sistering (same species/size)\n- Blocking and bridging addition\n- Reinforcing existing adequate members\n- Surface repairs (non-structural)\n\n### Assessment Process\n\n**Step 1: Visual Inspection**\n```\n- Look for visible deflection/sag\n- Check for cracks or splits\n- Identify signs of moisture/rot\n- Note any previous repairs\n- Document with photos\n```\n\n**Step 2: Hands-On Investigation**\n```\n- Probe wood with awl (rot detection)\n- Check for insect damage\n- Measure deflection amount\n- Assess connection integrity\n- Test stability of members\n```\n\n**Step 3: Structural Evaluation**\n```\n- Identify member function\n- Determine load paths\n- Assess remaining capacity\n- Plan repair approach\n- Determine if shoring needed\n```\n\n### Repair Categories\n\n**Reinforcement**\n- Member is intact but undersized\n- Sister or supplement existing\n- Increase capacity\n\n**Repair**\n- Member is damaged but salvageable\n- Fix damage, restore function\n- May include partial replacement\n\n**Replacement**\n- Member beyond repair\n- Remove and install new\n- May require temporary support\n\n### Safety Considerations\n\n**Before Starting Any Repair:**\n\n- [ ] Assess collapse risk\n- [ ] Install shoring if needed\n- [ ] Ensure adequate support\n- [ ] Plan load path during work\n- [ ] Have materials ready\n- [ ] Consider live loads above\n- [ ] Clear area of occupants"
+    },
+    {
+      "id": "FF-08-02",
+      "title": "Joist and Beam Repairs",
+      "summary": "Sistering, reinforcement, and replacement techniques for floor and ceiling framing",
+      "content_md": "## Joist Repair Techniques\n\n### Sistering Joists\n\n**When to Sister:**\n- Joists with localized damage\n- Cracked or split joists\n- Notched/bored beyond limits\n- Minor rot in limited areas\n- Sagging requiring leveling\n\n**Sistering Requirements:**\n\n| Condition | Sister Specs |\n|-----------|-------------|\n| Minor damage | Same size, 6' min each side |\n| Cracked joist | Same size, full span if possible |\n| Notching repair | Same size, 3' past damage each side |\n| Bounce reduction | Same or larger, full span |\n\n**Installation Procedure:**\n\n```\n1. Shore floor above if necessary\n2. Cut sister to length\n3. Crown up (match existing joist crown)\n4. Apply construction adhesive\n5. Position tight against existing joist\n6. Nail or screw:\n   - 16d nails at 16\" o.c., staggered rows\n   - Or structural screws per specs\n7. Ensure bearing at both ends\n8. Install blocking if needed\n```\n\n**Nailing Pattern:**\n```\nTop row:    X     X     X     X     X\n            ├──8\"──┼──16\"──┼──16\"──┼──8\"──┤\nBottom row:    X     X     X     X\n            ├──16\"──┼──16\"──┼──16\"──┼──16\"──┤\n```\n\n### Leveling Sagging Floors\n\n**Before Leveling:**\n- Determine cause of sag\n- Check for ongoing settlement\n- Plan incremental jacking\n- Never jack more than 1/4\" per day\n\n**Jacking Procedure:**\n```\n1. Install temporary support posts\n2. Place hydraulic jack on stable base\n3. Jack slowly until snug\n4. Raise 1/8\" to 1/4\" maximum\n5. Wait 24 hours minimum\n6. Repeat until level\n7. Install permanent support\n8. Remove jacks after cure time\n```\n\n### Beam Repairs\n\n**Beam Damage Assessment:**\n- Check for rot at bearing points\n- Look for splits along length\n- Assess deflection at center\n- Verify connection integrity\n\n**Beam Reinforcement Options:**\n\n*Flitch Plate:*\n- Steel plate sandwiched in beam\n- Through-bolted\n- Significant strength increase\n- Requires engineering\n\n*Sister Beam:*\n- Add beam alongside existing\n- Both share load\n- Must bear at same points\n\n*Post Addition:*\n- Add intermediate support\n- Reduces effective span\n- Requires foundation support\n\n### Rot Repair in Joists\n\n**Limited Rot (Less than 25% of section):**\n```\n1. Cut out rotted section completely\n2. Treat remaining wood with borate\n3. Sister full-length new member\n4. Seal cuts with preservative\n5. Address moisture source\n```\n\n**Extensive Rot:**\n```\n1. Shore floor above\n2. Remove damaged joist entirely\n3. Install new joist\n4. Match bearing conditions\n5. Connect to rim/header\n6. Address moisture source!\n```\n\n### Connection Repairs\n\n**Failed Joist Hangers:**\n- Replace with correct hanger\n- Fill all nail holes\n- Use specified fasteners\n\n**Separated Rim Joist:**\n- Renail through rim into joist ends\n- Add blocking between joists\n- Consider metal straps\n\n**Bearing Point Damage:**\n- Sister joist to new bearing\n- Add blocking under bearing\n- May need plate reinforcement"
+    },
+    {
+      "id": "FF-08-03",
+      "title": "Wall and Stud Repairs",
+      "summary": "Reinforcing and repairing wall framing, including load-bearing considerations",
+      "content_md": "## Wall Framing Repairs\n\n### Load-Bearing Wall Modifications\n\n**CRITICAL: Always Verify Before Work**\n\n**Load-Bearing Indicators:**\n- Wall runs perpendicular to joists above\n- Wall is directly below another wall\n- Wall supports visible beams\n- Wall is continuous to foundation\n\n**Non-Load-Bearing Indicators:**\n- Wall runs parallel to joists\n- Wall can be traced as added partition\n- Wall supports nothing above\n- Attic inspection shows no connection\n\n**When Uncertain:**\n- Assume load-bearing\n- Consult structural engineer\n- Do not remove or modify\n\n### Stud Repairs\n\n**Damaged Stud Replacement:**\n\n```\n1. Remove finishes to expose stud\n2. Assess load above\n3. Install temporary support if needed\n4. Cut damaged stud above/below damage\n5. Install new stud section\n6. Sister with 2×4 min 2' each side\n7. Nail per schedule\n8. Remove temporary support\n```\n\n**Stud Sistering:**\n- Same material as existing\n- Minimum 2' beyond damage each side\n- Nail 16d at 12\" o.c., staggered\n- Maintain wall plane\n\n### Notching and Boring Repairs\n\n**When Limits Exceeded:**\n\nNotch too deep (exceeds 25% of depth):\n```\n1. Install flat steel plate on both sides\n2. Through-bolt with 3/8\" bolts\n3. Plate extends 6\" past notch\n4. Or sister stud alongside\n```\n\nBore too large (exceeds 40% of depth):\n```\n1. Install sister stud full height\n2. Transfer load through sister\n3. Original stud becomes spacer\n```\n\n### Header Repairs\n\n**Sagging Header:**\n```\n1. Shore opening temporarily\n2. Jack header level slowly\n3. Add king stud if missing\n4. Verify jack stud quantity\n5. Install larger header if needed\n6. Remove shoring after secure\n```\n\n**Undersized Header:**\n```\n1. Shore temporarily\n2. Remove existing header\n3. Install properly sized header\n4. May need to modify framing\n5. Verify jack stud capacity\n```\n\n### Plate Repairs\n\n**Damaged Bottom Plate:**\n```\n1. Cut out damaged section\n2. Install new plate with splice\n3. Splice at stud location\n4. Nail/bolt per schedule\n5. Re-anchor to floor\n```\n\n**Rotted Sill Plate:**\n```\n1. Shore wall section\n2. Cut studs at temporary plate\n3. Remove rotted sill\n4. Install new pressure-treated sill\n5. Anchor to foundation\n6. Lower wall onto sill\n7. Reconnect studs\n```\n\n### Adding Openings in Existing Walls\n\n**Process for Load-Bearing Walls:**\n\n```\n1. Obtain engineering if required\n2. Install shoring above opening area\n3. Cut studs for opening\n4. Install king studs (full height)\n5. Install header (sized per engineering)\n6. Install jack studs\n7. Remove temporary shoring\n8. Install cripples above header\n```\n\n**Always Verify:**\n- [ ] Wall is properly shored\n- [ ] Header size is adequate\n- [ ] Load path is maintained\n- [ ] Jack studs support header\n- [ ] Connections meet code\n\n### Wall Straightening\n\n**Bowed Wall Repair:**\n- May indicate foundation issues\n- Check for lateral load cause\n- Consider engineered bracing\n- May require wall reconstruction"
+    },
+    {
+      "id": "FF-08-04",
+      "title": "Foundation and Sill Repairs",
+      "summary": "Addressing foundation connections, sill rot, and support issues",
+      "content_md": "## Foundation Connection Repairs\n\n### Anchor Bolt Issues\n\n**Missing Anchor Bolts:**\n```\n1. Drill into concrete for retrofit anchor\n2. Use epoxy or expansion anchor\n3. Minimum 7\" embedment\n4. Maximum 6' spacing\n5. Within 12\" of plate ends\n```\n\n**Loose Anchor Bolts:**\n```\n1. Remove nut and washer\n2. Inject anchoring epoxy\n3. Allow cure time\n4. Re-tighten nut\n5. Verify secure\n```\n\n### Sill Plate Rot Repair\n\n**NB Climate Consideration:**\nSill rot is common due to:\n- Ice dam backup\n- Basement moisture\n- Poor flashing\n- Condensation\n\n**Partial Sill Replacement:**\n\n```\nStep 1: Shore and Support\n- Install temporary wall 2' inside\n- Transfer load from rotted section\n\nStep 2: Remove Rotted Material\n- Cut studs above sill\n- Remove rotted sill section\n- Clean foundation top\n\nStep 3: Address Cause\n- Fix moisture source\n- Install proper flashing\n- Consider drainage improvement\n\nStep 4: Install New Sill\n- Use pressure-treated lumber\n- Install sill gasket\n- Drill for anchor bolts\n- Position and anchor\n\nStep 5: Reconnect Framing\n- Lower studs onto new sill\n- Toenail studs to sill\n- Remove temporary shoring\n```\n\n### Post and Column Repairs\n\n**Damaged Post Base:**\n- Cut post above damage\n- Install metal post base\n- Anchor to floor\n- Trim post to fit\n\n**Rotted Post Bottom:**\n```\n1. Shore load above\n2. Cut post above rot\n3. Install concrete pad if needed\n4. Install metal base\n5. Set post on base\n6. Remove shoring\n```\n\n### Floor Support Issues\n\n**Insufficient Floor Support:**\n\n*Adding Posts:*\n```\n1. Install concrete footing (below frost)\n2. Install post base\n3. Cut post to height\n4. Jack beam slightly\n5. Install post\n6. Remove jack slowly\n```\n\n*Adding Beam:*\n```\n1. Calculate required beam size\n2. Install posts/footings\n3. Install beam under joists\n4. Jack to contact\n5. Secure connections\n```\n\n### Joist Pocket Repairs\n\n**Rotted Joist Ends in Foundation:**\n```\n1. Sister joist with full-length member\n2. Bear sister on new location\n3. Original end becomes spacer\n4. Treat with preservative\n5. Address moisture entry\n```\n\n**Alternative: Joist Hanger Method**\n```\n1. Install ledger on foundation wall\n2. Install joist hanger on ledger\n3. Set joist in hanger\n4. Provides ventilation at end\n```\n\n### Foundation Wall Issues\n\n**Cracked Foundation:**\n- Hairline cracks: Monitor and seal\n- Structural cracks: Engineering required\n- Active leaks: Waterproofing needed\n\n**Bowed Foundation Walls:**\n- Requires engineering assessment\n- May need steel reinforcement\n- Or wall reconstruction\n- Carbon fiber straps possible\n\n### Moisture Prevention\n\n**After Any Sill/Foundation Repair:**\n\n- [ ] Grading slopes away from house\n- [ ] Gutters and downspouts working\n- [ ] Foundation drainage functioning\n- [ ] Sill gasket installed\n- [ ] Flashing at wall base\n- [ ] Ventilation adequate"
+    },
+    {
+      "id": "FF-08-05",
+      "title": "Inspection and Documentation",
+      "summary": "Verification procedures, documentation requirements, and quality control",
+      "content_md": "## Repair Inspection\n\n### Pre-Repair Documentation\n\n**Required Before Starting:**\n\n1. **Photo Documentation**\n   - Overall area photos\n   - Close-up of damage\n   - Measurement references\n   - Existing conditions\n\n2. **Measurements**\n   - Deflection amount\n   - Damage extent\n   - Member sizes\n   - Span lengths\n\n3. **Assessment Notes**\n   - Probable cause\n   - Moisture readings\n   - Related damage\n   - Repair approach\n\n### Repair Verification\n\n**Sistering Verification:**\n\n| Check | Requirement |\n|-------|-------------|\n| Sister size | Same or larger than original |\n| Extension | Minimum per repair type |\n| Bearing | Full support at ends |\n| Fastening | Per nailing schedule |\n| Adhesive | Applied at mating surface |\n| Alignment | Flush with existing top |\n\n**Support Installation:**\n\n| Check | Requirement |\n|-------|-------------|\n| Post size | Per engineering/span |\n| Footing | Adequate for load |\n| Base | Metal base, elevated |\n| Plumb | Verified in both directions |\n| Connection | Top and bottom secure |\n\n### Common Repair Failures\n\n**Sistering Issues:**\n\n*Insufficient Length*\n- Fix: Add additional sistering\n- Prevention: Follow minimum requirements\n\n*Inadequate Fastening*\n- Fix: Add required nails/screws\n- Prevention: Follow nailing schedule\n\n*Sister Not Bearing*\n- Fix: Extend to bearing or add support\n- Prevention: Plan before cutting\n\n**Support Issues:**\n\n*Inadequate Footing*\n- Fix: Enlarge footing\n- Prevention: Calculate loads first\n\n*Post Not Plumb*\n- Fix: Adjust while load is shored\n- Prevention: Check plumb during install\n\n### Documentation Requirements\n\n**For Insurance/Permit:**\n\n1. Before photos with date\n2. Cause of damage\n3. Repair method used\n4. Materials specifications\n5. Engineer's report (if applicable)\n6. During construction photos\n7. After repair photos\n8. Final inspection report\n\n**For Future Reference:**\n\n- Location of repairs\n- Hidden conditions found\n- Materials used\n- Who performed work\n- Date completed\n\n### Quality Control Checklist\n\n**Joist/Beam Repairs:**\n\n- [ ] Damage fully addressed\n- [ ] Moisture source eliminated\n- [ ] Sister properly sized\n- [ ] Sister extends properly\n- [ ] Full bearing achieved\n- [ ] Nailing schedule met\n- [ ] Floor level (within tolerance)\n- [ ] No bounce/spring\n\n**Wall Repairs:**\n\n- [ ] Load path maintained\n- [ ] Headers sized correctly\n- [ ] Studs properly connected\n- [ ] Plates secure to floor/foundation\n- [ ] Wall plumb and straight\n- [ ] Sheathing re-secured\n- [ ] Openings square\n\n**Foundation Repairs:**\n\n- [ ] Anchor bolts adequate\n- [ ] Sill plate level\n- [ ] Moisture barrier in place\n- [ ] Drainage addressed\n- [ ] Waterproofing complete\n- [ ] Post bases elevated\n- [ ] Footings adequate\n\n### Engineering Sign-Off\n\n**When Required:**\n- Load-bearing wall modifications\n- Foundation structural repairs\n- Beam/column sizing\n- Significant structural damage\n- Insurance claims\n\n**Engineer Should Provide:**\n- Drawings of repair\n- Specifications for materials\n- Construction notes\n- Inspection requirements\n- Final sign-off letter"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "FF-08-CL01",
+      "title": "Structural Assessment Checklist",
+      "items": [
+        "Visual inspection completed",
+        "Damage extent documented with photos",
+        "Cause of damage identified",
+        "Member function determined (load-bearing?)",
+        "Load path analyzed",
+        "Remaining capacity assessed",
+        "Engineering needed? (determined)",
+        "Repair approach selected",
+        "Shoring requirements identified"
+      ]
+    },
+    {
+      "id": "FF-08-CL02",
+      "title": "Joist Sistering Checklist",
+      "items": [
+        "Floor shored above if needed",
+        "Sister material same species and grade",
+        "Sister size same or larger than existing",
+        "Sister extends minimum required length",
+        "Sister crowned and oriented correctly",
+        "Construction adhesive applied",
+        "Nailing per schedule (16d at 16\" staggered)",
+        "Full bearing at both ends",
+        "Blocking installed if required",
+        "Shoring removed after secured"
+      ]
+    },
+    {
+      "id": "FF-08-CL03",
+      "title": "Beam Repair Checklist",
+      "items": [
+        "Load properly shored before work",
+        "Damage cause addressed",
+        "Repair method appropriate for damage",
+        "New material properly sized",
+        "Connections adequate",
+        "Bearing points secure",
+        "Deflection acceptable",
+        "Posts plumb and secure",
+        "Shoring removed safely"
+      ]
+    },
+    {
+      "id": "FF-08-CL04",
+      "title": "Load-Bearing Wall Modification Checklist",
+      "items": [
+        "Engineering obtained (if required)",
+        "Wall confirmed as load-bearing",
+        "Shoring installed per plan",
+        "Studs cut carefully",
+        "King studs installed full height",
+        "Header sized per engineering",
+        "Jack studs installed",
+        "Cripples installed above header",
+        "Connections per nailing schedule",
+        "Shoring removed after complete"
+      ]
+    },
+    {
+      "id": "FF-08-CL05",
+      "title": "Sill Plate Repair Checklist",
+      "items": [
+        "Wall properly shored",
+        "Rotted material completely removed",
+        "Moisture source addressed",
+        "Foundation cleaned and prepped",
+        "Sill gasket installed",
+        "Pressure-treated sill used",
+        "Anchor bolts installed (6' max spacing)",
+        "Bolts within 12\" of plate ends",
+        "Studs reconnected to sill",
+        "Shoring removed safely"
+      ]
+    },
+    {
+      "id": "FF-08-CL06",
+      "title": "Post/Support Installation Checklist",
+      "items": [
+        "Footing adequate for load",
+        "Footing below frost depth (NB: 4'+)",
+        "Metal post base installed",
+        "Post base elevated from floor",
+        "Post cut to correct height",
+        "Post plumb in both directions",
+        "Post cap installed (if beam connection)",
+        "Load transferred gradually",
+        "Temporary jacks removed"
+      ]
+    },
+    {
+      "id": "FF-08-CL07",
+      "title": "Repair Documentation Checklist",
+      "items": [
+        "Before photos with date/location",
+        "Damage cause documented",
+        "Repair method recorded",
+        "Materials list compiled",
+        "During-construction photos taken",
+        "Final repair photos taken",
+        "Engineer's letter obtained (if required)",
+        "Inspection completed",
+        "Documentation filed for records"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "FF-08-Q01",
+        "question": "What is the minimum length a sister joist should extend past damage on each side?",
+        "type": "multiple_choice",
+        "choices": [
+          "2 feet",
+          "3 feet",
+          "4 feet",
+          "6 feet"
+        ],
+        "answer": "3 feet",
+        "explanation": "For typical joist repairs, the sister should extend a minimum of 3 feet past the damage on each side. For more severe damage or cracked joists, full-span sistering is preferred."
+      },
+      {
+        "id": "FF-08-Q02",
+        "question": "How much should a sagging floor be raised per day maximum when leveling?",
+        "type": "multiple_choice",
+        "choices": [
+          "1/8 inch",
+          "1/4 inch",
+          "1/2 inch",
+          "1 inch"
+        ],
+        "answer": "1/4 inch",
+        "explanation": "When leveling a sagging floor, raise no more than 1/4 inch per day. Rapid jacking can cause cracking in finishes, damage to utilities, and stress on structural connections."
+      },
+      {
+        "id": "FF-08-Q03",
+        "question": "What type of lumber must be used for sill plate replacement?",
+        "type": "multiple_choice",
+        "choices": [
+          "Kiln-dried SPF",
+          "Cedar",
+          "Pressure-treated lumber",
+          "Any exterior-grade lumber"
+        ],
+        "answer": "Pressure-treated lumber",
+        "explanation": "Sill plates in contact with concrete foundations must be pressure-treated lumber to resist moisture and decay. This is especially important in NB's climate with freeze-thaw cycles and moisture exposure."
+      },
+      {
+        "id": "FF-08-Q04",
+        "question": "When is an engineer required for structural repairs?",
+        "type": "multiple_choice",
+        "choices": [
+          "All structural repairs require an engineer",
+          "Only for insurance claims",
+          "When modifying load-bearing walls or sizing beams",
+          "Never - carpenters can assess all repairs"
+        ],
+        "answer": "When modifying load-bearing walls or sizing beams",
+        "explanation": "An engineer should be consulted when modifying load-bearing walls, sizing replacement beams or columns, repairing foundations, or when damage is significant. Minor sistering may not require engineering."
+      },
+      {
+        "id": "FF-08-Q05",
+        "question": "What should be installed before replacing a rotted sill plate section?",
+        "type": "multiple_choice",
+        "choices": [
+          "New anchor bolts",
+          "Temporary shoring to support the wall",
+          "Waterproofing membrane",
+          "Metal post bases"
+        ],
+        "answer": "Temporary shoring to support the wall",
+        "explanation": "Before removing or replacing a sill plate section, temporary shoring must be installed to support the wall above. This prevents the wall from settling or collapsing during the repair."
+      },
+      {
+        "id": "FF-08-Q06",
+        "question": "How can you identify a load-bearing wall?",
+        "type": "multiple_choice",
+        "choices": [
+          "It has electrical outlets",
+          "It runs perpendicular to floor joists above",
+          "It's made of 2×4 studs",
+          "It has drywall on both sides"
+        ],
+        "answer": "It runs perpendicular to floor joists above",
+        "explanation": "Walls running perpendicular to floor or ceiling joists above are typically load-bearing as they support those joists. Also check if the wall is directly below another wall or supports visible beams."
+      },
+      {
+        "id": "FF-08-Q07",
+        "question": "What nailing pattern is recommended for sistering joists?",
+        "type": "multiple_choice",
+        "choices": [
+          "16d nails at 6\" o.c. in a single row",
+          "16d nails at 16\" o.c. in staggered rows",
+          "10d nails at 12\" o.c.",
+          "8d nails at 8\" o.c."
+        ],
+        "answer": "16d nails at 16\" o.c. in staggered rows",
+        "explanation": "When sistering joists, use 16d nails at 16 inches on center in staggered top and bottom rows. This pattern provides adequate shear strength and prevents splitting."
+      },
+      {
+        "id": "FF-08-Q08",
+        "question": "What should always be addressed before completing a rot repair?",
+        "type": "multiple_choice",
+        "choices": [
+          "Installing new insulation",
+          "Painting the repaired area",
+          "The moisture source that caused the rot",
+          "Adding additional nailing"
+        ],
+        "answer": "The moisture source that caused the rot",
+        "explanation": "Before or during rot repair, the moisture source must be identified and eliminated. Without addressing the cause, the new materials will also rot. This is especially critical in NB's wet climate."
+      },
+      {
+        "id": "FF-08-Q09",
+        "question": "What is a flitch plate repair used for?",
+        "type": "multiple_choice",
+        "choices": [
+          "Repairing drywall cracks",
+          "Reinforcing a damaged beam with steel",
+          "Replacing rotted sill plates",
+          "Leveling uneven floors"
+        ],
+        "answer": "Reinforcing a damaged beam with steel",
+        "explanation": "A flitch plate repair involves sandwiching a steel plate between or alongside beam members and through-bolting them together. This significantly increases the beam's load-carrying capacity."
+      },
+      {
+        "id": "FF-08-Q10",
+        "question": "What is the maximum stud notch depth allowed per code?",
+        "type": "multiple_choice",
+        "choices": [
+          "10% of stud depth",
+          "25% of stud depth",
+          "40% of stud depth",
+          "50% of stud depth"
+        ],
+        "answer": "25% of stud depth",
+        "explanation": "Notches in studs cannot exceed 25% of the stud depth. Deeper notches significantly weaken the stud and require reinforcement with steel plates or sistering."
+      },
+      {
+        "id": "FF-08-Q11",
+        "question": "What should be used at the base of replacement support posts?",
+        "type": "multiple_choice",
+        "choices": [
+          "Direct wood-to-concrete contact",
+          "Metal post base elevated from floor",
+          "Pressure-treated blocking",
+          "Rubber pad"
+        ],
+        "answer": "Metal post base elevated from floor",
+        "explanation": "Support posts should have metal post bases that elevate the wood above the concrete floor. This prevents moisture wicking into the post end and subsequent rot, which is common in NB's climate."
+      },
+      {
+        "id": "FF-08-Q12",
+        "question": "How do you test for rot in structural wood members?",
+        "type": "multiple_choice",
+        "choices": [
+          "Visual inspection only",
+          "Knock on wood and listen for hollow sound",
+          "Probe with an awl - soft/punky wood indicates rot",
+          "Moisture meter reading only"
+        ],
+        "answer": "Probe with an awl - soft/punky wood indicates rot",
+        "explanation": "Probing with an awl or screwdriver is the most reliable field test for rot. If the tool easily penetrates or the wood feels soft and punky, rot is present. Sound wood will resist penetration."
+      },
+      {
+        "id": "FF-08-Q13",
+        "question": "What documentation is needed for structural repair insurance claims?",
+        "type": "multiple_choice",
+        "choices": [
+          "Only the repair receipt",
+          "Before photos with date, repair method, and after photos",
+          "Just the building permit",
+          "Only the engineer's letter"
+        ],
+        "answer": "Before photos with date, repair method, and after photos",
+        "explanation": "Insurance claims require comprehensive documentation including dated before photos, cause of damage, repair methods used, materials specifications, during-construction photos, after photos, and any engineering reports."
+      },
+      {
+        "id": "FF-08-Q14",
+        "question": "What is the minimum frost depth for footings in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "24 inches",
+          "36 inches",
+          "48 inches or more",
+          "12 inches"
+        ],
+        "answer": "48 inches or more",
+        "explanation": "In New Brunswick's climate (Zone 6), footings must extend below the frost line, which is typically 48 inches (4 feet) or more depending on specific location. Footings above frost depth can heave and cause structural damage."
+      },
+      {
+        "id": "FF-08-Q15",
+        "question": "When adding a sister joist, what orientation should the crown have?",
+        "type": "multiple_choice",
+        "choices": [
+          "Crown down",
+          "Crown up, matching existing",
+          "No crown matters",
+          "Alternate from existing"
+        ],
+        "answer": "Crown up, matching existing",
+        "explanation": "Sister joists should be installed with crown up, matching the existing joist orientation. This ensures consistent deflection behavior and keeps the top edges flush for proper subfloor support."
+      }
+    ]
+  }
+}

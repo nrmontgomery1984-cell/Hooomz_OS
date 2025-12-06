@@ -1,0 +1,269 @@
+{
+  "id": "IF-03",
+  "title": "Interior Painting",
+  "category": "Interior Finish",
+  "level": "Intermediate",
+  "estimated_study_hours": 3.5,
+  "tags": [
+    "painting",
+    "primer",
+    "latex",
+    "cutting in",
+    "rolling",
+    "interior finish"
+  ],
+  "prerequisites": [
+    "IF-02"
+  ],
+  "sections": [
+    {
+      "title": "Paint Types & Selection",
+      "content": "## Paint Types for Interior Applications\n\nSelecting the right paint ensures durability, coverage, and appropriate finish for each surface and room type.\n\n### Latex vs. Oil-Based\n\n| Property | Latex (Water-Based) | Oil-Based (Alkyd) |\n|----------|---------------------|-------------------|\n| Dry Time | 1-2 hours | 6-8 hours |\n| Cleanup | Soap and water | Mineral spirits |\n| Odor | Low | Strong |\n| Durability | Good | Excellent |\n| Yellowing | Resistant | May yellow |\n| Best Use | Walls, ceilings | Trim, cabinets |\n\n### Sheen Levels\n\n| Sheen | Light Reflection | Best Applications | Durability |\n|-------|------------------|-------------------|------------|\n| Flat/Matte | 0-5% | Ceilings, low-traffic areas | Low |\n| Eggshell | 10-25% | Living rooms, bedrooms | Medium |\n| Satin | 25-35% | Hallways, kids' rooms | Medium-High |\n| Semi-Gloss | 35-70% | Kitchens, bathrooms, trim | High |\n| Gloss | 70%+ | Trim, doors, cabinets | Very High |\n\n### Quality Indicators\n\n**Premium Paint Characteristics:**\n- Higher titanium dioxide content (better coverage)\n- Finer pigment grind (smoother finish)\n- Better binders (improved adhesion)\n- Higher solids content (thicker film)\n\n> **Pro Tip:** Quality paint typically covers in 1-2 coats versus 3-4 for economy paint, often making it more cost-effective overall."
+    },
+    {
+      "title": "Surface Preparation",
+      "content": "## Preparing Surfaces for Paint\n\nProper preparation accounts for 80% of a quality paint job. Skipping prep leads to peeling, poor adhesion, and visible defects.\n\n### New Drywall Preparation\n\n1. **Dust removal** - Vacuum or wipe all surfaces\n2. **Spot prime** - PVA primer on mud and repairs\n3. **Full prime** - Entire surface with drywall primer\n4. **Light sand** - 220-grit after primer dries\n5. **Tack wipe** - Remove sanding dust\n\n### Previously Painted Surfaces\n\n**Assessment Checklist:**\n- Check adhesion (cross-hatch tape test)\n- Identify glossy areas requiring scuff-sand\n- Locate repairs needing spot prime\n- Note stains requiring stain-blocking primer\n\n### Primer Selection\n\n| Surface Condition | Primer Type |\n|-------------------|-------------|\n| New drywall | PVA drywall primer |\n| Stains (water, smoke) | Shellac-based or pigmented shellac |\n| Glossy surfaces | Bonding primer |\n| Bare wood | Wood primer (latex or oil) |\n| Tannin-bleeding wood | Shellac primer |\n\n### Masking & Protection\n\n- **Painter's tape:** Use quality tape (14-day removal)\n- **Drop cloths:** Canvas preferred over plastic\n- **Edge protection:** Tape ceiling lines, trim edges\n- **Hardware:** Remove switch plates, outlet covers\n- **Fixtures:** Mask or remove light fixtures"
+    },
+    {
+      "title": "Cutting In Techniques",
+      "content": "## Professional Cutting In\n\nCutting in creates clean edges at corners, ceilings, and trim before rolling. This technique separates amateur from professional results.\n\n### Brush Selection\n\n| Brush Type | Best For | Size |\n|------------|----------|------|\n| Angled sash | Cutting in, trim | 2-2.5\" |\n| Straight edge | Flat surfaces | 3-4\" |\n| Oval sash | Windows, detail | 1.5-2\" |\n\n**Quality brush indicators:**\n- Flagged bristle tips (hold more paint)\n- Tapered shape (fine edge control)\n- Solid ferrule (no loose bristles)\n\n### Cutting In Process\n\n1. **Load brush** - Dip 1/3 into paint, tap excess\n2. **Position** - Start 1/4\" from edge\n3. **Pressure stroke** - Press bristles, draw toward edge\n4. **Feather** - Light pressure on return stroke\n5. **Overlap** - Work in 3-4 foot sections\n\n### Edge Techniques\n\n**Ceiling Lines:**\n- Work toward the corner\n- Use ceiling as guide surface\n- Maintain wet edge for blending\n\n**Corner Lines:**\n- Cut one wall, let dry\n- Cut adjacent wall into corner\n- Overlap slightly for coverage\n\n**Trim Edges:**\n- Cut wall paint to trim edge\n- Clean, steady strokes\n- Touch up after trim paint cures\n\n> **Pro Tip:** Cut in before rolling and maintain a wet edge. Work in 4-6 foot sections to blend cut lines into rolled areas."
+    },
+    {
+      "title": "Rolling Techniques",
+      "content": "## Professional Rolling Methods\n\nProper rolling technique ensures even coverage, eliminates lap marks, and creates a uniform finish.\n\n### Roller Selection\n\n| Nap Length | Surface Type | Texture Result |\n|------------|--------------|----------------|\n| 3/16\" - 1/4\" | Smooth surfaces, doors | Very smooth |\n| 3/8\" | Light texture, drywall | Light stipple |\n| 1/2\" | Medium texture | Medium stipple |\n| 3/4\" - 1\" | Heavy texture, stucco | Heavy texture |\n\n**Roller quality factors:**\n- Shed-resistant fabric\n- Beveled edges (reduce lines)\n- Sturdy core (won't collapse)\n\n### Rolling Pattern (W-Method)\n\n1. **Load roller** - Roll in tray, remove excess\n2. **Apply W pattern** - Cover 3' x 3' area\n3. **Fill in** - Cross-roll to fill W\n4. **Finish strokes** - Light vertical passes\n5. **Feather edges** - Blend into adjacent areas\n\n### Avoiding Common Defects\n\n| Defect | Cause | Prevention |\n|--------|-------|------------|\n| Lap marks | Dried edges | Maintain wet edge |\n| Roller lines | Too much pressure | Light final passes |\n| Stipple variation | Inconsistent loading | Uniform roller saturation |\n| Holidays (misses) | Poor lighting | Use side lighting to check |\n| Drips | Overloaded roller | Remove excess in tray |\n\n### Coverage Rates\n\n- **Primer:** 300-400 sq ft/gallon\n- **First coat:** 350-400 sq ft/gallon\n- **Second coat:** 400-450 sq ft/gallon\n\n> **Pro Tip:** For ceilings, roll perpendicular to the main light source. For walls, finish with vertical strokes for consistent sheen."
+    },
+    {
+      "title": "Trim & Detail Work",
+      "content": "## Painting Trim & Woodwork\n\nTrim painting requires patience, proper preparation, and attention to detail. Quality trim work elevates the entire room's appearance.\n\n### Trim Preparation\n\n1. **Clean** - TSP wash, rinse thoroughly\n2. **Sand** - 150-220 grit, scuff glossy surfaces\n3. **Caulk** - Fill gaps at wall/trim junction\n4. **Prime** - Spot prime bare wood, repairs\n5. **Sand primer** - 220-grit, tack wipe\n\n### Painting Sequence\n\n**Standard Order:**\n1. Ceiling\n2. Walls\n3. Trim (after walls cure 24+ hours)\n4. Doors\n5. Final touch-ups\n\n**Trim-First Method (New Construction):**\n1. Prime all surfaces\n2. Paint trim\n3. Tape trim edges\n4. Paint walls\n5. Remove tape, touch up\n\n### Brush Technique for Trim\n\n| Surface | Direction | Method |\n|---------|-----------|--------|\n| Baseboards | Horizontal | Long, even strokes |\n| Door casings | Follow grain | Vertical strokes |\n| Window sills | Horizontal | Thin coats, sand between |\n| Crown moulding | Follow profile | Work in sections |\n\n### Door Painting (Panel Doors)\n\n**Sequence:**\n1. Panels (recessed areas first)\n2. Panel moulding/edges\n3. Horizontal rails\n4. Vertical stiles\n5. Edges (hinge side, latch side)\n\n### Drying & Recoating\n\n| Paint Type | Touch Dry | Recoat | Full Cure |\n|------------|-----------|--------|----------|\n| Latex | 1 hour | 2-4 hours | 30 days |\n| Alkyd | 6-8 hours | 16-24 hours | 7 days |\n| Waterborne alkyd | 1 hour | 4-6 hours | 7 days |\n\n> **Pro Tip:** For the smoothest trim finish, thin latex paint 5-10% with water, apply thin coats, and sand lightly with 320-grit between coats."
+    }
+  ],
+  "checklists": [
+    {
+      "title": "Pre-Paint Checklist",
+      "items": [
+        "All surfaces cleaned and dust-free",
+        "Repairs completed and sanded smooth",
+        "Appropriate primer applied to all surfaces",
+        "Primer sanded and tack-wiped",
+        "All trim and edges masked with quality tape",
+        "Drop cloths protecting floors and furniture",
+        "Switch plates and outlet covers removed",
+        "Light fixtures masked or removed",
+        "Paint thoroughly stirred/shaken",
+        "Brushes and rollers appropriate for paint type"
+      ]
+    },
+    {
+      "title": "Wall Painting Checklist",
+      "items": [
+        "Cut in ceiling lines with angled brush",
+        "Cut in all corners and edges",
+        "Cut in around trim and fixtures",
+        "Roll walls using W-pattern technique",
+        "Maintain wet edge throughout",
+        "Apply uniform pressure on roller",
+        "Finish with light vertical strokes",
+        "Check for holidays with side lighting",
+        "Allow proper dry time between coats",
+        "Apply second coat as needed for coverage"
+      ]
+    },
+    {
+      "title": "Trim Painting Checklist",
+      "items": [
+        "Trim cleaned and scuff-sanded",
+        "Gaps caulked and dried",
+        "Bare wood and repairs primed",
+        "Walls cured before trim painting",
+        "Quality brush selected for trim",
+        "Paint thinned if needed for flow",
+        "Thin, even coats applied",
+        "Proper drying between coats",
+        "Light sanding between coats",
+        "Final coat brushed in direction of grain"
+      ]
+    },
+    {
+      "title": "Cleanup & Inspection",
+      "items": [
+        "Tape removed at proper angle (45 degrees)",
+        "Touch-ups completed while wet",
+        "All drips and splatters cleaned",
+        "Brushes cleaned thoroughly",
+        "Rollers cleaned or disposed",
+        "Paint cans sealed properly",
+        "Drop cloths removed carefully",
+        "Hardware reinstalled",
+        "Final inspection under good lighting",
+        "Touch-up paint stored for future use"
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Which paint sheen is most appropriate for bathroom walls?",
+      "options": [
+        "Flat/Matte",
+        "Eggshell",
+        "Semi-Gloss",
+        "Gloss"
+      ],
+      "correct": 2,
+      "explanation": "Semi-gloss is ideal for bathrooms due to its high moisture resistance and ease of cleaning while not being as reflective as full gloss."
+    },
+    {
+      "question": "What percentage of a quality paint job is attributed to preparation?",
+      "options": [
+        "50%",
+        "60%",
+        "70%",
+        "80%"
+      ],
+      "correct": 3,
+      "explanation": "Proper preparation accounts for approximately 80% of a quality paint job. Skipping prep leads to adhesion failures and visible defects."
+    },
+    {
+      "question": "Which primer type should be used for water stains?",
+      "options": [
+        "PVA drywall primer",
+        "Bonding primer",
+        "Shellac-based primer",
+        "Latex wood primer"
+      ],
+      "correct": 2,
+      "explanation": "Shellac-based or pigmented shellac primers are best for blocking water stains, smoke damage, and other staining agents from bleeding through."
+    },
+    {
+      "question": "What is the ideal brush type for cutting in?",
+      "options": [
+        "Straight edge brush",
+        "Angled sash brush",
+        "Oval sash brush",
+        "Foam brush"
+      ],
+      "correct": 1,
+      "explanation": "Angled sash brushes in 2-2.5 inch sizes are ideal for cutting in, providing better control and edge definition at corners and trim lines."
+    },
+    {
+      "question": "How deep should you dip the brush into paint?",
+      "options": [
+        "Fully submerge bristles",
+        "Half the bristle length",
+        "One-third the bristle length",
+        "Just the tips"
+      ],
+      "correct": 2,
+      "explanation": "Dipping one-third of the bristle length into paint allows proper loading while preventing paint from getting into the ferrule."
+    },
+    {
+      "question": "What roller nap length is best for smooth drywall?",
+      "options": [
+        "1/4 inch",
+        "3/8 inch",
+        "1/2 inch",
+        "3/4 inch"
+      ],
+      "correct": 1,
+      "explanation": "3/8 inch nap is ideal for standard drywall with light texture, providing good coverage and a slight stipple finish typical of wall painting."
+    },
+    {
+      "question": "What is the W-method in rolling?",
+      "options": [
+        "Washing walls before painting",
+        "Working in W-shaped patterns",
+        "Using W-brand rollers",
+        "Wiping excess paint"
+      ],
+      "correct": 1,
+      "explanation": "The W-method involves applying paint in a W pattern over a 3 foot by 3 foot area, then filling in and finishing with light strokes for even coverage."
+    },
+    {
+      "question": "What causes lap marks when painting?",
+      "options": [
+        "Too much paint",
+        "Dried edges before overlapping",
+        "Wrong paint color",
+        "Dirty roller"
+      ],
+      "correct": 1,
+      "explanation": "Lap marks occur when paint edges dry before being overlapped with the next section. Maintaining a wet edge prevents this defect."
+    },
+    {
+      "question": "What is the typical coverage rate for first coat paint?",
+      "options": [
+        "200-250 sq ft/gallon",
+        "350-400 sq ft/gallon",
+        "500-550 sq ft/gallon",
+        "600-650 sq ft/gallon"
+      ],
+      "correct": 1,
+      "explanation": "First coat paint typically covers 350-400 square feet per gallon, with second coats covering slightly more due to sealed surface."
+    },
+    {
+      "question": "How long should walls cure before painting trim?",
+      "options": [
+        "2-4 hours",
+        "6-8 hours",
+        "24+ hours",
+        "7 days"
+      ],
+      "correct": 2,
+      "explanation": "Walls should cure at least 24 hours before painting trim to ensure the wall paint is hard enough to tape without lifting."
+    },
+    {
+      "question": "What order should panel door sections be painted?",
+      "options": [
+        "Stiles, rails, panels",
+        "Panels, rails, stiles",
+        "Rails, stiles, panels",
+        "Edges, panels, rails"
+      ],
+      "correct": 1,
+      "explanation": "Panel doors should be painted panels first, then horizontal rails, then vertical stiles. This sequence blends brush strokes properly."
+    },
+    {
+      "question": "What angle should tape be removed at?",
+      "options": [
+        "90 degrees (straight back)",
+        "45 degree angle",
+        "Parallel to surface",
+        "Any direction"
+      ],
+      "correct": 1,
+      "explanation": "Removing tape at a 45 degree angle back over itself creates the cleanest edge and reduces the chance of pulling off fresh paint."
+    },
+    {
+      "question": "What grit sandpaper is used between trim coats?",
+      "options": [
+        "100-grit",
+        "150-grit",
+        "220-320 grit",
+        "400-grit"
+      ],
+      "correct": 2,
+      "explanation": "220-320 grit sandpaper provides light scuffing between coats without creating visible scratches, promoting adhesion and smooth finish."
+    },
+    {
+      "question": "How much can latex paint be thinned for smoother trim application?",
+      "options": [
+        "Not at all",
+        "5-10%",
+        "20-25%",
+        "50%"
+      ],
+      "correct": 1,
+      "explanation": "Latex paint can be thinned 5-10% with water for smoother trim application, improving flow and leveling without sacrificing coverage."
+    },
+    {
+      "question": "How long does latex paint take to fully cure?",
+      "options": [
+        "2-4 hours",
+        "24 hours",
+        "7 days",
+        "30 days"
+      ],
+      "correct": 3,
+      "explanation": "While latex paint is touch-dry in 1 hour and recoatable in 2-4 hours, it takes approximately 30 days to fully cure to maximum hardness."
+    }
+  ]
+}

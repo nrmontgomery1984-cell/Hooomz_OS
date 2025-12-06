@@ -1,0 +1,261 @@
+{
+  "id": "FF-01",
+  "phase": 2,
+  "slug": "foundation-systems",
+  "title": "Foundation Systems & Types",
+  "category": "Foundation & Framing",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-04"],
+  "estimated_study_hours": 6,
+  "status": "complete",
+  "tags": ["foundation", "concrete", "footings", "basement", "crawlspace", "slab", "frost", "structural"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Foundations transfer building loads to the ground and protect the structure from moisture, frost, and soil movement. Foundation selection depends on soil conditions, climate, and building requirements.",
+      "content_md": "## What is a Foundation System?\n\nA foundation is the structural system that transfers all building loads (dead, live, snow, wind) to the supporting soil. It anchors the building, resists movement, and provides a barrier between the structure and ground moisture.\n\n## Foundation Functions:\n\n1. **Load Transfer** - Distributes building weight to soil\n2. **Anchorage** - Resists uplift, sliding, and overturning\n3. **Frost Protection** - Extends below frost depth to prevent heaving\n4. **Moisture Barrier** - Keeps water out of living space\n5. **Level Platform** - Provides flat, stable base for framing\n\n## Why Foundations Matter in NB\n\n### Climate Challenges:\n\n**Frost Depth:**\n- NB Zone 6 (Moncton area): 6 feet (1.8m) frost depth\n- Footings must extend below frost line\n- Frost heaving can destroy inadequate foundations\n- 50-80 freeze-thaw cycles per year\n\n**Moisture:**\n- High water table in many areas\n- 1,100-1,400mm annual precipitation\n- Spring snowmelt flooding common\n- Clay soils hold water\n\n**Soil Conditions:**\n- Varied: Clay, silt, sand, gravel, bedrock\n- Clay expands/contracts with moisture\n- Some areas have marine clay (very unstable)\n- Soil bearing capacity varies greatly\n\n## Foundation Types Overview\n\n### Type 1: Full Basement\n- 8'+ ceiling height below grade\n- Maximum living/storage space\n- Most common in NB residential\n- Highest cost, best value if finished\n\n### Type 2: Crawl Space\n- 3-4' height below floor\n- Access for mechanicals\n- Lower cost than basement\n- Must be properly vented or sealed\n\n### Type 3: Slab-on-Grade\n- Concrete floor at ground level\n- Lowest cost\n- Requires excellent drainage\n- Challenging in NB climate (frost protection critical)\n\n### Type 4: Pier/Post\n- Point supports (decks, additions)\n- Quick, economical for small structures\n- Each pier below frost depth\n\n## Certification Requirements\n\nTo earn Foundation Systems certification:\n1. Complete this guide\n2. Pass quiz with 80%\n3. Assist with one foundation pour\n4. Identify foundation types on 3 existing buildings\n5. Read foundation drawings correctly"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Soil bearing capacity, footing design, foundation wall systems, waterproofing and drainage, and NBC code requirements.",
+      "content_md": "## 2.1 Soil & Bearing Capacity\n\n### Soil Types & Bearing Capacity:\n\n| Soil Type | Bearing Capacity (psf) | Notes |\n|-----------|------------------------|-------|\n| Bedrock | 12,000+ | Excellent, may need blasting |\n| Gravel (compacted) | 4,000-6,000 | Excellent drainage |\n| Sand (compacted) | 2,000-4,000 | Good with proper compaction |\n| Clay (stiff) | 2,000-4,000 | Expands when wet |\n| Clay (soft) | 1,000-2,000 | Problematic, may need engineering |\n| Silt | 1,000-2,000 | Poor, retains moisture |\n| Fill | Varies | Must be engineered fill, compacted |\n\n**NBC Default:** 75 kPa (1,500 psf) if soil not tested\n\n### Soil Investigation:\n\n**When Required:**\n- Poor soil suspected\n- High water table\n- Previous fill on site\n- Near water bodies\n- Unusual conditions\n\n**Methods:**\n- Test pits (visual inspection)\n- Soil boring (lab analysis)\n- Proctor test (compaction verification)\n\n### Bearing Capacity Problems:\n\n**Signs of Inadequate Bearing:**\n- Uneven settling\n- Foundation cracks (diagonal, stair-step)\n- Doors/windows won't close\n- Sloping floors\n- Wall/floor separation\n\n## 2.2 Footing Design\n\n### Footing Purpose:\n- Spreads load over larger soil area\n- Provides stable base for foundation wall\n- Must be below frost depth\n\n### Standard Residential Footings (NBC):\n\n**Minimum Dimensions:**\n\n| Building Width | Footing Width | Footing Depth |\n|----------------|---------------|---------------|\n| Up to 32' | 16\" (400mm) | 8\" (200mm) |\n| 32' to 40' | 18\" (450mm) | 8\" (200mm) |\n| Over 40' | Engineering required | Engineering required |\n\n**Reinforcement:**\n- Typically 2 - #4 (15M) rebar continuous\n- Lap splices minimum 24\" (600mm)\n- Cover: 3\" (75mm) from soil\n\n### Stepped Footings:\n\n**When Required:**\n- Sloped sites\n- Different foundation depths\n- Garage attached to basement\n\n**Rules:**\n- Horizontal run ≥ 2× vertical rise\n- Maximum step: 24\" (600mm)\n- Rebar continuous through steps\n- Key or dowels at steps\n\n### Pier Footings:\n\n**For Decks, Posts, Point Loads:**\n- Minimum 24\" × 24\" × 8\" thick\n- Depth: Below frost (6' in NB Zone 6)\n- Sonotube: 10\"-12\" diameter typical\n- Rebar: Vertical #4 into post anchor\n\n## 2.3 Foundation Wall Systems\n\n### Poured Concrete (Most Common in NB):\n\n**Advantages:**\n- Monolithic (no joints)\n- Strong in compression and tension\n- Excellent waterproofing potential\n- Can be insulated inside or out\n\n**Specifications:**\n- Minimum thickness: 8\" (200mm)\n- Concrete: 25 MPa minimum\n- Reinforcement: Per engineer or prescriptive tables\n- Typical: #4 @ 24\" vertical, #4 @ 16\" horizontal\n\n### Concrete Block (CMU):\n\n**Advantages:**\n- No forms required\n- Can be built in stages\n- Good for DIY (simpler than poured)\n\n**Disadvantages:**\n- Mortar joints = water entry points\n- Lower lateral strength\n- Requires grouting and rebar for full strength\n\n**Specifications:**\n- 8\" or 10\" block typical\n- Grouted solid at corners and 4' intervals\n- Vertical rebar @ 4' o.c. minimum\n- Bond beam at top (grouted with rebar)\n\n### Insulated Concrete Forms (ICF):\n\n**Advantages:**\n- Built-in insulation (R-22 to R-30)\n- Faster installation\n- Excellent air sealing\n- Energy code compliant easily\n\n**Disadvantages:**\n- Higher material cost\n- Requires experienced installer\n- Limited waterproofing access\n\n**Specifications:**\n- Minimum 6\" concrete core (150mm)\n- EPS foam forms remain in place\n- Rebar per manufacturer specs\n- Brace heavily during pour\n\n### Preserved Wood Foundation (PWF):\n\n**Advantages:**\n- Fast installation (no cure time)\n- Built-in insulation cavity\n- Can be installed in cold weather\n\n**Disadvantages:**\n- Requires perfect drainage\n- Preservative chemical exposure\n- Less common, fewer contractors\n\n**Specifications:**\n- CCA or ACQ treated lumber and plywood\n- Granular drainage layer required\n- Dampproofing on exterior\n- Sump pump typically required\n\n## 2.4 Waterproofing & Drainage\n\n### Exterior Waterproofing System:\n\n**Components (bottom to top):**\n\n1. **Weeping Tile (Drain Tile)**\n   - 4\" perforated pipe\n   - Filter fabric wrapped\n   - Slopes to outlet or sump\n   - Minimum 1% slope (1/8\" per foot)\n\n2. **Drainage Layer**\n   - 12\" clear gravel over weeping tile\n   - OR drainage board (dimple mat)\n   - Allows water to drain to weeping tile\n\n3. **Waterproofing Membrane**\n   - Dampproofing (spray/roll): Moisture barrier only\n   - Waterproofing (membrane): Full water barrier\n   - Must extend from footing to 6\" above grade\n\n4. **Protection Board**\n   - Protects membrane during backfill\n   - Rigid foam or drainage board serves dual purpose\n\n5. **Grading**\n   - Slope away from foundation: Minimum 5% for 6'\n   - Maintain grade over time (settling)\n\n### Interior Drainage (If Required):\n\n**Interior Weeping Tile:**\n- Installed in floor slab trench\n- Drains to sump pit\n- Used when exterior drainage inadequate\n- Common in retrofits\n\n**Sump Pump:**\n- Required if gravity drainage not possible\n- Pit: Minimum 18\" diameter, 24\" deep\n- Pump capacity: Per water table conditions\n- Battery backup recommended\n\n## 2.5 NBC Code Requirements\n\n### Frost Protection:\n\n**Minimum Depth (NB Zone 6):**\n- Footings: 6' (1.8m) below grade\n- OR protected by insulation (frost-protected shallow foundation)\n- Heated buildings only for shallow option\n\n### Foundation Wall Thickness:\n\n| Wall Height | Minimum Thickness (Poured) |\n|-------------|----------------------------|\n| Up to 7' | 6\" (150mm) |\n| 7' to 8' | 8\" (200mm) |\n| Over 8' | Engineering required |\n\n### Reinforcement Requirements:\n\n**Minimum for Poured Walls:**\n- Vertical: #4 @ 48\" (1200mm) maximum\n- Horizontal: #4 @ 24\" (600mm) maximum\n- Increased in high-load or tall walls\n\n### Anchor Bolts:\n\n- Minimum: 1/2\" (12mm) diameter\n- Spacing: Maximum 8' (2.4m) o.c.\n- Embed: Minimum 7\" (180mm) into concrete\n- Location: Within 12\" of corners and splices\n\n### Dampproofing Required:\n\n- All below-grade walls enclosing habitable space\n- From footing to 6\" above finished grade\n- Full waterproofing for high water table areas"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Excavation, footing installation, wall forming and pouring, and waterproofing procedures.",
+      "content_md": "## 3.1 Excavation Procedure\n\n### Before Excavation:\n\n**Step 1: Site Preparation**\n- Review drawings for dimensions and depths\n- Verify property lines (survey if needed)\n- Check for underground utilities (NB One Call)\n- Establish benchmarks for elevation control\n- Install erosion control\n\n**Step 2: Layout**\n- Set up batter boards 4' outside building footprint\n- String lines for wall centerlines\n- Mark excavation limits (2-3' beyond footprint)\n- Verify square: 3-4-5 method or diagonal check\n\n### During Excavation:\n\n**Step 3: Excavate**\n- Remove topsoil separately (save for grading)\n- Excavate to footing bottom elevation\n- Watch for water (dewater as needed)\n- Maintain safe slope on banks (1:1 for safety)\n- Don't over-excavate (undisturbed soil critical)\n\n**Step 4: Verify**\n- Check elevations frequently\n- Verify level or consistent slope\n- Inspect soil conditions (note any changes)\n- Mark areas of concern (soft spots, water, fill)\n\n**Step 5: Prepare for Footings**\n- Level footing area (hand work for final 2-3\")\n- Compact if disturbed\n- Install granular base if required (soft soil)\n- Check dimensions against layout\n\n## 3.2 Footing Installation\n\n### Form Setup:\n\n**Step 1: Layout on Excavation**\n- Transfer string lines down to excavation\n- Mark footing edges on soil\n- Verify dimensions and square\n\n**Step 2: Install Forms**\n- 2× lumber or manufactured forms\n- Stake firmly to prevent blowout\n- Level forms (use level and transit)\n- Brace at intervals (4' typical)\n\n**Step 3: Reinforcement**\n- Install rebar chairs (3\" cover from soil)\n- Place horizontal rebar\n- Tie intersections\n- Install vertical dowels for wall connection\n- Ensure rebar doesn't touch forms\n\n### Concrete Pour:\n\n**Step 4: Prepare for Pour**\n- Verify ready-mix order (quantity, strength, slump)\n- Wet forms (prevents water absorption)\n- Have vibrator and finishing tools ready\n- Ensure access for concrete truck/pump\n\n**Step 5: Pour Concrete**\n- Place concrete in layers (12-18\" lifts)\n- Vibrate or rod to consolidate\n- Don't over-vibrate (causes segregation)\n- Screed level with forms\n- Insert key strip if keyed footing required\n\n**Step 6: Finish and Cure**\n- Smooth top surface (not critical - wall covers)\n- Insert wall dowels if not pre-placed\n- Cover and cure (wet cure or curing compound)\n- Minimum cure: 24 hours before backfill, 7 days before load\n\n## 3.3 Foundation Wall Forming\n\n### For Poured Concrete Walls:\n\n**Step 1: Prepare Footing Surface**\n- Clean debris and laitance\n- Verify level (shim wall forms if needed)\n- Snap chalk lines for wall location\n- Install any penetration sleeves (water, sewer, electrical)\n\n**Step 2: Set Wall Forms**\n- Manufactured panel forms (fastest)\n- OR plywood and walers (custom sizes)\n- Start at corners\n- Brace and align as you go\n\n**Step 3: Install Reinforcement**\n- Vertical rebar tied to footing dowels\n- Horizontal rebar at specified spacing\n- Tie at intersections\n- Maintain cover (1.5\" from forms)\n- Add extra at openings (window bucks)\n\n**Step 4: Install Embeds**\n- Anchor bolts (template or wet-set)\n- Window buck frames\n- Beam pockets\n- Pipe sleeves\n- Form ties\n\n**Step 5: Final Check**\n- Verify plumb, level, square\n- Check wall dimensions\n- Ensure adequate bracing\n- Verify embed locations\n- Oil forms (release agent)\n\n### Concrete Pour:\n\n**Step 6: Pour Walls**\n- Coordinate with ready-mix plant\n- Pour in lifts (2-4' depending on form strength)\n- Vibrate each lift (don't over-vibrate)\n- Watch for blowouts (stop, repair, continue)\n- Don't pour too fast (form pressure)\n\n**Step 7: Finish**\n- Vibrate final lift thoroughly\n- Screed top level\n- Set anchor bolts to correct depth and spacing\n- Float top surface smooth\n- Begin curing immediately\n\n**Step 8: Strip and Cure**\n- Strip forms after 24-48 hours (weather dependent)\n- Patch tie holes\n- Apply curing compound or keep wet\n- Inspect for defects (honeycombing, voids)\n- Repair any defects immediately\n\n## 3.4 Waterproofing Procedure\n\n### Surface Preparation:\n\n**Step 1: Prepare Wall Surface**\n- Remove form debris, projections\n- Fill tie holes and voids\n- Repair honeycomb areas\n- Allow wall to cure (minimum 7 days for membranes)\n- Surface must be clean and dry\n\n### Dampproofing (Minimum Requirement):\n\n**Step 2: Apply Dampproofing**\n- Spray or roll application\n- Foundation coating (asphalt emulsion)\n- Coverage: Per manufacturer (typically 1 gal/100 sf)\n- Full coverage from footing to above grade\n- Allow to dry before backfill\n\n### Waterproofing (Enhanced Protection):\n\n**Step 2 (Alternate): Apply Waterproofing**\n- Self-adhering membrane (peel and stick)\n- OR spray-applied membrane\n- OR liquid-applied membrane\n- Extend onto footing (2-4\" typical)\n- Seal all seams and penetrations\n\n**Step 3: Install Protection Board**\n- Rigid foam or drainage board\n- Protects membrane during backfill\n- Tape seams if using for drainage\n- Extend to top of membrane\n\n### Drainage System:\n\n**Step 4: Install Weeping Tile**\n- Lay geotextile fabric in trench\n- Place 4\" perforated pipe (holes down)\n- Cover with filter fabric\n- Extend to outlet or sump pit\n- Verify slope (minimum 1%)\n\n**Step 5: Drainage Gravel**\n- 12\" clear crushed stone over pipe\n- Extend up wall (or use drainage board)\n- Wrap with filter fabric (prevents soil migration)\n\n**Step 6: Backfill**\n- Use clean fill (no large rocks, no organic material)\n- Compact in 12\" lifts\n- Don't compact against fresh concrete (wait 7 days)\n- Grade away from foundation\n- Don't backfill before first floor framed (prevents collapse)"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Inspection points, self-inspection checklists, common defects, and when to call for official inspections.",
+      "content_md": "## 4.1 Inspection Points\n\n### Municipal Inspections Required:\n\n**1. Footing Inspection:**\n- Before concrete pour\n- Verifies: Depth, dimensions, rebar, soil conditions\n- Required in most NB municipalities\n\n**2. Foundation Inspection:**\n- Before backfill\n- Verifies: Wall thickness, height, rebar, anchor bolts, waterproofing\n- Required in most NB municipalities\n\n### When to Call for Inspection:\n\n- Footing forms complete, rebar in place, BEFORE pour\n- Foundation walls complete, waterproofing done, BEFORE backfill\n- Call 24-48 hours ahead (schedule varies by municipality)\n- Have drawings on site for inspector reference\n\n## 4.2 Self-Inspection Checklists\n\n### Footing Checklist:\n- [ ] Dimensions match drawings\n- [ ] Depth below frost line (6' minimum in NB)\n- [ ] Forms level and secure\n- [ ] Rebar correct size and spacing\n- [ ] Rebar has proper cover (3\" from soil)\n- [ ] Dowels placed for wall connection\n- [ ] Soil bearing adequate (no soft spots)\n- [ ] Stepped footings per code (if applicable)\n\n### Foundation Wall Checklist:\n- [ ] Wall thickness meets code (8\" typical)\n- [ ] Wall height per drawings\n- [ ] Plumb, level, and square\n- [ ] Rebar correct size and spacing\n- [ ] Rebar has proper cover (1.5\" from face)\n- [ ] Anchor bolts correct spacing (max 8' o.c.)\n- [ ] Anchor bolts within 12\" of corners\n- [ ] Window openings correct size and location\n- [ ] Beam pockets correct size and elevation\n- [ ] Penetrations sleeved properly\n\n### Waterproofing Checklist:\n- [ ] Surface clean and dry\n- [ ] Full coverage to above grade\n- [ ] Membrane sealed at seams\n- [ ] Penetrations sealed\n- [ ] Protection board installed\n- [ ] Weeping tile installed and sloped\n- [ ] Drainage gravel in place\n- [ ] Filter fabric wrapped\n\n### Pre-Backfill Final Check:\n- [ ] All inspections passed\n- [ ] Waterproofing complete and undamaged\n- [ ] Weeping tile flows to outlet/sump\n- [ ] Window wells installed (if applicable)\n- [ ] First floor framed (wall bracing)\n- [ ] Sump pit and pump installed\n- [ ] Grade board/insulation at top of wall\n\n## 4.3 Common Foundation Defects\n\n| Defect | Cause | Prevention/Repair |\n|--------|-------|-------------------|\n| Honeycombing | Poor vibration, cold concrete | Vibrate properly, correct mix design; patch with grout |\n| Cold joints | Pour stopped too long | Continuous pour, don't interrupt |\n| Cracks (shrinkage) | Rapid drying, poor curing | Proper curing, control joints |\n| Cracks (structural) | Overload, settlement, frost | Engineering review, may need underpinning |\n| Water leaks | Membrane damage, poor drainage | Repair membrane, improve drainage |\n| Anchor bolt misplaced | Poor layout, shifted during pour | Use template, reset if needed |\n| Out of level | Form settlement, poor setup | Check continuously, shim if needed |\n| Out of plumb | Form deflection, poor bracing | Brace thoroughly, check during pour |\n\n## 4.4 Critical Tolerances\n\n### Foundation Tolerances (Residential):\n\n| Measurement | Tolerance |\n|-------------|----------|\n| Overall dimensions | ±1/2\" (12mm) |\n| Wall thickness | ±1/4\" (6mm) |\n| Wall plumb | ±1/4\" in 8' (6mm in 2.4m) |\n| Top of wall level | ±1/4\" (6mm) |\n| Anchor bolt location | ±1/2\" (12mm) |\n| Anchor bolt projection | ±1/4\" (6mm) |\n| Footing depth | 0 to +2\" (can be deeper, not shallower) |\n| Rebar cover | -0, +1/2\" (can be more, not less) |\n\n## 4.5 Red Flags (Stop Work)\n\n**During Excavation:**\n- Water entering faster than pumping\n- Soil collapsing or sloughing\n- Unexpected fill or debris discovered\n- Suspected contamination (odor, discoloration)\n\n**During Concrete Work:**\n- Forms deflecting or failing\n- Concrete arriving with wrong specs\n- Rebar shifting during pour\n- Segregation visible in concrete\n\n**After Stripping:**\n- Structural cracks (wide, through-wall)\n- Large honeycomb areas\n- Wall significantly out of plumb/level\n- Missing or misplaced anchor bolts"
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "Quick reference tables, concrete mix specifications, and troubleshooting guide.",
+      "content_md": "## APPENDIX A: QUICK REFERENCE TABLES\n\n### Footing Sizes (NBC Prescriptive):\n\n| Building Stories | Max Width | Footing Width | Footing Depth |\n|------------------|-----------|---------------|---------------|\n| 1 story | 32' | 12\" | 6\" |\n| 2 story | 32' | 16\" | 8\" |\n| 3 story | 32' | 20\" | 8\" |\n| 2 story | 40' | 18\" | 8\" |\n\n### Concrete Specifications:\n\n| Component | Specification |\n|-----------|---------------|\n| Footings | 20 MPa (3000 psi) minimum |\n| Walls | 25 MPa (3600 psi) minimum |\n| Garage slabs | 25 MPa, air-entrained |\n| Exterior slabs | 32 MPa, air-entrained |\n| Slump | 100-150mm (4-6\") typical |\n| Air entrainment | 5-7% for freeze-thaw exposure |\n\n### Rebar Specifications:\n\n| Bar Size | Diameter | Area | Common Use |\n|----------|----------|------|------------|\n| #3 (10M) | 3/8\" (10mm) | 0.11 sq in | Slabs, light duty |\n| #4 (15M) | 1/2\" (12mm) | 0.20 sq in | Footings, walls |\n| #5 (20M) | 5/8\" (16mm) | 0.31 sq in | Heavy walls, beams |\n| #6 (25M) | 3/4\" (19mm) | 0.44 sq in | Structural elements |\n\n## APPENDIX B: CONCRETE VOLUME CALCULATOR\n\n### Formula:\nVolume (cubic yards) = (Length × Width × Depth in feet) ÷ 27\n\n### Quick Reference:\n\n| Footing Size | Per Linear Foot |\n|--------------|----------------|\n| 16\" × 8\" | 0.033 cu yd |\n| 18\" × 8\" | 0.037 cu yd |\n| 20\" × 10\" | 0.051 cu yd |\n\n| Wall Size | Per Linear Foot |\n|-----------|----------------|\n| 8\" × 8' high | 0.20 cu yd |\n| 10\" × 8' high | 0.25 cu yd |\n| 8\" × 9' high | 0.22 cu yd |\n\n**Always order 5-10% extra for waste, spillage, and variations.**\n\n## APPENDIX C: FROST-PROTECTED SHALLOW FOUNDATION\n\n### When Allowed:\n- Heated buildings only\n- Ground not previously frozen\n- Adequate insulation installed\n\n### Insulation Requirements (NB Zone 6):\n\n| Configuration | Horizontal Wing | Vertical |\n|---------------|-----------------|----------|\n| Slab foundation | R-10 for 4' out | R-10 to 24\" deep |\n| Basement wall | R-10 for 2' out | R-10 to 24\" deep |\n\n### Benefits:\n- Reduced excavation\n- Faster construction\n- Lower cost\n- Less site disturbance\n\n### Risks:\n- If building loses heat, frost can heave\n- Must maintain continuous heating\n- Not suitable for unheated structures\n\n## APPENDIX D: TROUBLESHOOTING\n\n### Water Infiltration:\n\n| Symptom | Likely Cause | Solution |\n|---------|--------------|----------|\n| Water at wall/floor joint | Hydrostatic pressure | Interior drain tile, sump pump |\n| Water through wall | Membrane failure | Exterior excavation, re-waterproof |\n| Damp walls (no water) | Vapor diffusion | Interior vapor barrier, dehumidifier |\n| Water after rain only | Surface water | Improve grading, extend downspouts |\n\n### Cracks:\n\n| Crack Type | Likely Cause | Concern Level |\n|------------|--------------|---------------|\n| Hairline (<1/16\") | Shrinkage | Low - cosmetic |\n| Vertical, consistent width | Shrinkage | Low - seal and monitor |\n| Diagonal, wider at top | Settlement | High - engineer review |\n| Horizontal | Lateral pressure | High - engineer review |\n| Stair-step (block) | Settlement | High - engineer review |\n\n## APPENDIX E: NB CONTACTS\n\n### Building Inspections:\n- Moncton: 506-853-3550\n- Dieppe: 506-877-7900\n- Riverview: 506-387-2030\n- Fredericton: 506-460-2020\n- Saint John: 506-658-2835\n\n### Utilities (Before Digging):\n- NB One Call: 1-800-222-4420\n- Online: www.nb1call.com\n\n### Ready-Mix Suppliers (Moncton Area):\n- Ocean Ready Mix\n- Irving Materials\n- Lafarge (multiple locations)"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "pre-excavation",
+      "title": "Pre-Excavation Checklist",
+      "items": [
+        "Building permit obtained",
+        "Survey/property lines verified",
+        "NB One Call completed (utility locates)",
+        "Benchmarks established",
+        "Erosion control installed",
+        "Excavation limits marked",
+        "Layout verified square (diagonal check)"
+      ]
+    },
+    {
+      "id": "footing-inspection",
+      "title": "Footing Inspection Checklist",
+      "items": [
+        "Dimensions match drawings",
+        "Depth below frost line (6 ft minimum NB)",
+        "Forms level and secure",
+        "Rebar correct size and spacing",
+        "Rebar has 3 inch cover from soil",
+        "Wall dowels placed",
+        "Soil bearing adequate",
+        "Stepped footings per code (if applicable)",
+        "Municipal inspection called"
+      ]
+    },
+    {
+      "id": "wall-inspection",
+      "title": "Foundation Wall Inspection Checklist",
+      "items": [
+        "Wall thickness meets code (8 inch typical)",
+        "Wall height per drawings",
+        "Walls plumb, level, and square",
+        "Rebar correct size and spacing",
+        "Rebar has 1.5 inch cover",
+        "Anchor bolts at max 8 ft spacing",
+        "Anchor bolts within 12 inch of corners",
+        "Window openings correct",
+        "Beam pockets correct",
+        "Penetrations sleeved"
+      ]
+    },
+    {
+      "id": "waterproofing",
+      "title": "Waterproofing Checklist",
+      "items": [
+        "Wall surface clean and cured",
+        "Membrane applied to above grade",
+        "All seams sealed",
+        "Penetrations sealed",
+        "Protection board installed",
+        "Weeping tile installed",
+        "Weeping tile has minimum 1% slope",
+        "Drainage gravel in place",
+        "Filter fabric wrapped"
+      ]
+    },
+    {
+      "id": "pre-backfill",
+      "title": "Pre-Backfill Checklist",
+      "items": [
+        "All municipal inspections passed",
+        "Waterproofing complete and undamaged",
+        "Weeping tile flows to outlet/sump",
+        "Window wells installed (if needed)",
+        "First floor framed (bracing)",
+        "Sump pit and pump installed",
+        "Grade board at wall top",
+        "Photos taken for records"
+      ]
+    },
+    {
+      "id": "concrete-pour",
+      "title": "Concrete Pour Day Checklist",
+      "items": [
+        "Ready-mix order confirmed",
+        "Truck access verified",
+        "Pump arranged (if needed)",
+        "Forms oiled",
+        "Rebar inspected and tied",
+        "Embeds in place",
+        "Vibrator tested and working",
+        "Finishing tools ready",
+        "Curing materials on site"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What is the minimum frost depth for footings in NB Zone 6 (Moncton area)?",
+        "type": "mcq",
+        "choices": ["A) 3 feet", "B) 4 feet", "C) 6 feet", "D) 8 feet"],
+        "answer": "C",
+        "explanation": "NB Zone 6 requires footings to extend 6 feet (1.8m) below grade to get below the frost line and prevent frost heaving."
+      },
+      {
+        "id": "q2",
+        "question": "What is the minimum concrete strength for foundation walls?",
+        "type": "mcq",
+        "choices": ["A) 15 MPa", "B) 20 MPa", "C) 25 MPa", "D) 32 MPa"],
+        "answer": "C",
+        "explanation": "Foundation walls require a minimum of 25 MPa (3600 psi) concrete. Footings can use 20 MPa minimum."
+      },
+      {
+        "id": "q3",
+        "question": "What is the maximum spacing for anchor bolts in a foundation wall?",
+        "type": "mcq",
+        "choices": ["A) 4 feet", "B) 6 feet", "C) 8 feet", "D) 10 feet"],
+        "answer": "C",
+        "explanation": "Anchor bolts must be spaced at maximum 8 feet (2.4m) on center, with bolts within 12 inches of corners and plate splices."
+      },
+      {
+        "id": "q4",
+        "question": "What is the minimum slope for weeping tile (drain tile)?",
+        "type": "mcq",
+        "choices": ["A) 0.5%", "B) 1%", "C) 2%", "D) 5%"],
+        "answer": "B",
+        "explanation": "Weeping tile must slope at minimum 1% (1/8 inch per foot) toward the outlet or sump pit to ensure proper drainage."
+      },
+      {
+        "id": "q5",
+        "question": "What should you do BEFORE backfilling a foundation?",
+        "type": "mcq",
+        "choices": ["A) Just wait 24 hours for concrete to cure", "B) Frame the first floor to provide lateral bracing", "C) Backfill immediately to protect waterproofing", "D) Only wait for waterproofing to dry"],
+        "answer": "B",
+        "explanation": "The first floor must be framed before backfilling to provide lateral bracing. Without bracing, the soil pressure during backfill can cause the walls to collapse inward."
+      },
+      {
+        "id": "q6",
+        "question": "What is the minimum cover for rebar in footings?",
+        "type": "mcq",
+        "choices": ["A) 1 inch", "B) 2 inches", "C) 3 inches", "D) 4 inches"],
+        "answer": "C",
+        "explanation": "Rebar in footings requires minimum 3 inches (75mm) cover from the soil to protect against corrosion and ensure proper concrete encasement."
+      },
+      {
+        "id": "q7",
+        "question": "When is a foundation inspection required to be called?",
+        "type": "mcq",
+        "choices": ["A) After backfilling", "B) Before backfilling, after waterproofing", "C) Only if there are problems", "D) After the first floor is framed"],
+        "answer": "B",
+        "explanation": "Municipal foundation inspection must be called before backfill, after waterproofing is complete. This allows the inspector to verify wall dimensions, rebar, anchor bolts, and waterproofing."
+      },
+      {
+        "id": "q8",
+        "question": "What causes \"honeycombing\" in concrete?",
+        "type": "mcq",
+        "choices": ["A) Too much water in mix", "B) Poor vibration or consolidation", "C) Cold weather", "D) Adding too much air entrainment"],
+        "answer": "B",
+        "explanation": "Honeycombing (voids in concrete surface) is caused by poor vibration or consolidation. The concrete doesn't fully fill around aggregate, leaving pockets."
+      },
+      {
+        "id": "q9",
+        "question": "What is the minimum wall thickness for an 8-foot high poured concrete foundation wall?",
+        "type": "mcq",
+        "choices": ["A) 6 inches", "B) 8 inches", "C) 10 inches", "D) 12 inches"],
+        "answer": "B",
+        "explanation": "For wall heights of 7 to 8 feet, minimum thickness is 8 inches (200mm). Walls up to 7 feet can be 6 inches; walls over 8 feet require engineering."
+      },
+      {
+        "id": "q10",
+        "question": "What soil type has the highest bearing capacity?",
+        "type": "mcq",
+        "choices": ["A) Clay", "B) Silt", "C) Bedrock", "D) Fill"],
+        "answer": "C",
+        "explanation": "Bedrock has the highest bearing capacity at 12,000+ psf. It provides excellent, stable support. Gravel is second best at 4,000-6,000 psf."
+      },
+      {
+        "id": "q11",
+        "question": "For stepped footings, what is the maximum vertical step allowed?",
+        "type": "mcq",
+        "choices": ["A) 12 inches", "B) 18 inches", "C) 24 inches", "D) 36 inches"],
+        "answer": "C",
+        "explanation": "Maximum step in a stepped footing is 24 inches (600mm). The horizontal run must be at least twice the vertical rise, and rebar must be continuous through the step."
+      },
+      {
+        "id": "q12",
+        "question": "What is the purpose of a weeping tile system?",
+        "type": "mcq",
+        "choices": ["A) To water the landscaping", "B) To collect and drain groundwater away from the foundation", "C) To provide ventilation", "D) To support the foundation wall"],
+        "answer": "B",
+        "explanation": "Weeping tile (drain tile) collects groundwater around the foundation and drains it away to a sump pit or daylight outlet, preventing hydrostatic pressure against basement walls."
+      },
+      {
+        "id": "q13",
+        "question": "What type of crack pattern indicates possible foundation settlement?",
+        "type": "mcq",
+        "choices": ["A) Hairline cracks", "B) Diagonal cracks wider at the top", "C) Uniform vertical cracks", "D) Small corner cracks"],
+        "answer": "B",
+        "explanation": "Diagonal cracks that are wider at the top (or in stair-step pattern in block walls) indicate differential settlement. This requires engineering review and possible underpinning."
+      },
+      {
+        "id": "q14",
+        "question": "What is the minimum grade slope away from a foundation?",
+        "type": "mcq",
+        "choices": ["A) 1% for 3 feet", "B) 2% for 4 feet", "C) 5% for 6 feet", "D) 10% for 10 feet"],
+        "answer": "C",
+        "explanation": "Grade must slope away from the foundation at minimum 5% (6 inches in 10 feet) for a distance of 6 feet. This directs surface water away from the foundation."
+      },
+      {
+        "id": "q15",
+        "question": "What percentage extra concrete should you order to account for waste and variations?",
+        "type": "mcq",
+        "choices": ["A) 1-2%", "B) 5-10%", "C) 15-20%", "D) 25-30%"],
+        "answer": "B",
+        "explanation": "Order 5-10% extra concrete beyond calculated quantities to account for spillage, waste, form variations, and over-excavation. Running short during a pour is a serious problem."
+      }
+    ]
+  }
+}

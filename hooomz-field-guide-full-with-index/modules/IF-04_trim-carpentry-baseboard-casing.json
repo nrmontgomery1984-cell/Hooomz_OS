@@ -1,0 +1,269 @@
+{
+  "id": "IF-04",
+  "title": "Trim Carpentry - Baseboard & Casing",
+  "category": "Interior Finish",
+  "level": "Intermediate",
+  "estimated_study_hours": 4,
+  "tags": [
+    "trim",
+    "baseboard",
+    "casing",
+    "mitre cuts",
+    "coping",
+    "finish carpentry"
+  ],
+  "prerequisites": [
+    "IF-03"
+  ],
+  "sections": [
+    {
+      "title": "Trim Materials & Selection",
+      "content": "## Interior Trim Materials\n\nSelecting appropriate trim materials depends on budget, paint/stain finish, and moisture exposure.\n\n### Wood Species\n\n| Species | Characteristics | Best For |\n|---------|-----------------|----------|\n| Pine | Soft, affordable, paintable | Paint-grade trim |\n| Poplar | Harder, smooth grain | Paint-grade, high-wear areas |\n| Oak | Hard, prominent grain | Stain-grade traditional |\n| Maple | Very hard, fine grain | Stain-grade contemporary |\n| MDF | Uniform, no grain | Paint-grade, moisture-free |\n\n### Profile Styles\n\n**Traditional Profiles:**\n- Colonial casing (curved profile)\n- Victorian (ornate details)\n- Craftsman (square edges)\n\n**Contemporary Profiles:**\n- Flat stock (simple, clean)\n- Eased edge (slightly rounded)\n- Shaker style (minimal detail)\n\n### Material Grades\n\n| Grade | Description | Application |\n|-------|-------------|-------------|\n| Clear | No knots, uniform | Stain-grade finish |\n| Paint Grade | Small knots, filled | Painted finish |\n| Finger-jointed | Joined short pieces | Paint-grade, economical |\n| Primed MDF | Factory primed | Paint-grade, stable |\n\n> **Pro Tip:** In NB Zone 6, solid wood trim in bathrooms may cup or warp. Consider PVC or primed MDF for moisture-prone areas."
+    },
+    {
+      "title": "Tools & Equipment",
+      "content": "## Essential Trim Carpentry Tools\n\nQuality tools are essential for tight-fitting joints and professional results.\n\n### Power Tools\n\n| Tool | Use | Key Features |\n|------|-----|-------------|\n| Mitre saw | Angle cuts | 10-12\" blade, dual bevel |\n| Brad nailer | Attachment | 18-gauge, 2\" capacity |\n| Pin nailer | Delicate trim | 23-gauge, no splitting |\n| Jigsaw | Curved cuts | Variable speed |\n| Router | Edge profiles | 1/4\" collet minimum |\n\n### Hand Tools\n\n**Measuring & Layout:**\n- Tape measure (25')\n- Combination square\n- Bevel gauge\n- Stud finder\n- Pencil compass\n\n**Cutting & Fitting:**\n- Coping saw\n- Block plane\n- Utility knife\n- Nail set\n- Flush-cut saw\n\n### Setup & Calibration\n\n**Mitre Saw Setup:**\n1. Check blade perpendicular to fence\n2. Verify 45° stops accurate\n3. Support long pieces with stands\n4. Use stop blocks for repetitive cuts\n\n**Brad Nailer Settings:**\n- Depth adjustment for material\n- Test on scrap first\n- Slightly countersink for filling"
+    },
+    {
+      "title": "Baseboard Installation",
+      "content": "## Professional Baseboard Installation\n\nBaseboards protect wall bases and provide visual transition between wall and floor.\n\n### Planning & Measurement\n\n1. **Room survey** - Measure all walls\n2. **Add waste** - 10-15% for cuts\n3. **Plan joints** - Inside corners coped, outside mitred\n4. **Mark studs** - Transfer to baseboard height\n\n### Inside Corner Methods\n\n**Coped Joint (Preferred):**\n1. Cut first piece square to wall\n2. Cut second piece at 45° (profile exposed)\n3. Back-cut profile with coping saw\n4. Test fit and adjust\n\n**Why cope vs. mitre inside corners:**\n- Accommodates out-of-square corners\n- Won't open gaps when walls settle\n- Cleaner appearance long-term\n\n### Outside Corner Mitres\n\n1. Measure to corner point\n2. Cut 45° mitre (test with scrap)\n3. Dry fit both pieces\n4. Adjust angle if corner not 90°\n5. Glue joint and nail both sides\n\n### Installation Sequence\n\n1. Start with longest wall (square cut both ends)\n2. Work around room with coped inside corners\n3. Install outside corner pieces together\n4. Fill nail holes\n5. Caulk top edge to wall\n\n### Fastening\n\n| Wall Type | Fastener | Spacing |\n|-----------|----------|----------|\n| Stud locations | 2\" brad nails | 16\" o.c. |\n| No stud access | Construction adhesive + nails | Continuous |\n| Outside corners | Nail both directions | Cross-nail |\n\n> **Pro Tip:** Always leave a 1/16\" gap at floor for expansion. This gap is hidden by flooring or floor finish."
+    },
+    {
+      "title": "Door & Window Casing",
+      "content": "## Casing Installation Techniques\n\nDoor and window casings frame openings and conceal jamb-to-wall transitions.\n\n### Reveal Layout\n\nThe reveal is the setback from jamb edge to casing edge (typically 3/16\" to 1/4\").\n\n**Setting Reveal:**\n1. Mark reveal line on all jamb edges\n2. Use combination square for consistency\n3. Transfer marks to head and legs\n\n### Standard Casing Methods\n\n**Mitred Casing:**\n1. Measure head piece (jamb + 2 reveals + mitre allowance)\n2. Cut 45° mitres on both ends\n3. Measure leg pieces (floor to head reveal + mitre)\n4. Cut 45° at top, square at bottom\n5. Install head first, then legs\n\n**Butt Joint Casing:**\n1. Install head piece with square cuts\n2. Butt legs against bottom of head\n3. Simpler for beginners\n4. Works with square-edged profiles\n\n### Door Casing Specifics\n\n| Measurement | Method |\n|-------------|--------|\n| Head length | Jamb width + 2 reveals + 1/16\" |\n| Leg length | Floor to head reveal line |\n| Reveal | 3/16\" - 1/4\" from jamb edge |\n\n### Window Casing\n\n**With Stool & Apron:**\n1. Install stool (extends past casing width)\n2. Case head and sides to stool\n3. Install apron beneath stool\n\n**Picture Frame Style:**\n- Four mitred pieces\n- No stool or apron\n- Contemporary appearance\n\n### Fastening Casing\n\n- Nail through casing into jamb (interior)\n- Nail through casing into framing (exterior edge)\n- Use 15-gauge for thick casings, 18-gauge for thin\n- Pre-drill hardwoods to prevent splitting"
+    },
+    {
+      "title": "Fitting & Finishing Details",
+      "content": "## Professional Finishing Techniques\n\nAttention to detail separates professional trim work from amateur installations.\n\n### Dealing with Out-of-Square\n\n**Walls:**\n- Use bevel gauge to measure actual angle\n- Split difference between pieces\n- Back-cut to improve fit\n\n**Floors:**\n- Scribe baseboard to uneven floor\n- Use compass to transfer profile\n- Cut with jigsaw following scribe line\n\n### Gap Filling\n\n| Gap Size | Solution |\n|----------|----------|\n| < 1/16\" | Caulk |\n| 1/16\" - 1/8\" | Wood filler |\n| > 1/8\" | Recut or shim |\n\n### Caulking\n\n**Where to Caulk:**\n- Top of baseboard to wall\n- Inside corners (after coping)\n- Casing to wall surfaces\n\n**Caulking Technique:**\n1. Cut tip at 45° angle\n2. Apply consistent bead\n3. Tool with wet finger\n4. Clean excess immediately\n\n### Nail Hole Filling\n\n**Paint-Grade:**\n1. Use lightweight spackle\n2. Overfill slightly\n3. Sand flush after drying\n\n**Stain-Grade:**\n1. Match wood filler to stain\n2. Test on scrap first\n3. Apply after staining\n\n### Pre-Finishing\n\nPre-finishing trim before installation:\n- Back-prime all pieces\n- Apply finish coats\n- Touch up after installation\n- Saves time on ladders\n\n> **Pro Tip:** For stain-grade trim, number pieces and their locations. Pre-stain, then install. Touch up nail holes with matching putty stick after installation."
+    }
+  ],
+  "checklists": [
+    {
+      "title": "Pre-Installation Checklist",
+      "items": [
+        "All trim materials acclimated to room (48+ hours)",
+        "Walls painted or ready for final coat",
+        "Flooring installed or accounted for",
+        "Jambs installed plumb and square",
+        "Mitre saw calibrated and accurate",
+        "Brad nailer adjusted for depth",
+        "Stud locations marked",
+        "Reveals marked on all jambs",
+        "Trim profiles match throughout",
+        "Adequate material with 10-15% waste allowance"
+      ]
+    },
+    {
+      "title": "Baseboard Installation Checklist",
+      "items": [
+        "Longest wall piece cut and fit first",
+        "Inside corners coped (not mitred)",
+        "Cope joints test-fit before nailing",
+        "Outside corners dry-fit before gluing",
+        "Nails into studs where possible",
+        "Consistent height maintained",
+        "Floor gap maintained for expansion",
+        "Scarf joints on long runs properly executed",
+        "All pieces secured without gaps",
+        "Return pieces installed at door openings"
+      ]
+    },
+    {
+      "title": "Casing Installation Checklist",
+      "items": [
+        "Reveal consistent on all jamb edges",
+        "Head casing length includes reveals both sides",
+        "Mitres tight at corners",
+        "Leg casings extend to floor",
+        "Nails set below surface",
+        "Casing aligned with reveal marks",
+        "Both sides of door match",
+        "Window stool extends past casing",
+        "Apron centered under stool",
+        "All joints glued at mitres"
+      ]
+    },
+    {
+      "title": "Finishing Checklist",
+      "items": [
+        "All nail holes filled appropriately",
+        "Filler sanded smooth when dry",
+        "Top of baseboards caulked to wall",
+        "Casing-to-wall gaps caulked",
+        "Inside corners touched up after coping",
+        "Outside corners sanded smooth",
+        "All caulk tooled and cleaned",
+        "Touch-up paint applied",
+        "Final inspection for gaps",
+        "Cleanup complete, materials stored"
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "question": "Which wood species is best for stain-grade traditional trim?",
+      "options": [
+        "Pine",
+        "MDF",
+        "Oak",
+        "Finger-jointed pine"
+      ],
+      "correct": 2,
+      "explanation": "Oak is ideal for stain-grade traditional trim due to its hardness and prominent grain that enhances stained finishes."
+    },
+    {
+      "question": "What is the preferred joint method for inside corners on baseboard?",
+      "options": [
+        "Mitre joint",
+        "Butt joint",
+        "Coped joint",
+        "Scarf joint"
+      ],
+      "correct": 2,
+      "explanation": "Coped joints are preferred for inside corners because they accommodate out-of-square corners and won't open gaps when walls settle."
+    },
+    {
+      "question": "What is the typical reveal dimension when installing door casing?",
+      "options": [
+        "1/16 to 1/8 inch",
+        "3/16 to 1/4 inch",
+        "3/8 to 1/2 inch",
+        "Flush with jamb edge"
+      ],
+      "correct": 1,
+      "explanation": "The standard reveal is 3/16 to 1/4 inch setback from the jamb edge to the casing edge, providing visual depth and hiding minor irregularities."
+    },
+    {
+      "question": "What gauge brad nailer is typically used for trim installation?",
+      "options": [
+        "15-gauge",
+        "16-gauge",
+        "18-gauge",
+        "23-gauge"
+      ],
+      "correct": 2,
+      "explanation": "18-gauge brad nailers are most common for trim work, providing adequate holding power with small holes that are easy to fill."
+    },
+    {
+      "question": "Why should solid wood trim be avoided in bathrooms in NB Zone 6?",
+      "options": [
+        "Too expensive",
+        "May cup or warp from moisture",
+        "Not code compliant",
+        "Difficult to paint"
+      ],
+      "correct": 1,
+      "explanation": "In humid bathroom environments, solid wood trim may cup or warp. PVC or primed MDF are better choices for moisture-prone areas."
+    },
+    {
+      "question": "What is the first piece installed when casing a door with mitred joints?",
+      "options": [
+        "Left leg",
+        "Right leg",
+        "Head casing",
+        "Any piece"
+      ],
+      "correct": 2,
+      "explanation": "The head casing is installed first, then the leg pieces are fit to it. This ensures the mitres align properly at the top corners."
+    },
+    {
+      "question": "How much waste allowance should be included when ordering trim materials?",
+      "options": [
+        "5%",
+        "10-15%",
+        "25%",
+        "50%"
+      ],
+      "correct": 1,
+      "explanation": "A 10-15% waste allowance accounts for mitre cuts, coping waste, mistakes, and fitting adjustments during installation."
+    },
+    {
+      "question": "What tool is used to cut the profile when coping an inside corner?",
+      "options": [
+        "Mitre saw",
+        "Circular saw",
+        "Coping saw",
+        "Table saw"
+      ],
+      "correct": 2,
+      "explanation": "A coping saw is used to carefully cut along the profile line exposed by the 45-degree mitre cut, removing the back material."
+    },
+    {
+      "question": "What is a scarf joint used for in baseboard installation?",
+      "options": [
+        "Inside corners",
+        "Outside corners",
+        "Joining pieces on long walls",
+        "Transitions to door casings"
+      ],
+      "correct": 2,
+      "explanation": "Scarf joints (opposing 45-degree cuts) are used to join baseboard pieces on walls longer than available trim lengths."
+    },
+    {
+      "question": "What gap should be left at the floor when installing baseboard?",
+      "options": [
+        "None - tight to floor",
+        "1/16 inch",
+        "1/4 inch",
+        "1/2 inch"
+      ],
+      "correct": 1,
+      "explanation": "A 1/16 inch gap at the floor allows for expansion and is hidden by the flooring or floor finish."
+    },
+    {
+      "question": "What should be used to fill gaps larger than 1/8 inch?",
+      "options": [
+        "Caulk",
+        "Wood filler",
+        "Recut the piece or use shims",
+        "Leave as is"
+      ],
+      "correct": 2,
+      "explanation": "Gaps larger than 1/8 inch indicate a fitting problem. The piece should be recut or shimmed rather than filled."
+    },
+    {
+      "question": "What is the purpose of back-priming trim before installation?",
+      "options": [
+        "Adds color",
+        "Seals against moisture",
+        "Makes cutting easier",
+        "Required by code"
+      ],
+      "correct": 1,
+      "explanation": "Back-priming seals the back of trim against moisture absorption, preventing warping and improving long-term stability."
+    },
+    {
+      "question": "Where should nails be placed when fastening door casing?",
+      "options": [
+        "Only through the casing into the jamb",
+        "Only through the casing into the wall framing",
+        "Both into the jamb and into the wall framing",
+        "Adhesive only, no nails"
+      ],
+      "correct": 2,
+      "explanation": "Casing should be nailed both into the jamb (interior edge) and into the wall framing (exterior edge) for secure attachment."
+    },
+    {
+      "question": "What tool should be used to measure actual corner angles when walls are out of square?",
+      "options": [
+        "Tape measure",
+        "Bevel gauge",
+        "Level",
+        "Stud finder"
+      ],
+      "correct": 1,
+      "explanation": "A bevel gauge captures the actual angle of out-of-square corners, allowing you to transfer that angle to the mitre saw."
+    },
+    {
+      "question": "When should stain-grade trim be stained relative to installation?",
+      "options": [
+        "After installation only",
+        "Before installation, touch up after",
+        "Both equally acceptable",
+        "Never stain trim"
+      ],
+      "correct": 1,
+      "explanation": "Pre-staining trim before installation saves time and provides better coverage. Touch up nail holes with matching putty after installation."
+    }
+  ]
+}

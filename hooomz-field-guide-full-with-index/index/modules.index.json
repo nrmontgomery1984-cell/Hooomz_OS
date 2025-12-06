@@ -1,0 +1,452 @@
+[
+  {
+    "id": "ED-01",
+    "phase": 0,
+    "slug": "engineering-design-overview",
+    "title": "Engineering & Design Overview",
+    "category": "Engineering & Design",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "EL-01",
+    "phase": 5,
+    "slug": "electrical-rough-in-fundamentals",
+    "title": "Electrical Rough-In Fundamentals",
+    "category": "Electrical",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "EL-02",
+    "phase": 5,
+    "slug": "electrical-devices-finishes",
+    "title": "Electrical Devices & Finishes",
+    "category": "Electrical",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "EW-01",
+    "phase": 3,
+    "slug": "building-science-fundamentals",
+    "title": "Building Science Fundamentals",
+    "category": "Building Science",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "EW-02",
+    "phase": 3,
+    "slug": "air-sealing-vapor-barriers",
+    "title": "Air Sealing & Vapor Barriers",
+    "category": "Air Sealing & Insulation",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "EW-03",
+    "phase": 3,
+    "slug": "insulation-installation",
+    "title": "Insulation Installation",
+    "category": "Air Sealing & Insulation",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "EW-04",
+    "phase": 3,
+    "slug": "window-door-installation",
+    "title": "Window & Door Installation",
+    "category": "Exterior Envelope",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "EW-05",
+    "phase": 3,
+    "slug": "exterior-trim-cladding-prep",
+    "title": "Exterior Trim & Cladding Prep",
+    "category": "Exterior Envelope",
+    "level": "Journeyman",
+    "priority": 3
+  },
+  {
+    "id": "EW-06",
+    "phase": 3,
+    "slug": "roofing-systems",
+    "title": "Roofing Systems",
+    "category": "Roofing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "EW-07",
+    "phase": 3,
+    "slug": "flat-roof-systems",
+    "title": "Flat Roof Systems",
+    "category": "Roofing",
+    "level": "Journeyman",
+    "priority": 3
+  },
+  {
+    "id": "EW-08",
+    "phase": 3,
+    "slug": "eavestroughs-drainage",
+    "title": "Eavestroughs & Drainage",
+    "category": "Roofing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "EW-09",
+    "phase": 3,
+    "slug": "exterior-weatherproofing-repairs",
+    "title": "Exterior Weatherproofing Repairs",
+    "category": "Exterior Envelope",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "EW-10",
+    "phase": 3,
+    "slug": "foundation-waterproofing",
+    "title": "Foundation Waterproofing",
+    "category": "Foundation & Drainage",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "EW-11",
+    "phase": 3,
+    "slug": "exterior-drainage-systems",
+    "title": "Exterior Drainage Systems",
+    "category": "Foundation & Drainage",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "FF-01",
+    "phase": 2,
+    "slug": "foundation-systems",
+    "title": "Foundation Systems",
+    "category": "Structural Foundation",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "FF-02",
+    "phase": 2,
+    "slug": "floor-framing",
+    "title": "Floor Framing",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "FF-03",
+    "phase": 2,
+    "slug": "wall-framing",
+    "title": "Wall Framing",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "FF-04",
+    "phase": 2,
+    "slug": "ceiling-roof-framing",
+    "title": "Ceiling & Roof Framing",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "FF-05",
+    "phase": 2,
+    "slug": "structural-connections",
+    "title": "Structural Connections",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "FF-06",
+    "phase": 2,
+    "slug": "window-door-framing",
+    "title": "Window & Door Framing",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "FF-07",
+    "phase": 2,
+    "slug": "stairs-railings",
+    "title": "Stairs & Railings",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "FF-08",
+    "phase": 2,
+    "slug": "structural-repairs-reinforcement",
+    "title": "Structural Repairs & Reinforcement",
+    "category": "Structural Framing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "HV-01",
+    "phase": 5,
+    "slug": "hvac-systems-fundamentals",
+    "title": "HVAC Systems Fundamentals",
+    "category": "HVAC",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "HV-02",
+    "phase": 5,
+    "slug": "hvac-installation-commissioning",
+    "title": "HVAC Installation & Commissioning",
+    "category": "HVAC",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "IF-01",
+    "phase": 4,
+    "slug": "drywall-installation",
+    "title": "Drywall Installation",
+    "category": "Drywall",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "IF-02",
+    "phase": 4,
+    "slug": "drywall-finishing",
+    "title": "Drywall Finishing",
+    "category": "Drywall",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "IF-03",
+    "phase": 4,
+    "slug": "interior-painting",
+    "title": "Interior Painting",
+    "category": "Paint & Finish",
+    "level": "Apprentice",
+    "priority": 3
+  },
+  {
+    "id": "IF-04",
+    "phase": 4,
+    "slug": "trim-carpentry-baseboard-casing",
+    "title": "Trim Carpentry - Baseboard & Casing",
+    "category": "Finish Carpentry",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "IF-05",
+    "phase": 4,
+    "slug": "crown-moulding-advanced-trim",
+    "title": "Crown Moulding & Advanced Trim",
+    "category": "Finish Carpentry",
+    "level": "Journeyman",
+    "priority": 3
+  },
+  {
+    "id": "IF-06",
+    "phase": 4,
+    "slug": "flooring-installation",
+    "title": "Flooring Installation",
+    "category": "Flooring",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "IF-07",
+    "phase": 4,
+    "slug": "interior-doors-trim-overview",
+    "title": "Interior Doors & Trim Overview",
+    "category": "Interior Finish (Trim & Doors)",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "MW-01",
+    "phase": 4,
+    "slug": "millwork-overview",
+    "title": "Millwork Overview",
+    "category": "Millwork",
+    "level": "Journeyman",
+    "priority": 3
+  },
+  {
+    "id": "OH-01",
+    "phase": 1,
+    "slug": "site-safety-ppe",
+    "title": "Site Safety & PPE",
+    "category": "Safety & Compliance",
+    "level": "Apprentice",
+    "priority": 5
+  },
+  {
+    "id": "OH-02",
+    "phase": 1,
+    "slug": "tool-safety-maintenance",
+    "title": "Tool Safety & Maintenance",
+    "category": "Tools & Equipment",
+    "level": "Apprentice",
+    "priority": 4
+  },
+  {
+    "id": "OH-03",
+    "phase": 1,
+    "slug": "material-handling-storage",
+    "title": "Material Handling & Storage",
+    "category": "Site Management",
+    "level": "Apprentice",
+    "priority": 3
+  },
+  {
+    "id": "OH-04",
+    "phase": 1,
+    "slug": "site-preparation-layout",
+    "title": "Site Preparation & Layout",
+    "category": "Site Management",
+    "level": "Apprentice",
+    "priority": 4
+  },
+  {
+    "id": "OH-05",
+    "phase": 1,
+    "slug": "waste-management-cleanup",
+    "title": "Waste Management & Cleanup",
+    "category": "Site Management",
+    "level": "Apprentice",
+    "priority": 2
+  },
+  {
+    "id": "PL-01",
+    "phase": 5,
+    "slug": "plumbing-rough-in-fundamentals",
+    "title": "Plumbing Rough-In Fundamentals",
+    "category": "Plumbing",
+    "level": "Journeyman",
+    "priority": 5
+  },
+  {
+    "id": "PL-02",
+    "phase": 5,
+    "slug": "plumbing-fixtures-trim",
+    "title": "Plumbing Fixtures & Trim",
+    "category": "Plumbing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "PM-01",
+    "phase": 0,
+    "slug": "project-management-fundamentals",
+    "title": "Project Management Fundamentals",
+    "category": "Project Management",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "PM-02",
+    "phase": 0,
+    "slug": "scheduling-qa-coordination",
+    "title": "Scheduling, QA & Coordination",
+    "category": "Project Management",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "PT-01",
+    "phase": 0,
+    "slug": "permits-testing-overview",
+    "title": "Permits & Testing Overview",
+    "category": "Permits & Testing",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "SF-01",
+    "phase": 4,
+    "slug": "stairs-flooring-overview",
+    "title": "Stairs & Flooring Overview",
+    "category": "Stairs & Flooring",
+    "level": "Journeyman",
+    "priority": 3
+  },
+  {
+    "id": "SP-01",
+    "phase": 1,
+    "slug": "site-preparation-overview",
+    "title": "Site Preparation Overview",
+    "category": "Site Preparation",
+    "level": "Apprentice",
+    "priority": 4
+  },
+  {
+    "id": "TI-01",
+    "phase": 5,
+    "slug": "wall-tile-installation",
+    "title": "Wall Tile Installation",
+    "category": "Tile Work Advanced",
+    "level": "Journeyman",
+    "priority": 3
+  },
+  {
+    "id": "TI-02",
+    "phase": 5,
+    "slug": "floor-tile-installation",
+    "title": "Floor Tile Installation",
+    "category": "Tile Work Advanced",
+    "level": "Journeyman",
+    "priority": 4
+  },
+  {
+    "id": "TI-03",
+    "phase": 5,
+    "slug": "shower-tile-installation",
+    "title": "Shower Tile Installation",
+    "category": "Tile Work Advanced",
+    "level": "Certified Professional",
+    "priority": 5
+  },
+  {
+    "id": "TI-04",
+    "phase": 5,
+    "slug": "backsplash-installation",
+    "title": "Backsplash Installation",
+    "category": "Tile Work Advanced",
+    "level": "Journeyman",
+    "priority": 2
+  },
+  {
+    "id": "TI-05",
+    "phase": 5,
+    "slug": "tile-repair-maintenance",
+    "title": "Tile Repair & Maintenance",
+    "category": "Tile Work Advanced",
+    "level": "Journeyman",
+    "priority": 2
+  },
+  {
+    "id": "WD-01",
+    "phase": 3,
+    "slug": "window-door-systems-overview",
+    "title": "Window & Door Systems Overview",
+    "category": "Windows & Doors",
+    "level": "Journeyman",
+    "priority": 4
+  }
+]

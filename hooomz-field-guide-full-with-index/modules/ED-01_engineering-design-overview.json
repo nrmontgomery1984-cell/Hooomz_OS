@@ -1,0 +1,16 @@
+{
+  "id": "ED-01",
+  "phase": 0,
+  "slug": "engineering-design-overview",
+  "title": "Engineering & Design Overview",
+  "category": "Engineering & Design",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

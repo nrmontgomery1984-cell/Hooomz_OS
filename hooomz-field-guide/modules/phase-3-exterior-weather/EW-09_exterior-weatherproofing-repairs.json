@@ -1,0 +1,298 @@
+{
+  "id": "EW-09",
+  "title": "Exterior Weatherproofing Repairs",
+  "category": "Exterior & Weather",
+  "level": "Intermediate",
+  "estimated_study_hours": 3.5,
+  "tags": [
+    "caulking",
+    "sealants",
+    "repairs",
+    "weatherproofing",
+    "maintenance"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "EW-02"
+  ],
+  "sections": [
+    {
+      "id": "ew09-s1",
+      "title": "Sealant Types & Selection",
+      "summary": "Understanding different sealant types and choosing the right product for each application.",
+      "content_md": "## Sealant Types & Selection\n\n### Why Sealants Matter\n\nExterior sealants are the first line of defense at joints and transitions. Failed sealants lead to:\n- Water infiltration\n- Air leakage (energy loss)\n- Rot and structural damage\n- Mold and indoor air quality issues\n\n### Sealant Categories\n\n| Type | Movement | Adhesion | Lifespan | Best Uses |\n|------|----------|----------|----------|----------|\n| **Silicone** | Excellent (50%+) | Fair | 20+ yrs | Glass, metal, non-porous |\n| **Polyurethane** | Very Good (25-50%) | Excellent | 15-20 yrs | Wood, concrete, most surfaces |\n| **Hybrid (STPE)** | Very Good (25-35%) | Excellent | 20+ yrs | All-purpose exterior |\n| **Latex/Acrylic** | Poor (5-10%) | Good | 5-10 yrs | Interior, paint-over needs |\n| **Butyl** | Good (15-25%) | Good | 10-15 yrs | Flashing, roofing, gutters |\n\n### Application-Specific Recommendations\n\n**Windows & Doors:**\n- Primary: Silicone or hybrid STPE\n- Paintable option: Polyurethane\n- Never use latex on exterior\n\n**Siding & Trim:**\n- Paintable polyurethane best\n- Hybrid STPE for color-matched\n- Allow proper cure before painting\n\n**Concrete & Masonry:**\n- Polyurethane or hybrid\n- Silicone for non-paintable applications\n- Self-leveling for horizontal joints\n\n**Roofing & Flashing:**\n- Butyl-based for metal\n- Roofing-specific products\n- UV-stable formulations\n\n> **Zone 6 Critical:** Choose sealants rated for -40°F to +200°F temperature range. Cold-weather application products available for winter repairs."
+    },
+    {
+      "id": "ew09-s2",
+      "title": "Joint Preparation",
+      "summary": "Proper joint preparation for successful, long-lasting sealant applications.",
+      "content_md": "## Joint Preparation\n\n### The 3-Step Process\n\nProper preparation determines sealant success:\n\n**1. Clean**\n- Remove old sealant completely\n- Scrape, cut, or use sealant remover\n- Wire brush loose material\n- Solvent wipe for oils/residue\n\n**2. Dry**\n- No moisture in joint\n- Use heat gun if needed\n- Wait after rain/dew\n- Test with tape adhesion\n\n**3. Prime (If Required)**\n- Some substrates need primer\n- Follow manufacturer specs\n- Allow proper flash time\n- Don't skip this step!\n\n### Substrate Preparation Guide\n\n| Substrate | Cleaning Method | Primer Needed? |\n|-----------|-----------------|----------------|\n| **Aluminum** | Solvent wipe | Usually no |\n| **Vinyl** | Soap/water, solvent | Usually no |\n| **Wood (painted)** | Scrape, sand, wipe | No |\n| **Wood (bare)** | Sand, dust off | Sometimes |\n| **Concrete** | Wire brush, solvent | Often yes |\n| **Brick** | Wire brush, blow clean | Often yes |\n| **Glass** | Glass cleaner, solvent | Usually no |\n\n### Backer Rod Installation\n\n**Purpose:**\n- Controls sealant depth\n- Creates proper shape factor\n- Prevents three-sided adhesion\n- Allows sealant movement\n\n**Selection:**\n- Open-cell: For wet applications\n- Closed-cell: Standard exterior\n- Size: 25-50% larger than joint width\n\n**Installation:**\n1. Measure joint depth\n2. Select backer rod size\n3. Push in with blunt tool\n4. Position 1/2 joint width from surface\n5. No gaps or stretching\n\n### Ideal Joint Dimensions\n\n**Width-to-Depth Ratio:**\n- Joints 1/4\" to 1/2\": 1:1 ratio (depth = width)\n- Joints over 1/2\": 2:1 ratio (depth = half width)\n- Never deeper than wide"
+    },
+    {
+      "id": "ew09-s3",
+      "title": "Application Techniques",
+      "summary": "Proper caulking and sealant application methods for professional results.",
+      "content_md": "## Application Techniques\n\n### Tools Required\n\n- Quality caulk gun (smooth rod preferred)\n- Utility knife for tip cutting\n- Tooling spatulas or fingers\n- Blue painter's tape\n- Rags and solvent for cleanup\n- Backer rod in various sizes\n\n### Cutting the Tip\n\n**Best Practice:**\n- Cut at 45° angle\n- Match opening to joint width\n- Start smaller, can always enlarge\n- Clean cut (no jagged edges)\n\n**Opening Size:**\n| Joint Width | Tip Opening |\n|-------------|-------------|\n| 1/4\" | 3/16\" |\n| 3/8\" | 1/4\" |\n| 1/2\" | 3/8\" |\n| 3/4\" | 1/2\" |\n\n### Application Method\n\n**Gun Technique:**\n1. Pierce inner seal with rod\n2. Hold gun at 45° to surface\n3. Push bead ahead of tip\n4. Maintain steady pressure\n5. Release trigger before stopping\n\n**Bead Profile:**\n- Slightly overfill joint\n- Consistent size throughout\n- No gaps or thin spots\n- Plan for tooling to spread\n\n### Tooling the Joint\n\n**Why Tool:**\n- Forces sealant into joint\n- Creates smooth finish\n- Ensures substrate contact\n- Proper concave shape\n\n**Tooling Method:**\n1. Tool within 5 minutes of application\n2. Use wet finger, spatula, or foam tool\n3. Firm pressure against both sides\n4. One continuous stroke\n5. Remove excess, don't add\n\n**Tooling Aids:**\n- Soapy water for silicone\n- Denatured alcohol for polyurethane\n- Nothing for STPE hybrids\n\n### Tape Masking\n\n**For Clean Lines:**\n1. Apply tape along both sides of joint\n2. Leave 1/16\" gap at joint edge\n3. Apply sealant over tape\n4. Tool immediately\n5. Remove tape immediately while wet\n6. Pull tape at 45° angle"
+    },
+    {
+      "id": "ew09-s4",
+      "title": "Common Repair Scenarios",
+      "summary": "Step-by-step repair procedures for common exterior weatherproofing failures.",
+      "content_md": "## Common Repair Scenarios\n\n### Window & Door Perimeter Sealing\n\n**Problem:** Air leakage, water entry at frames\n\n**Repair Steps:**\n1. Remove old sealant completely\n2. Check flashing integrity (repair if needed)\n3. Install backer rod if joint >1/4\"\n4. Apply compatible sealant\n5. Tool for smooth finish\n6. Seal head and jambs; leave sill weep gaps\n\n> **Important:** Don't seal bottom of window frames - weep holes allow drainage.\n\n### Siding Joint Repairs\n\n**Butt Joints (Fiber Cement):**\n1. Clean joint thoroughly\n2. Prime cut edges if exposed\n3. Apply paintable sealant\n4. Tool flush with surface\n5. Paint to match after cure\n\n**Corner Board Gaps:**\n1. Remove loose caulk\n2. Check for rot behind\n3. Fill large gaps with backer rod\n4. Apply flexible sealant\n5. Tool and paint\n\n### Masonry & Concrete Sealing\n\n**Control Joints:**\n1. Clean out debris and old sealant\n2. Insert closed-cell backer rod\n3. Apply self-leveling polyurethane\n4. Do not tool (self-levels)\n5. Allow full cure before traffic\n\n**Wall-to-Foundation:**\n1. Wire brush joint clean\n2. Apply masonry primer if needed\n3. Install backer rod\n4. Apply polyurethane sealant\n5. Tool for positive contact\n\n### Penetration Sealing\n\n**Pipes & Conduits:**\n1. Clean pipe and wall surface\n2. Apply sealant around perimeter\n3. Build up in layers if large gap\n4. Tool for continuous seal\n5. Consider boot for large pipes\n\n**Wires & Cables:**\n1. Group wires together if possible\n2. Apply sealant around bundle\n3. Ensure full coverage\n4. Verify interior seal also complete"
+    },
+    {
+      "id": "ew09-s5",
+      "title": "Inspection & Maintenance",
+      "summary": "Regular inspection procedures and maintenance scheduling for exterior sealants.",
+      "content_md": "## Inspection & Maintenance\n\n### Annual Inspection Checklist\n\n**Window & Doors:**\n- [ ] Frame-to-wall sealant intact\n- [ ] Glass-to-frame seals\n- [ ] Weather stripping condition\n- [ ] Threshold/sill sealing\n\n**Siding & Trim:**\n- [ ] Corner board joints\n- [ ] Butt joints in siding\n- [ ] Trim-to-siding transitions\n- [ ] J-channel and accessories\n\n**Penetrations:**\n- [ ] Vent hoods and caps\n- [ ] Electrical mast entry\n- [ ] HVAC line entries\n- [ ] Hose bibs and outlets\n\n**Foundation:**\n- [ ] Sill plate joint\n- [ ] Below-grade transitions\n- [ ] Basement window wells\n\n### Signs of Sealant Failure\n\n| Symptom | Cause | Action |\n|---------|-------|--------|\n| **Cracking** | Age, wrong product, movement | Remove and replace |\n| **Peeling** | Poor adhesion, contamination | Remove, clean, re-seal |\n| **Gaps/Pulling** | Excessive movement, wrong depth | Add backer, re-seal |\n| **Discoloration** | UV damage, mold, dirt | May be cosmetic only |\n| **Chalking** | UV degradation | Replace if adhesion lost |\n\n### Preventive Maintenance Schedule\n\n**Annually:**\n- Complete visual inspection\n- Document problem areas\n- Clean visible sealant\n- Test adhesion with tool\n\n**Every 5 Years:**\n- Proactive re-sealing of high-stress joints\n- Window and door perimeters\n- Corner boards and transitions\n\n**Every 10-15 Years:**\n- Complete exterior re-sealing\n- Replace all original sealants\n- Update to improved products\n\n### Documentation\n\n**Keep Records Of:**\n- Products used (brand, type)\n- Application dates\n- Locations sealed\n- Warranty information\n- Photos of completed work\n\n> **Pro Tip:** Create a \"sealant map\" of your home showing all sealed joints and penetrations with product used and date. Makes maintenance planning much easier."
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew09-c1",
+      "title": "Sealant Selection Checklist",
+      "items": [
+        "Joint movement amount estimated",
+        "Substrate material identified",
+        "Paintability requirement determined",
+        "Temperature range verified for Zone 6",
+        "Adhesion compatibility confirmed",
+        "Appropriate sealant type selected",
+        "Application temperature acceptable",
+        "Manufacturer data sheet reviewed"
+      ]
+    },
+    {
+      "id": "ew09-c2",
+      "title": "Joint Preparation Checklist",
+      "items": [
+        "Old sealant completely removed",
+        "Joint scraped and wire brushed",
+        "Substrate clean and dry",
+        "Solvent wipe completed if needed",
+        "Primer applied (if required)",
+        "Primer flash time observed",
+        "Backer rod selected (25-50% larger)",
+        "Backer rod installed at proper depth",
+        "Joint ready for sealant application"
+      ]
+    },
+    {
+      "id": "ew09-c3",
+      "title": "Sealant Application Checklist",
+      "items": [
+        "Temperature within product range",
+        "No rain expected for cure time",
+        "Caulk gun loaded and tip cut",
+        "Tip size matches joint width",
+        "Masking tape applied (if used)",
+        "Bead applied continuously",
+        "Joint slightly overfilled",
+        "Tooled within 5 minutes",
+        "Tape removed immediately",
+        "Cleanup completed"
+      ]
+    },
+    {
+      "id": "ew09-c4",
+      "title": "Annual Exterior Inspection Checklist",
+      "items": [
+        "All window perimeters inspected",
+        "All door perimeters inspected",
+        "Corner boards and trim joints checked",
+        "Siding butt joints verified",
+        "All penetrations examined",
+        "Foundation/wall joint inspected",
+        "Flashing transitions checked",
+        "Failed sealants documented",
+        "Repair schedule planned",
+        "Documentation updated"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew09-q1",
+        "question": "Which sealant type offers the best movement capability?",
+        "options": [
+          "Latex/Acrylic",
+          "Butyl",
+          "Silicone",
+          "Polyurethane"
+        ],
+        "correct": 2,
+        "explanation": "Silicone offers excellent movement capability (50%+), making it ideal for joints with significant expansion/contraction."
+      },
+      {
+        "id": "ew09-q2",
+        "question": "What is the proper width-to-depth ratio for sealant joints under 1/2\"?",
+        "options": [
+          "2:1",
+          "1:1",
+          "1:2",
+          "3:1"
+        ],
+        "correct": 1,
+        "explanation": "Joints under 1/2\" wide should have a 1:1 ratio (depth equals width) for optimal sealant performance."
+      },
+      {
+        "id": "ew09-q3",
+        "question": "How much larger should backer rod be compared to joint width?",
+        "options": [
+          "10-20% larger",
+          "25-50% larger",
+          "50-75% larger",
+          "Same size"
+        ],
+        "correct": 1,
+        "explanation": "Backer rod should be 25-50% larger than the joint width to stay in place without forcing."
+      },
+      {
+        "id": "ew09-q4",
+        "question": "Why should you NOT seal the bottom of window frames?",
+        "options": [
+          "It looks bad",
+          "To allow weep holes to drain",
+          "Sealant won't stick",
+          "Code prohibits it"
+        ],
+        "correct": 1,
+        "explanation": "Window frames have weep holes at the bottom for drainage. Sealing them traps water and causes damage."
+      },
+      {
+        "id": "ew09-q5",
+        "question": "What is the purpose of backer rod in sealant joints?",
+        "options": [
+          "Add strength",
+          "Control depth and prevent three-sided adhesion",
+          "Fill space cheaply",
+          "Create texture"
+        ],
+        "correct": 1,
+        "explanation": "Backer rod controls sealant depth, creates proper shape factor, and prevents three-sided adhesion that causes failures."
+      },
+      {
+        "id": "ew09-q6",
+        "question": "Within what timeframe should sealant be tooled after application?",
+        "options": [
+          "Immediately (1 minute)",
+          "Within 5 minutes",
+          "Within 30 minutes",
+          "After it skins over"
+        ],
+        "correct": 1,
+        "explanation": "Sealant should be tooled within 5 minutes of application while still wet for proper adhesion and finish."
+      },
+      {
+        "id": "ew09-q7",
+        "question": "Which sealant type is best for exterior wood trim that needs painting?",
+        "options": [
+          "Silicone",
+          "Butyl",
+          "Paintable polyurethane",
+          "Latex"
+        ],
+        "correct": 2,
+        "explanation": "Paintable polyurethane offers excellent adhesion, flexibility, and can be painted after curing."
+      },
+      {
+        "id": "ew09-q8",
+        "question": "What temperature range should Zone 6 sealants be rated for?",
+        "options": [
+          "-20°F to +150°F",
+          "-40°F to +200°F",
+          "0°F to +120°F",
+          "+20°F to +180°F"
+        ],
+        "correct": 1,
+        "explanation": "Zone 6 sealants should be rated for -40°F to +200°F to handle NB's extreme temperature swings."
+      },
+      {
+        "id": "ew09-q9",
+        "question": "What causes sealant cracking?",
+        "options": [
+          "Too much tooling",
+          "Age, wrong product, or excessive movement",
+          "Applying too thick",
+          "Cold weather application"
+        ],
+        "correct": 1,
+        "explanation": "Cracking is typically caused by age degradation, using the wrong sealant type, or more joint movement than the sealant can handle."
+      },
+      {
+        "id": "ew09-q10",
+        "question": "How should masking tape be removed after sealant application?",
+        "options": [
+          "After sealant cures",
+          "Immediately while wet, at 45° angle",
+          "Leave it in place",
+          "After tooling and waiting 10 minutes"
+        ],
+        "correct": 1,
+        "explanation": "Masking tape should be removed immediately while sealant is wet, pulling at a 45° angle for clean lines."
+      },
+      {
+        "id": "ew09-q11",
+        "question": "What is the recommended re-sealing interval for high-stress joints?",
+        "options": [
+          "Every year",
+          "Every 5 years",
+          "Every 10 years",
+          "Only when failed"
+        ],
+        "correct": 1,
+        "explanation": "High-stress joints like window perimeters should be proactively re-sealed every 5 years."
+      },
+      {
+        "id": "ew09-q12",
+        "question": "What tooling aid is used with silicone sealants?",
+        "options": [
+          "Mineral spirits",
+          "Denatured alcohol",
+          "Soapy water",
+          "Nothing - tool dry"
+        ],
+        "correct": 2,
+        "explanation": "Soapy water is used as a tooling aid for silicone sealants to create a smooth finish."
+      },
+      {
+        "id": "ew09-q13",
+        "question": "At what angle should the caulk gun be held during application?",
+        "options": [
+          "90° (perpendicular)",
+          "45° angle",
+          "30° angle",
+          "Flat against surface"
+        ],
+        "correct": 1,
+        "explanation": "Hold the caulk gun at a 45° angle to the surface while pushing the bead ahead of the tip."
+      },
+      {
+        "id": "ew09-q14",
+        "question": "Which sealant type is best for concrete control joints?",
+        "options": [
+          "Silicone",
+          "Latex",
+          "Self-leveling polyurethane",
+          "Butyl"
+        ],
+        "correct": 2,
+        "explanation": "Self-leveling polyurethane is ideal for horizontal concrete joints as it levels itself without tooling."
+      },
+      {
+        "id": "ew09-q15",
+        "question": "What is the first step in sealant joint preparation?",
+        "options": [
+          "Apply primer",
+          "Install backer rod",
+          "Remove old sealant completely",
+          "Cut the tip"
+        ],
+        "correct": 2,
+        "explanation": "The first step is always to remove old sealant completely before cleaning, drying, and applying new sealant."
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "PL-02",
+  "phase": 5,
+  "slug": "plumbing-fixtures-trim",
+  "title": "Plumbing Fixtures & Trim",
+  "category": "Plumbing",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

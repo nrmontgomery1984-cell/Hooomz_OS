@@ -1,0 +1,268 @@
+{
+  "id": "IF-05",
+  "title": "Crown Moulding & Advanced Trim",
+  "category": "Interior Finish",
+  "level": "Advanced",
+  "estimated_study_hours": 4.5,
+  "tags": [
+    "crown moulding",
+    "compound angles",
+    "built-up crown",
+    "advanced trim",
+    "finish carpentry"
+  ],
+  "prerequisites": [
+    "IF-04"
+  ],
+  "sections": [
+    {
+      "title": "Crown Moulding Fundamentals",
+      "content": "## Understanding Crown Moulding\n\nCrown moulding creates a decorative transition between walls and ceilings. Its angled profile requires specialized cutting techniques.\n\n### Crown Geometry\n\n**Spring Angle:**\nThe angle between the back of the crown and the wall. Common angles:\n- 38° (most common residential)\n- 45° (standard commercial)\n- 52° (steep contemporary)\n\n**Understanding the Profile:**\n- Ceiling edge (flat against ceiling)\n- Wall edge (flat against wall)\n- Face (decorative visible surface)\n\n### Crown Sizes\n\n| Room Height | Recommended Crown |\n|-------------|-------------------|\n| 8' | 3-1/2\" to 4-1/2\" |\n| 9' | 4-1/2\" to 5-1/4\" |\n| 10'+ | 5-1/4\" to 7-1/4\" |\n\n### Material Selection\n\n| Material | Characteristics | Best For |\n|----------|-----------------|----------|\n| Pine | Affordable, paintable | Paint-grade rooms |\n| MDF | Smooth, no grain | Paint-grade, stable |\n| Polyurethane | Lightweight, flexible | DIY, curved walls |\n| Hardwood | Premium, stainable | Stain-grade formal rooms |\n\n> **Pro Tip:** Always purchase 15-20% extra crown for waste, especially when learning. Compound angle mistakes add up quickly."
+    },
+    {
+      "title": "Cutting Methods",
+      "content": "## Crown Cutting Techniques\n\nTwo primary methods exist for cutting crown: nested (upside-down) and flat with compound angles.\n\n### Nested Method (Recommended for Beginners)\n\n**Setup:**\n1. Position crown upside-down on saw\n2. Fence represents ceiling\n3. Table represents wall\n4. Crown sits at proper spring angle\n\n**Advantages:**\n- Uses simple 45° cuts\n- Visual orientation matches installation\n- Works on standard mitre saws\n\n### Compound Mitre Method\n\n**For 38° Spring Crown (90° Corners):**\n\n| Corner Type | Mitre Angle | Bevel Angle |\n|-------------|-------------|-------------|\n| Inside left | 31.6° left | 33.9° left |\n| Inside right | 31.6° right | 33.9° right |\n| Outside left | 31.6° right | 33.9° left |\n| Outside right | 31.6° left | 33.9° right |\n\n**For 45° Spring Crown (90° Corners):**\n\n| Corner Type | Mitre Angle | Bevel Angle |\n|-------------|-------------|-------------|\n| All corners | 35.3° | 30° |\n\n### Corner Reference\n\n**Inside Corners:**\n- Bottom of crown points outward from corner\n- Pieces overlap at inside\n\n**Outside Corners:**\n- Bottom of crown points inward to corner\n- Pieces meet at point\n\n### Out-of-Square Corners\n\n1. Measure actual corner angle with bevel gauge\n2. Divide by 2 for mitre setting\n3. Adjust bevel angle accordingly\n4. Test with scrap pieces first"
+    },
+    {
+      "title": "Installation Techniques",
+      "content": "## Professional Crown Installation\n\nProper installation requires careful planning, backing support, and systematic corner work.\n\n### Backing Installation\n\n**Why backing is needed:**\n- Provides nailing surface in ceiling/wall gap\n- Supports crown weight\n- Ensures solid attachment\n\n**Backing Methods:**\n\n| Method | Description | Best For |\n|--------|-------------|----------|\n| Triangular blocks | Ripped 2x4 at spring angle | Heavy crown |\n| Flat backer | 3/4\" strip along ceiling | Light crown |\n| Construction adhesive | No backing needed | Lightweight polyurethane |\n\n### Installation Sequence\n\n1. **Plan the room** - Identify start/end points\n2. **Install backing** - Around entire room\n3. **Start opposite entry** - Hide any gaps\n4. **Install long walls first** - Square cuts if possible\n5. **Work toward entry** - Coped inside corners\n6. **Finish outside corners** - Glue and nail\n\n### Coping Crown Inside Corners\n\n1. Cut first piece square, install to corner\n2. Cut second piece at 45° inside mitre\n3. Follow profile with coping saw\n4. Back-cut aggressively (30-45°)\n5. Test fit and adjust\n6. Install with tight fit at face\n\n### Fastening\n\n**Nail Placement:**\n- Through wall edge into blocking\n- Through ceiling edge into ceiling framing\n- Angle nails toward framing members\n\n| Crown Size | Nail Gauge | Length |\n|------------|------------|--------|\n| Under 4\" | 18-gauge | 2\" |\n| 4\" - 6\" | 15-gauge | 2-1/2\" |\n| Over 6\" | 15-gauge | 2-1/2\" - 3\" |\n\n> **Pro Tip:** For outside corners, apply wood glue to the mitre joint and use painter's tape to hold pieces tight while nailing. Cross-nail from both sides."
+    },
+    {
+      "title": "Built-Up Crown Systems",
+      "content": "## Creating Built-Up Crown Assemblies\n\nBuilt-up crown combines multiple trim pieces to create elaborate, high-impact profiles.\n\n### Basic Built-Up Components\n\n**Typical Layering (Bottom to Top):**\n1. Base cap or bed moulding\n2. Flat frieze board\n3. Crown moulding\n4. Optional: Picture rail or dentil\n\n### Common Built-Up Profiles\n\n**Simple Two-Piece:**\n- Crown + backing board\n- Adds visual height\n- Easy to install\n\n**Three-Piece Traditional:**\n- Bed moulding\n- Frieze board (3-6\" flat)\n- Crown moulding\n\n**Elaborate Multi-Piece:**\n- Base cap\n- Lower frieze\n- Dentil moulding\n- Upper frieze\n- Crown\n\n### Installation Order\n\n1. Install frieze board flat to wall\n2. Add bed moulding below frieze\n3. Install crown on top of frieze\n4. Add decorative elements\n\n### Measuring Built-Up Systems\n\n**Total Projection:**\nMeasure from wall to furthest point of crown\n\n**Total Drop:**\nMeasure from ceiling to bottom of assembly\n\n| System Type | Typical Drop | Projection |\n|-------------|--------------|------------|\n| Simple 2-piece | 5-7\" | 3-4\" |\n| Standard 3-piece | 8-12\" | 4-6\" |\n| Elaborate | 12-18\" | 6-8\" |\n\n> **Pro Tip:** Build a sample assembly on the workbench first. This helps visualize proportions and identifies installation challenges before committing to the room."
+    },
+    {
+      "title": "Problem Solving & Specialty Situations",
+      "content": "## Advanced Crown Challenges\n\nReal-world crown installation involves dealing with imperfect conditions and special situations.\n\n### Cathedral & Vaulted Ceilings\n\n**Approach:**\n1. Measure ceiling slope angle\n2. Add/subtract from standard mitre\n3. Bevel angle changes with slope\n4. Cut test pieces before committing\n\n### Curved Walls\n\n**Options:**\n- Flexible polyurethane crown (follows curve)\n- Kerfed wood crown (relief cuts on back)\n- Blocking at multiple points for curve\n\n### Uneven Ceilings\n\n**Solutions:**\n| Problem | Solution |\n|---------|----------|\n| Minor waves | Caulk gaps up to 1/8\" |\n| Moderate gaps | Scribe crown to ceiling |\n| Severe variance | Install frieze board first |\n\n### Stairway Crown\n\n**At Stair Angle:**\n1. Determine stair rake angle\n2. Crown follows rake line\n3. Mitre changes at landing transitions\n4. Level crown returns at top/bottom\n\n### Returns & Terminations\n\n**Where Crown Ends:**\n- At door/window casings\n- At ceiling changes\n- At wall terminations\n\n**Return Methods:**\n1. Full return (wraps back to wall)\n2. Simple return (small mitre piece)\n3. Rosette block (decorative end)\n\n### Gap Remediation\n\n| Gap Location | Fix |\n|--------------|-----|\n| At ceiling | Caulk and paint |\n| At wall | Caulk and paint |\n| At inside corner | Caulk after coping |\n| At outside corner | Recut or wood filler |\n\n> **Pro Tip:** When crown meets cathedral ceilings, make cardboard templates of the angles before cutting expensive material. One mistake at a complex transition can waste multiple feet of crown."
+    }
+  ],
+  "checklists": [
+    {
+      "title": "Pre-Installation Checklist",
+      "items": [
+        "Room measured and crown quantity calculated",
+        "Spring angle identified (38 or 45 degrees)",
+        "Backing plan determined",
+        "Mitre saw calibrated and tested",
+        "Test cuts made on scrap material",
+        "Corners checked for square",
+        "Ceiling flatness assessed",
+        "Stud and joist locations marked",
+        "Crown material acclimated",
+        "All tools and supplies ready"
+      ]
+    },
+    {
+      "title": "Backing Installation Checklist",
+      "items": [
+        "Backing material cut to proper angle",
+        "Backing installed around entire room",
+        "Backing secured into studs and joists",
+        "Consistent spacing from ceiling",
+        "Inside corners blocked properly",
+        "Outside corners blocked properly",
+        "Backing tested for solid attachment",
+        "Gaps filled where needed",
+        "Backing height matches crown profile",
+        "All backing level and consistent"
+      ]
+    },
+    {
+      "title": "Crown Installation Checklist",
+      "items": [
+        "Installation sequence planned",
+        "First piece installed with square cuts",
+        "Inside corners coped (not mitred)",
+        "Coped joints tight at face",
+        "Outside corners glued and cross-nailed",
+        "Crown tight to ceiling and wall",
+        "Nails set below surface",
+        "Joints at proper locations",
+        "Scarf joints staggered if needed",
+        "Returns properly installed"
+      ]
+    },
+    {
+      "title": "Finishing Checklist",
+      "items": [
+        "All nail holes filled",
+        "Gaps caulked at ceiling",
+        "Gaps caulked at wall",
+        "Inside corners caulked",
+        "Outside corners sanded smooth",
+        "Joint compound on seams if needed",
+        "Sanding complete",
+        "Prime coat applied",
+        "Finish coats applied",
+        "Final inspection complete"
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What is the spring angle of most residential crown moulding?",
+      "options": [
+        "30 degrees",
+        "38 degrees",
+        "45 degrees",
+        "52 degrees"
+      ],
+      "correct": 1,
+      "explanation": "38 degrees is the most common spring angle for residential crown moulding, representing the angle between the back of the crown and the wall."
+    },
+    {
+      "question": "For nested cutting, how is the crown positioned on the mitre saw?",
+      "options": [
+        "Right-side up, back to fence",
+        "Upside-down with fence as ceiling",
+        "Flat on the table",
+        "At compound angle"
+      ],
+      "correct": 1,
+      "explanation": "In nested cutting, crown is positioned upside-down with the fence representing the ceiling and the table representing the wall."
+    },
+    {
+      "question": "What is the recommended crown size for 9-foot ceilings?",
+      "options": [
+        "2-1/2 to 3 inches",
+        "3-1/2 to 4-1/2 inches",
+        "4-1/2 to 5-1/4 inches",
+        "6 to 7 inches"
+      ],
+      "correct": 2,
+      "explanation": "For 9-foot ceilings, 4-1/2 to 5-1/4 inch crown provides appropriate visual proportion without overwhelming the space."
+    },
+    {
+      "question": "Why is backing needed for crown moulding installation?",
+      "options": [
+        "Code requirement",
+        "Provides nailing surface in ceiling/wall gap",
+        "Prevents paint peeling",
+        "Required for inspections"
+      ],
+      "correct": 1,
+      "explanation": "Backing provides a solid nailing surface in the gap between ceiling and wall where no framing exists, ensuring secure attachment."
+    },
+    {
+      "question": "What joint method is preferred for inside corners on crown moulding?",
+      "options": [
+        "Mitre joint",
+        "Butt joint",
+        "Coped joint",
+        "Scarf joint"
+      ],
+      "correct": 2,
+      "explanation": "Coped joints are preferred for inside corners because they accommodate out-of-square corners and won't show gaps if the house settles."
+    },
+    {
+      "question": "How much extra crown material should be purchased for waste?",
+      "options": [
+        "5%",
+        "10%",
+        "15-20%",
+        "30%"
+      ],
+      "correct": 2,
+      "explanation": "15-20% extra material accounts for compound angle cutting mistakes, coping waste, and fitting adjustments, especially for those learning."
+    },
+    {
+      "question": "What back-cut angle is recommended when coping crown moulding?",
+      "options": [
+        "10-15 degrees",
+        "20-25 degrees",
+        "30-45 degrees",
+        "No back-cut needed"
+      ],
+      "correct": 2,
+      "explanation": "A 30-45 degree back-cut on coped joints ensures only the face profile makes contact, allowing for tight-fitting joints."
+    },
+    {
+      "question": "What is a built-up crown system?",
+      "options": [
+        "Extra-thick crown moulding",
+        "Multiple trim pieces combined to create elaborate profiles",
+        "Crown with built-in backing",
+        "Pre-assembled crown kits"
+      ],
+      "correct": 1,
+      "explanation": "Built-up crown combines multiple trim pieces (bed moulding, frieze boards, crown) to create elaborate, high-impact decorative assemblies."
+    },
+    {
+      "question": "What nail gauge is recommended for crown moulding 4-6 inches?",
+      "options": [
+        "23-gauge pins",
+        "18-gauge brads",
+        "15-gauge finish nails",
+        "8d common nails"
+      ],
+      "correct": 2,
+      "explanation": "15-gauge finish nails in 2-1/2 inch length provide adequate holding power for medium to large crown moulding profiles."
+    },
+    {
+      "question": "How should outside corners be assembled?",
+      "options": [
+        "Coped, like inside corners",
+        "Nailed only, no glue",
+        "Glued and cross-nailed from both sides",
+        "Caulked and painted"
+      ],
+      "correct": 2,
+      "explanation": "Outside corners should be glued at the mitre joint and cross-nailed from both sides while using painter's tape to hold tight during assembly."
+    },
+    {
+      "question": "What is the typical drop for a standard 3-piece built-up crown assembly?",
+      "options": [
+        "3-5 inches",
+        "5-7 inches",
+        "8-12 inches",
+        "15-20 inches"
+      ],
+      "correct": 2,
+      "explanation": "A standard three-piece built-up crown (bed moulding, frieze, crown) typically has a total drop of 8-12 inches from ceiling."
+    },
+    {
+      "question": "What material is best for crown on curved walls?",
+      "options": [
+        "MDF",
+        "Hardwood",
+        "Flexible polyurethane",
+        "Finger-jointed pine"
+      ],
+      "correct": 2,
+      "explanation": "Flexible polyurethane crown can follow curves without kerfing, making it ideal for curved walls and other non-straight applications."
+    },
+    {
+      "question": "Where should crown installation typically begin in a room?",
+      "options": [
+        "At the entry door",
+        "Opposite the entry door",
+        "On the longest wall",
+        "At an outside corner"
+      ],
+      "correct": 1,
+      "explanation": "Starting opposite the entry door ensures any closure gaps or imperfections end up in the least visible location."
+    },
+    {
+      "question": "What is a return on crown moulding?",
+      "options": [
+        "Refund policy at store",
+        "Crown that wraps back to wall at termination",
+        "Inside corner joint",
+        "Scarf joint splice"
+      ],
+      "correct": 1,
+      "explanation": "A return is where crown moulding wraps back to the wall at terminations (doors, windows, wall ends) for a finished appearance."
+    },
+    {
+      "question": "What should be done before cutting crown for cathedral ceilings?",
+      "options": [
+        "Nothing special needed",
+        "Make cardboard templates of angles",
+        "Use only pre-made corner pieces",
+        "Avoid installing crown"
+      ],
+      "correct": 1,
+      "explanation": "Cardboard templates help visualize complex angles at cathedral ceiling transitions before cutting expensive material, preventing costly mistakes."
+    }
+  ]
+}

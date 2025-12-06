@@ -1,0 +1,297 @@
+{
+  "id": "EW-05",
+  "title": "Exterior Trim & Cladding Prep",
+  "category": "Exterior & Weather",
+  "level": "Intermediate",
+  "estimated_study_hours": 3.5,
+  "tags": [
+    "exterior trim",
+    "cladding",
+    "siding prep",
+    "furring",
+    "rainscreen"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "EW-02",
+    "EW-04"
+  ],
+  "sections": [
+    {
+      "id": "ew05-s1",
+      "title": "Cladding System Overview",
+      "summary": "Understanding different cladding types and their requirements for NB Zone 6 climate.",
+      "content_md": "## Cladding System Overview\n\n### Purpose of Cladding\n\nCladding serves multiple functions in the building envelope:\n\n1. **Weather Protection:** Primary defense against rain, snow, wind\n2. **Aesthetic Appeal:** Visual appearance of the building\n3. **UV Protection:** Shields WRB and structure from sun damage\n4. **Impact Resistance:** Protects from physical damage\n\n### Common Cladding Types in NB\n\n| Type | Durability | Maintenance | Cost | Suitability |\n|------|------------|-------------|------|-------------|\n| **Vinyl Siding** | 25-40 yrs | Low | $ | Excellent - expands/contracts well |\n| **Fiber Cement** | 50+ yrs | Medium | $$ | Excellent - handles freeze/thaw |\n| **Wood Siding** | 20-40 yrs | High | $$-$$$ | Good if maintained |\n| **Engineered Wood** | 25-30 yrs | Medium | $$ | Good - verify warranty |\n| **Metal Siding** | 40+ yrs | Low | $$-$$$ | Excellent - no rot |\n| **Brick Veneer** | 100+ yrs | Low | $$$$ | Excellent - thermal mass |\n| **Stone Veneer** | 50+ yrs | Low | $$$ | Good - weight considerations |\n\n### Rainscreen Principle\n\n> **Best Practice:** In Zone 6, rainscreen assemblies significantly reduce moisture problems and extend cladding life.\n\n**How Rainscreens Work:**\n1. Gap between cladding and WRB\n2. Allows drainage of any water that penetrates\n3. Provides drying through ventilation\n4. Reduces pressure differentials\n\n**Benefits:**\n- Extends WRB and cladding life\n- Reduces rot and mold risk\n- Improves drying potential\n- Better performance in driving rain"
+    },
+    {
+      "id": "ew05-s2",
+      "title": "Furring & Rainscreen Installation",
+      "summary": "Installing furring strips and rainscreen systems for proper drainage and ventilation.",
+      "content_md": "## Furring & Rainscreen Installation\n\n### When Furring is Required\n\n**Code Requirements:**\n- Over continuous exterior insulation\n- With some cladding types (per manufacturer)\n- Recommended for all Zone 6 assemblies\n\n**Furring Strip Options:**\n\n| Material | Size | Spacing | Notes |\n|----------|------|---------|-------|\n| **Pressure-Treated** | 1x3 or 1x4 | 16\" or 24\" OC | Most common, economical |\n| **Cedar** | 1x3 or 1x4 | 16\" or 24\" OC | Rot resistant, no treatment |\n| **Composite** | Various | Per spec | No rot, premium cost |\n| **Metal Hat Channel** | 7/8\" depth | 16\" or 24\" OC | Non-combustible option |\n\n### Furring Installation Steps\n\n**1. Plan Layout**\n- Vertical furring for horizontal siding\n- Horizontal furring for vertical siding\n- Consider window/door integration\n\n**2. Locate Studs**\n- Mark stud locations on WRB\n- Furring must hit framing for secure attachment\n- Use stud finder or measure from corners\n\n**3. Install Furring**\n\n| Fastener | Min Length | Spacing |\n|----------|------------|--------|\n| Screws (recommended) | Penetrate stud 1-1/2\" | Every 12\" |\n| Nails | Penetrate stud 1-1/2\" | Every 8\" |\n\n**4. Check for Plane**\n- Use straightedge across furring\n- Shim as needed for flat plane\n- Critical for proper siding installation\n\n### Ventilation Pathways\n\n**Inlets and Outlets:**\n- Bottom: Vented starter strip or perforated metal\n- Top: Vented soffit or top outlet\n- Maintain continuous airflow path\n\n**Insect Protection:**\n- Use 1/8\" mesh at all openings\n- Stainless steel or copper mesh preferred\n- Prevents wasp/bee entry\n\n### Cross-Furring for Continuous Insulation\n\n**Over Rigid Foam:**\n1. Install foam board with taped seams\n2. Vertical furring over foam into studs\n3. Fastener length = foam + furring + 1-1/2\"\n\n> **Example:** 2\" foam + 3/4\" furring + 1-1/2\" penetration = 4-1/4\" screws minimum"
+    },
+    {
+      "id": "ew05-s3",
+      "title": "Trim Board Installation",
+      "summary": "Installing exterior trim including corner boards, fascia, and window/door casings.",
+      "content_md": "## Trim Board Installation\n\n### Trim Material Options\n\n| Material | Characteristics | Best For |\n|----------|-----------------|----------|\n| **PVC/Cellular PVC** | Rot-proof, paintable, no expansion gaps | All trim applications |\n| **Fiber Cement** | Durable, needs paint, cut edges primed | Fascia, flat trim |\n| **Cedar** | Traditional, needs finish, breathable | Historic, natural look |\n| **Pressure-Treated** | Rot resistant, must dry before paint | Hidden applications |\n| **Composite** | Wood-like, stable, paintable | Balanced performance |\n\n### Corner Board Installation\n\n**Standard Sizing:**\n- Outside corners: 1x4 + 1x3 or 1x4 + 1x4\n- Inside corners: 1x1 or caulked joint\n\n**Installation Steps:**\n\n1. **Cut to Length:** Full height from foundation to soffit\n2. **Pre-finish:** Prime/paint all sides before install\n3. **Position:** Plumb using level, tack at top\n4. **Fasten:** \n   - Every 16\" into studs\n   - Stainless or hot-dipped galvanized fasteners\n   - Pre-drill hardwoods and PVC\n5. **Joint Treatment:**\n   - Butt joints with caulk backup\n   - Scarf joints preferred for length\n\n### Fascia Installation\n\n**Fascia Board Sequence:**\n1. Install drip edge if not already in place\n2. Cut fascia with slight back-bevel at top\n3. Fit tight to soffit/drip edge\n4. Fasten into rafter tails or subfascia\n\n**Common Widths:**\n- 1x6: Standard eave detail\n- 1x8: Deeper overhang or built-up look\n- 1x4 + 1x6: Shadow line detail\n\n### Window & Door Casing\n\n**Standard Profiles:**\n- Flat stock: 1x4 or 5/4x4\n- Built-up: Flat + cap + bed mold\n- PVC profiles: Match historic details\n\n**Installation Best Practices:**\n\n| Step | Action | Why |\n|------|--------|-----|\n| 1 | Install head first | Sheds water properly |\n| 2 | Side casings under head | Water drains off |\n| 3 | Sill last (if used) | Covers jamb ends |\n| 4 | Back-caulk all pieces | Seals against water |\n| 5 | Top only for sealant | Allow drainage at jambs |"
+    },
+    {
+      "id": "ew05-s4",
+      "title": "Starter Strips & Accessories",
+      "summary": "Installing starter strips, J-channels, and accessory trim for various cladding systems.",
+      "content_md": "## Starter Strips & Accessories\n\n### Vinyl Siding Accessories\n\n**Starter Strip:**\n- Install level, 1-1/4\" above foundation\n- Nail every 10\" at center of slots\n- Overlap joints 4\"\n- Creates attachment for first course\n\n**J-Channel:**\n- Used around windows, doors, and ends\n- Leave 1/4\" gap at corners for expansion\n- Do not nail tight - allow movement\n\n**F-Channel:**\n- Soffit termination\n- Same installation rules as J-channel\n\n**Undersill Trim:**\n- For cut pieces under windows\n- Receives punch-lock or snap-lock utility trim\n\n**Outside Corner Post:**\n- Standard 3/4\" x 3/4\" or larger\n- Nail at top of highest slot, then centered\n- Allow 1/4\" gap at soffit\n\n### Fiber Cement Accessories\n\n**Metal Starter Strip:**\n- Z-flashing or manufacturer starter\n- Creates drainage gap at bottom\n- Supports first course\n\n**H-Bars:**\n- Butt joint covers\n- Required for most applications\n- Pre-paint before installation\n\n### Critical Measurements\n\n**Expansion Allowances:**\n\n| Material | Gap at Ends | Gap at Accessories |\n|----------|-------------|--------------------|\n| Vinyl | 1/4\" (winter install: 3/8\") | 1/4\" |\n| Fiber Cement | Tight (caulked) | Caulked joints |\n| Wood | 1/8\" (tight caulk) | Caulked |\n| Metal | Per manufacturer | Varies |\n\n> **Temperature Rule:** Install accessories to allow for the greater expansion expected. Cold-weather installation needs larger gaps.\n\n### Water Management Details\n\n**At Transitions:**\n- Kick-out flashings at roof/wall intersections\n- Head flashing over horizontal trim\n- Z-flashing at material changes\n- Sealant at top, drainage at bottom"
+    },
+    {
+      "id": "ew05-s5",
+      "title": "Quality Control & Inspection",
+      "summary": "Inspection points and quality control for cladding preparation work.",
+      "content_md": "## Quality Control & Inspection\n\n### Pre-Cladding Inspection Points\n\n**WRB Verification:**\n- [ ] No tears or holes in membrane\n- [ ] All seams taped with 3\" minimum overlap\n- [ ] Proper integration at windows/doors\n- [ ] Penetrations properly sealed\n\n**Flashing Check:**\n- [ ] Window/door head flashing under WRB\n- [ ] Kick-out flashings at roof terminations\n- [ ] Through-wall flashings at material changes\n- [ ] Drip edge properly installed\n\n**Furring Verification:**\n- [ ] Correct spacing (16\" or 24\" OC)\n- [ ] All furring hits framing\n- [ ] Plane is flat (check with straightedge)\n- [ ] Ventilation paths maintained\n\n### Common Defects to Avoid\n\n| Defect | Cause | Prevention |\n|--------|-------|------------|\n| Wavy siding | Furring not in plane | Check with 6' level |\n| Water intrusion | Flashing reversed | Follow shingle principle |\n| Trim rot | Unpainted cut edges | Pre-finish all surfaces |\n| Buckled vinyl | Nailed too tight | Leave 1/32\" at nail head |\n| Joint failures | Wrong caulk | Use paintable silicone/polyurethane |\n\n### Documentation Requirements\n\n**Photo Documentation:**\n- WRB installation complete\n- All flashing details\n- Furring installation\n- Trim before cladding covers\n\n**Inspection Sign-off:**\n- Building official (if required)\n- Energy code compliance\n- Manufacturer warranty requirements\n\n### Warranty Considerations\n\n**Protect Your Warranties:**\n\n1. **Follow Manufacturer Instructions**\n   - Each product has specific requirements\n   - Deviations void warranty\n\n2. **Use Compatible Products**\n   - Fasteners appropriate for material\n   - Sealants compatible with finishes\n   - Flashing tapes that won't degrade\n\n3. **Document Everything**\n   - Product lot numbers\n   - Installation dates\n   - Photos of key details\n\n> **Pro Tip:** Create a \"warranty file\" for each project with all product documentation, receipts, and installation photos."
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew05-c1",
+      "title": "Pre-Cladding Inspection Checklist",
+      "items": [
+        "WRB installed with no tears or holes",
+        "All WRB seams taped with 3\" minimum overlap",
+        "Window and door flashing complete",
+        "Penetrations properly sealed",
+        "Kick-out flashings installed at roof/wall intersections",
+        "Drip edge installed at eaves",
+        "Through-wall flashings at material transitions",
+        "All required inspections completed"
+      ]
+    },
+    {
+      "id": "ew05-c2",
+      "title": "Furring Strip Installation Checklist",
+      "items": [
+        "Stud locations marked on WRB",
+        "Furring orientation correct for cladding direction",
+        "Fasteners penetrate studs minimum 1-1/2\"",
+        "Furring spaced correctly (16\" or 24\" OC)",
+        "Plane verified flat with straightedge",
+        "Shims installed where needed",
+        "Bottom ventilation inlet provided",
+        "Top ventilation outlet maintained",
+        "Insect mesh installed at all openings"
+      ]
+    },
+    {
+      "id": "ew05-c3",
+      "title": "Exterior Trim Installation Checklist",
+      "items": [
+        "All trim pre-finished on all surfaces",
+        "Corner boards plumb and properly fastened",
+        "Fascia boards fitted tight at joints",
+        "Window/door casing back-caulked",
+        "Head casing installed before sides",
+        "Scarf joints used for long runs",
+        "Stainless or galvanized fasteners used",
+        "Pre-drilling done for hardwoods and PVC",
+        "Cut edges of fiber cement primed"
+      ]
+    },
+    {
+      "id": "ew05-c4",
+      "title": "Vinyl Siding Prep Checklist",
+      "items": [
+        "Starter strip level and properly spaced",
+        "Starter strip overlaps correct (4\")",
+        "J-channel at windows with expansion gaps",
+        "F-channel at soffits properly installed",
+        "Outside corner posts plumb",
+        "Expansion gaps at all accessories (1/4\")",
+        "Nailing at center of slots only",
+        "Nails not driven tight (allow movement)",
+        "Undersill trim at cut locations"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew05-q1",
+        "question": "What is the primary purpose of a rainscreen assembly?",
+        "options": [
+          "Increase insulation value",
+          "Allow drainage and drying behind cladding",
+          "Support the siding weight",
+          "Reduce installation time"
+        ],
+        "correct": 1,
+        "explanation": "Rainscreen assemblies create a gap that allows any water penetrating the cladding to drain out and provides ventilation for drying."
+      },
+      {
+        "id": "ew05-q2",
+        "question": "What is the minimum fastener penetration into studs for furring strips?",
+        "options": [
+          "1\"",
+          "1-1/4\"",
+          "1-1/2\"",
+          "2\""
+        ],
+        "correct": 2,
+        "explanation": "Fasteners must penetrate studs a minimum of 1-1/2\" to provide adequate holding strength for furring strips."
+      },
+      {
+        "id": "ew05-q3",
+        "question": "When installing vinyl siding accessories, what is the standard expansion gap at ends?",
+        "options": [
+          "1/8\"",
+          "1/4\"",
+          "3/8\"",
+          "1/2\""
+        ],
+        "correct": 1,
+        "explanation": "Standard expansion gap for vinyl siding accessories is 1/4\" (may increase to 3/8\" for cold weather installation)."
+      },
+      {
+        "id": "ew05-q4",
+        "question": "Which direction should furring strips run for horizontal siding?",
+        "options": [
+          "Horizontal",
+          "Vertical",
+          "Diagonal",
+          "Any direction"
+        ],
+        "correct": 1,
+        "explanation": "Furring strips should run perpendicular to siding - vertical furring for horizontal siding to allow drainage."
+      },
+      {
+        "id": "ew05-q5",
+        "question": "What type of mesh should protect rainscreen ventilation openings?",
+        "options": [
+          "1/4\" mesh",
+          "1/8\" mesh",
+          "1/16\" mesh",
+          "No mesh needed"
+        ],
+        "correct": 1,
+        "explanation": "Use 1/8\" mesh at ventilation openings to prevent insect entry while maintaining airflow."
+      },
+      {
+        "id": "ew05-q6",
+        "question": "When installing window casing, which piece should be installed first?",
+        "options": [
+          "Left side",
+          "Right side",
+          "Sill",
+          "Head"
+        ],
+        "correct": 3,
+        "explanation": "The head (top) casing should be installed first so water sheds properly off the sides."
+      },
+      {
+        "id": "ew05-q7",
+        "question": "What is the recommended spacing for vinyl starter strip nailing?",
+        "options": [
+          "Every 6\"",
+          "Every 10\"",
+          "Every 12\"",
+          "Every 16\""
+        ],
+        "correct": 1,
+        "explanation": "Vinyl starter strip should be nailed every 10\" at the center of the nail slots."
+      },
+      {
+        "id": "ew05-q8",
+        "question": "How much should vinyl starter strip joints overlap?",
+        "options": [
+          "2\"",
+          "4\"",
+          "6\"",
+          "No overlap needed"
+        ],
+        "correct": 1,
+        "explanation": "Vinyl starter strip joints should overlap 4\" to maintain proper connection for the first siding course."
+      },
+      {
+        "id": "ew05-q9",
+        "question": "What must be done to fiber cement cut edges before installation?",
+        "options": [
+          "Nothing special",
+          "Sand smooth",
+          "Prime with paint",
+          "Seal with caulk"
+        ],
+        "correct": 2,
+        "explanation": "Cut edges of fiber cement must be primed before installation to prevent moisture absorption."
+      },
+      {
+        "id": "ew05-q10",
+        "question": "Why should vinyl siding nails not be driven tight?",
+        "options": [
+          "Prevents splitting",
+          "Allows expansion/contraction",
+          "Easier to remove",
+          "Better water resistance"
+        ],
+        "correct": 1,
+        "explanation": "Vinyl siding must be able to expand and contract with temperature changes. Nails should leave 1/32\" gap."
+      },
+      {
+        "id": "ew05-q11",
+        "question": "What type of fasteners should be used for exterior trim?",
+        "options": [
+          "Plain steel",
+          "Zinc-plated",
+          "Stainless or hot-dipped galvanized",
+          "Any exterior rated"
+        ],
+        "correct": 2,
+        "explanation": "Stainless steel or hot-dipped galvanized fasteners prevent corrosion and staining on exterior trim."
+      },
+      {
+        "id": "ew05-q12",
+        "question": "What is a kick-out flashing used for?",
+        "options": [
+          "At window sills",
+          "At door thresholds",
+          "At roof/wall intersections",
+          "At foundation"
+        ],
+        "correct": 2,
+        "explanation": "Kick-out flashings direct water away from the wall at roof/wall intersections to prevent water damage."
+      },
+      {
+        "id": "ew05-q13",
+        "question": "What is the minimum WRB seam overlap requirement?",
+        "options": [
+          "2\"",
+          "3\"",
+          "4\"",
+          "6\""
+        ],
+        "correct": 1,
+        "explanation": "WRB seams require a minimum 3\" overlap to maintain water resistance."
+      },
+      {
+        "id": "ew05-q14",
+        "question": "For outside corners with vinyl siding, how much gap should be left at the soffit?",
+        "options": [
+          "1/8\"",
+          "1/4\"",
+          "1/2\"",
+          "Tight fit"
+        ],
+        "correct": 1,
+        "explanation": "Leave 1/4\" gap at the soffit to allow for vinyl expansion."
+      },
+      {
+        "id": "ew05-q15",
+        "question": "Which cladding material has the longest expected lifespan?",
+        "options": [
+          "Vinyl siding",
+          "Fiber cement",
+          "Wood siding",
+          "Brick veneer"
+        ],
+        "correct": 3,
+        "explanation": "Brick veneer can last 100+ years with minimal maintenance, far outlasting other common cladding materials."
+      }
+    ]
+  }
+}

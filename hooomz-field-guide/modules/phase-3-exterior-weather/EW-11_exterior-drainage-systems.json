@@ -1,0 +1,299 @@
+{
+  "id": "EW-11",
+  "title": "Exterior Drainage Systems",
+  "category": "Exterior & Weather",
+  "level": "Intermediate",
+  "estimated_study_hours": 3.5,
+  "tags": [
+    "drainage",
+    "footer drain",
+    "grading",
+    "swales",
+    "water management"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "EW-10"
+  ],
+  "sections": [
+    {
+      "id": "ew11-s1",
+      "title": "Site Drainage Fundamentals",
+      "summary": "Understanding site grading and surface water management principles.",
+      "content_md": "## Site Drainage Fundamentals\n\n### Why Drainage Matters\n\nPoor drainage is the #1 cause of basement water problems. Proper exterior drainage:\n- Prevents hydrostatic pressure against foundation\n- Protects basement from water infiltration\n- Reduces frost heaving potential\n- Extends foundation lifespan\n- Prevents soil erosion\n\n### Surface Drainage Principles\n\n**Positive Slope Away from Building:**\n\n| Distance | Minimum Slope |\n|----------|---------------|\n| First 6 feet | 6\" drop (1\" per foot) |\n| Beyond 6 feet | 2% minimum (1/4\" per foot) |\n\n**NBC Requirement:**\n> Ground surface within 1.8m (6 feet) of foundation must slope away with minimum 5% grade (6 inches over 10 feet).\n\n### Grading Problems to Avoid\n\n| Problem | Consequence | Solution |\n|---------|-------------|----------|\n| Negative slope | Water flows to foundation | Re-grade with proper slope |\n| Settlement near foundation | Ponding at walls | Add soil, compact, slope away |\n| Flat areas | Standing water | Create swales or drains |\n| Soil against siding | Rot, insects | Maintain 8\" clearance |\n\n### Soil Types & Drainage\n\n| Soil Type | Drainage | Considerations |\n|-----------|----------|----------------|\n| **Sandy/Gravelly** | Excellent | May drain too fast |\n| **Loam** | Good | Ideal for most situations |\n| **Silty** | Fair | Can become impermeable when wet |\n| **Clay** | Poor | Holds water, requires special attention |\n\n> **NB Reality:** Many areas have clay soils or hardpan that don't drain well. Assume worst-case and design accordingly."
+    },
+    {
+      "id": "ew11-s2",
+      "title": "Footer Drain Systems",
+      "summary": "Installing perimeter footer drains for foundation water management.",
+      "content_md": "## Footer Drain Systems\n\n### System Components\n\n1. **Perforated Drain Pipe:** Collects water\n2. **Filter Fabric:** Prevents soil infiltration\n3. **Clear Stone:** Provides drainage medium\n4. **Outlet:** Discharges collected water\n\n### Pipe Selection\n\n| Type | Diameter | Pros | Cons |\n|------|----------|------|------|\n| **Rigid PVC** | 4\" | Durable, cleanable | More expensive |\n| **Corrugated** | 4\" | Flexible, cheap | Harder to clean |\n| **Big-O** | 4\" | Good capacity | Can crush |\n\n> **Recommendation:** Use 4\" rigid PVC perforated pipe for best long-term performance and cleanability.\n\n### Installation Procedure\n\n**1. Excavate Trench**\n- Along footer, never ON footer\n- 12\" below top of footer minimum\n- Wide enough for pipe and stone\n\n**2. Line with Filter Fabric**\n- Extend up sides\n- Leave excess to wrap over top\n- No gaps or tears\n\n**3. Place Stone Bed**\n- 4\" of 3/4\" clear stone\n- Level along trench\n- Maintain slope to outlet\n\n**4. Install Pipe**\n- Holes DOWN (common mistake: holes up)\n- Maintain 1/8\" per foot slope\n- Connect sections firmly\n\n**5. Cover with Stone**\n- Minimum 4\" over pipe\n- Completely surround pipe\n- Maintain filter fabric position\n\n**6. Wrap with Fabric**\n- Fold fabric over stone\n- Overlap minimum 6\"\n- Secure with staples if needed\n\n### Outlet Options\n\n| Type | Description | Best For |\n|------|-------------|----------|\n| **Daylight** | Pipe exits on slope | Sloped lots |\n| **Sump Pump** | Collects in pit, pumps out | Flat lots, no gravity outlet |\n| **Dry Well** | Disperses into ground | Well-drained soils |\n| **Storm Sewer** | Connects to municipal system | Urban areas (if permitted) |"
+    },
+    {
+      "id": "ew11-s3",
+      "title": "Surface Drainage Features",
+      "summary": "Installing swales, catch basins, and other surface drainage improvements.",
+      "content_md": "## Surface Drainage Features\n\n### Swales\n\nShallow, vegetated channels that direct surface water.\n\n**Design Parameters:**\n- Minimum 2% slope along length\n- Side slopes: 3:1 to 4:1 (gentle)\n- Depth: 6-12\" typical\n- Width: 2-4 feet typical\n\n**Installation Steps:**\n1. Mark swale route\n2. Excavate to grade\n3. Compact subgrade\n4. Add 2-4\" topsoil\n5. Seed or sod\n6. Install erosion control until established\n\n### French Drains\n\nSubsurface drains for areas with poor drainage.\n\n**Installation:**\n1. Dig trench 12-18\" deep\n2. Line with filter fabric\n3. Add 4\" gravel base\n4. Install perforated pipe (4\" minimum)\n5. Cover with gravel to within 4\" of surface\n6. Wrap fabric over gravel\n7. Top with soil and turf\n\n### Catch Basins\n\n**Components:**\n- Grated inlet\n- Basin (collection box)\n- Outlet pipe to discharge\n\n**Installation:**\n| Step | Action |\n|------|--------|\n| 1 | Excavate for basin + gravel bed |\n| 2 | Set basin on compacted gravel |\n| 3 | Level and align |\n| 4 | Connect outlet pipe |\n| 5 | Backfill and grade toward inlet |\n| 6 | Install grate |\n\n### Pop-Up Emitters\n\n**Purpose:** Discharge buried pipe at grade level\n\n**Installation:**\n- At end of underground drain runs\n- Opens when water pressure builds\n- Closes when pressure drops\n- Prevents debris entry\n- Place on slope, away from building\n\n### Dry Wells\n\n**For dispersing water into soil:**\n\n1. Excavate pit (4' x 4' x 4' typical)\n2. Line with filter fabric\n3. Fill with large stone or dry well chamber\n4. Connect inlet pipe\n5. Cover with fabric and soil\n6. Mark location for future reference"
+    },
+    {
+      "id": "ew11-s4",
+      "title": "Backfill & Compaction",
+      "summary": "Proper backfilling procedures for foundation drainage systems.",
+      "content_md": "## Backfill & Compaction\n\n### Backfill Material Selection\n\n| Zone | Material | Purpose |\n|------|----------|--------|\n| **Against foundation** | Free-draining granular | Allows water to drain down |\n| **Middle zone** | Select fill | Structural support |\n| **Top 6-12\"** | Topsoil | Grading, landscaping |\n\n**Free-Draining Materials:**\n- 3/4\" clear stone\n- Sand-gravel mixture\n- Crushed stone (clean)\n\n**Do NOT Use:**\n- Clay\n- Organic material\n- Frozen soil\n- Construction debris\n- Large rocks (against membrane)\n\n### Backfill Procedure\n\n**1. Verify Readiness**\n- [ ] Waterproofing inspected\n- [ ] Protection board installed\n- [ ] Drainage mat in place\n- [ ] Footer drains complete\n- [ ] No debris in excavation\n\n**2. Backfill in Lifts**\n- 8-12\" lifts maximum\n- Compact each lift\n- Don't dump large volumes at once\n- Protect membrane from damage\n\n**3. Compaction**\n\n| Lift | Equipment | Target Density |\n|------|-----------|---------------|\n| First 2' | Hand tamper only | Light compaction |\n| Middle | Plate compactor | 95% Proctor |\n| Upper | Plate/roller | 95% Proctor |\n\n> **CRITICAL:** Do not use heavy equipment within 5 feet of foundation walls until backfill is complete and cured.\n\n### Settlement Prevention\n\n**Causes of Settlement:**\n- Inadequate compaction\n- Improper material\n- Water in backfill\n- Freeze-thaw cycles\n\n**Prevention:**\n- Compact in proper lifts\n- Use suitable material\n- Allow drainage before final grade\n- Over-fill slightly for settlement"
+    },
+    {
+      "id": "ew11-s5",
+      "title": "Maintenance & Troubleshooting",
+      "summary": "Maintaining drainage systems and solving common problems.",
+      "content_md": "## Maintenance & Troubleshooting\n\n### Regular Maintenance Schedule\n\n**Spring:**\n- Inspect grade around foundation\n- Clear any debris from catch basins\n- Check sump pump operation\n- Verify downspout extensions in place\n\n**Fall:**\n- Clean catch basin grates\n- Clear leaves from swales\n- Test sump pump before freeze\n- Verify no negative grading from settlement\n\n**After Major Rain:**\n- Look for ponding areas\n- Check for erosion\n- Verify no water against foundation\n- Confirm drains functioning\n\n### Common Problems & Solutions\n\n**1. Ponding Near Foundation**\n\n| Cause | Solution |\n|-------|----------|\n| Settlement | Add soil, compact, re-grade |\n| Hardpan layer | Break through, add drain |\n| Blocked drain | Clean or replace drainage |\n| Improper grade | Re-grade to positive slope |\n\n**2. Wet Basement Walls**\n\n| Location | Likely Cause | Solution |\n|----------|--------------|----------|\n| Base of wall | Footer drain failure | Clean/repair drain system |\n| Mid-wall | Surface water entry | Improve grading |\n| Top of wall | Splash/surface water | Extend downspouts, grade |\n| Everywhere | High water table | May need sump system |\n\n**3. Footer Drain Failure**\n\n**Signs:**\n- Water in basement\n- Sump runs constantly\n- Hydrostatic pressure cracks\n\n**Solutions:**\n- Camera inspection of pipes\n- Jetting to clear blockages\n- Interior drain system as alternative\n- Excavation and replacement (last resort)\n\n### Inspection Access\n\n**Install cleanouts:**\n- At corners of foundation\n- Every 100' maximum\n- At changes in direction\n- Accessible from grade\n\n> **Pro Tip:** Install cleanouts during initial construction - much cheaper than adding later when problems arise.\n\n### When to Call a Professional\n\n- Persistent basement water despite corrections\n- Foundation cracking from hydrostatic pressure\n- Major grading changes needed\n- Sump pump runs continuously\n- Signs of structural movement"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew11-c1",
+      "title": "Site Grading Checklist",
+      "items": [
+        "Grade slopes away from foundation minimum 6\" in 6 feet",
+        "No negative slopes toward building",
+        "No ponding areas within 10 feet of foundation",
+        "Minimum 8\" clearance from soil to siding",
+        "Swales properly graded to direct water away",
+        "Downspout discharge points graded away",
+        "Window wells properly drained",
+        "Driveway and walkways slope away from building"
+      ]
+    },
+    {
+      "id": "ew11-c2",
+      "title": "Footer Drain Installation Checklist",
+      "items": [
+        "Trench excavated beside (not on) footer",
+        "Filter fabric lines entire trench",
+        "4\" gravel bed installed and leveled",
+        "Perforated pipe installed holes DOWN",
+        "Pipe maintains 1/8\" per foot slope",
+        "Pipe connections secure",
+        "Minimum 4\" stone over pipe",
+        "Filter fabric wrapped over stone",
+        "Outlet pipe connected and functional",
+        "Cleanouts installed at corners"
+      ]
+    },
+    {
+      "id": "ew11-c3",
+      "title": "Backfill Procedure Checklist",
+      "items": [
+        "Waterproofing inspection complete",
+        "Protection board installed full height",
+        "Drainage mat installed (if specified)",
+        "Footer drain system complete and tested",
+        "No debris in excavation",
+        "Free-draining material against foundation",
+        "Backfill placed in 8-12\" lifts",
+        "Each lift compacted before next",
+        "No heavy equipment within 5' of walls",
+        "Final grade slopes away from building"
+      ]
+    },
+    {
+      "id": "ew11-c4",
+      "title": "Drainage System Maintenance Checklist",
+      "items": [
+        "Grade inspected around entire foundation",
+        "Catch basin grates cleared of debris",
+        "Swales clear and properly sloped",
+        "Downspout extensions in place (4' minimum)",
+        "Sump pump tested and operational",
+        "No visible ponding after rain",
+        "No erosion near foundation",
+        "Cleanouts accessible and capped",
+        "Window well drains clear",
+        "Problems documented for repair"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew11-q1",
+        "question": "What is the minimum slope required within the first 6 feet of a foundation?",
+        "options": [
+          "2 inches",
+          "4 inches",
+          "6 inches",
+          "12 inches"
+        ],
+        "correct": 2,
+        "explanation": "NBC requires minimum 6 inches of fall within the first 6 feet from the foundation (approximately 1 inch per foot)."
+      },
+      {
+        "id": "ew11-q2",
+        "question": "Which direction should footer drain pipe perforations face?",
+        "options": [
+          "Up",
+          "Down",
+          "Sideways",
+          "Doesn't matter"
+        ],
+        "correct": 1,
+        "explanation": "Perforations should face DOWN so water enters from below as the water table rises."
+      },
+      {
+        "id": "ew11-q3",
+        "question": "What is the minimum slope for footer drain pipe?",
+        "options": [
+          "1/16\" per foot",
+          "1/8\" per foot",
+          "1/4\" per foot",
+          "1/2\" per foot"
+        ],
+        "correct": 1,
+        "explanation": "Footer drain pipe should maintain minimum 1/8\" per foot slope toward the outlet."
+      },
+      {
+        "id": "ew11-q4",
+        "question": "What type of pipe is recommended for best long-term footer drain performance?",
+        "options": [
+          "Corrugated flexible",
+          "Big-O drainage tile",
+          "4\" rigid PVC perforated",
+          "Clay tile"
+        ],
+        "correct": 2,
+        "explanation": "4\" rigid PVC perforated pipe is recommended for durability and cleanability."
+      },
+      {
+        "id": "ew11-q5",
+        "question": "What is the minimum clearance between soil and siding?",
+        "options": [
+          "2\"",
+          "4\"",
+          "6\"",
+          "8\""
+        ],
+        "correct": 3,
+        "explanation": "Maintain minimum 8\" clearance between soil and siding to prevent rot and insect access."
+      },
+      {
+        "id": "ew11-q6",
+        "question": "What material should NOT be used as backfill against a foundation?",
+        "options": [
+          "Clear stone",
+          "Sand-gravel mix",
+          "Clay",
+          "Crushed stone"
+        ],
+        "correct": 2,
+        "explanation": "Clay holds water and should not be used as backfill against foundations. Use free-draining granular materials."
+      },
+      {
+        "id": "ew11-q7",
+        "question": "What is the maximum lift thickness for foundation backfill?",
+        "options": [
+          "4-6\"",
+          "8-12\"",
+          "18-24\"",
+          "36\""
+        ],
+        "correct": 1,
+        "explanation": "Backfill should be placed in lifts of 8-12\" maximum and compacted before adding the next lift."
+      },
+      {
+        "id": "ew11-q8",
+        "question": "How close can heavy equipment operate to foundation walls during backfilling?",
+        "options": [
+          "Immediately adjacent",
+          "2 feet",
+          "5 feet",
+          "10 feet"
+        ],
+        "correct": 2,
+        "explanation": "Heavy equipment should not operate within 5 feet of foundation walls until backfill is complete and cured."
+      },
+      {
+        "id": "ew11-q9",
+        "question": "What is the purpose of filter fabric in drainage systems?",
+        "options": [
+          "Add strength",
+          "Prevent soil infiltration into drain",
+          "Improve appearance",
+          "Reduce cost"
+        ],
+        "correct": 1,
+        "explanation": "Filter fabric prevents soil particles from entering and clogging the drainage stone and pipe."
+      },
+      {
+        "id": "ew11-q10",
+        "question": "What is a swale?",
+        "options": [
+          "A type of drain pipe",
+          "A shallow vegetated channel",
+          "A sump pump",
+          "A waterproofing membrane"
+        ],
+        "correct": 1,
+        "explanation": "A swale is a shallow, vegetated channel designed to direct surface water away from structures."
+      },
+      {
+        "id": "ew11-q11",
+        "question": "When should sump pump operation be tested?",
+        "options": [
+          "Only when it fails",
+          "Monthly",
+          "In fall before freeze",
+          "After every rain"
+        ],
+        "correct": 2,
+        "explanation": "Sump pumps should be tested in fall before freeze to ensure they're operational during spring thaw."
+      },
+      {
+        "id": "ew11-q12",
+        "question": "What is a daylight outlet?",
+        "options": [
+          "A light fixture",
+          "A window well",
+          "Where drain pipe exits on a slope",
+          "A roof drain"
+        ],
+        "correct": 2,
+        "explanation": "A daylight outlet is where the drain pipe exits the ground on a slope, discharging water by gravity."
+      },
+      {
+        "id": "ew11-q13",
+        "question": "What causes most basement water problems?",
+        "options": [
+          "High water table",
+          "Poor exterior drainage",
+          "Defective waterproofing",
+          "Plumbing leaks"
+        ],
+        "correct": 1,
+        "explanation": "Poor exterior drainage (improper grading, failed drains) is the #1 cause of basement water problems."
+      },
+      {
+        "id": "ew11-q14",
+        "question": "How often should footer drain cleanouts be installed?",
+        "options": [
+          "At each corner only",
+          "Every 50 feet",
+          "Every 100 feet maximum",
+          "Only at outlet"
+        ],
+        "correct": 2,
+        "explanation": "Cleanouts should be installed at corners and every 100 feet maximum for maintenance access."
+      },
+      {
+        "id": "ew11-q15",
+        "question": "What is the minimum amount of stone that should cover footer drain pipe?",
+        "options": [
+          "2\"",
+          "4\"",
+          "6\"",
+          "12\""
+        ],
+        "correct": 1,
+        "explanation": "Footer drain pipe should have minimum 4\" of clean stone covering it before wrapping with filter fabric."
+      }
+    ]
+  }
+}

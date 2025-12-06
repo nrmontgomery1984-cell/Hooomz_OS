@@ -1,0 +1,16 @@
+{
+  "id": "HV-02",
+  "phase": 5,
+  "slug": "hvac-installation-commissioning",
+  "title": "HVAC Installation & Commissioning",
+  "category": "HVAC",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

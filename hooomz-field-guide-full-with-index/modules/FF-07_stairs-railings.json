@@ -1,0 +1,348 @@
+{
+  "id": "FF-07",
+  "phase": 2,
+  "slug": "stairs-railings",
+  "title": "Stairs & Railings",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 4,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-02", "FF-03"],
+  "estimated_study_hours": 6,
+  "status": "complete",
+  "tags": ["stairs", "railings", "guardrails", "handrails", "stringers", "risers", "treads", "balusters", "NBC 2020", "stair calculations"],
+  "sections": [
+    {
+      "id": "FF-07-01",
+      "title": "Introduction to Stair Systems",
+      "summary": "Overview of stair components, types, and code requirements",
+      "content_md": "## Stair Fundamentals\n\nStairs are critical building components that must meet strict code requirements for safety, comfort, and accessibility.\n\n### Why Stair Code Compliance Matters\n\n1. **Safety** - Falls are a leading cause of home injuries\n2. **Ergonomics** - Proper dimensions reduce fatigue and accidents\n3. **Accessibility** - Enables safe movement for all users\n4. **Code compliance** - Required for permit approval\n5. **Resale value** - Non-compliant stairs affect home value\n\n### Key Terminology\n\n**Rise**\n- Vertical height of one step\n- Measured face of riser to face of riser\n- NBC maximum: 200 mm (7-7/8\")\n\n**Run**\n- Horizontal depth of tread\n- Measured nosing to nosing\n- NBC minimum: 255 mm (10\")\n\n**Tread**\n- Horizontal stepping surface\n- Includes nosing overhang\n\n**Riser**\n- Vertical board between treads\n- May be open or closed\n\n**Stringer**\n- Inclined structural member\n- Supports treads and risers\n- Cut, housed, or kerfed types\n\n**Nosing**\n- Tread overhang beyond riser\n- NBC: 25 mm maximum projection\n\n### Stair Types\n\n| Type | Description | Common Use |\n|------|-------------|------------|\n| Straight | Single flight, no turns | Most common residential |\n| L-shaped | 90° turn with landing | Where space allows |\n| U-shaped | 180° turn with landing | Two-story homes |\n| Winder | Turns with tapered treads | Tight spaces (code limits) |\n| Spiral | Continuous helix | Secondary access only |\n\n### NBC 2020 Key Requirements\n\n**Section 9.8 - Stairs**\n\n| Parameter | Requirement |\n|-----------|-------------|\n| Maximum rise | 200 mm (7-7/8\") |\n| Minimum run | 255 mm (10\") |\n| Minimum width | 860 mm (34\") |\n| Maximum variation | 6 mm (1/4\") |\n| Headroom minimum | 1950 mm (6'-5\") |\n| Handrail required | Both sides or one side |\n| Guardrail height | 900 mm (35\") minimum |\n\n### Stair Calculation Formula\n\n**Rise + Run Rule**\n```\nIdeal: 2R + G = 635 mm (25\")\nWhere: R = riser height, G = tread depth\n\nExample:\nR = 180 mm (7\")\nG = 635 - (2 × 180) = 275 mm (10-3/4\")\n```\n\n### Common Stair Configurations\n\n**Standard Residential**\n- Total rise: 8'-0\" to 9'-0\"\n- 13-14 risers typical\n- Riser height: ~180 mm (7\")\n- Tread depth: ~270 mm (10-5/8\")\n\n**Basement Stairs**\n- Total rise: Often 8'-6\" to 9'-0\"\n- May be steeper (still within code)\n- Sometimes narrower minimum width\n\n**Deck Stairs**\n- Exposed to weather\n- Pressure-treated materials\n- Drainage considerations"
+    },
+    {
+      "id": "FF-07-02",
+      "title": "Stair Calculations and Layout",
+      "summary": "Step-by-step procedures for calculating rise, run, and stringer layout",
+      "content_md": "## Stair Calculation Process\n\n### Step 1: Measure Total Rise\n\n**Critical Measurement**\n- Measure from finish floor to finish floor\n- Include all floor coverings\n- Verify at multiple points if floors not level\n\n**Example:**\n```\nSubfloor to subfloor: 103\"\nFinish floor (upper): 3/4\" hardwood\nFinish floor (lower): 3/4\" hardwood\nTotal rise: 103\" + 0\" = 103\" (3/4\" at each level cancels)\n\nIf different finish floors:\nUpper: 3/4\" hardwood\nLower: 1/4\" vinyl\nTotal rise: 103\" + (3/4\" - 1/4\") = 103-1/2\"\n```\n\n### Step 2: Calculate Number of Risers\n\n**Formula:**\n```\nNumber of risers = Total rise ÷ Target riser height\n\nExample:\nTotal rise: 103\"\nTarget riser: 7\" (within code)\n103\" ÷ 7\" = 14.7 → Round to 15 risers\n```\n\n### Step 3: Calculate Actual Riser Height\n\n**Formula:**\n```\nActual riser = Total rise ÷ Number of risers\n\nExample:\n103\" ÷ 15 = 6.867\" (6-7/8\")\n\nConvert to fraction:\n0.867\" × 8 = 6.93/8 ≈ 7/8\nFinal riser: 6-7/8\"\n```\n\n### Step 4: Calculate Tread Depth\n\n**Using 2R + G = 25\" Rule:**\n```\nG = 25\" - (2 × R)\nG = 25\" - (2 × 6.867\")\nG = 25\" - 13.73\"\nG = 11.27\" (11-1/4\")\n\nVerify: Exceeds 10\" minimum ✓\n```\n\n### Step 5: Calculate Total Run\n\n**Formula:**\n```\nTotal run = Tread depth × (Number of risers - 1)\n\nExample:\nTreads = 15 risers - 1 = 14 treads\nTotal run = 11.25\" × 14 = 157.5\" (13'-1-1/2\")\n```\n\n### Stringer Layout\n\n**Materials:**\n- 2×12 minimum for cut stringers\n- 2×10 with carriages acceptable\n- Select straight, dry lumber\n\n**Layout Procedure:**\n\n```\n1. Mark riser height on framing square leg\n2. Mark tread depth on square blade\n3. Use stair gauges for consistency\n4. Start from bottom of stringer\n5. Mark first rise (subtract 1 tread thickness)\n6. Mark all rises and runs\n7. Mark top connection to header\n8. Verify minimum 3-1/2\" throat\n```\n\n**Bottom Riser Adjustment:**\n```\nFirst riser = Calculated riser - Tread thickness\nExample: 6-7/8\" - 1\" tread = 5-7/8\" first riser\n```\n\n**Top Connection:**\n- May bear on header\n- May hang on header with hanger\n- Verify secure attachment\n\n### Minimum Stringer Throat\n\n```\nThroat = Remaining width after cuts\nMinimum: 3-1/2\" (per NBC)\n\nFor 2×12 (11-1/4\" wide):\nRiser: 7\"\nRun: 10\"\nDiagonal cut: √(7² + 10²) = 12.2\"\nCheck: 11.25\" ÷ (7/12.2) = ~6.5\" throat ✓\n```\n\n### Calculation Verification Checklist\n\n- [ ] Total rise measured finish to finish\n- [ ] Riser height ≤ 200 mm (7-7/8\")\n- [ ] Tread depth ≥ 255 mm (10\")\n- [ ] 2R + G = 635mm ± 25mm\n- [ ] All risers equal (±6 mm max)\n- [ ] Total run fits available space\n- [ ] Headroom maintained (1950 mm min)"
+    },
+    {
+      "id": "FF-07-03",
+      "title": "Stringer Construction and Installation",
+      "summary": "Cutting, reinforcing, and installing stair stringers",
+      "content_md": "## Stringer Construction\n\n### Stringer Types\n\n**Cut (Open) Stringers**\n- Treads rest on cut notches\n- Most common type\n- Visible from side\n- Requires minimum throat\n\n**Closed (Housed) Stringers**\n- Treads fit in routed grooves\n- Finished appearance\n- Factory-built typically\n- Interior finish stairs\n\n**Carriage with Skirt**\n- Cut carriage provides support\n- Skirt board for appearance\n- Combines strength and finish\n\n### Number of Stringers Required\n\n| Stair Width | Stringers Required |\n|-------------|-------------------|\n| Up to 36\" | 2 stringers |\n| 36\" to 48\" | 3 stringers |\n| Over 48\" | Per engineering |\n\n### Cutting Stringers\n\n**Tools Needed:**\n- Framing square with stair gauges\n- Circular saw\n- Hand saw (for corners)\n- Pencil and measuring tape\n\n**Cutting Procedure:**\n\n```\n1. Set stair gauges on square:\n   - Rise on tongue\n   - Run on blade\n\n2. Position square at bottom of stringer:\n   - Align gauges with edge\n   - Mark first riser line\n\n3. Slide square up, maintaining alignment:\n   - Mark each rise and run\n   - Continue to top\n\n4. Mark bottom cut:\n   - Parallel to tread cuts\n   - Height = riser minus tread thickness\n\n5. Mark top cut:\n   - May be plumb (against header)\n   - May be level (on ledger)\n\n6. Cut with circular saw:\n   - Stop short of inside corners\n   - Finish with hand saw\n   - Keep cuts accurate\n```\n\n**Critical: Do Not Overcut**\n- Overcutting weakens stringer\n- Creates visible gaps\n- Use hand saw for clean corners\n\n### Stringer Installation\n\n**Bottom Connection:**\n\n*To concrete:*\n- Pressure-treated kick plate\n- Anchor bolts or concrete screws\n- String secured to kick plate\n\n*To wood floor:*\n- 2×4 or 2×6 cleat nailed to floor\n- Stringer against cleat\n- Through-nail or screw\n\n**Top Connection:**\n\n*Flush with floor:*\n- Upper floor acts as top tread\n- Stringer notched around header\n- Face-nail through header into stringer\n\n*To header face:*\n- Metal stair hanger\n- Or ledger board with joist hangers\n- Most common method\n\n### Reinforcement Options\n\n**Glued Blocks**\n- 2×2 or 2×4 blocks\n- Glued and screwed under treads\n- Reduces squeaks\n- Adds strength\n\n**Metal Brackets**\n- Manufactured stair brackets\n- Quick installation\n- Consistent support\n\n**Kickers**\n- Short studs behind risers\n- Prevents forward movement\n- Required for open risers\n\n### Special Considerations for NB\n\n**Exterior Stairs:**\n- Pressure-treated lumber required\n- Drainage away from house\n- Non-slip surface recommended\n- Consider snow/ice buildup\n\n**Basement Stairs:**\n- May meet concrete floor\n- Moisture protection at base\n- Consider metal stair frame\n\n### Stringer Spacing\n\n| Tread Material | Maximum Span |\n|----------------|-------------|\n| 5/4\" tread | 16\" max |\n| 2×10/2×12 tread | 36\" max |\n| Manufactured tread | Per specs |"
+    },
+    {
+      "id": "FF-07-04",
+      "title": "Handrails and Guardrails",
+      "summary": "Code requirements, installation, and baluster spacing",
+      "content_md": "## Rails and Balusters\n\n### Terminology\n\n**Handrail**\n- Graspable rail for hand support\n- Runs along stair slope\n- Required on at least one side\n- Must meet graspability requirements\n\n**Guardrail**\n- Protective barrier at open edges\n- Vertical barrier at landings/balconies\n- Prevents falls from elevated surfaces\n- Height measured from floor/tread\n\n**Baluster (Spindle)**\n- Vertical members in guardrail\n- Fill space under handrail\n- Spacing prevents child entrapment\n\n**Newel Post**\n- Structural post at rail ends/turns\n- Anchors handrail system\n- Must be securely fastened\n\n### NBC 2020 Requirements\n\n**Handrail Requirements:**\n\n| Parameter | Requirement |\n|-----------|-------------|\n| Height above nosing | 865-965 mm (34\"-38\") |\n| Graspable profile | Circular 32-43 mm |\n| Clearance from wall | 50 mm (2\") minimum |\n| Continuous | Full stair length |\n| Extensions | 300 mm (12\") at top and bottom |\n\n**Guardrail Requirements:**\n\n| Parameter | Requirement |\n|-----------|-------------|\n| Height at stairs | 900 mm (35\") minimum |\n| Height at landings | 1070 mm (42\") minimum |\n| Baluster spacing | 100 mm (4\") maximum |\n| Climbability | No horizontal rails in first 550 mm |\n| Openings | No sphere > 100 mm can pass |\n\n### Handrail Profiles\n\n**Graspable Requirements:**\n```\nCircular:\n- 32-43 mm (1-1/4\" to 1-11/16\") diameter\n\nNon-circular:\n- Perimeter 100-125 mm (4\"-5\")\n- Cross-section max 57 mm (2-1/4\")\n- Graspable finger recess\n```\n\n**Acceptable Profiles:**\n- Round (1-1/4\" to 1-1/2\")\n- Oval with finger groove\n- Code-compliant molding profiles\n\n**Not Acceptable:**\n- 2×4 or 2×6 flat\n- Very large diameter\n- Flat top without finger grip\n\n### Baluster Spacing\n\n**4\" Maximum Opening Rule:**\n```\nTest: 4\" sphere cannot pass through\n\nTypical baluster spacing:\n- 4\" on center with 1-1/2\" balusters\n- Net opening = 2-1/2\"\n\nAt rake (stair angle):\n- Measure perpendicular to balusters\n- Opening increases with slope\n- May need closer spacing\n```\n\n### Installation Methods\n\n**Newel Post Mounting:**\n\n*Floor-mounted:*\n- Through-bolt to framing\n- Minimum 3/8\" bolt\n- Must resist 200 lb lateral force\n\n*Over-the-post:*\n- Continuous rail over post top\n- Lag screws from below\n- Decorative cap covers fasteners\n\n*Post-to-post:*\n- Rail terminates at posts\n- Rail bolts into post\n- Requires rosettes or returned ends\n\n**Baluster Installation:**\n\n*Bottom (shoe rail method):*\n- Plowed shoe rail on treads\n- Balusters fit in groove\n- Pin or glue to secure\n\n*Dovetail method:*\n- Dovetailed baluster bottom\n- Tread routed for dovetail\n- Traditional method\n\n*Surface mount:*\n- Balusters face-attach\n- Screws from behind\n- Cover with fillet strip\n\n### Guardrail Strength\n\n**Load Requirements:**\n- 0.5 kN/m (34 lb/ft) horizontal at top\n- Point load: 1.0 kN (225 lb) any direction\n- Concentrated load on infill: 0.5 kN (112 lb)\n\n**Secure Fastening:**\n- Newels to framing (not just trim)\n- Multiple fasteners at connections\n- No wobble when tested\n\n### Common Violations\n\n- [ ] Guardrail height too low\n- [ ] Baluster spacing too wide\n- [ ] Handrail not graspable\n- [ ] Missing handrail extensions\n- [ ] Newels not secure\n- [ ] Openings exceed 100 mm"
+    },
+    {
+      "id": "FF-07-05",
+      "title": "Inspection and Quality Control",
+      "summary": "Verification procedures, tolerances, and common defects",
+      "content_md": "## Stair Inspection\n\n### Critical Dimensions to Verify\n\n| Measurement | Requirement | Tolerance |\n|-------------|-------------|----------|\n| Rise (individual) | ≤ 200 mm (7-7/8\") | ±6 mm (1/4\") |\n| Run (individual) | ≥ 255 mm (10\") | ±6 mm (1/4\") |\n| Rise uniformity | All equal | ±6 mm max variation |\n| Run uniformity | All equal | ±6 mm max variation |\n| Width | ≥ 860 mm (34\") | - |\n| Headroom | ≥ 1950 mm (6'-5\") | - |\n| Handrail height | 865-965 mm (34\"-38\") | - |\n| Guardrail height (stair) | ≥ 900 mm (35\") | - |\n| Guardrail height (landing) | ≥ 1070 mm (42\") | - |\n\n### Inspection Process\n\n**Rise Verification:**\n1. Measure each riser height\n2. Record measurements\n3. Calculate variation\n4. Largest minus smallest ≤ 6 mm\n\n**Run Verification:**\n1. Measure each tread depth\n2. Measure nosing to nosing\n3. Record and compare\n4. Maximum variation ≤ 6 mm\n\n**Handrail Check:**\n1. Verify graspable profile\n2. Measure height at nosings\n3. Check continuity\n4. Verify extensions at ends\n\n**Guardrail Check:**\n1. Measure height from tread/floor\n2. Test baluster spacing (4\" sphere)\n3. Check for climbable elements\n4. Test structural rigidity\n\n### Common Defects\n\n**Dimensional Issues:**\n\n*Uneven Risers*\n- Cause: Calculation error, floor finish not accounted\n- Fix: May require rebuild\n- Prevention: Measure finish to finish, verify before install\n\n*Risers Too High*\n- Cause: Too few risers, incorrect calculation\n- Fix: Add riser (extend stair length) or rebuild\n- Prevention: Calculate with maximum 7-7/8\" target\n\n*Treads Too Shallow*\n- Cause: Space constraints, calculation error\n- Fix: May need to relocate stair\n- Prevention: Verify total run fits before building\n\n**Structural Issues:**\n\n*Springy/Bouncy Treads*\n- Cause: Insufficient stringers, thin treads\n- Fix: Add center stringer, use thicker treads\n- Prevention: Follow stringer spacing requirements\n\n*Squeaky Stairs*\n- Cause: Loose treads, no adhesive\n- Fix: Add screws from behind, shim gaps\n- Prevention: Glue and screw all connections\n\n*Loose Handrails*\n- Cause: Inadequate newel fastening\n- Fix: Add through-bolts, reinforce\n- Prevention: Proper newel installation\n\n### Guardrail Failures\n\n**Spacing Too Wide:**\n- Common at angled sections\n- Test with 4\" sphere at all points\n- Add balusters if needed\n\n**Height Too Low:**\n- Measure from tread nosing, not from back\n- 35\" at stairs, 42\" at landings\n- May need to raise entire rail\n\n**Not Rigid:**\n- Newels must be structural\n- Test with lateral push\n- Reinforce if wobbles\n\n### Documentation\n\n**Record for Each Stair:**\n1. Total rise (measured)\n2. Number of risers\n3. Individual rise dimensions\n4. Individual run dimensions\n5. Width at narrowest point\n6. Headroom at lowest point\n7. Handrail height range\n8. Guardrail height\n9. Baluster spacing test (pass/fail)\n\n### Pre-Inspection Checklist\n\n- [ ] All risers measured and within 6 mm\n- [ ] All runs measured and within 6 mm\n- [ ] Rise ≤ 200 mm, run ≥ 255 mm\n- [ ] Minimum width achieved\n- [ ] Headroom clearance adequate\n- [ ] Handrails at correct height\n- [ ] Handrails graspable profile\n- [ ] Guardrails at correct height\n- [ ] Baluster spacing ≤ 100 mm\n- [ ] No climbable elements\n- [ ] Structurally rigid\n- [ ] Lighting adequate"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "FF-07-CL01",
+      "title": "Stair Calculation Checklist",
+      "items": [
+        "Total rise measured finish floor to finish floor",
+        "Floor finishes accounted for in measurement",
+        "Number of risers calculated",
+        "Individual rise calculated (≤ 200 mm)",
+        "Individual run calculated (≥ 255 mm)",
+        "2R + G formula verified (~635 mm)",
+        "Total run calculated and fits space",
+        "Headroom will be adequate"
+      ]
+    },
+    {
+      "id": "FF-07-CL02",
+      "title": "Stringer Layout Checklist",
+      "items": [
+        "Lumber straight and defect-free",
+        "Stair gauges set correctly",
+        "Bottom riser reduced by tread thickness",
+        "All rises and runs marked consistently",
+        "Top connection detail marked",
+        "Minimum 3-1/2\" throat verified",
+        "Layout checked before cutting",
+        "Pattern stringer tested before cutting others"
+      ]
+    },
+    {
+      "id": "FF-07-CL03",
+      "title": "Stringer Installation Checklist",
+      "items": [
+        "Correct number of stringers for width",
+        "Bottom secured to floor/kick plate",
+        "Top connection secure to header",
+        "Stringers plumb in both directions",
+        "Stringers level across width",
+        "Spacing consistent for treads",
+        "No twist or warp in stringers",
+        "Ready for tread installation"
+      ]
+    },
+    {
+      "id": "FF-07-CL04",
+      "title": "Tread and Riser Installation Checklist",
+      "items": [
+        "Risers cut to correct height",
+        "Treads cut to correct depth with nosing",
+        "Treads level front to back",
+        "Treads level side to side",
+        "Nosing projection correct (25 mm max)",
+        "All treads at same height variation",
+        "Glue applied at all joints",
+        "Screws/nails properly set"
+      ]
+    },
+    {
+      "id": "FF-07-CL05",
+      "title": "Handrail Checklist",
+      "items": [
+        "Profile meets graspability requirements",
+        "Height 865-965 mm above nosing",
+        "Continuous for full stair length",
+        "Wall clearance minimum 50 mm",
+        "Extensions at top (300 mm) if open",
+        "Extensions at bottom (300 mm + tread)",
+        "Securely mounted (no wobble)",
+        "Brackets spaced properly (≤1200 mm)"
+      ]
+    },
+    {
+      "id": "FF-07-CL06",
+      "title": "Guardrail Checklist",
+      "items": [
+        "Height ≥ 900 mm at stairs",
+        "Height ≥ 1070 mm at landings",
+        "Baluster spacing ≤ 100 mm (4\" sphere test)",
+        "No climbable elements in lower 550 mm",
+        "Newel posts securely anchored",
+        "Rigid when lateral force applied",
+        "Openings uniform and code-compliant",
+        "Top rail is graspable or has handrail"
+      ]
+    },
+    {
+      "id": "FF-07-CL07",
+      "title": "Pre-Inspection Final Checklist",
+      "items": [
+        "All riser heights verified (±6 mm)",
+        "All tread depths verified (±6 mm)",
+        "Maximum rise 200 mm confirmed",
+        "Minimum run 255 mm confirmed",
+        "Width minimum 860 mm confirmed",
+        "Headroom minimum 1950 mm confirmed",
+        "Handrails complete and compliant",
+        "Guardrails complete and compliant",
+        "Stair structurally sound (no bounce)",
+        "Lighting adequate for safety"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "FF-07-Q01",
+        "question": "What is the maximum riser height allowed by NBC 2020?",
+        "type": "multiple_choice",
+        "choices": [
+          "175 mm (6-7/8\")",
+          "200 mm (7-7/8\")",
+          "210 mm (8-1/4\")",
+          "225 mm (8-7/8\")"
+        ],
+        "answer": "200 mm (7-7/8\")",
+        "explanation": "NBC 2020 limits residential stair risers to a maximum of 200 mm (approximately 7-7/8 inches). Taller risers create a tripping hazard and make stairs difficult to climb."
+      },
+      {
+        "id": "FF-07-Q02",
+        "question": "What is the minimum tread depth (run) required for residential stairs?",
+        "type": "multiple_choice",
+        "choices": [
+          "230 mm (9\")",
+          "245 mm (9-5/8\")",
+          "255 mm (10\")",
+          "280 mm (11\")"
+        ],
+        "answer": "255 mm (10\")",
+        "explanation": "NBC 2020 requires a minimum tread depth of 255 mm (approximately 10 inches). Shallower treads don't provide adequate foot support and increase fall risk."
+      },
+      {
+        "id": "FF-07-Q03",
+        "question": "What is the maximum variation allowed between the largest and smallest riser?",
+        "type": "multiple_choice",
+        "choices": [
+          "3 mm (1/8\")",
+          "6 mm (1/4\")",
+          "10 mm (3/8\")",
+          "12 mm (1/2\")"
+        ],
+        "answer": "6 mm (1/4\")",
+        "explanation": "The maximum variation allowed between any two risers is 6 mm (1/4 inch). Inconsistent riser heights are a major tripping hazard as users develop a rhythm when climbing stairs."
+      },
+      {
+        "id": "FF-07-Q04",
+        "question": "What is the minimum headroom clearance required for residential stairs?",
+        "type": "multiple_choice",
+        "choices": [
+          "1850 mm (6'-1\")",
+          "1950 mm (6'-5\")",
+          "2050 mm (6'-9\")",
+          "2100 mm (6'-11\")"
+        ],
+        "answer": "1950 mm (6'-5\")",
+        "explanation": "NBC 2020 requires minimum headroom of 1950 mm (approximately 6'-5\") measured vertically from the stair nosing to any overhead obstruction."
+      },
+      {
+        "id": "FF-07-Q05",
+        "question": "What formula is commonly used to verify comfortable stair proportions?",
+        "type": "multiple_choice",
+        "choices": [
+          "R + G = 450 mm",
+          "2R + G = 635 mm",
+          "R × G = 4500 mm²",
+          "3R + G = 750 mm"
+        ],
+        "answer": "2R + G = 635 mm",
+        "explanation": "The formula 2R + G = 635 mm (where R = rise and G = run/going) is used to verify comfortable stair proportions. Stairs meeting this ratio are ergonomically comfortable to climb."
+      },
+      {
+        "id": "FF-07-Q06",
+        "question": "What is the minimum width for residential stairs?",
+        "type": "multiple_choice",
+        "choices": [
+          "760 mm (30\")",
+          "810 mm (32\")",
+          "860 mm (34\")",
+          "910 mm (36\")"
+        ],
+        "answer": "860 mm (34\")",
+        "explanation": "NBC 2020 requires residential stairs to have a minimum width of 860 mm (approximately 34 inches). This provides adequate space for users and allows furniture movement."
+      },
+      {
+        "id": "FF-07-Q07",
+        "question": "What is the handrail height range measured from the stair nosing?",
+        "type": "multiple_choice",
+        "choices": [
+          "760-860 mm (30\"-34\")",
+          "865-965 mm (34\"-38\")",
+          "900-1000 mm (35\"-39\")",
+          "1000-1100 mm (39\"-43\")"
+        ],
+        "answer": "865-965 mm (34\"-38\")",
+        "explanation": "Handrails must be between 865 mm and 965 mm (34\" to 38\") above the stair nosing. This range accommodates users of different heights while providing effective support."
+      },
+      {
+        "id": "FF-07-Q08",
+        "question": "What is the maximum baluster spacing to prevent child entrapment?",
+        "type": "multiple_choice",
+        "choices": [
+          "75 mm (3\")",
+          "100 mm (4\")",
+          "125 mm (5\")",
+          "150 mm (6\")"
+        ],
+        "answer": "100 mm (4\")",
+        "explanation": "Baluster spacing must be 100 mm (4 inches) or less, tested by ensuring a 100 mm sphere cannot pass through. This prevents small children from getting their heads stuck between balusters."
+      },
+      {
+        "id": "FF-07-Q09",
+        "question": "What is the minimum guardrail height at a stair landing?",
+        "type": "multiple_choice",
+        "choices": [
+          "900 mm (35\")",
+          "920 mm (36\")",
+          "1000 mm (39\")",
+          "1070 mm (42\")"
+        ],
+        "answer": "1070 mm (42\")",
+        "explanation": "Guardrails at landings and balconies must be at least 1070 mm (42 inches) high. This is higher than the 900 mm required at stairs because landings have more floor area where someone could build momentum before falling."
+      },
+      {
+        "id": "FF-07-Q10",
+        "question": "When measuring total rise for stair calculations, what should be measured?",
+        "type": "multiple_choice",
+        "choices": [
+          "Subfloor to subfloor",
+          "Finished floor to finished floor",
+          "Subfloor to finished floor at top",
+          "Joist to joist"
+        ],
+        "answer": "Finished floor to finished floor",
+        "explanation": "Total rise must be measured from finish floor to finish floor, including all floor coverings. Using subfloor measurements will result in incorrect riser heights after flooring is installed."
+      },
+      {
+        "id": "FF-07-Q11",
+        "question": "What is the minimum stringer throat (remaining width after cuts)?",
+        "type": "multiple_choice",
+        "choices": [
+          "2-1/2 inches",
+          "3-1/2 inches",
+          "4-1/2 inches",
+          "5-1/2 inches"
+        ],
+        "answer": "3-1/2 inches",
+        "explanation": "After cutting rises and runs, the stringer must retain a minimum 3-1/2 inch throat (uncut width) for adequate structural strength. This typically requires 2×12 lumber for cut stringers."
+      },
+      {
+        "id": "FF-07-Q12",
+        "question": "Why is the first riser cut shorter than the calculated rise?",
+        "type": "multiple_choice",
+        "choices": [
+          "To account for floor levelness",
+          "To compensate for tread thickness",
+          "To provide more headroom",
+          "To make the bottom step easier"
+        ],
+        "answer": "To compensate for tread thickness",
+        "explanation": "The first riser is reduced by the tread thickness because the tread adds height at all other steps. Without this adjustment, the first step would be taller than all others after treads are installed."
+      },
+      {
+        "id": "FF-07-Q13",
+        "question": "What diameter range makes a handrail \"graspable\" for circular profiles?",
+        "type": "multiple_choice",
+        "choices": [
+          "25-32 mm (1\"-1-1/4\")",
+          "32-43 mm (1-1/4\"-1-11/16\")",
+          "38-50 mm (1-1/2\"-2\")",
+          "44-57 mm (1-3/4\"-2-1/4\")"
+        ],
+        "answer": "32-43 mm (1-1/4\"-1-11/16\")",
+        "explanation": "For circular handrail profiles, the diameter must be between 32 mm and 43 mm to be considered graspable. This size allows users to wrap their fingers around for a secure grip."
+      },
+      {
+        "id": "FF-07-Q14",
+        "question": "How many stringers are required for a stair width of 40 inches?",
+        "type": "multiple_choice",
+        "choices": [
+          "2 stringers",
+          "3 stringers",
+          "4 stringers",
+          "Per engineering only"
+        ],
+        "answer": "3 stringers",
+        "explanation": "Stairs between 36\" and 48\" wide require 3 stringers to adequately support the treads. Two stringers are adequate only for widths up to 36 inches."
+      },
+      {
+        "id": "FF-07-Q15",
+        "question": "What is the guardrail height requirement at an open side of stairs?",
+        "type": "multiple_choice",
+        "choices": [
+          "865 mm (34\")",
+          "900 mm (35\")",
+          "920 mm (36\")",
+          "1070 mm (42\")"
+        ],
+        "answer": "900 mm (35\")",
+        "explanation": "At the open side of stairs (not landings), guardrails must be at least 900 mm (35 inches) high, measured vertically from the tread nosing. Landings require the higher 1070 mm guardrail."
+      }
+    ]
+  }
+}

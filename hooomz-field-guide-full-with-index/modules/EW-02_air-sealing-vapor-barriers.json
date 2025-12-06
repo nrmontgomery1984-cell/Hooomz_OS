@@ -1,0 +1,348 @@
+{
+  "id": "EW-02",
+  "phase": 3,
+  "slug": "air-sealing-vapor-barriers",
+  "title": "Air Sealing & Vapor Barriers",
+  "category": "Air Sealing & Insulation",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "EW-01"],
+  "estimated_study_hours": 6,
+  "status": "complete",
+  "tags": ["air sealing", "vapor barrier", "polyethylene", "air leakage", "acoustical sealant", "energy efficiency", "NBC 2020", "blower door", "condensation"],
+  "sections": [
+    {
+      "id": "EW-02-01",
+      "title": "Introduction to Air Sealing",
+      "summary": "Why air sealing matters, where air leaks occur, and the impact on building performance",
+      "content_md": "## Air Sealing Fundamentals\n\nAir sealing is one of the most cost-effective energy efficiency measures in residential construction. Uncontrolled air leakage can account for 25-40% of a home's heating costs in NB.\n\n### Why Air Sealing Matters\n\n**Energy Impact:**\n- Reduces heating costs 15-30%\n- Improves insulation effectiveness\n- Enables proper ventilation control\n- Meets NBC 2020 requirements\n\n**Comfort Impact:**\n- Eliminates drafts\n- Maintains consistent temperatures\n- Reduces noise infiltration\n- Controls humidity levels\n\n**Durability Impact:**\n- Prevents condensation in cavities\n- Reduces ice dam risk\n- Protects insulation from moisture\n- Extends building lifespan\n\n### Stack Effect and Air Movement\n\n**Winter Air Movement in NB:**\n```\nWarm interior air rises (buoyancy)\n    ↓\nExfiltrates at upper levels\n    ↓\nCreates negative pressure at lower levels\n    ↓\nCold outdoor air infiltrates at bottom\n```\n\n**Key Exfiltration Points (Upper):**\n- Attic penetrations\n- Ceiling/wall intersections\n- Dropped ceilings\n- Balloon-framed cavities\n\n**Key Infiltration Points (Lower):**\n- Rim joist area\n- Foundation/sill junction\n- Basement penetrations\n- Service entries\n\n### NBC 2020 Air Leakage Requirements\n\n**Section 9.25 - Air Barrier Systems**\n\n| Requirement | Specification |\n|-------------|---------------|\n| Air barrier required | All heated spaces |\n| Continuity | Entire building envelope |\n| Air leakage rate | ≤ 0.05 L/(s·m²) at 75 Pa |\n| Blower door (optional) | ≤ 2.5 ACH @ 50 Pa |\n\n### Common Air Leakage Locations\n\n**Top 10 Leakage Points:**\n\n1. **Attic hatches** - Often worst single leak\n2. **Recessed lights** - Multiple penetrations\n3. **Electrical boxes** - Numerous small leaks\n4. **Plumbing penetrations** - Often unsealed\n5. **Duct penetrations** - Large openings\n6. **Rim joist area** - Complex geometry\n7. **Windows/doors** - Perimeter gaps\n8. **Balloon frame cavities** - Hidden pathways\n9. **Dropped ceilings** - Bypass routes\n10. **Chimney chases** - Thermal bypasses\n\n### Air Barrier vs. Vapor Barrier\n\n| Property | Air Barrier | Vapor Barrier |\n|----------|-------------|---------------|\n| Purpose | Stop air movement | Slow moisture diffusion |\n| Continuity | Must be continuous | Generally continuous |\n| Location | Any side of insulation | Warm side (interior in NB) |\n| Materials | Many options | 6 mil poly, specific products |\n| Sealing | Critical at all joints | Critical at all joints |\n\n**In NB Climate:**\n- 6 mil poly serves as BOTH air and vapor barrier\n- Interior installation (warm side)\n- Must be continuous and sealed"
+    },
+    {
+      "id": "EW-02-02",
+      "title": "Air Sealing Materials and Methods",
+      "summary": "Sealants, foams, gaskets, and installation techniques for different applications",
+      "content_md": "## Air Sealing Products\n\n### Caulks and Sealants\n\n**Acoustical Sealant**\n- Non-hardening, remains flexible\n- Primary choice for poly-to-framing\n- Interior use only\n- Apply in continuous bead\n\n**Silicone Sealant**\n- Excellent flexibility and durability\n- Interior and exterior use\n- Wide temperature range\n- Not paintable (unless specified)\n\n**Polyurethane Sealant**\n- Excellent adhesion\n- Paintable\n- Interior and exterior\n- Good gap filling\n\n**Latex/Acrylic Sealant**\n- Easy cleanup\n- Paintable\n- Interior use primarily\n- Less durable than silicone\n\n### Spray Foams\n\n**Low-Expansion Foam**\n- For windows and doors\n- Won't bow frames\n- Fills small gaps\n- Interior and exterior\n\n**High-Expansion Foam**\n- For large gaps only\n- NOT for windows/doors\n- Can exert significant force\n- Rough fill applications\n\n**Two-Component Foam**\n- Professional application\n- Higher density\n- Better air barrier\n- Large area coverage\n\n### Foam Specifications\n\n| Type | Expansion | Use Case | R-Value/inch |\n|------|-----------|----------|-------------|\n| Low expansion | 20-30% | Windows, doors | ~3.7 |\n| Medium expansion | 50-100% | General gaps | ~3.7 |\n| High expansion | 200-300% | Large voids | ~3.5 |\n| Closed-cell SPF | 30x | Professional | ~6.5 |\n| Open-cell SPF | 100x | Professional | ~3.7 |\n\n### Gaskets and Tapes\n\n**Sill Gasket**\n- Under sill plates\n- Foam or rubber\n- Continuous installation\n- Compresses to seal\n\n**Weatherstripping**\n- Windows and doors\n- Various profiles\n- Replace when worn\n\n**Air Sealing Tape**\n- For air barrier joints\n- Must adhere to substrates\n- Acrylic or butyl-based\n- Follow manufacturer specs\n\n### Application Methods\n\n**Caulk Application:**\n```\n1. Surface must be clean, dry, dust-free\n2. Cut tip at 45° angle\n3. Apply continuous bead\n4. Tool within working time\n5. Allow proper cure time\n```\n\n**Foam Application:**\n```\n1. Shake can thoroughly (1 minute)\n2. Hold can upside down\n3. Fill gap 50% (for expansion)\n4. Allow cure before trimming\n5. Protect from UV if exterior\n```\n\n**Critical Joints to Seal:**\n\n- [ ] Bottom plate to subfloor\n- [ ] Top plate to drywall\n- [ ] Electrical boxes\n- [ ] Plumbing penetrations\n- [ ] HVAC penetrations\n- [ ] Window/door frames\n- [ ] Rim joist area\n- [ ] Attic penetrations"
+    },
+    {
+      "id": "EW-02-03",
+      "title": "Vapor Barrier Installation",
+      "summary": "6 mil polyethylene installation, sealing details, and common problem areas",
+      "content_md": "## Vapor Barrier Systems\n\n### Material Requirements\n\n**6 Mil Polyethylene**\n- Standard vapor barrier in NB\n- Clear or black (clear preferred for inspection)\n- Continuous sheets where possible\n- Minimum 6 mil thickness\n\n**Vapor Barrier Ratings**\n\n| Material | Perm Rating | Classification |\n|----------|-------------|----------------|\n| 6 mil poly | 0.06 perms | Class I (vapor impermeable) |\n| Kraft paper | 1 perm | Class II (vapor semi-impermeable) |\n| Latex paint | 3-5 perms | Class III (vapor semi-permeable) |\n\n**NBC Requirement:**\n- Vapor barrier required on warm side\n- Must be ≤ 60 ng/(Pa·s·m²) = 1 perm\n- 6 mil poly exceeds requirement\n\n### Wall Installation Procedure\n\n**Step 1: Prepare Surface**\n```\n- Insulation installed and inspected\n- Electrical/plumbing complete\n- Framing clean of debris\n- Protruding nails removed\n```\n\n**Step 2: Apply Acoustical Sealant**\n```\n- Bottom plate (continuous bead)\n- Top plate (continuous bead)\n- Window/door frames (perimeter)\n- Around all penetrations\n```\n\n**Step 3: Install Poly Sheet**\n```\n- Start at corner or window\n- Unroll horizontally\n- Press into sealant at plates\n- Smooth to remove wrinkles\n- Staple at 6\" intervals\n```\n\n**Step 4: Seal Joints**\n```\n- Overlap joints 6\" minimum\n- Both sheets in sealant bead\n- Or use approved tape\n- No gaps or holes\n```\n\n### Ceiling Installation\n\n**Before Ceiling Poly:**\n- Attic penetrations sealed (from above)\n- Blocking installed at wall intersections\n- Electrical boxes accessible\n\n**Installation:**\n```\n1. Apply sealant at wall/ceiling junction\n2. Roll poly across ceiling joists\n3. Press into sealant at perimeter\n4. Staple to joists/blocking\n5. Overlap joints in sealant\n6. Seal all penetrations\n```\n\n### Critical Details\n\n**Electrical Boxes:**\n```\nOption 1: Poly behind box\n- Seal wire penetrations\n- Seal box edges to poly\n\nOption 2: Vapor barrier box\n- Purpose-built sealed box\n- Poly seals to box flange\n\nOption 3: Poly over front\n- Cut around box after drywall\n- Seal box to drywall with gasket\n```\n\n**Window/Door Openings:**\n```\n1. Fold poly into rough opening\n2. Staple to inside face of framing\n3. Seal with acoustical sealant\n4. Trim excess after secured\n5. Connection to window later\n```\n\n**Wall/Ceiling Intersection:**\n```\n- Ceiling poly overlaps wall poly\n- OR separate sealed connection\n- Sealant at all joints\n- Blocking provides backing\n```\n\n### Common Mistakes to Avoid\n\n- [ ] Poly installed with holes/tears\n- [ ] Joints not in sealant or taped\n- [ ] Penetrations not sealed\n- [ ] Poly not sealed at plates\n- [ ] Using wrong sealant type\n- [ ] Installing poly too tight (tears)\n- [ ] Installing poly too loose (pooling)"
+    },
+    {
+      "id": "EW-02-04",
+      "title": "Sealing Penetrations and Transitions",
+      "summary": "Detailed procedures for sealing around electrical, plumbing, HVAC, and at building transitions",
+      "content_md": "## Penetration Sealing\n\n### Electrical Penetrations\n\n**Electrical Boxes (Interior):**\n```\nMethod 1: Sealed Box Assembly\n- Pre-sealed vapor barrier box\n- Wires sealed with grommets\n- Flange seals to poly\n\nMethod 2: Traditional with Sealant\n- Apply sealant around box perimeter\n- Seal each wire penetration\n- Use fire-rated sealant if required\n```\n\n**Wire Penetrations (Plates):**\n```\n1. Drill appropriately sized holes\n2. Run wires through\n3. Seal with acoustical sealant\n4. Or use rubber grommets\n```\n\n**Recessed Lights:**\n```\nIC-Rated Air-Tight (ICAT) fixtures:\n- Purpose-built air-sealed\n- Can contact insulation\n- Poly seals to housing trim\n\nStandard fixtures:\n- Require air-sealed enclosure\n- Minimum 3\" clearance to insulation\n- Enclosure sealed at ceiling\n```\n\n### Plumbing Penetrations\n\n**Pipe Penetrations:**\n\n| Pipe Size | Sealing Method |\n|-----------|---------------|\n| Small (≤1\") | Acoustical sealant |\n| Medium (1-3\") | Foam + sealant |\n| Large (>3\") | Foam collar or escutcheon |\n\n**Vent Stack Sealing:**\n```\n1. Install rubber boot at roof level\n2. Seal at ceiling penetration\n3. Fill gap with foam\n4. Cover with sealed plate\n```\n\n**Plumbing Wall Cavities:**\n```\n- Block top and bottom of cavity\n- Seal around all pipes\n- Insulate pipes as required\n- Maintain vapor barrier continuity\n```\n\n### HVAC Penetrations\n\n**Duct Penetrations:**\n```\n1. Size opening close to duct\n2. Seal with foam + tape or mastic\n3. Maintain duct insulation\n4. Seal duct boot to drywall\n```\n\n**Supply/Return Register:**\n```\n- Seal boot to drywall with gasket\n- Or caulk perimeter of register\n- Don't rely on register alone\n```\n\n### Building Transitions\n\n**Rim Joist Area:**\n```\nAir Sealing Approach:\n1. Seal sill to foundation (sill gasket)\n2. Seal rim joist to sill (foam/caulk)\n3. Seal rim joist to subfloor (foam/caulk)\n4. Seal each joist bay individually\n\nInsulation Options:\n- Spray foam (best air seal)\n- Rigid foam + caulk\n- Batt with separate air barrier\n```\n\n**Wall/Ceiling Junction:**\n```\n1. Install blocking at top plates\n2. Seal poly to blocking\n3. Continuous seal at perimeter\n4. Address interior wall cavities\n```\n\n**Wall/Floor Junction:**\n```\n1. Seal bottom plate to subfloor\n2. Acoustical sealant (continuous)\n3. Address balloon-frame cavities\n4. Verify continuity at all walls\n```\n\n**Attic Hatch:**\n```\n1. Weatherstrip around frame\n2. Latches to compress weatherstrip\n3. Insulate top of hatch\n4. Consider pre-made insulated hatch\n```\n\n### Fire Stopping Requirements\n\n**Where Required:**\n- Penetrations through fire separations\n- Membrane penetrations (certain types)\n- Per NBC fire stopping requirements\n\n**Materials:**\n- Fire-rated caulk\n- Fire-rated foam\n- Fire stop collars\n- Intumescent materials\n\n**Note:** Fire stopping and air sealing are separate requirements - ensure both are addressed where applicable."
+    },
+    {
+      "id": "EW-02-05",
+      "title": "Inspection and Quality Control",
+      "summary": "Visual inspection, blower door testing, and common defects",
+      "content_md": "## Air Sealing Inspection\n\n### Visual Inspection Checklist\n\n**Vapor Barrier (Poly):**\n\n| Item | Requirement |\n|------|-------------|\n| Coverage | Complete, no gaps |\n| Holes/tears | None (repair if found) |\n| Overlap joints | 6\" minimum |\n| Sealed to plates | Continuous sealant |\n| Penetrations | All sealed |\n| Electrical boxes | Sealed or vapor barrier type |\n| Window/door frames | Sealed perimeter |\n\n**Foam and Sealant:**\n\n| Item | Requirement |\n|------|-------------|\n| Rim joist | All bays sealed |\n| Penetrations | Foam cured/trimmed |\n| Gaps | No visible gaps |\n| Adhesion | Proper bond to substrates |\n\n### Blower Door Testing\n\n**Purpose:**\n- Quantify air leakage\n- Verify code compliance\n- Identify leak locations\n- Quality control measure\n\n**Test Procedure:**\n```\n1. Close all windows and exterior doors\n2. Open all interior doors\n3. Close fireplace dampers\n4. Install blower door in exterior door\n5. Depressurize to 50 Pa\n6. Measure airflow (CFM50)\n7. Calculate ACH50\n```\n\n**Target Values:**\n\n| Standard | Maximum ACH50 |\n|----------|---------------|\n| NBC minimum | Not specified (use 3.0) |\n| Good practice | 2.5 |\n| Energy Star | 2.0 |\n| Passive House | 0.6 |\n\n**ACH50 Calculation:**\n```\nACH50 = (CFM50 × 60) ÷ House Volume\n\nExample:\nCFM50: 1,500\nVolume: 15,000 cubic feet\nACH50 = (1,500 × 60) ÷ 15,000 = 6.0 (poor)\n```\n\n### Leak Detection Methods\n\n**During Blower Door Test:**\n\n*Smoke Pencil:*\n- Shows air movement direction\n- Identifies specific leaks\n- Use at suspected locations\n\n*Infrared Camera:*\n- Shows temperature differences\n- Identifies thermal bypasses\n- Best in cold weather\n\n*Hand Feel:*\n- Obvious drafts detectable\n- Less precise than tools\n- Good for large leaks\n\n### Common Defects\n\n**Vapor Barrier Issues:**\n\n*Tears and Holes*\n- Cause: Handling damage, subsequent trades\n- Fix: Patch with tape or new poly\n- Prevention: Protect during construction\n\n*Unsealed Joints*\n- Cause: Missing sealant, poor technique\n- Fix: Add sealant, re-staple\n- Prevention: Quality control during install\n\n*Bypasses*\n- Cause: Missed penetrations, cavities\n- Fix: Seal identified locations\n- Prevention: Systematic approach, checklist\n\n**Foam Issues:**\n\n*Gaps in Foam*\n- Cause: Insufficient application\n- Fix: Add foam to gaps\n- Prevention: Complete fill, inspect\n\n*Poor Adhesion*\n- Cause: Dirty/wet substrate, wrong temp\n- Fix: Remove and reapply\n- Prevention: Clean substrates, check temp\n\n### Documentation\n\n**Required Records:**\n- Pre-drywall inspection approval\n- Blower door test results (if performed)\n- Photos of key details\n- Defect corrections\n\n### NB Climate Considerations\n\n**Vapor Barrier Placement:**\n- Always on interior (warm side)\n- Critical in Zone 6 heating climate\n- Prevents condensation in wall cavity\n\n**Cold Weather Installation:**\n- Poly becomes stiff below 0°C\n- Sealants may not cure properly\n- Heat workspace if needed"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "EW-02-CL01",
+      "title": "Pre-Sealing Preparation Checklist",
+      "items": [
+        "Framing inspection complete",
+        "Electrical rough-in complete",
+        "Plumbing rough-in complete",
+        "HVAC rough-in complete",
+        "All penetrations identified",
+        "Materials staged (poly, sealant, foam)",
+        "Surface clean and dry",
+        "Temperature appropriate for sealants"
+      ]
+    },
+    {
+      "id": "EW-02-CL02",
+      "title": "Wall Air Sealing Checklist",
+      "items": [
+        "Bottom plate sealed to subfloor",
+        "Top plate sealed (sealant line)",
+        "Window frames sealed to framing",
+        "Door frames sealed to framing",
+        "Electrical boxes sealed",
+        "Plumbing penetrations sealed",
+        "Wire penetrations through plates sealed",
+        "Interior wall/exterior wall junction sealed"
+      ]
+    },
+    {
+      "id": "EW-02-CL03",
+      "title": "Vapor Barrier Installation Checklist",
+      "items": [
+        "6 mil poly material verified",
+        "Acoustical sealant at all plates",
+        "Poly pressed into sealant",
+        "Stapled at 6\" intervals",
+        "Joints overlap 6\" minimum",
+        "Joints sealed or taped",
+        "No holes, tears, or gaps",
+        "Electrical boxes addressed",
+        "Penetrations sealed"
+      ]
+    },
+    {
+      "id": "EW-02-CL04",
+      "title": "Ceiling Air Sealing Checklist",
+      "items": [
+        "Attic penetrations sealed from above",
+        "Ceiling/wall junction sealed",
+        "Recessed lights addressed (ICAT or enclosure)",
+        "Exhaust fan housings sealed",
+        "Attic hatch weatherstripped",
+        "Dropped ceiling areas blocked",
+        "Balloon-frame cavities blocked",
+        "Ceiling poly complete and sealed"
+      ]
+    },
+    {
+      "id": "EW-02-CL05",
+      "title": "Rim Joist Sealing Checklist",
+      "items": [
+        "Sill gasket installed under plate",
+        "Sill to foundation sealed",
+        "Rim joist to sill sealed",
+        "Rim joist to subfloor sealed",
+        "Each joist bay individually sealed",
+        "Penetrations through rim sealed",
+        "Insulation properly installed",
+        "Air barrier continuous"
+      ]
+    },
+    {
+      "id": "EW-02-CL06",
+      "title": "Penetration Sealing Checklist",
+      "items": [
+        "Electrical wires through plates sealed",
+        "Plumbing pipes sealed",
+        "HVAC ducts sealed",
+        "Exhaust vents sealed",
+        "Combustion air pipes sealed (maintain clearance)",
+        "Service entries sealed",
+        "Outdoor faucets sealed",
+        "Dryer vent sealed"
+      ]
+    },
+    {
+      "id": "EW-02-CL07",
+      "title": "Pre-Drywall Inspection Checklist",
+      "items": [
+        "Vapor barrier complete and continuous",
+        "All joints sealed or taped",
+        "All penetrations sealed",
+        "Rim joist area sealed",
+        "Attic penetrations sealed",
+        "No visible gaps or holes",
+        "Electrical boxes properly addressed",
+        "Fire stopping complete where required",
+        "Ready for insulation inspection"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "EW-02-Q01",
+        "question": "What percentage of a home's heating costs can be attributed to uncontrolled air leakage in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "5-10%",
+          "10-15%",
+          "25-40%",
+          "50-60%"
+        ],
+        "answer": "25-40%",
+        "explanation": "Uncontrolled air leakage can account for 25-40% of a home's heating costs in NB's cold climate. This makes air sealing one of the most cost-effective energy efficiency improvements."
+      },
+      {
+        "id": "EW-02-Q02",
+        "question": "In NB's cold climate, where should the vapor barrier be installed?",
+        "type": "multiple_choice",
+        "choices": [
+          "On the exterior (cold side)",
+          "On the interior (warm side)",
+          "In the middle of the insulation",
+          "Vapor barrier is not required"
+        ],
+        "answer": "On the interior (warm side)",
+        "explanation": "In NB's heating-dominated climate, the vapor barrier must be on the interior (warm) side of the insulation. This prevents warm, moist indoor air from reaching cold surfaces where it would condense."
+      },
+      {
+        "id": "EW-02-Q03",
+        "question": "What is the minimum thickness required for polyethylene vapor barrier?",
+        "type": "multiple_choice",
+        "choices": [
+          "2 mil",
+          "4 mil",
+          "6 mil",
+          "10 mil"
+        ],
+        "answer": "6 mil",
+        "explanation": "6 mil (0.006 inch) polyethylene is the minimum thickness for vapor barriers in residential construction. This thickness provides adequate durability during construction and proper vapor resistance."
+      },
+      {
+        "id": "EW-02-Q04",
+        "question": "What type of foam should be used around windows and doors?",
+        "type": "multiple_choice",
+        "choices": [
+          "High-expansion foam",
+          "Low-expansion foam",
+          "Open-cell spray foam",
+          "Any foam type is acceptable"
+        ],
+        "answer": "Low-expansion foam",
+        "explanation": "Low-expansion foam must be used around windows and doors. High-expansion foam can exert enough force to bow frames, causing binding and seal failures."
+      },
+      {
+        "id": "EW-02-Q05",
+        "question": "What minimum overlap is required at polyethylene vapor barrier joints?",
+        "type": "multiple_choice",
+        "choices": [
+          "2 inches",
+          "4 inches",
+          "6 inches",
+          "12 inches"
+        ],
+        "answer": "6 inches",
+        "explanation": "Vapor barrier joints must overlap a minimum of 6 inches, with both sheets pressed into a bead of acoustical sealant or sealed with approved tape."
+      },
+      {
+        "id": "EW-02-Q06",
+        "question": "What is the primary purpose of acoustical sealant in air sealing?",
+        "type": "multiple_choice",
+        "choices": [
+          "To reduce noise transmission",
+          "To seal vapor barrier to framing (stays flexible)",
+          "To waterproof exterior surfaces",
+          "To bond drywall to framing"
+        ],
+        "answer": "To seal vapor barrier to framing (stays flexible)",
+        "explanation": "Acoustical sealant remains flexible permanently, allowing it to accommodate building movement while maintaining the seal between the vapor barrier and framing. Regular caulk can crack and fail."
+      },
+      {
+        "id": "EW-02-Q07",
+        "question": "What drives the stack effect in winter?",
+        "type": "multiple_choice",
+        "choices": [
+          "Wind pressure on the building",
+          "HVAC system operation",
+          "Warm air rising creates pressure differences",
+          "Mechanical ventilation"
+        ],
+        "answer": "Warm air rising creates pressure differences",
+        "explanation": "Stack effect is driven by warm air rising (buoyancy). Warm indoor air rises and exfiltrates at upper levels, creating negative pressure at lower levels that draws in cold outdoor air."
+      },
+      {
+        "id": "EW-02-Q08",
+        "question": "What is a good target for ACH50 (air changes per hour at 50 pascals) in new construction?",
+        "type": "multiple_choice",
+        "choices": [
+          "5.0 or less",
+          "3.0 or less",
+          "2.5 or less",
+          "1.0 or less"
+        ],
+        "answer": "2.5 or less",
+        "explanation": "A good target for residential construction is 2.5 ACH50 or less. Energy Star homes target 2.0, while Passive House requires 0.6. Lower numbers indicate tighter construction."
+      },
+      {
+        "id": "EW-02-Q09",
+        "question": "What type of recessed light fixture can be installed in contact with insulation?",
+        "type": "multiple_choice",
+        "choices": [
+          "Standard IC-rated fixtures",
+          "Non-IC-rated fixtures with enclosure",
+          "IC-rated Air-Tight (ICAT) fixtures",
+          "Any fixture if covered with drywall"
+        ],
+        "answer": "IC-rated Air-Tight (ICAT) fixtures",
+        "explanation": "Only ICAT (Insulation Contact Air Tight) fixtures are both safe for insulation contact AND sealed against air leakage. Standard IC-rated fixtures may not be air-sealed."
+      },
+      {
+        "id": "EW-02-Q10",
+        "question": "Which area is often the worst single source of air leakage in homes?",
+        "type": "multiple_choice",
+        "choices": [
+          "Windows",
+          "Exterior doors",
+          "Attic hatches",
+          "Electrical outlets"
+        ],
+        "answer": "Attic hatches",
+        "explanation": "Attic hatches are often the worst single source of air leakage because they connect directly to the attic, have large perimeters, and are frequently unsealed and uninsulated."
+      },
+      {
+        "id": "EW-02-Q11",
+        "question": "What should be used to seal vapor barrier around electrical boxes?",
+        "type": "multiple_choice",
+        "choices": [
+          "Standard silicone caulk",
+          "Acoustical sealant or vapor barrier boxes",
+          "Electrical tape",
+          "No sealing required for electrical boxes"
+        ],
+        "answer": "Acoustical sealant or vapor barrier boxes",
+        "explanation": "Electrical boxes should be sealed with acoustical sealant (flexible) or purpose-built vapor barrier boxes that have sealed flanges. Standard caulk can crack, and tape doesn't provide adequate seal."
+      },
+      {
+        "id": "EW-02-Q12",
+        "question": "What is the difference between an air barrier and a vapor barrier?",
+        "type": "multiple_choice",
+        "choices": [
+          "They are the same thing",
+          "Air barrier stops air flow; vapor barrier slows moisture diffusion",
+          "Vapor barrier is for exterior; air barrier is for interior",
+          "Air barrier is only needed in commercial buildings"
+        ],
+        "answer": "Air barrier stops air flow; vapor barrier slows moisture diffusion",
+        "explanation": "An air barrier stops bulk air movement (convection), while a vapor barrier slows moisture diffusion through materials. In NB, 6 mil poly serves both functions when properly installed."
+      },
+      {
+        "id": "EW-02-Q13",
+        "question": "What component should be installed under the sill plate before framing?",
+        "type": "multiple_choice",
+        "choices": [
+          "Vapor barrier",
+          "Foam board insulation",
+          "Sill gasket",
+          "Flashing tape"
+        ],
+        "answer": "Sill gasket",
+        "explanation": "A sill gasket should be installed between the foundation and sill plate. It provides an air seal at this critical junction and also acts as a capillary break against moisture."
+      },
+      {
+        "id": "EW-02-Q14",
+        "question": "What problem can occur if the vapor barrier is installed on the exterior in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "No problem - it works the same",
+          "Moisture can condense inside the wall cavity",
+          "The insulation will be less effective",
+          "The wall will be too air-tight"
+        ],
+        "answer": "Moisture can condense inside the wall cavity",
+        "explanation": "In NB's cold climate, an exterior vapor barrier traps moisture that diffuses outward from the interior. This moisture condenses on the cold vapor barrier, leading to rot, mold, and insulation damage."
+      },
+      {
+        "id": "EW-02-Q15",
+        "question": "What tool is used during a blower door test to identify specific leak locations?",
+        "type": "multiple_choice",
+        "choices": [
+          "Moisture meter",
+          "Smoke pencil",
+          "Stud finder",
+          "Level"
+        ],
+        "answer": "Smoke pencil",
+        "explanation": "A smoke pencil (or theatrical fog) produces visible smoke that shows air movement during a blower door test. The smoke is drawn toward leaks, identifying their exact location."
+      }
+    ]
+  }
+}

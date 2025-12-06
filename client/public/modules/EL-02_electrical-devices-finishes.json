@@ -1,0 +1,16 @@
+{
+  "id": "EL-02",
+  "phase": 5,
+  "slug": "electrical-devices-finishes",
+  "title": "Electrical Devices & Finishes",
+  "category": "Electrical",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

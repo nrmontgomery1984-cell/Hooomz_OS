@@ -1,0 +1,287 @@
+{
+  "id": "OH-01",
+  "phase": 1,
+  "slug": "site-safety-ppe",
+  "title": "Site Safety & Setup",
+  "category": "Safety & Compliance",
+  "level": "Apprentice",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": [],
+  "estimated_study_hours": 3,
+  "status": "complete",
+  "tags": ["safety", "ppe", "site-setup", "dust-control", "floor-protection", "required", "foundational"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Site safety and setup is the foundation of every successful construction project. It encompasses preparing a work site, maintaining safe conditions, and protecting workers and clients' property.",
+      "content_md": "## What is Site Safety & Setup?\n\nSite safety and setup is the foundation of every successful construction project. It encompasses all activities required to prepare a work site before any construction work begins, maintain safe conditions throughout the project, and protect both workers and clients' property from harm.\n\nFor interior renovations, this means transforming an occupied or semi-occupied home into a controlled work environment where professional construction can take place safely and efficiently.\n\n## Why Does It Matter?\n\n### Legal & Financial Protection:\n- WorkSafeBC compliance prevents fines ($1,000-$50,000 per violation)\n- Proper safety documentation protects your company in case of incidents\n- Insurance claims require proof of safety protocols\n- Client lawsuits can be avoided with proper protection measures\n\n### Professional Reputation:\n- First impression sets tone for entire project\n- Clean, organized sites = professional contractor\n- Damage to client property = lost referrals and online reviews\n- Safety incidents = project delays and cost overruns\n\n### Worker Safety:\n- Construction has one of the highest injury rates of any industry\n- Preventable injuries cost time, money, and quality of life\n- Proper setup prevents 80% of jobsite accidents\n- Culture of safety starts with the first day on site\n\n## Certification Requirements\n\nTo receive Hooomz Apprentice Certification in Site Safety & Setup, you must:\n\n1. Complete this entire field guide\n2. Pass the review questions with 80% or higher (12/15 correct)\n3. Complete a practical setup assessment with a journeyman supervisor\n4. Demonstrate proper use of all PPE listed in Section 2\n\n> **This certification is REQUIRED before beginning any other Hooomz Buildz training guides.**\n\n## Safety Overview - The Hierarchy of Hazard Control\n\n(Most to least effective):\n\n1. **Elimination** - Remove the hazard entirely\n2. **Substitution** - Replace with something safer\n3. **Engineering Controls** - Isolate people from hazard\n4. **Administrative Controls** - Change how people work\n5. **PPE (Personal Protective Equipment)** - Protect the worker\n\nAlways use the highest level of control available."
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Required PPE, essential tools and equipment, building science principles for dust control and moisture management, and code requirements.",
+      "content_md": "## Required Personal Protective Equipment (PPE)\n\n### Minimum PPE for All Interior Renovation Work:\n\n### 1. Safety Footwear (CSA Grade 1)\n- Steel or composite toe (rated for 125 joules of impact)\n- Puncture-resistant sole plate\n- Ankle support\n- Slip-resistant tread\n\n**NOT ACCEPTABLE:** Running shoes, hiking boots, casual work boots\n\n### 2. Eye Protection\n- **Safety Glasses:** Minimum for all work (ANSI Z87.1 rated), side shields required\n- **Safety Goggles:** Required for overhead work, grinding, demolition\n- **Face Shield:** Required for grinding, concrete cutting, high-dust activities (must be worn WITH safety glasses underneath)\n\n### 3. Hearing Protection\n- **Ear Plugs:** NRR 25+ (for moderate noise)\n- **Ear Muffs:** NRR 30+ (for high noise - saws, grinders, demo)\n- Required when: Noise levels require raised voice to communicate (85+ dB)\n- Common loud tools: Circular saw, miter saw, grinder, demolition hammer, shop vac\n\n### 4. Hand Protection\n- **General Work Gloves:** Synthetic or leather palm for material handling\n- **Cut-Resistant Gloves:** For metal work, glass handling\n- **Disposable Gloves:** For painting, adhesives, chemicals\n- **When NOT to wear gloves:** Operating power tools with rotating parts (saw, drill, grinder)\n\n### 5. Respiratory Protection (Task-Dependent)\n- **N95 Mask:** Minimum for drywall sanding, insulation, general dust\n- **P100 Respirator:** Required for mold, asbestos awareness, heavy dust\n- **Half-Face Respirator with Organic Vapor Cartridges:** Required for painting, adhesives, solvents\n\n> **Note:** Fit testing required for respirators (not disposable masks)\n\n### 6. Head Protection\n- **Hard Hat (CSA Type 1):** Required when overhead hazards exist\n- Examples: Working below other trades, demolition, material storage overhead\n- Not typically required for single-story interior renos with no overhead work\n\n### 7. Additional Protective Clothing\n- **Knee Pads:** Mandatory for tile work, flooring, low work\n- **Dust Suit:** For heavy dust work (drywall sanding, demo)\n- **High-Visibility Vest:** When working near traffic or loading/unloading\n\n## Essential Tools & Equipment for Site Setup\n\n### Protection & Containment:\n\n| Item | Purpose | Quantity (Typical Reno) |\n|------|---------|-------------------------|\n| Ram Board | Floor protection (heavy traffic) | 1 roll per 500 sq ft |\n| Red Rosin Paper | Floor protection (light traffic) | 1 roll per 1000 sq ft |\n| Painter's Plastic (6 mil) | Furniture/surface protection | 2-3 rolls |\n| Poly Sheeting (6 mil) | Dust barriers, vapor barrier | 2-4 rolls |\n| Painter's Tape (2\") | Plastic attachment, masking | 4-6 rolls |\n| Tuck Tape (2\") | Poly sealing, heavy-duty attachment | 2-3 rolls |\n| Zip Wall System | Dust barrier poles & zippers | 1 kit (10 poles) |\n| Door Zipper | Temporary access through barriers | 2-4 per project |\n\n### Site Organization:\n\n| Item | Purpose | Notes |\n|------|---------|-------|\n| Waste Bins | Material separation | 1 for garbage, 1 for recycling, 1 for demo |\n| Material Storage Shelving | Organize materials | Keeps site clean, prevents damage |\n| Tool Chest/Gang Box | Secure tool storage | Lock overnight, theft prevention |\n| Extension Cords (12-gauge) | Power distribution | 2-3 per work area |\n| Work Lights (LED) | Adequate illumination | 1 per 200 sq ft work area |\n| Shop Vacuum (HEPA filter) | Dust control | 1 per work crew |\n\n### First Aid & Emergency:\n\n| Item | Purpose | Location |\n|------|---------|----------|\n| First Aid Kit (Level 2) | Minor injuries | Accessible to all workers |\n| Fire Extinguisher (5 lb ABC) | Fire suppression | Near exit, unobstructed |\n| Eyewash Station (portable) | Chemical exposure | For painting/chemical work |\n| Emergency Contact List | Posted at site entrance | Client, supervisor, emergency services |\n\n## Building Science Principles for Interior Reno Setup\n\n### Dust Control & Indoor Air Quality\n\n**Why it matters:** Renovation dust contains:\n- Silica (from drywall, concrete, tile) - causes lung disease\n- Wood dust - respiratory irritant, potential carcinogen\n- Lead (in homes built pre-1978) - neurotoxin\n- Mold spores - respiratory issues, allergies\n\n### Containment Strategy:\n\n**Negative Pressure** - Work area should be at lower pressure than rest of home:\n- Use box fan facing OUT of work area window\n- Seal all doorways with poly and zip doors\n- Air flows INTO work area, preventing dust escape\n\n**HEPA Filtration** - Remove airborne particles:\n- Shop vac with HEPA filter for cleanup\n- Air scrubber with HEPA filter for continuous operation\n- Change filters regularly (clogged = ineffective)\n\n**Source Control** - Generate less dust:\n- Wet-cut tile and concrete when possible\n- Use dust shrouds on grinders and saws\n- Clean as you go rather than letting dust accumulate\n\n### Moisture Management\n\nOccupied Homes Create Moisture:\n- Cooking, showering, breathing = 10-15 liters water/day\n- Open walls/ceilings allow moisture into building cavities\n- Winter construction = condensation risk\n- Summer construction = humidity issues\n\n**Prevention Strategy:**\n- Maintain Poly Barriers - Keep conditioned air out of wall cavities\n- Ventilate Work Area - Crack a window even in winter\n- Don't Wet Materials - Store drywall, insulation, lumber dry\n- Dehumidifier - Use in basements and humid conditions\n- Heat Carefully - Propane heaters produce 1L water per hour of operation\n\n### Load Path & Structural Safety\n\n**Never assume a wall is non-structural:**\n- Load-bearing walls carry roof/floor weight to foundation\n- Bearing walls typically run perpendicular to joists\n- Check for doubled top plates - often indicates bearing\n- Always consult drawings or engineer before removing ANY wall\n\n**Temporary Support:**\n- If opening a bearing wall, temporary support wall required FIRST\n- Posts must be within 12\" of bearing wall\n- Support must extend 4' beyond opening on each side\n- Never partially demo a bearing wall without support in place\n\n## Code Considerations\n\n### WorkSafeBC Requirements:\n\n**Fall Protection (Part 11):**\n- Guardrails required at 10' (3m) height or greater\n- Scaffold must meet CSA standards\n- Ladder use: 1:4 ratio (1' out for every 4' up)\n\n**Confined Spaces (Part 9):**\n- Attics, crawl spaces, mechanical rooms may qualify\n- Requires atmospheric testing and monitoring\n- Emergency rescue plan required\n\n**Hazardous Materials (Part 6):**\n- Asbestos surveys required for pre-1990 homes\n- Lead awareness for pre-1978 homes\n- Mold remediation requires protocol\n\n**Noise Exposure (Part 7):**\n- Limit: 85 dBA for 8-hour exposure\n- Most power tools exceed this (circular saw = 110 dBA)\n- Hearing protection mandatory\n\n**Electrical Safety (Part 19):**\n- CSA-approved extension cords only\n- GFCI protection required for all temporary power\n- Damaged cords = immediately tag out\n\n### Building Code (NBC 2020)\n\n**Interior Renovation Permits Required For:**\n- Structural alterations (removing walls, beams)\n- Plumbing/gas/electrical work (licensed trades)\n- Adding/relocating bathrooms or kitchens\n- Basement development (new living space)\n- Window/door changes in fire-rated walls\n\n**Permits NOT Required For (typically):**\n- Painting, flooring, trim work\n- Cabinet installation (non-structural)\n- Tile work (non-structural)\n- Drywall repair/replacement (non-structural)\n\n> **Note:** Check with local building department - requirements vary by municipality"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Detailed procedures for pre-work checklist, arrival and initial setup, daily operations, and project completion/final cleanup.",
+      "content_md": "## PRE-WORK CHECKLIST (Before Arriving at Site)\n\n### 24-48 Hours Before Start:\n- [ ] Client walkthrough completed and documented (photos/video)\n- [ ] Scope of work confirmed in writing\n- [ ] Access instructions confirmed (key location, lockbox code, contact)\n- [ ] Parking plan established (street parking, driveway, neighbor's space)\n- [ ] Material delivery scheduled and confirmed\n- [ ] Waste bin delivery scheduled (if required)\n- [ ] All permits obtained and posted\n- [ ] Crew assigned and notified of start time/location\n\n### Morning of First Day:\n- [ ] All PPE packed and inspected (replace worn items)\n- [ ] First aid kit stocked and current (check expiry dates)\n- [ ] Fire extinguisher inspected and charged\n- [ ] Tools inventoried and ready (see Section 2 list)\n- [ ] Protection materials loaded (ram board, poly, tape)\n- [ ] Client contacted with ETA (30 minutes before arrival)\n\n## ARRIVAL & INITIAL SETUP (Day 1: 0-2 Hours)\n\n### Step 1: Site Entry & Introduction (15 minutes)\n\n**Park Respectfully:**\n- Block driveways only if client approved\n- Don't block mailboxes, fire hydrants, neighbor driveways\n- Use cones/signs if parking on street with trailer\n\n**Meet the Client (if occupied):**\n- Introduce entire crew by name\n- Exchange phone numbers (crew lead - homeowner)\n- Confirm work hours and break times\n- Ask about pets, children, special needs\n- Review bathroom/kitchen use policy\n- Confirm daily cleanup expectations\n\n**Document Pre-Existing Conditions:**\n- Photo/video walkthrough of entire home (not just work area)\n- Capture: Floors, walls, furniture, landscaping, driveway\n- Focus on: Pre-existing damage, high-value items, tight spaces\n- Store in project folder with date/time stamp\n\n> **This protects you from false damage claims**\n\n### Step 2: Establish Work Zone Boundaries (30 minutes)\n\n**Define the \"Hot Zone\" (active construction area):**\n- Identify all rooms involved in work\n- Map access routes from entry door to work area\n- Determine material staging location\n- Plan waste removal route\n\n**Create Access Path:**\n- This is the route from front door to work area\n- Will be protected but accessible\n- Should avoid high-traffic family areas if possible\n- Consider stairs, tight corners, door widths\n\n**Mark Boundaries:**\n- Use painter's tape on floor to mark protection zones\n- Post signs: \"CONSTRUCTION AREA - PPE REQUIRED\"\n- Identify \"clean zones\" where no dusty boots allowed\n\n### Step 3: Floor Protection Installation (45 minutes)\n\n**Protection Level by Traffic & Use:**\n\n| Area | Traffic Level | Protection Type | Installation |\n|------|---------------|-----------------|-------------|\n| Work Zone | Heavy (tools, materials) | Ram Board | Tape seams, tape to baseboards |\n| Access Path | Medium (walking only) | Ram Board or Red Rosin | Overlap 6\", tape seams |\n| Adjacent Rooms | Light (occasional) | Red Rosin Paper | Tape to doorways |\n| Stairs | High (slippery when dusty) | Ram Board + Anti-Slip | Tape every tread, wrap nosing |\n\n**Installation Procedure:**\n\n1. **Clean floors first** - Sweep, vacuum, remove debris\n   - Dirt under protection = scratches when walked on\n\n2. **Roll out protection** - Work from farthest point toward entry\n   - Ram Board: Printed side UP (logo visible)\n   - Red Rosin: Slick side DOWN (felt side up)\n\n3. **Overlap seams** - Minimum 6\" overlap\n   - Tape every seam with painter's tape or tuck tape\n   - No gaps = no dust penetration\n\n4. **Seal perimeter** - Tape to baseboards/walls\n   - Painter's tape on finished surfaces (easy removal)\n   - Tuck tape on rough surfaces (better hold)\n\n5. **Reinforce high-traffic areas** - Double layer at:\n   - Doorways (most scuffing occurs here)\n   - Base of stairs\n   - Material staging areas\n\n**PHOTO STOP #1:** Installed floor protection with visible seams and perimeter taping\n\n### Step 4: Dust Barrier Installation (60 minutes)\n\n**Zip Wall System (Professional Method):**\n\n**Materials Needed:**\n- Zip Wall poles (spring-loaded, telescoping)\n- 6 mil poly sheeting\n- Painter's tape (for poly attachment)\n- Door zipper (for access points)\n- Utility knife\n\n**Installation Steps:**\n\n1. **Measure doorway/opening** - Floor to ceiling height\n   - Cut poly 12\" wider and 6\" taller than opening\n   - Extra material allows for proper sealing\n\n2. **Install top of poly first:**\n   - Tape poly to ceiling/header with painter's tape\n   - Overlap tape by 50% for secure hold\n   - Smooth out wrinkles as you go\n\n3. **Install Zip Wall poles:**\n   - Place poles 4-6' apart along poly edge\n   - Extend pole to just below ceiling height\n   - Clamp poly edge into pole track\n   - Compress spring to wedge pole between floor/ceiling\n   - Never exceed ceiling height - can damage drywall\n\n4. **Seal sides and bottom:**\n   - Tape poly to walls on both sides\n   - Tape poly to floor protection (not directly to finished floor)\n   - Seal any gaps where dust could escape\n\n5. **Install door zipper (for access):**\n   - Position zipper in center of poly sheet\n   - Peel backing and press onto poly\n   - Use razor blade to cut poly along zipper path\n   - Test zipper operation before proceeding\n\n**Negative Pressure Verification:**\n- Place box fan in window facing OUT\n- Tape around fan to seal gaps\n- Hold tissue paper near zipper door - should pull slightly inward\n- If poly \"breathes\" outward, increase exhaust fan speed\n\n**PHOTO STOP #2:** Completed dust barrier with door zipper and negative pressure fan\n\n### Step 5: Material Staging & Organization (30 minutes)\n\n**Material Storage Zones:**\n\n**Zone 1: Active Materials (in work area)**\n- Today's materials only\n- Drywall sheets (stand on edge, lean against wall)\n- Trim pieces (horizontal on sawhorses)\n- Bags of compound (off floor, on scrap wood)\n- Rule: If not using today, not in work zone\n\n**Zone 2: Project Materials (secure, dry location)**\n- Garage, basement, or dedicated room\n- Stack properly to prevent damage:\n  - Drywall: On edge, max 6 sheets per stack\n  - Lumber: Flat, supported every 4', covered\n  - Tile: Boxes stacked max 6 high, no overhang\n  - Flooring: Acclimatize per manufacturer (48-72 hours)\n- Create aisle for access\n\n**Zone 3: Tools (secured overnight)**\n- Locking gang box OR\n- Locked room in home (client permission) OR\n- Load into vehicle and take home\n- Never leave tools unsecured - theft is common\n\n**Waste Management:**\nSet up 3-bin system:\n1. **Garbage** - General waste, plastic, non-recyclables\n2. **Recycling** - Clean cardboard, metal scrap, clean wood\n3. **Demo Debris** - Drywall, plaster, demolition materials\n\nLabel each bin clearly with signs.\n\n**PHOTO STOP #3:** Organized material staging with labeled waste bins\n\n### Step 6: Power & Lighting Setup (20 minutes)\n\n**Extension Cord Selection:**\n- 12-gauge (20 amp) - For circular saws, miter saws, shop vac (under 50')\n- 10-gauge (30 amp) - For table saws, compressors, heaters (over 50')\n\n> **DO NOT use 14 or 16-gauge - fire hazard with power tools**\n\n**GFCI Protection:**\n- All temporary power must be GFCI protected\n- Use inline GFCI extension cord OR\n- Plug into GFCI outlet (bathroom, kitchen, exterior)\n- Test GFCI weekly (push test button, should trip)\n\n**Cord Management:**\n- Route cords along walls (not across walkways)\n- Tape down with duct tape where crossing is unavoidable\n- Coil excess cord neatly (don't leave loops)\n- Check daily for damage (cuts, exposed wire, bent prongs)\n- Damaged cord = immediate removal and replacement\n\n**Lighting:**\n- Work area should have 50 footcandles minimum (500 lux)\n- LED work lights: 1 per 200 sq ft\n- Position to eliminate shadows at work height\n- Plug lights into different circuits than power tools\n\n**Circuit Capacity Check:**\n- Identify which breakers serve work area\n- Note amperage (usually 15A or 20A)\n- Calculate tool load:\n  - Circular saw: 13A\n  - Shop vac: 10A\n  - Miter saw: 13A\n- Don't exceed 80% of breaker rating (12A on 15A circuit)\n- Distribute tools across multiple circuits\n\n**PHOTO STOP #4:** Power distribution with GFCI protection and properly routed cords\n\n### Step 7: Safety Stations & Signage (15 minutes)\n\n**First Aid Station:**\n- Mount Level 2 first aid kit on wall near entry\n- Height: 4-5' (accessible to all workers)\n- Post emergency contact list beside kit:\n  - 911\n  - Client phone number\n  - Supervisor phone number\n  - Site address (for calling 911)\n  - Nearest hospital with ER\n\n**Fire Extinguisher:**\n- Position near exit door\n- Unobstructed access (nothing stored within 3')\n- Mounted 4' off floor (top of extinguisher)\n- Inspect monthly:\n  - Pin and tamper seal intact\n  - Pressure gauge in green zone\n  - Hose and nozzle clear\n  - No visible damage\n\n**Required Signage:**\n- Work Area Entry: \"CONSTRUCTION ZONE - PPE REQUIRED\"\n- Dust Barrier Doors: \"KEEP CLOSED - DUST CONTAINMENT\"\n- Bathroom: \"CREW BATHROOM\" or \"OFF LIMITS\" (client preference)\n- Waste Bins: \"GARBAGE\" / \"RECYCLING\" / \"DEMO DEBRIS\"\n- Material Storage: \"DANGER - FALLING HAZARD\" (if stacked materials)\n\n**PHOTO STOP #5:** Completed safety setup with visible signage and emergency equipment\n\n## DAILY OPERATIONS (During Project)\n\n### Start of Each Day (15 minutes)\n\n**Crew Huddle (5 minutes):**\n- Review today's tasks and goals\n- Identify hazards specific to today's work\n- Assign roles (who's doing what)\n- Confirm material/tool availability\n- Take questions\n\n**Site Inspection Walk (10 minutes):**\n- Floor protection intact (no tears, no tape lifting)\n- Dust barriers sealed (no gaps, zipper functional)\n- Extension cords undamaged\n- GFCI protection functional (test button)\n- Fire extinguisher in place and charged\n- First aid kit accessible\n- Lighting adequate\n- Ventilation operating (negative pressure fan on)\n- No new hazards (client moved items, pet access, etc.)\n\nDocument any issues immediately and correct before starting work.\n\n### Mid-Day Check (Lunch Break)\n\n**Quick Reset (10 minutes):**\n- Sweep work area (don't let dust accumulate)\n- Organize tools (return to designated spots)\n- Remove full waste bags/bins\n- Refill water bottles (hydration = safety)\n- Restock consumables (blades, screws, tape, etc.)\n\n### End of Each Day (30-45 minutes)\n\n**This is NOT optional - it's part of the job.**\n\n**Cleanup Sequence:**\n\n1. **Rough Cleanup (15 minutes):**\n   - Collect all scrap and debris\n   - Sort into appropriate waste bins\n   - Vacuum work area with HEPA shop vac\n   - Wipe down dusty surfaces with damp cloth (don't dry-sweep drywall dust)\n\n2. **Tool Inventory (10 minutes):**\n   - Count tools against checklist\n   - Clean tools (sawdust = premature wear)\n   - Charge batteries overnight\n   - Secure tools in gang box or vehicle\n\n3. **Site Securing (10 minutes):**\n   - Close and lock all windows\n   - Turn off all work lights\n   - Unplug all extension cords (fire prevention)\n   - Close dust barrier zippers\n   - Turn off negative pressure fan (if leaving overnight)\n   - Set thermostat per client instruction\n\n4. **Walk-Through (5 minutes):**\n   - Check all areas (not just work zone)\n   - Look for: Tools left behind, tripping hazards, water leaks, unsecured materials\n   - Lock all doors per client instruction\n   - Text client update: \"Day X complete, site secured, see you tomorrow at [time]\"\n\n**PHOTO STOP #6:** Clean work area at end of day\n\n## PROJECT COMPLETION - FINAL CLEANUP & REMOVAL\n\n### Final Cleanup (2-4 hours, depending on project size)\n\nThis cleanup is different - it's about returning the home to the client, not just tidying up for tomorrow.\n\n**Deep Clean Sequence:**\n\n1. **Remove ALL Construction Materials (30 minutes):**\n   - Scrap wood, drywall, empty boxes\n   - Unused materials return to storage or vehicle\n   - All waste bins emptied and removed\n   - Tools and equipment loaded\n\n2. **HEPA Vacuum EVERYTHING (60 minutes):**\n   - Work area floors, walls, ceiling\n   - Adjacent rooms (dust travels)\n   - Window sills and ledges\n   - Light fixtures and ceiling fans\n   - Inside cabinets and closets (if opened during work)\n   - Use HEPA vacuum only - regular vacuum spreads dust\n\n3. **Damp Wipe All Surfaces (45 minutes):**\n   - Countertops, tables, shelves\n   - Door frames and doors\n   - Baseboards and trim (outside work area)\n   - Window sills\n   - Light switches and outlets\n   - Thermostat and smoke detectors\n   - Change wipe cloths frequently - don't smear dust around\n\n4. **Mop Hard Floors (30 minutes):**\n   - Work area first (most dust)\n   - Access paths second\n   - Adjacent rooms last\n   - Use clean water (change when dirty)\n   - Move furniture to clean under\n\n5. **Remove Floor Protection (30 minutes):**\n   - Peel tape carefully (don't damage paint/baseboards)\n   - Roll up ram board and rosin paper\n   - Vacuum floor underneath (dust collects under protection)\n   - Inspect for damage (scratches, stains, marks)\n   - Document any issues found\n\n6. **Remove Dust Barriers (15 minutes):**\n   - Lower Zip Wall poles carefully\n   - Fold poly inward (traps dust inside)\n   - Dispose in garbage (don't reuse dusty poly)\n   - Wipe down poles before storing\n\n7. **Final Inspection (30 minutes):**\n   - Walk every room with client (if possible)\n   - Check for: Dust, debris, damage, leftover materials, odors\n   - Test all work performed (doors close, lights work, etc.)\n   - Touch-up any scuffs or marks created during cleanup\n   - Take final photos for records\n\n**PHOTO STOP #7:** Completed work area with all protection removed and final cleanup done\n\n### Client Handover Checklist\n\n**Before client walkthrough:**\n- [ ] All punch list items completed\n- [ ] Final cleanup completed\n- [ ] All tools and materials removed\n- [ ] Thermostats returned to original settings\n- [ ] Windows closed and locked\n- [ ] Furniture returned to original positions (if moved)\n- [ ] Floor protection removed\n- [ ] Dust barriers removed\n- [ ] Site photos taken (before/after comparison)\n\n**During client walkthrough:**\n- [ ] Review all work completed (walk the scope)\n- [ ] Demonstrate proper use/care of new materials\n- [ ] Provide warranty information (materials and workmanship)\n- [ ] Collect feedback (what went well, what could improve)\n- [ ] Request review/referral (if client is satisfied)\n- [ ] Provide contact info for any questions/concerns\n\n**After client signs off:**\n- [ ] Invoice submitted\n- [ ] Project photos uploaded to Hooomz Buildz\n- [ ] Time logs finalized\n- [ ] Materials list updated (actual vs. estimated)\n- [ ] Lessons learned documented (for future similar projects)"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Self-inspection checklists for protection systems, safety systems, and housekeeping. What inspectors look for and common defects.",
+      "content_md": "## Self-Inspection Checklist\n\nUse this checklist at project START, WEEKLY during project, and at COMPLETION.\n\n### Protection Systems\n\n**Floor Protection:**\n- [ ] Covers all traffic paths from entry to work area\n- [ ] Appropriate protection level for area (ram board vs. rosin)\n- [ ] All seams overlapped minimum 6\" and taped\n- [ ] Perimeter taped to walls/baseboards\n- [ ] No tears, punctures, or lifted areas\n- [ ] Clean (dust and debris swept daily)\n- [ ] Replaced when damaged or worn through\n\n**Dust Barriers:**\n- [ ] Poly sheeting minimum 6 mil thickness\n- [ ] Sealed on all four sides (top, bottom, both sides)\n- [ ] Door zipper functional and closes completely\n- [ ] No gaps or tears in poly\n- [ ] Negative pressure maintained (tissue test)\n- [ ] Exhaust fan operating when work is active\n- [ ] Minimal dust escaping to adjacent areas\n\n### Safety Systems\n\n**PPE Compliance:**\n- [ ] All workers wearing appropriate PPE for task\n- [ ] Safety glasses on at all times in work zone\n- [ ] Hearing protection used with loud tools (85+ dB)\n- [ ] Respirators used for dusty tasks (drywall sanding, demo)\n- [ ] Gloves used for material handling (not power tools)\n- [ ] Safety footwear on all workers (CSA Grade 1)\n\n**Electrical Safety:**\n- [ ] All extension cords 12-gauge or heavier\n- [ ] GFCI protection on all temporary power\n- [ ] No damaged cords in use (tag out immediately)\n- [ ] Cords routed safely (not across walkways)\n- [ ] Circuits not overloaded (check breaker ratings)\n- [ ] Work lights positioned to eliminate shadows\n\n**Emergency Preparedness:**\n- [ ] First aid kit accessible and stocked\n- [ ] Fire extinguisher accessible and charged\n- [ ] Emergency contact list posted\n- [ ] Site address clearly posted (for 911 calls)\n- [ ] Exit paths clear and unobstructed\n- [ ] Phone reception verified (or radio communication)\n\n### Housekeeping\n\n**Work Area Organization:**\n- [ ] Tools returned to designated locations (not left on floor)\n- [ ] Materials stacked properly and secured (no falling hazard)\n- [ ] Waste sorted into appropriate bins (garbage/recycling/demo)\n- [ ] Scrap piles organized (sorted by material type)\n- [ ] Floors swept/vacuumed daily (don't let dust accumulate)\n- [ ] Sawdust and shavings cleaned up immediately (fire hazard)\n\n**Client Relations:**\n- [ ] Daily communication maintained (text/call with update)\n- [ ] Work area left clean at end of each day\n- [ ] Access paths kept clear (client can move through home)\n- [ ] Noise minimized during sensitive hours (before 8am, after 6pm)\n- [ ] Crew professional (no loud music, swearing, smoking on site)\n- [ ] Client concerns addressed promptly\n\n## What Inspectors Look For\n\n### WorkSafeNB Inspector Focus Areas\n\nIf WorkSafeNB shows up (random or complaint-driven):\n\n**Fall Protection (if working at heights):**\n- Guardrails on elevated platforms\n- Ladder security and angle (1:4 ratio)\n- Scaffold compliance (tags, base plates, guardrails)\n\n**Electrical Safety:**\n- GFCI protection on temporary power\n- Damaged extension cords (immediate violation)\n- Overloaded circuits\n\n**Respiratory Protection:**\n- Appropriate respirators for tasks (N95, P100, organic vapor)\n- Fit testing documentation (for half/full face respirators)\n- Voluntary use acknowledgment (if using without fit test)\n\n**Hazardous Materials:**\n- Asbestos survey for pre-1990 homes (if disturbing materials)\n- Lead awareness for pre-1978 homes\n- Mold remediation protocol (if visible mold present)\n\n**General Safety:**\n- First aid kit present and stocked\n- Fire extinguisher present and charged\n- Emergency information posted\n- PPE compliance (safety glasses, footwear, hearing protection)\n\n### Violations Result In:\n- **Minor:** Written order to comply (no fine, but must correct immediately)\n- **Moderate:** $500-$5,000 fine + order to comply\n- **Serious:** $5,000-$50,000 fine + possible work stoppage\n- **Repeat Violations:** Increased fines + director/officer liability\n\n## Common Site Setup Defects\n\n| Defect | Risk | Prevention |\n|--------|------|------------|\n| Inadequate Floor Protection | Scratches, dents, stains on flooring | Use proper protection (ram board for heavy traffic) |\n| Gaps in Dust Barriers | Dust spreads to entire home, client complaints | Seal all edges, test with tissue paper |\n| No Negative Pressure | Dust escapes work area | Exhaust fan in window, verify with tissue test |\n| Overloaded Circuits | Breaker trips, work delays, fire risk | Calculate amperage, distribute loads |\n| Damaged Extension Cords | Shock hazard, fire risk, WorkSafeNB violation | Daily inspection, immediate replacement |\n| Poor Material Storage | Warped lumber, damaged drywall, waste | Stack properly, keep dry, support every 4' |\n| Inadequate Lighting | Quality issues (missed defects), safety hazards | 1 light per 200 sq ft, eliminate shadows |\n| No Daily Cleanup | Client dissatisfaction, dust contamination | 30-45 minutes end of each day |\n| Missing Safety Equipment | Worker injury, WorkSafeNB violations, liability | First aid kit, fire extinguisher, PPE compliance |\n\n## Red Flags (Stop Work and Correct Immediately)\n\n- Worker without safety glasses in work zone\n- Damaged extension cord in use\n- Overloaded circuit (repeated breaker trips)\n- Material stored unsafely (falling hazard)\n- Dust escaping work area (client visible)\n- Fire extinguisher missing or discharged\n- First aid kit empty or expired\n- Exit path blocked by materials"
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "Quick reference checklists, emergency procedures, material protection reference, and tool amperage reference.",
+      "content_md": "## APPENDIX A: QUICK REFERENCE CHECKLISTS\n\n### Daily Start Checklist\n- [ ] Crew huddle complete (5 min)\n- [ ] Floor protection intact\n- [ ] Dust barriers sealed\n- [ ] Extension cords undamaged\n- [ ] GFCI tested and functional\n- [ ] Fire extinguisher in place\n- [ ] First aid kit accessible\n- [ ] Lighting adequate\n- [ ] Negative pressure verified\n- [ ] All crew wearing PPE\n\n### Daily End Checklist\n- [ ] Work area swept/vacuumed\n- [ ] Tools inventoried and secured\n- [ ] Waste bins emptied (if full)\n- [ ] Work lights turned off\n- [ ] Extension cords unplugged\n- [ ] Windows closed and locked\n- [ ] Dust barrier zippers closed\n- [ ] Thermostat per client settings\n- [ ] Site walkthrough complete\n- [ ] Client update sent\n\n### Final Cleanup Checklist\n- [ ] All materials removed\n- [ ] All tools removed\n- [ ] Waste bins emptied and removed\n- [ ] HEPA vacuum all surfaces\n- [ ] Damp wipe all surfaces\n- [ ] Mop all hard floors\n- [ ] Floor protection removed\n- [ ] Dust barriers removed\n- [ ] Furniture returned to position\n- [ ] Final inspection with client\n- [ ] Photos taken (before/after)\n- [ ] Warranty info provided\n\n## APPENDIX B: EMERGENCY PROCEDURES\n\n### Medical Emergency\n1. Assess the situation - Is it safe to approach?\n2. Call 911 immediately - Don't delay to \"see if they're okay\"\n3. Provide first aid (if trained) - Control bleeding, CPR if needed\n4. Don't move injured person (unless immediate danger)\n5. Meet ambulance - Have someone flag them down\n6. Document incident - Photos, witness statements, timeline\n\n### Fire\n1. Alert everyone - Yell \"FIRE!\" loudly\n2. Evacuate immediately - Don't gather belongings\n3. Call 911 - Once outside and safe\n4. Use extinguisher ONLY IF:\n   - Fire is small (size of garbage can or smaller)\n   - You have clear exit behind you\n   - Extinguisher is rated for fire type\n5. If in doubt, GET OUT - Property can be replaced, you can't\n\n### Electrical Shock\n1. DO NOT TOUCH the person - You'll be shocked too\n2. Shut off power - Main breaker or unplug cord\n3. If unable to shut off power - Use non-conductive material (wood, plastic) to separate person from source\n4. Call 911 - Electrical shock can cause internal injuries\n5. Provide CPR if needed (and trained)\n\n### Chemical Exposure\n\n**Eyes:**\n- Flush with water immediately (15 minutes minimum)\n- Use eyewash station if available\n- Call Poison Control: 1-800-222-1222\n- Seek medical attention\n\n**Skin:**\n- Remove contaminated clothing\n- Flush with water (15 minutes minimum)\n- Call Poison Control if severe\n- Seek medical attention if irritation persists\n\n**Inhalation:**\n- Move to fresh air immediately\n- Call Poison Control\n- Monitor breathing\n- Call 911 if difficulty breathing\n\n## APPENDIX C: MATERIAL PROTECTION REFERENCE\n\n| Surface Type | Protection Level | Material | Cost/100 sq ft |\n|--------------|-----------------|----------|----------------|\n| Hardwood | Heavy-duty | Ram Board | $40 |\n| Tile/Stone | Heavy-duty | Ram Board | $40 |\n| Vinyl/Laminate | Medium | Ram Board or Red Rosin | $25-40 |\n| Carpet | Light | Red Rosin Paper | $15 |\n| Stairs | Heavy-duty + anti-slip | Ram Board + Tape | $50 |\n| Countertops | Cover | 6 mil plastic | $5 |\n| Furniture | Cover | 6 mil plastic + padding | $10 |\n\n## APPENDIX D: TOOL AMPERAGE REFERENCE\n\n| Tool | Typical Amperage | Circuit Capacity (15A) | Circuit Capacity (20A) |\n|------|------------------|------------------------|------------------------|\n| Circular Saw | 13A | Can't run with other tools | OK with shop vac |\n| Miter Saw | 13A | Can't run with other tools | OK with shop vac |\n| Table Saw | 15A | Requires dedicated circuit | Requires dedicated circuit |\n| Shop Vacuum | 10A | OK with lights/chargers | OK with saw |\n| Compressor | 15A | Requires dedicated circuit | OK with light tools |\n| Grinder | 10A | OK with lights/chargers | OK with shop vac |\n| Drill | 5-7A | OK with most tools | OK with most tools |\n| Work Light (LED) | 1A | OK with everything | OK with everything |\n\n**Remember:** Don't exceed 80% of circuit capacity (12A on 15A circuit, 16A on 20A circuit)"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "pre-work",
+      "title": "Pre-Work Checklist (24-48 Hours Before)",
+      "items": [
+        "Client walkthrough completed and documented (photos/video)",
+        "Scope of work confirmed in writing",
+        "Access instructions confirmed (key location, lockbox code, contact)",
+        "Parking plan established",
+        "Material delivery scheduled and confirmed",
+        "Waste bin delivery scheduled (if required)",
+        "All permits obtained and posted",
+        "Crew assigned and notified of start time/location"
+      ]
+    },
+    {
+      "id": "morning-start",
+      "title": "Morning of First Day Checklist",
+      "items": [
+        "All PPE packed and inspected (replace worn items)",
+        "First aid kit stocked and current (check expiry dates)",
+        "Fire extinguisher inspected and charged",
+        "Tools inventoried and ready",
+        "Protection materials loaded (ram board, poly, tape)",
+        "Client contacted with ETA (30 minutes before arrival)"
+      ]
+    },
+    {
+      "id": "daily-start",
+      "title": "Daily Start Checklist",
+      "items": [
+        "Crew huddle complete (5 min)",
+        "Floor protection intact",
+        "Dust barriers sealed",
+        "Extension cords undamaged",
+        "GFCI tested and functional",
+        "Fire extinguisher in place",
+        "First aid kit accessible",
+        "Lighting adequate",
+        "Negative pressure verified",
+        "All crew wearing PPE"
+      ]
+    },
+    {
+      "id": "daily-end",
+      "title": "Daily End Checklist",
+      "items": [
+        "Work area swept/vacuumed",
+        "Tools inventoried and secured",
+        "Waste bins emptied (if full)",
+        "Work lights turned off",
+        "Extension cords unplugged",
+        "Windows closed and locked",
+        "Dust barrier zippers closed",
+        "Thermostat per client settings",
+        "Site walkthrough complete",
+        "Client update sent"
+      ]
+    },
+    {
+      "id": "floor-protection",
+      "title": "Floor Protection Checklist",
+      "items": [
+        "Covers all traffic paths from entry to work area",
+        "Appropriate protection level for area (ram board vs. rosin)",
+        "All seams overlapped minimum 6\" and taped",
+        "Perimeter taped to walls/baseboards",
+        "No tears, punctures, or lifted areas",
+        "Clean (dust and debris swept daily)",
+        "Replaced when damaged or worn through"
+      ]
+    },
+    {
+      "id": "dust-barrier",
+      "title": "Dust Barrier Checklist",
+      "items": [
+        "Poly sheeting minimum 6 mil thickness",
+        "Sealed on all four sides (top, bottom, both sides)",
+        "Door zipper functional and closes completely",
+        "No gaps or tears in poly",
+        "Negative pressure maintained (tissue test)",
+        "Exhaust fan operating when work is active",
+        "Minimal dust escaping to adjacent areas"
+      ]
+    },
+    {
+      "id": "ppe-compliance",
+      "title": "PPE Compliance Checklist",
+      "items": [
+        "All workers wearing appropriate PPE for task",
+        "Safety glasses on at all times in work zone",
+        "Hearing protection used with loud tools (85+ dB)",
+        "Respirators used for dusty tasks (drywall sanding, demo)",
+        "Gloves used for material handling (not power tools)",
+        "Safety footwear on all workers (CSA Grade 1)"
+      ]
+    },
+    {
+      "id": "final-cleanup",
+      "title": "Final Cleanup Checklist",
+      "items": [
+        "All materials removed",
+        "All tools removed",
+        "Waste bins emptied and removed",
+        "HEPA vacuum all surfaces",
+        "Damp wipe all surfaces",
+        "Mop all hard floors",
+        "Floor protection removed",
+        "Dust barriers removed",
+        "Furniture returned to position",
+        "Final inspection with client",
+        "Photos taken (before/after)",
+        "Warranty info provided"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What is the MINIMUM safety footwear requirement for interior renovation work?",
+        "type": "mcq",
+        "choices": ["A) Steel-toed running shoes", "B) Hiking boots with ankle support", "C) CSA Grade 1 safety boots with steel/composite toe rated for 125 joules", "D) Any work boot from a hardware store"],
+        "answer": "C",
+        "explanation": "CSA Grade 1 safety boots are the minimum standard required. They must be rated for 125 joules of impact, have puncture-resistant sole plates, ankle support, and slip-resistant tread."
+      },
+      {
+        "id": "q2",
+        "question": "When installing floor protection, what is the minimum overlap required at seams?",
+        "type": "mcq",
+        "choices": ["A) 2 inches", "B) 4 inches", "C) 6 inches", "D) 12 inches"],
+        "answer": "C",
+        "explanation": "Floor protection seams must overlap by a minimum of 6 inches and be taped. This prevents dust from penetrating through gaps in the protection."
+      },
+      {
+        "id": "q3",
+        "question": "What is the purpose of creating \"negative pressure\" in the work area?",
+        "type": "mcq",
+        "choices": ["A) To cool down the work area", "B) To prevent dust from escaping to other parts of the home", "C) To increase air circulation", "D) To reduce heating costs"],
+        "answer": "B",
+        "explanation": "Negative pressure (lower air pressure in the work area than the rest of the home) causes air to flow INTO the work area rather than OUT, preventing construction dust from escaping to clean areas of the home."
+      },
+      {
+        "id": "q4",
+        "question": "Which gauge extension cord is the MINIMUM acceptable for power tools like circular saws?",
+        "type": "mcq",
+        "choices": ["A) 16-gauge", "B) 14-gauge", "C) 12-gauge", "D) 10-gauge"],
+        "answer": "C",
+        "explanation": "12-gauge extension cords are the minimum for power tools like circular saws, miter saws, and shop vacs (under 50'). Using lighter gauge cords like 14 or 16-gauge creates a fire hazard with power tools."
+      },
+      {
+        "id": "q5",
+        "question": "At what noise level does hearing protection become MANDATORY?",
+        "type": "mcq",
+        "choices": ["A) 70 dB (normal conversation)", "B) 85 dB (requires raised voice to communicate)", "C) 100 dB (uncomfortable but tolerable)", "D) 120 dB (painful)"],
+        "answer": "B",
+        "explanation": "Hearing protection is mandatory when noise levels reach 85 dB, which is the level where you need to raise your voice to communicate. Most power tools exceed this level (circular saw = 110 dBA)."
+      },
+      {
+        "id": "q6",
+        "question": "How should you verify that negative pressure is working in your dust containment?",
+        "type": "mcq",
+        "choices": ["A) Feel for air movement with your hand", "B) Hold a tissue near the door zipper - it should be pulled slightly inward", "C) Listen for the exhaust fan running", "D) Check if the poly is inflated like a balloon"],
+        "answer": "B",
+        "explanation": "The tissue test is the correct method. Hold a tissue near the door zipper opening - if negative pressure is working correctly, the tissue should be pulled slightly inward toward the work area."
+      },
+      {
+        "id": "q7",
+        "question": "What should you do if you discover a damaged extension cord during your daily inspection?",
+        "type": "mcq",
+        "choices": ["A) Wrap the damaged area with electrical tape and continue using it", "B) Make a note to replace it at the end of the week", "C) Immediately remove it from service and replace it", "D) Only replace it if the damage is severe"],
+        "answer": "C",
+        "explanation": "Damaged extension cords must be immediately removed from service and replaced. They pose serious shock and fire hazards. Using electrical tape to repair is not an acceptable fix."
+      },
+      {
+        "id": "q8",
+        "question": "What is the proper way to store drywall sheets on site?",
+        "type": "mcq",
+        "choices": ["A) Lay flat on the floor, stacked as high as needed", "B) Stand on edge, leaning against wall, maximum 6 sheets per stack", "C) Store outside under a tarp", "D) Doesn't matter as long as they're covered"],
+        "answer": "B",
+        "explanation": "Drywall should be stored standing on edge, leaning against a wall, with a maximum of 6 sheets per stack. Laying flat can cause warping, and storing outside exposes it to moisture damage."
+      },
+      {
+        "id": "q9",
+        "question": "According to the Hierarchy of Hazard Control, which is the MOST effective way to control a hazard?",
+        "type": "mcq",
+        "choices": ["A) Personal Protective Equipment (PPE)", "B) Administrative controls (changing work procedures)", "C) Engineering controls (isolating the hazard)", "D) Elimination (removing the hazard entirely)"],
+        "answer": "D",
+        "explanation": "Elimination (removing the hazard entirely) is the most effective control. The hierarchy from most to least effective is: Elimination > Substitution > Engineering Controls > Administrative Controls > PPE."
+      },
+      {
+        "id": "q10",
+        "question": "How far from a fire extinguisher must you maintain clear, unobstructed access?",
+        "type": "mcq",
+        "choices": ["A) 1 foot", "B) 2 feet", "C) 3 feet", "D) 6 feet"],
+        "answer": "C",
+        "explanation": "Fire extinguishers must have 3 feet of clear, unobstructed access around them. Nothing should be stored within this distance that could prevent quick access in an emergency."
+      },
+      {
+        "id": "q11",
+        "question": "What type of vacuum filter is REQUIRED for construction dust cleanup?",
+        "type": "mcq",
+        "choices": ["A) Standard shop vac filter", "B) Foam pre-filter", "C) HEPA filter", "D) Any filter is acceptable"],
+        "answer": "C",
+        "explanation": "HEPA filters are required for construction dust cleanup. Regular vacuum filters will spread fine particles back into the air, including harmful silica dust from drywall and concrete."
+      },
+      {
+        "id": "q12",
+        "question": "What is the maximum height a fire extinguisher should be mounted (measured to the top of the extinguisher)?",
+        "type": "mcq",
+        "choices": ["A) 2 feet off the floor", "B) 3 feet off the floor", "C) 4 feet off the floor", "D) 6 feet off the floor"],
+        "answer": "C",
+        "explanation": "Fire extinguishers should be mounted with the top at 4 feet off the floor. This makes them accessible to workers of various heights while keeping them at a convenient grabbing height."
+      },
+      {
+        "id": "q13",
+        "question": "When should you perform the client pre-existing conditions photo/video walkthrough?",
+        "type": "mcq",
+        "choices": ["A) At the end of the project", "B) Only if the client requests it", "C) Immediately upon arrival on Day 1, before any work begins", "D) Whenever you have time during the project"],
+        "answer": "C",
+        "explanation": "The pre-existing conditions documentation must be done immediately upon arrival on Day 1, before any work begins. This protects you from false damage claims by documenting the state of the home before construction starts."
+      },
+      {
+        "id": "q14",
+        "question": "What percentage of a circuit's rated amperage should you NOT exceed to prevent breaker trips?",
+        "type": "mcq",
+        "choices": ["A) 50%", "B) 80%", "C) 100%", "D) 120%"],
+        "answer": "B",
+        "explanation": "Don't exceed 80% of a circuit's rated amperage. For a 15A circuit, stay under 12A; for a 20A circuit, stay under 16A. This prevents breaker trips and reduces fire risk."
+      },
+      {
+        "id": "q15",
+        "question": "Which of the following is NOT typically required for interior renovation work that doesn't involve structural, plumbing, gas, or electrical changes?",
+        "type": "mcq",
+        "choices": ["A) Building permit", "B) Floor protection", "C) Dust barriers", "D) PPE compliance"],
+        "answer": "A",
+        "explanation": "Building permits are typically NOT required for non-structural interior work like painting, flooring, trim, cabinets, tile, and drywall repair. Floor protection, dust barriers, and PPE are still required for professionalism and safety."
+      }
+    ]
+  }
+}

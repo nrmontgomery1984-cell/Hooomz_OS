@@ -1,0 +1,254 @@
+{
+  "id": "FF-02",
+  "phase": 2,
+  "slug": "floor-framing",
+  "title": "Floor Framing Systems",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-01"],
+  "estimated_study_hours": 6,
+  "status": "complete",
+  "tags": ["framing", "floor", "joists", "subfloor", "beam", "structural", "I-joist", "TJI"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Floor framing creates the structural platform that supports all live and dead loads above, transfers loads to foundation or bearing walls, and provides a base for subfloor and finishes.",
+      "content_md": "## What is Floor Framing?\n\nFloor framing is the structural system of horizontal members (joists, beams, headers) that creates the platform between foundation and living space, or between floors in multi-story construction. It must safely carry all loads while providing a flat, solid base for finishes.\n\n## Floor Framing Components:\n\n1. **Sill Plate** - Connects floor system to foundation\n2. **Rim Joist/Band Board** - Closes perimeter of floor system\n3. **Floor Joists** - Primary spanning members\n4. **Beams/Girders** - Support joists at intermediate spans\n5. **Blocking/Bridging** - Prevents joist rotation and distributes loads\n6. **Subfloor** - Structural sheathing over joists\n\n## Why Floor Framing Matters\n\n### Structural Performance:\n- Carries all live loads (people, furniture: 40 psf minimum)\n- Carries dead loads (structure, finishes: ~15 psf)\n- Must resist deflection (bouncy floors = undersized)\n- Transfers loads to bearing walls/foundation\n\n### Comfort & Quality:\n- Level floors essential for finishes\n- Squeaks from improper fastening/blocking\n- Bounce/vibration from undersized joists\n- Sound transmission between floors\n\n### NB Climate Considerations:\n\n**Moisture:**\n- Basement humidity affects floor from below\n- Crawl space moisture = joist rot risk\n- Vapor barrier location critical\n\n**Thermal:**\n- Floor over unheated space needs insulation\n- Rim joist area = major heat loss point\n- Cold floors over garage/crawl space\n\n## Floor System Types\n\n### Solid Lumber Joists (Traditional):\n- 2×8, 2×10, 2×12 dimensional lumber\n- Simple, familiar to all framers\n- Limited spans, more material needed\n- Shrinkage can cause squeaks, nail pops\n\n### Engineered I-Joists (TJI):\n- OSB web with LVL or solid lumber flanges\n- Longer spans, lighter weight\n- Consistent dimensions (no crowning)\n- Pre-punched knockouts for mechanicals\n- Requires specific hangers and blocking\n\n### Floor Trusses:\n- Open web design\n- Longest spans possible\n- Easy mechanical routing\n- Requires engineered design\n- More expensive, longer lead time\n\n### Engineered Rim Board:\n- LVL or LSL rim instead of dimensional\n- No shrinkage\n- Stronger for deck ledger connections\n- More expensive than lumber rim"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Joist sizing and spans, beam design, connection requirements, and code specifications for floor framing.",
+      "content_md": "## 2.1 Joist Sizing & Spans\n\n### Span Tables (NBC Simplified - SPF #2):\n\n**Residential Live Load: 40 psf, L/360 deflection**\n\n| Joist Size | 12\" o.c. | 16\" o.c. | 24\" o.c. |\n|------------|----------|----------|----------|\n| 2×8 | 12'-6\" | 11'-4\" | 9'-3\" |\n| 2×10 | 15'-5\" | 14'-0\" | 11'-5\" |\n| 2×12 | 18'-0\" | 16'-5\" | 13'-5\" |\n\n**Note:** These are maximum spans. Always verify with current NBC span tables or engineering.\n\n### Engineered I-Joist Spans (Typical):\n\n| Depth | 12\" o.c. | 16\" o.c. | 19.2\" o.c. |\n|-------|----------|----------|------------|\n| 9-1/2\" | 16'-0\" | 15'-2\" | 14'-6\" |\n| 11-7/8\" | 19'-1\" | 18'-0\" | 17'-3\" |\n| 14\" | 22'-0\" | 20'-9\" | 19'-9\" |\n| 16\" | 24'-6\" | 23'-1\" | 22'-0\" |\n\n**Note:** Varies by manufacturer. Use their span tables.\n\n### Factors Affecting Span:\n\n1. **Species/Grade** - SPF vs. Hem-Fir vs. Doug Fir\n2. **Spacing** - Closer spacing = longer spans\n3. **Load** - Bedrooms (30 psf) vs. living areas (40 psf)\n4. **Deflection Limit** - L/360 (general) vs. L/480 (tile floors)\n5. **Duration of Load** - Snow load adjustments\n\n## 2.2 Beam Design\n\n### Beam Types:\n\n**Built-Up Lumber Beam:**\n- Multiple 2× members nailed together\n- Common: (3) 2×10, (3) 2×12\n- Must be properly nailed per code\n- Economical for shorter spans\n\n**LVL (Laminated Veneer Lumber):**\n- Engineered wood, very strong\n- Common depths: 9-1/2\", 11-7/8\", 14\", 16\", 18\"\n- Width: 1-3/4\" (single) or 3-1/2\" (double)\n- Long spans, minimal deflection\n- Requires engineering for sizing\n\n**Steel Beam:**\n- W-shape (wide flange) or S-shape\n- Maximum spans, minimum depth\n- Requires engineering\n- Fire protection if exposed\n\n### Beam Sizing (Rules of Thumb):\n\n**For preliminary sizing only - verify with engineer:**\n\n- Depth ≈ Span (inches) ÷ 20\n- Example: 16' span ÷ 20 = 9.6\" → use 11-7/8\" LVL\n\n**Built-Up Beam Quick Reference:**\n\n| Span | Beam Size (Built-Up) |\n|------|----------------------|\n| 8' | (2) 2×8 |\n| 10' | (2) 2×10 |\n| 12' | (3) 2×10 |\n| 14' | (3) 2×12 |\n| 16' | (2) LVL 9-1/2\" |\n| 18'+ | Engineering required |\n\n### Beam Bearing:\n\n**Minimum Bearing Length:**\n- Wood on wood: 1-1/2\" minimum, 3\" preferred\n- Wood on concrete/masonry: 3\" minimum\n- Beam pockets: Full bearing, 1/2\" air gap at end and sides\n\n**Post Under Beam:**\n- Must align with beam above and bearing below\n- Load path continuous to foundation\n- Size per load (4×4, 6×6, or steel)\n\n## 2.3 Connection Requirements\n\n### Sill Plate to Foundation:\n\n**Anchor Bolts:**\n- 1/2\" diameter minimum\n- 7\" embedment in concrete\n- Maximum 8' spacing\n- Within 12\" of ends and splices\n- Washer required\n\n**Sill Seal:**\n- Foam gasket under sill plate\n- Air sealing and capillary break\n- Required by energy code\n\n### Joist to Sill/Beam:\n\n**Toenailing (Lumber Joists):**\n- 3 - 3-1/4\" (82mm) nails per joist\n- 2 on one side, 1 on other\n- Or use joist hangers\n\n**Joist Hangers (I-Joists - Required):**\n- Sized to joist depth and width\n- All holes filled with specified nails\n- 1-1/2\" or 10d×1-1/2\" joist hanger nails\n- No common nails in hangers\n\n### Joist to Rim:\n\n- 3 - 3-1/4\" nails through rim into joist end\n- Or metal connector\n- I-joists: Rim joist hanger or web stiffener required\n\n### Subfloor to Joists:\n\n**Nailing Schedule:**\n- 2-3/8\" (8d) ring shank or 2\" screws\n- 6\" o.c. at edges\n- 12\" o.c. in field\n- Glue + fasteners for squeak prevention\n\n## 2.4 Code Requirements (NBC)\n\n### Joist Requirements:\n\n- Minimum depth: 2×6 (not recommended - too bouncy)\n- Maximum spacing: 24\" o.c. for 5/8\" subfloor\n- Crown up (always)\n- Bearing: Minimum 1-1/2\" on wood, 3\" on masonry\n\n### Blocking/Bridging:\n\n- Required at supports (bearing points)\n- Required at 8' intervals for joists deeper than 2×10\n- Solid blocking OR cross-bridging\n- Must be tight to prevent movement\n\n### Openings:\n\n- Headers required when joists cut\n- Double headers for spans over 4'\n- Double trimmers for spans over 4'\n- Hangers required for header connections over 6' span\n\n### Fire Blocking:\n\n- Required where floor meets concealed wall space\n- Rim joist typically provides this\n- Critical for fire spread prevention"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Complete floor framing procedure from sill plate installation through subfloor.",
+      "content_md": "## 3.1 Sill Plate Installation\n\n### Preparation:\n\n**Step 1: Check Foundation**\n- Verify foundation is level (within 1/4\")\n- Check dimensions match plans\n- Identify anchor bolt locations\n- Mark any high/low spots\n\n**Step 2: Mark Sill Plate**\n- Select straight, dry lumber (pressure-treated or natural)\n- Lay plate alongside foundation\n- Mark anchor bolt locations\n- Drill holes 1/8\" larger than bolts\n\n### Installation:\n\n**Step 3: Install Sill Seal**\n- Roll out foam sill seal on foundation\n- Cover full width of sill plate area\n- Don't leave gaps\n\n**Step 4: Set Sill Plate**\n- Lift plate over anchor bolts\n- Press down onto sill seal\n- Add washer and nut\n- Snug but don't fully tighten yet\n\n**Step 5: Level and Align**\n- Check level across multiple points\n- Shim low spots with metal or plastic shims\n- Align outside edge with foundation\n- Tighten nuts once positioned\n\n**Step 6: Splice Plates**\n- Butt joints over anchor bolts\n- Or scarf joint with bolt near joint\n- No splice at corners\n\n## 3.2 Beam Installation\n\n### For Built-Up Beam:\n\n**Step 1: Prepare Members**\n- Select straightest lumber\n- All members same length\n- Crown in same direction\n\n**Step 2: Assemble Beam**\n- Apply construction adhesive between layers\n- Nail together: 2 rows, 16\" o.c., staggered\n- 3-1/4\" nails from each side\n- Clamp if needed for tight fit\n\n**Step 3: Install Beam**\n- Set into beam pockets (if applicable)\n- Minimum bearing: 3\" on foundation\n- 1/2\" gap at end and sides for air circulation\n- Level and shim as needed\n\n### For LVL/Steel Beam:\n\n**Step 1: Verify Size and Bearing**\n- Confirm beam matches engineered specs\n- Verify bearing pad/pocket ready\n- Check column locations align\n\n**Step 2: Set Beam**\n- Use equipment for heavy beams (crane, telehandler)\n- Set into position on bearings\n- Check level, shim if needed\n- Secure per engineer's specs\n\n**Step 3: Install Columns**\n- Center under beam\n- Plumb in both directions\n- Secure top and bottom connections\n- Load path continuous\n\n## 3.3 Joist Layout and Installation\n\n### Layout:\n\n**Step 1: Mark Joist Locations**\n- Hook tape at corner\n- Mark 15-1/4\", then every 16\" (for 16\" o.c.)\n- Or 23-1/4\", then every 24\" (for 24\" o.c.)\n- \"X\" on side where joist sits\n- Transfer marks to opposite sill plate\n\n**Step 2: Plan for Openings**\n- Mark stair openings, chase locations\n- Identify doubled joists at openings\n- Plan header and trimmer locations\n\n### Installation (Lumber Joists):\n\n**Step 3: Install Rim Joist**\n- Set rim joist on edge on sill plate\n- Toenail to sill: 3 nails per 16\"\n- Square to sill plate\n- Splice over sill plate if needed\n\n**Step 4: Set Joists**\n- Select joist, identify crown (curve)\n- Crown UP always\n- Set joist on marks, crown up\n- Toenail to sill: 3 - 3-1/4\" nails\n- Nail through rim into joist end: 3 nails\n\n**Step 5: Repeat for All Joists**\n- Work systematically across floor\n- Double joists at openings, under bearing walls\n- Check alignment periodically\n\n### Installation (I-Joists):\n\n**Step 3: Install Rim Board**\n- Use engineered rim board or manufacturer's spec\n- Set on sill plate, toenail\n- Keep square and aligned\n\n**Step 4: Install Hangers**\n- Nail hangers to rim board at layout marks\n- Use specified nails in all holes\n- Hangers must match joist size\n\n**Step 5: Set I-Joists**\n- Drop joist into hanger\n- Bearing must be on bottom flange, not web\n- Nail hanger to joist (both sides)\n- Web stiffeners at bearing if required\n\n## 3.4 Blocking and Bridging\n\n### Solid Blocking:\n\n**Step 1: Cut Blocks**\n- Same depth as joists\n- Length = joist spacing minus 1-1/2\" (snug fit)\n- Cut multiple at once for efficiency\n\n**Step 2: Install at Bearings**\n- Block between each joist at rim\n- Block between each joist at beam\n- Toenail or face-nail through joist\n- Stagger for easier nailing\n\n**Step 3: Install Mid-Span (if required)**\n- Required for joists over 2×10 at 8' intervals\n- Snap chalk line for alignment\n- Stagger blocks for nailing access\n\n### Cross Bridging:\n\n**Step 1: Install Upper End**\n- Metal or wood bridging\n- Nail top end tight\n- Leave bottom loose until subfloor on\n\n**Step 2: Complete After Subfloor**\n- Return to nail bottom ends\n- Bridging should be snug (not forced)\n- Prevents joist rotation\n\n## 3.5 Floor Openings\n\n### Stair Opening Framing:\n\n**Step 1: Mark Opening**\n- Layout opening per plans\n- Add for trimmer/header thickness\n- Minimum clear: 36\" wide, length per rise/run\n\n**Step 2: Install Trimmers**\n- Full-length joists at opening sides\n- Double trimmers for spans over 4'\n- Nail trimmers together: 16\" o.c.\n\n**Step 3: Install Headers**\n- Cut headers to fit between trimmers\n- Double headers for spans over 4'\n- Connect with hangers for spans over 6'\n- Or face-nail: 3 nails per joist into header\n\n**Step 4: Install Tail Joists**\n- Short joists from header to rim/beam\n- Hang in hangers at header\n- Toenail or hang at opposite end\n\n## 3.6 Subfloor Installation\n\n### Preparation:\n\n**Step 1: Check Framing**\n- All joists level and aligned\n- Blocking complete at edges\n- No bowed or twisted joists (fix now)\n- Snap lines if joists not straight\n\n### Installation:\n\n**Step 2: Start First Row**\n- Begin at corner\n- Long edge perpendicular to joists\n- End joints centered on joists\n- 1/8\" gap at edges (expansion)\n- Leave 1/8\" gap between panels\n\n**Step 3: Apply Adhesive**\n- Construction adhesive on joist tops\n- Continuous bead, not dots\n- Critical for squeak prevention\n\n**Step 4: Install Panel**\n- Set panel on adhesive before it skins\n- Align edge with joist center\n- Nail/screw immediately\n\n**Step 5: Fastening**\n- 2-3/8\" ring shank nails or 2\" screws\n- 6\" o.c. at panel edges\n- 12\" o.c. in field (on each joist)\n- Keep fasteners 3/8\" from panel edges\n\n**Step 6: Stagger Joints**\n- Offset end joints by 4' minimum\n- No four-corner joints\n- Continue across floor\n\n**Step 7: Cut Around Openings**\n- Support panel from below\n- Cut with circular saw (set depth to panel thickness only)\n- Don't overcut at corners"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Floor framing inspection points, tolerances, and common defects.",
+      "content_md": "## 4.1 Inspection Points\n\n### Before Subfloor (Framing Inspection):\n\n**Inspector Will Check:**\n- Joist size, spacing, spans\n- Beam sizes and bearing\n- Anchor bolt spacing and installation\n- Joist hangers and connections\n- Blocking at bearings\n- Header and trimmer assemblies\n- Fire blocking\n\n### Self-Inspection Checklist:\n\n**Sill Plate:**\n- [ ] Anchor bolts at max 8' spacing\n- [ ] Bolts within 12\" of ends/splices\n- [ ] Sill seal installed\n- [ ] Plate level (shims where needed)\n- [ ] Nuts tight with washers\n\n**Joists:**\n- [ ] Correct size per span tables\n- [ ] Correct spacing (16\" or 24\" o.c.)\n- [ ] All crowns UP\n- [ ] Minimum bearing (1-1/2\" wood, 3\" masonry)\n- [ ] Properly connected at each end\n- [ ] Doubled at openings and under bearing walls\n\n**Connections:**\n- [ ] Rim to sill: toenailed or strapped\n- [ ] Joist to sill: 3 toenails or hanger\n- [ ] Joist to rim: 3 end nails\n- [ ] Hangers: All holes filled, correct nails\n- [ ] I-joist: Web stiffeners where required\n\n**Blocking:**\n- [ ] Solid blocking at all bearings\n- [ ] Mid-span blocking if required\n- [ ] Blocks tight, properly nailed\n\n**Openings:**\n- [ ] Headers correctly sized\n- [ ] Trimmers doubled if required\n- [ ] Hangers at headers over 6' span\n- [ ] Opening dimensions correct\n\n**Subfloor:**\n- [ ] Correct thickness (5/8\" or 3/4\")\n- [ ] Adhesive used\n- [ ] Fastener spacing: 6\" edges, 12\" field\n- [ ] Joints staggered\n- [ ] 1/8\" gaps at edges/between panels\n\n## 4.2 Tolerances\n\n### Floor Framing Tolerances:\n\n| Measurement | Tolerance |\n|-------------|----------|\n| Sill plate level | ±1/4\" over 20' |\n| Joist spacing | ±1/4\" |\n| Joist crown | All same direction (up) |\n| Overall floor level | ±1/4\" in 10' |\n| Subfloor flatness | ±1/8\" in 6' |\n| Opening dimensions | ±1/4\" |\n\n## 4.3 Common Defects\n\n| Defect | Cause | Prevention/Fix |\n|--------|-------|----------------|\n| Squeaky floor | No adhesive, gaps, shrinkage | Use adhesive, screw down squeaks |\n| Bouncy floor | Undersized joists, too long span | Verify spans, add beam if needed |\n| Floor not level | Sill plate not level, joist variation | Level sill, plane high joists |\n| Cracked drywall below | Floor deflection | Verify sizing, add blocking |\n| Nail pops in subfloor | Nails too short, missed joist | Use ring shank, re-fasten on joist |\n| Failed hanger | Wrong nails, missing nails | Correct nails, fill all holes |\n| I-joist web failure | Point load, no stiffener | Add web stiffener |\n| Rot at rim | Moisture from exterior | Flash properly, seal air gaps |\n\n## 4.4 Critical Quality Points\n\n### Crown Direction:\n\n**Every joist must have crown UP:**\n1. Sight down joist to identify curve\n2. Mark crown side\n3. Install with crown facing up\n4. Floor will be more level, feel more solid\n\n### Adhesive Application:\n\n**Construction adhesive prevents squeaks:**\n1. Apply continuous bead on joist tops\n2. Install subfloor within 10 minutes\n3. Adhesive + fasteners = no squeaks\n4. Don't apply too far ahead (skins over)\n\n### I-Joist Special Requirements:\n\n**Critical for I-Joists:**\n- Never notch or cut holes in flanges\n- Web holes must follow manufacturer specs\n- Bearing on bottom flange only\n- Web stiffeners at point loads and hangers\n- Use only specified blocking panels\n\n## 4.5 Red Flags (Stop and Fix)\n\n- Joist span exceeds tables (add beam)\n- Crown down (flip joist)\n- Missing blocking at bearing\n- Wrong nails in hangers\n- I-joist bearing on web (will crush)\n- Splits in lumber at connections\n- Subfloor not glued (will squeak)\n- Opening headers undersized"
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "Span tables, nailing schedules, and I-joist specifications.",
+      "content_md": "## APPENDIX A: SPAN TABLES (SPF #2, 40 psf Live Load)\n\n### Floor Joists - L/360 Deflection:\n\n| Size | 12\" o.c. | 16\" o.c. | 24\" o.c. |\n|------|----------|----------|----------|\n| 2×6 | 9'-6\" | 8'-7\" | 7'-0\" |\n| 2×8 | 12'-6\" | 11'-4\" | 9'-3\" |\n| 2×10 | 15'-5\" | 14'-0\" | 11'-5\" |\n| 2×12 | 18'-0\" | 16'-5\" | 13'-5\" |\n\n### Bedroom Joists (30 psf):\n\n| Size | 12\" o.c. | 16\" o.c. | 24\" o.c. |\n|------|----------|----------|----------|\n| 2×8 | 13'-5\" | 12'-3\" | 10'-9\" |\n| 2×10 | 16'-6\" | 15'-1\" | 13'-3\" |\n| 2×12 | 19'-3\" | 17'-6\" | 15'-5\" |\n\n## APPENDIX B: NAILING SCHEDULE\n\n### Floor Framing:\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Sill to foundation | 1/2\" anchor bolt | Per code |\n| Rim to sill | 3-1/4\" toenail | 3 per 16\" |\n| Joist to sill | 3-1/4\" toenail | 3 per joist |\n| Rim to joist end | 3-1/4\" face nail | 3 per joist |\n| Blocking | 3-1/4\" face/toenail | 2-3 per end |\n| Header to trimmer | 3-1/4\" face nail | 3 per connection |\n| Built-up beam | 3-1/4\" | 2 rows @ 16\" o.c. |\n| Subfloor | 2-3/8\" ring shank | 6\"/12\" pattern |\n\n### Joist Hangers:\n\n| Hanger Type | Nail Size | Fill All Holes |\n|-------------|-----------|----------------|\n| Standard | 1-1/2\" × 10ga | YES |\n| Heavy duty | 1-1/2\" × 10ga or 10d | YES |\n| I-joist | Per manufacturer | YES |\n\n**NEVER use common nails in hangers - use joist hanger nails only**\n\n## APPENDIX C: I-JOIST SPECIFICATIONS\n\n### General Rules:\n\n| Item | Requirement |\n|------|-------------|\n| End bearing | 1-3/4\" minimum |\n| Intermediate bearing | 3-1/2\" minimum |\n| Web stiffeners | At point loads, hangers, bearing |\n| Hole location | Center 1/3 of span, centered in web |\n| Maximum hole | Per manufacturer (typically 4-6\") |\n| Blocking | Manufacturer's blocking panels |\n\n### Common I-Joist Depths:\n\n| Depth | Flange Width | Typical Use |\n|-------|--------------|-------------|\n| 9-1/2\" | 1-1/2\" or 2-5/16\" | Short spans, residential |\n| 11-7/8\" | 1-1/2\" or 2-5/16\" | Standard residential |\n| 14\" | 2-5/16\" or 3-1/2\" | Longer spans |\n| 16\" | 2-5/16\" or 3-1/2\" | Long spans, commercial |\n\n## APPENDIX D: SUBFLOOR SPECIFICATIONS\n\n### Panel Thickness by Joist Spacing:\n\n| Joist Spacing | Minimum Panel | Recommended |\n|---------------|---------------|-------------|\n| 16\" o.c. | 5/8\" | 3/4\" |\n| 19.2\" o.c. | 3/4\" | 3/4\" |\n| 24\" o.c. | 7/8\" | 7/8\" (or 3/4\" w/ blocking) |\n\n### Panel Types:\n\n| Type | Use | Notes |\n|------|-----|-------|\n| OSB | Standard subfloor | Most common, economical |\n| Plywood | Higher quality | Better for hardwood floors |\n| T&G | All applications | Tongue and groove edges |\n| AdvanTech | Premium | Water resistant, very flat |\n\n## APPENDIX E: SQUEAK PREVENTION\n\n### Best Practices:\n\n1. **Always use construction adhesive**\n2. **Use ring shank nails or screws**\n3. **Fasten before adhesive skins**\n4. **Don't over-drive fasteners**\n5. **Ensure joists are dry (<19% MC)**\n6. **Verify joists are aligned (no twists)**\n7. **Block all panel edges at openings**\n\n### Fixing Squeaks:\n\n| Access | Method |\n|--------|--------|\n| From above | Drive screws through subfloor into joist |\n| From below | Shim gap between joist and subfloor |\n| From below | Add blocking between joists |\n| From below | Screw up through joist into subfloor |"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "sill-plate",
+      "title": "Sill Plate Installation Checklist",
+      "items": [
+        "Foundation level checked",
+        "Sill seal installed continuous",
+        "Anchor bolt holes drilled accurately",
+        "Plate installed over bolts",
+        "Plate shimmed level where needed",
+        "Washers and nuts installed and tight",
+        "Splices located over anchor bolts",
+        "Outside edge aligned with foundation"
+      ]
+    },
+    {
+      "id": "joist-installation",
+      "title": "Joist Installation Checklist",
+      "items": [
+        "Layout marked at 16 or 24 inch spacing",
+        "Rim joist installed and squared",
+        "All joists crown UP",
+        "Joists at correct spacing",
+        "Minimum bearing achieved",
+        "Joists connected at both ends",
+        "Doubled joists at openings",
+        "Doubled joists under parallel bearing walls"
+      ]
+    },
+    {
+      "id": "hangers",
+      "title": "Joist Hanger Checklist",
+      "items": [
+        "Correct hanger size for joist",
+        "Hanger tight to header/beam",
+        "All nail holes filled",
+        "Joist hanger nails used (not common)",
+        "Joist fully seated in hanger",
+        "Both sides of hanger nailed",
+        "Web stiffeners installed (I-joists)"
+      ]
+    },
+    {
+      "id": "blocking",
+      "title": "Blocking Checklist",
+      "items": [
+        "Blocking at all bearing points",
+        "Blocking at rim joist",
+        "Mid-span blocking if joists over 2x10",
+        "Blocks tight between joists",
+        "Blocks properly fastened",
+        "Blocking at subfloor edges/openings"
+      ]
+    },
+    {
+      "id": "subfloor",
+      "title": "Subfloor Installation Checklist",
+      "items": [
+        "Correct panel thickness for spacing",
+        "Construction adhesive applied",
+        "Panels perpendicular to joists",
+        "End joints staggered minimum 4 feet",
+        "Expansion gap 1/8 inch at edges",
+        "Fasteners 6 inch at edges, 12 inch field",
+        "Fasteners not overdriven",
+        "No four-corner panel joints"
+      ]
+    },
+    {
+      "id": "opening-framing",
+      "title": "Floor Opening Checklist",
+      "items": [
+        "Opening dimensions correct",
+        "Trimmers full length joists",
+        "Trimmers doubled (spans over 4 ft)",
+        "Headers correct size",
+        "Headers doubled (spans over 4 ft)",
+        "Hangers at headers (spans over 6 ft)",
+        "Tail joists in hangers",
+        "All connections properly fastened"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "When installing floor joists, which direction should the crown face?",
+        "type": "mcq",
+        "choices": ["A) Down", "B) Up", "C) Alternating", "D) It doesn't matter"],
+        "answer": "B",
+        "explanation": "The crown (curve) of a joist should always face UP. This creates a slight camber that flattens under load and results in a more level floor."
+      },
+      {
+        "id": "q2",
+        "question": "What is the maximum anchor bolt spacing for sill plates?",
+        "type": "mcq",
+        "choices": ["A) 4 feet", "B) 6 feet", "C) 8 feet", "D) 10 feet"],
+        "answer": "C",
+        "explanation": "Anchor bolts must be spaced at maximum 8 feet on center, with additional bolts within 12 inches of ends and plate splices."
+      },
+      {
+        "id": "q3",
+        "question": "What fastener spacing is required for subfloor panel edges?",
+        "type": "mcq",
+        "choices": ["A) 4 inches", "B) 6 inches", "C) 8 inches", "D) 12 inches"],
+        "answer": "B",
+        "explanation": "Subfloor fasteners must be 6 inches on center at panel edges and 12 inches on center in the field (at intermediate joists)."
+      },
+      {
+        "id": "q4",
+        "question": "What type of nails should be used in joist hangers?",
+        "type": "mcq",
+        "choices": ["A) Common nails", "B) Box nails", "C) Joist hanger nails (short, thick shank)", "D) Finish nails"],
+        "answer": "C",
+        "explanation": "Only joist hanger nails (1-1/2\" × 10 gauge) should be used in hangers. Common nails are too long and thin, reducing shear capacity significantly."
+      },
+      {
+        "id": "q5",
+        "question": "What is the primary purpose of blocking at joist bearings?",
+        "type": "mcq",
+        "choices": ["A) Sound insulation", "B) Prevent joist rotation and distribute loads", "C) Decorative", "D) Fire stopping only"],
+        "answer": "B",
+        "explanation": "Blocking at bearings prevents joists from rotating or rolling over under load, and helps distribute point loads to adjacent joists."
+      },
+      {
+        "id": "q6",
+        "question": "When are doubled headers required at floor openings?",
+        "type": "mcq",
+        "choices": ["A) Always", "B) Spans over 4 feet", "C) Spans over 6 feet", "D) Never for residential"],
+        "answer": "B",
+        "explanation": "Headers must be doubled when the header span (distance between trimmers) exceeds 4 feet. Hangers are also required when the span exceeds 6 feet."
+      },
+      {
+        "id": "q7",
+        "question": "What is the minimum bearing for a floor joist on a wood sill plate?",
+        "type": "mcq",
+        "choices": ["A) 1 inch", "B) 1-1/2 inches", "C) 3 inches", "D) 4 inches"],
+        "answer": "B",
+        "explanation": "Minimum joist bearing on wood is 1-1/2 inches. On masonry or concrete, minimum bearing is 3 inches."
+      },
+      {
+        "id": "q8",
+        "question": "What is the best way to prevent squeaky floors?",
+        "type": "mcq",
+        "choices": ["A) Use more nails", "B) Use thicker subfloor", "C) Apply construction adhesive and use ring shank nails or screws", "D) Space joists closer"],
+        "answer": "C",
+        "explanation": "Construction adhesive creates a bond between subfloor and joist that prevents the movement causing squeaks. Ring shank nails or screws hold better than smooth shank nails."
+      },
+      {
+        "id": "q9",
+        "question": "What must never be cut or notched on an engineered I-joist?",
+        "type": "mcq",
+        "choices": ["A) The web", "B) The flanges (top or bottom)", "C) Either end", "D) The middle third"],
+        "answer": "B",
+        "explanation": "Never cut, notch, or drill holes in I-joist flanges. The flanges carry all the bending stress. Holes in the web are allowed per manufacturer's specifications."
+      },
+      {
+        "id": "q10",
+        "question": "How much gap should be left between subfloor panels?",
+        "type": "mcq",
+        "choices": ["A) None - tight fit", "B) 1/8 inch", "C) 1/4 inch", "D) 1/2 inch"],
+        "answer": "B",
+        "explanation": "Leave 1/8 inch gap between subfloor panels and at walls to allow for expansion. Without this gap, panels can buckle when they absorb moisture."
+      },
+      {
+        "id": "q11",
+        "question": "What is a web stiffener and when is it required for I-joists?",
+        "type": "mcq",
+        "choices": ["A) Insulation in the web, always required", "B) Plywood piece at web, required at point loads and hangers", "C) Metal strap, required at all bearings", "D) Blocking between joists, never required"],
+        "answer": "B",
+        "explanation": "Web stiffeners are plywood or OSB pieces installed against the web at bearing points, hangers, and point loads. They prevent the thin web from buckling under concentrated loads."
+      },
+      {
+        "id": "q12",
+        "question": "How should subfloor end joints be arranged?",
+        "type": "mcq",
+        "choices": ["A) Aligned in rows", "B) Staggered by at least 4 feet", "C) Random placement", "D) Centered on the floor"],
+        "answer": "B",
+        "explanation": "Subfloor end joints must be staggered by at least 4 feet (one full joist bay). This prevents weak lines across the floor and creates a stronger diaphragm."
+      },
+      {
+        "id": "q13",
+        "question": "What size subfloor is required for 24\" joist spacing?",
+        "type": "mcq",
+        "choices": ["A) 1/2 inch", "B) 5/8 inch", "C) 3/4 inch minimum (7/8 inch recommended)", "D) 1 inch"],
+        "answer": "C",
+        "explanation": "At 24 inch joist spacing, minimum 3/4 inch (or 7/8 inch) subfloor is required. The wider spacing requires thicker panels to prevent deflection between joists."
+      },
+      {
+        "id": "q14",
+        "question": "What is the purpose of sill seal under the sill plate?",
+        "type": "mcq",
+        "choices": ["A) Structural support", "B) Air sealing and capillary break", "C) Leveling the plate", "D) Insect barrier"],
+        "answer": "B",
+        "explanation": "Sill seal (foam gasket) provides air sealing between the sill plate and concrete, and acts as a capillary break to prevent moisture from wicking into the wood."
+      },
+      {
+        "id": "q15",
+        "question": "At what joist depth is mid-span blocking required?",
+        "type": "mcq",
+        "choices": ["A) 2×6 and larger", "B) 2×8 and larger", "C) 2×10 and larger at 8 foot intervals", "D) Never required for residential"],
+        "answer": "C",
+        "explanation": "When joists are deeper than 2×10 (nominal), blocking or bridging is required at intervals not exceeding 8 feet. This prevents joists from rotating or buckling."
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "PM-01",
+  "phase": 0,
+  "slug": "project-management-fundamentals",
+  "title": "Project Management Fundamentals",
+  "category": "Project Management",
+  "level": "Journeyman",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

@@ -1,0 +1,368 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2025-12-05T00:00:00Z",
+  "total_modules": 37,
+  "completed": 37,
+  "modules": [
+    {
+      "id": "OH-01",
+      "phase": 1,
+      "slug": "site-safety-ppe",
+      "title": "Site Safety & PPE",
+      "category": "Safety",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-1-overhead/OH-01_site-safety-ppe.json"
+    },
+    {
+      "id": "OH-02",
+      "phase": 1,
+      "slug": "tool-safety-maintenance",
+      "title": "Tool Safety & Maintenance",
+      "category": "Safety",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-1-overhead/OH-02_tool-safety-maintenance.json"
+    },
+    {
+      "id": "OH-03",
+      "phase": 1,
+      "slug": "material-handling-storage",
+      "title": "Material Handling & Storage",
+      "category": "Site Operations",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-1-overhead/OH-03_material-handling-storage.json"
+    },
+    {
+      "id": "OH-04",
+      "phase": 1,
+      "slug": "site-prep-layout",
+      "title": "Site Prep & Layout",
+      "category": "Site Operations",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-1-overhead/OH-04_site-prep-layout.json"
+    },
+    {
+      "id": "OH-05",
+      "phase": 1,
+      "slug": "waste-management-cleanup",
+      "title": "Waste Management & Cleanup",
+      "category": "Site Operations",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-1-overhead/OH-05_waste-management-cleanup.json"
+    },
+    {
+      "id": "FF-01",
+      "phase": 2,
+      "slug": "foundation-systems",
+      "title": "Foundation Systems",
+      "category": "Structural Foundation",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-01_foundation-systems.json"
+    },
+    {
+      "id": "FF-02",
+      "phase": 2,
+      "slug": "floor-framing",
+      "title": "Floor Framing",
+      "category": "Framing",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-02_floor-framing.json"
+    },
+    {
+      "id": "FF-03",
+      "phase": 2,
+      "slug": "wall-framing",
+      "title": "Wall Framing",
+      "category": "Framing",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-03_wall-framing.json"
+    },
+    {
+      "id": "FF-04",
+      "phase": 2,
+      "slug": "ceiling-roof-framing",
+      "title": "Ceiling & Roof Framing",
+      "category": "Framing",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-04_ceiling-roof-framing.json"
+    },
+    {
+      "id": "FF-05",
+      "phase": 2,
+      "slug": "structural-connections",
+      "title": "Structural Connections",
+      "category": "Framing",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-05_structural-connections.json"
+    },
+    {
+      "id": "FF-06",
+      "phase": 2,
+      "slug": "window-door-framing",
+      "title": "Window & Door Framing",
+      "category": "Framing",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-06_window-door-framing.json"
+    },
+    {
+      "id": "FF-07",
+      "phase": 2,
+      "slug": "stairs-railings",
+      "title": "Stairs & Railings",
+      "category": "Framing",
+      "level": "Certified Professional",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-07_stairs-railings.json"
+    },
+    {
+      "id": "FF-08",
+      "phase": 2,
+      "slug": "structural-repairs-reinforcement",
+      "title": "Structural Repairs & Reinforcement",
+      "category": "Framing",
+      "level": "Certified Professional",
+      "status": "complete",
+      "file": "modules/phase-2-foundation-framing/FF-08_structural-repairs-reinforcement.json"
+    },
+    {
+      "id": "EW-01",
+      "phase": 3,
+      "slug": "building-science-fundamentals",
+      "title": "Building Science Fundamentals",
+      "category": "Building Science",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-01_building-science-fundamentals.json"
+    },
+    {
+      "id": "EW-02",
+      "phase": 3,
+      "slug": "air-sealing-vapor-barriers",
+      "title": "Air Sealing & Vapor Barriers",
+      "category": "Building Envelope",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-02_air-sealing-vapor-barriers.json"
+    },
+    {
+      "id": "EW-03",
+      "phase": 3,
+      "slug": "insulation-installation",
+      "title": "Insulation Installation",
+      "category": "Building Envelope",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-03_insulation-installation.json"
+    },
+    {
+      "id": "EW-04",
+      "phase": 3,
+      "slug": "window-door-installation",
+      "title": "Window & Door Installation",
+      "category": "Building Envelope",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-04_window-door-installation.json"
+    },
+    {
+      "id": "EW-05",
+      "phase": 3,
+      "slug": "exterior-trim-cladding-prep",
+      "title": "Exterior Trim & Cladding Prep",
+      "category": "Exterior",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-05_exterior-trim-cladding-prep.json"
+    },
+    {
+      "id": "EW-06",
+      "phase": 3,
+      "slug": "roofing-systems",
+      "title": "Roofing Systems",
+      "category": "Roofing",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-06_roofing-systems.json"
+    },
+    {
+      "id": "EW-07",
+      "phase": 3,
+      "slug": "flat-roof-systems",
+      "title": "Flat Roof Systems",
+      "category": "Roofing",
+      "level": "Certified Professional",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-07_flat-roof-systems.json"
+    },
+    {
+      "id": "EW-08",
+      "phase": 3,
+      "slug": "eavestroughs-drainage",
+      "title": "Eavestroughs & Drainage",
+      "category": "Exterior",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-08_eavestroughs-drainage.json"
+    },
+    {
+      "id": "EW-09",
+      "phase": 3,
+      "slug": "exterior-weatherproofing-repairs",
+      "title": "Exterior Weatherproofing & Repairs",
+      "category": "Exterior",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-09_exterior-weatherproofing-repairs.json"
+    },
+    {
+      "id": "EW-10",
+      "phase": 3,
+      "slug": "foundation-waterproofing",
+      "title": "Foundation Waterproofing",
+      "category": "Foundation",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-10_foundation-waterproofing.json"
+    },
+    {
+      "id": "EW-11",
+      "phase": 3,
+      "slug": "exterior-drainage-systems",
+      "title": "Exterior Drainage Systems",
+      "category": "Foundation",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-3-exterior-weather/EW-11_exterior-drainage-systems.json"
+    },
+    {
+      "id": "IF-01",
+      "phase": 4,
+      "slug": "drywall-installation",
+      "title": "Drywall Installation",
+      "category": "Drywall",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-01_drywall-installation.json"
+    },
+    {
+      "id": "IF-02",
+      "phase": 4,
+      "slug": "drywall-finishing",
+      "title": "Drywall Finishing",
+      "category": "Drywall",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-02_drywall-finishing.json"
+    },
+    {
+      "id": "IF-03",
+      "phase": 4,
+      "slug": "interior-painting",
+      "title": "Interior Painting",
+      "category": "Painting",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-03_interior-painting.json"
+    },
+    {
+      "id": "IF-04",
+      "phase": 4,
+      "slug": "trim-carpentry-baseboard-casing",
+      "title": "Trim Carpentry: Baseboard & Casing",
+      "category": "Trim",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-04_trim-carpentry-baseboard-casing.json"
+    },
+    {
+      "id": "IF-05",
+      "phase": 4,
+      "slug": "crown-moulding-advanced-trim",
+      "title": "Crown Moulding & Advanced Trim",
+      "category": "Trim",
+      "level": "Certified Professional",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-05_crown-moulding-advanced-trim.json"
+    },
+    {
+      "id": "IF-06",
+      "phase": 4,
+      "slug": "flooring-installation",
+      "title": "Flooring Installation",
+      "category": "Flooring",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-06_flooring-installation.json"
+    },
+    {
+      "id": "IF-07",
+      "phase": 4,
+      "slug": "interior-doors-trim-overview",
+      "title": "Interior Doors & Trim Overview",
+      "category": "Trim",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-4-interior-finish/IF-07_interior-doors-trim-overview.json"
+    },
+    {
+      "id": "TI-01",
+      "phase": 5,
+      "slug": "wall-tile-installation",
+      "title": "Wall Tile Installation",
+      "category": "Tile",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-5-tile-advanced/TI-01_wall-tile-installation.json"
+    },
+    {
+      "id": "TI-02",
+      "phase": 5,
+      "slug": "floor-tile-installation",
+      "title": "Floor Tile Installation",
+      "category": "Tile",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-5-tile-advanced/TI-02_floor-tile-installation.json"
+    },
+    {
+      "id": "TI-03",
+      "phase": 5,
+      "slug": "shower-tile-installation",
+      "title": "Shower Tile Installation",
+      "category": "Tile",
+      "level": "Certified Professional",
+      "status": "complete",
+      "file": "modules/phase-5-tile-advanced/TI-03_shower-tile-installation.json"
+    },
+    {
+      "id": "TI-04",
+      "phase": 5,
+      "slug": "backsplash-installation",
+      "title": "Backsplash Installation",
+      "category": "Tile",
+      "level": "Journeyman",
+      "status": "complete",
+      "file": "modules/phase-5-tile-advanced/TI-04_backsplash-installation.json"
+    },
+    {
+      "id": "TI-05",
+      "phase": 5,
+      "slug": "tile-repair-maintenance",
+      "title": "Tile Repair & Maintenance",
+      "category": "Tile",
+      "level": "Apprentice",
+      "status": "complete",
+      "file": "modules/phase-5-tile-advanced/TI-05_tile-repair-maintenance.json"
+    }
+  ]
+}

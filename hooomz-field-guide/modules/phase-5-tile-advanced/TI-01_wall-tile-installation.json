@@ -1,0 +1,16 @@
+{
+  "id": "TI-01",
+  "phase": 5,
+  "slug": "wall-tile-installation",
+  "title": "Wall Tile Installation",
+  "category": "Tile Work Advanced",
+  "level": "Journeyman",
+  "priority": 3,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

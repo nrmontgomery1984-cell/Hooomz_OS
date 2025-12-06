@@ -1,0 +1,296 @@
+{
+  "id": "EW-06",
+  "title": "Roofing Systems",
+  "category": "Exterior & Weather",
+  "level": "Intermediate",
+  "estimated_study_hours": 4.5,
+  "tags": [
+    "roofing",
+    "shingles",
+    "underlayment",
+    "ice dam",
+    "ventilation"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "FF-04"
+  ],
+  "sections": [
+    {
+      "id": "ew06-s1",
+      "title": "Roofing Materials & Selection",
+      "summary": "Understanding roofing material options and selection criteria for NB Zone 6 climate.",
+      "content_md": "## Roofing Materials & Selection\n\n### Asphalt Shingles\n\nThe most common roofing material in New Brunswick:\n\n| Type | Lifespan | Wind Rating | Cost | Notes |\n|------|----------|-------------|------|-------|\n| **3-Tab** | 15-20 yrs | 60-70 mph | $ | Flat appearance, economy choice |\n| **Architectural** | 25-30 yrs | 110-130 mph | $$ | Dimensional look, best value |\n| **Premium/Designer** | 30-50 yrs | 130+ mph | $$$ | Thickest, best warranties |\n\n**Zone 6 Considerations:**\n- Choose algae-resistant shingles (AR suffix)\n- Higher wind ratings for coastal/exposed areas\n- Impact-resistant (Class 4) for hail-prone areas\n\n### Other Roofing Options\n\n| Material | Lifespan | Pros | Cons |\n|----------|----------|------|------|\n| **Metal Standing Seam** | 40-70 yrs | Snow shedding, durable | Higher cost, noise |\n| **Metal Shingles** | 40-50 yrs | Traditional look, durable | Cost, specialized install |\n| **Cedar Shakes** | 25-30 yrs | Natural beauty | Maintenance, fire risk |\n| **Slate** | 75-100+ yrs | Longevity, beauty | Weight, cost, fragile |\n| **Synthetic Slate** | 50+ yrs | Lighter than slate | New technology |\n\n### Warranty Considerations\n\n**Manufacturer Warranties:**\n- Material defect coverage (20-50 years)\n- Wind damage coverage (varies)\n- Algae staining (10-15 years)\n\n> **Important:** Most warranties require proper ventilation and installation by certified contractors. Keep all documentation."
+    },
+    {
+      "id": "ew06-s2",
+      "title": "Roof Deck Preparation",
+      "summary": "Preparing the roof deck including sheathing inspection, repairs, and ventilation requirements.",
+      "content_md": "## Roof Deck Preparation\n\n### Sheathing Requirements\n\n**Acceptable Sheathing:**\n- OSB: 7/16\" minimum (1/2\" recommended)\n- Plywood: 1/2\" CDX minimum\n- Boards: 1x6 nominal, max 1/4\" gaps\n\n**Inspection Points:**\n- No rot or delamination\n- Secure to rafters/trusses\n- No excessive waviness\n- All gaps filled or covered\n\n### Fastening Requirements\n\n| Sheathing | Fastener | Edge Spacing | Field Spacing |\n|-----------|----------|--------------|---------------|\n| OSB 7/16\" | 8d ring-shank | 6\" OC | 12\" OC |\n| Plywood 1/2\" | 8d ring-shank | 6\" OC | 12\" OC |\n| High-Wind Zone | 8d ring-shank | 4\" OC | 6\" OC |\n\n### Ventilation Fundamentals\n\n**NBC Requirements:**\n- Minimum 1:300 ratio (1 sq ft vent per 300 sq ft attic)\n- Balanced intake/exhaust\n- 50% low (soffit), 50% high (ridge/roof)\n\n**Ventilation Types:**\n\n| Type | Location | CFM/sq ft | Notes |\n|------|----------|-----------|-------|\n| **Soffit Vents** | Eaves | Intake | Critical - never block |\n| **Ridge Vent** | Peak | 18 NFVA/ft | Best exhaust option |\n| **Box Vents** | Upper roof | 50-75 sq ft each | Static, no moving parts |\n| **Power Vents** | Upper roof | 1000+ CFM | Thermostat controlled |\n| **Gable Vents** | Gable ends | Varies | Supplement only |\n\n> **Zone 6 Critical:** Proper ventilation prevents ice dams by keeping roof deck cold and attic dry. Inadequate ventilation is the #1 cause of premature roof failure in NB."
+    },
+    {
+      "id": "ew06-s3",
+      "title": "Underlayment & Ice Protection",
+      "summary": "Installing underlayment and ice/water shield for Zone 6 protection requirements.",
+      "content_md": "## Underlayment & Ice Protection\n\n### Ice & Water Shield Requirements\n\n**NBC Zone 6 Requirement:**\nIce protection membrane required from eave edge to minimum 36\" past interior wall line.\n\n**Where Required:**\n- All eaves (entire width)\n- Valleys (full length)\n- Around chimneys\n- Around skylights\n- Low-slope transitions\n- Any roof-wall intersections\n\n### Installation Guidelines\n\n**Ice & Water Shield:**\n\n| Step | Action | Key Point |\n|------|--------|----------|\n| 1 | Clean deck | Remove debris, nail heads flush |\n| 2 | Start at eave | Align with drip edge |\n| 3 | Remove backing | Peel as you go, not all at once |\n| 4 | Press firmly | Use roller, eliminate air bubbles |\n| 5 | Overlap seams | 6\" minimum horizontal, 12\" end laps |\n| 6 | Extend up roof | Past interior wall line minimum |\n\n### Synthetic Underlayment\n\n**Advantages over Felt:**\n- Lighter weight, easier handling\n- Won't absorb water\n- Lays flat, won't wrinkle\n- Longer UV exposure time\n- Better tear resistance\n\n**Installation:**\n- Horizontal courses, starting at eave\n- Minimum 4\" horizontal laps\n- Minimum 6\" end laps\n- Cap nails every 6\" at laps, 12\" field\n\n### Drip Edge Installation\n\n**Sequence (Critical for Water Management):**\n\n1. **Eave drip edge** - Install first, directly on deck\n2. **Ice & water shield** - Over eave drip edge\n3. **Underlayment** - Over ice shield\n4. **Rake drip edge** - Over underlayment at rakes\n\n> **Why This Order?** Water flows from rake to eave. The eave drip edge goes under membrane so water entering there drains out. Rake drip edge goes over membrane to direct water onto roof surface."
+    },
+    {
+      "id": "ew06-s4",
+      "title": "Shingle Installation",
+      "summary": "Step-by-step asphalt shingle installation including starter course, field, and hip/ridge caps.",
+      "content_md": "## Shingle Installation\n\n### Starter Course\n\n**Purpose:** Provides seal strip for first course and covers gaps\n\n**Options:**\n- Pre-cut starter strips (recommended)\n- Shingles with tabs cut off\n- Shingles installed upside down\n\n**Installation:**\n- Overhang drip edge 1/4\" to 3/8\"\n- Offset from first course by half tab\n- Nail 3-4\" above edge, in seal strip\n\n### Field Shingle Installation\n\n**Nail Placement (4-Nail Pattern):**\n\n| Position | Location |\n|----------|----------|\n| Nail 1 | 1\" from end, on nail line |\n| Nail 2 | Above first cutout center |\n| Nail 3 | Above second cutout center |\n| Nail 4 | 1\" from opposite end |\n\n**6-Nail High-Wind Pattern:** Add nail above each outer cutout\n\n**Critical Points:**\n- Nail on manufacturer's nail line\n- Drive flush - not over or under driven\n- Never nail into or above seal strip\n\n### Exposure & Offset Patterns\n\n**Standard Exposure:** 5\" to 5-5/8\" (per manufacturer)\n\n**Offset Patterns:**\n\n| Pattern | First Course Offset | Subsequent |\n|---------|---------------------|------------|\n| **6\" Offset** | Full, then -6\" | Repeat |\n| **5\" Offset** | Full, -5\", -10\", etc. | Repeat |\n| **Random** | Minimum 4\" offset | Varies |\n\n### Valley Installation\n\n**Closed Cut Valley (Most Common):**\n1. Run shingles from less-steep slope across valley\n2. Extend minimum 12\" past valley center\n3. Run steeper slope shingles to valley\n4. Cut 2\" back from valley center\n5. Cut corner off each shingle at 45°\n6. Seal cut edge with roofing cement\n\n**Open Valley:**\n- Metal valley flashing installed first\n- Shingles cut 3\" from center each side\n- 1/8\" per foot wider toward bottom\n\n### Hip & Ridge Caps\n\n**Pre-formed vs. Cut:**\n- Pre-formed caps: Faster, consistent\n- Cut from 3-tab: Economy option\n\n**Installation:**\n- 5\" exposure standard\n- Nail 1\" from each edge, 5-6\" from exposed end\n- Start at bottom of hips, work up\n- Start at end of ridge opposite prevailing wind"
+    },
+    {
+      "id": "ew06-s5",
+      "title": "Flashing & Penetrations",
+      "summary": "Installing flashings at penetrations, walls, chimneys, and roof transitions.",
+      "content_md": "## Flashing & Penetrations\n\n### Pipe Boot Flashings\n\n**Installation Steps:**\n\n| Step | Action |\n|------|--------|\n| 1 | Shingle up to below penetration |\n| 2 | Apply roofing cement ring |\n| 3 | Slide boot over pipe |\n| 4 | Nail top corners only |\n| 5 | Shingle over top flange |\n| 6 | Leave side and bottom exposed |\n\n**Materials:**\n- Rubber/neoprene: 15-20 year life\n- Lead: Longest lasting, bendable\n- Thermoplastic: UV resistant\n\n### Chimney Flashing\n\n**Three-Part System:**\n\n1. **Step Flashing:** L-shaped pieces woven with shingles\n   - 5\" x 7\" minimum size\n   - Overlap each piece 2\"\n   - One nail in deck only\n\n2. **Counter Flashing:** Covers step flashing\n   - Set into mortar joint or reglet\n   - Caulk top edge\n   - Overlap step flashing 2\" minimum\n\n3. **Cricket/Saddle:** Behind chimney >30\" wide\n   - Diverts water around chimney\n   - Required by code\n\n### Roof-to-Wall Flashing\n\n**Step Flashing Method:**\n- Minimum 4\" x 4\" L-shape\n- Weave with each shingle course\n- Wall leg under siding/WRB\n- Kick-out flashing at bottom\n\n**Continuous Flashing:**\n- Used with brick/masonry walls\n- Counter flashing covers\n- Proper end dam required\n\n### Skylight Flashing\n\n**Most skylights use integral flashing kits:**\n\n1. Install underlayment to curb\n2. Install sill flashing first\n3. Step flashing up sides\n4. Head flashing last, under shingles\n5. Shingle around per manufacturer\n\n> **Best Practice:** Use manufacturer's flashing kit and follow their instructions exactly. Deviations void warranty and invite leaks.\n\n### Common Flashing Failures\n\n| Problem | Cause | Prevention |\n|---------|-------|------------|\n| Lifted step flashing | Nailed through face | Nail in deck only |\n| Chimney leaks | No cricket | Install cricket >30\" |\n| Wall streaking | No kick-out | Always install kick-out |\n| Boot cracking | Sun damage | Use quality materials |"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew06-c1",
+      "title": "Roof Deck Inspection Checklist",
+      "items": [
+        "Sheathing is minimum 7/16\" OSB or 1/2\" plywood",
+        "No rot, delamination, or damage present",
+        "All sheathing securely fastened to framing",
+        "H-clips installed at unsupported edges (if required)",
+        "Deck is clean of debris and nails flush",
+        "Ventilation openings properly located",
+        "All penetrations properly framed",
+        "Deck surface reasonably flat (no excessive waves)"
+      ]
+    },
+    {
+      "id": "ew06-c2",
+      "title": "Ice & Water Shield Checklist",
+      "items": [
+        "Eave drip edge installed before membrane",
+        "Ice shield extends minimum 36\" past interior wall",
+        "Full ice shield coverage in all valleys",
+        "Ice shield around all penetrations",
+        "Ice shield at all roof-wall intersections",
+        "All seams have minimum 6\" overlap",
+        "End laps minimum 12\"",
+        "Surface rolled smooth, no bubbles or wrinkles",
+        "Edge aligned with drip edge"
+      ]
+    },
+    {
+      "id": "ew06-c3",
+      "title": "Shingle Installation Checklist",
+      "items": [
+        "Starter course installed with proper offset",
+        "Starter overhangs drip edge 1/4\" to 3/8\"",
+        "Shingles nailed on manufacturer nail line",
+        "Correct number of nails per shingle (4 or 6)",
+        "Nails driven flush, not over or under",
+        "Proper exposure maintained (5\" to 5-5/8\")",
+        "Offset pattern consistent throughout",
+        "Valleys properly cut and sealed",
+        "Hip and ridge caps properly lapped"
+      ]
+    },
+    {
+      "id": "ew06-c4",
+      "title": "Flashing Installation Checklist",
+      "items": [
+        "Pipe boots properly seated in cement",
+        "Pipe boot flanges integrated with shingles",
+        "Step flashing at all wall intersections",
+        "Counter flashing installed over step flashing",
+        "Kick-out flashings at all wall terminations",
+        "Chimney cricket installed if width >30\"",
+        "Skylight flashing per manufacturer specs",
+        "All flashing materials compatible",
+        "Roofing cement at all cut shingle edges"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew06-q1",
+        "question": "What is the minimum ice & water shield coverage requirement for Zone 6?",
+        "options": [
+          "24\" from eave",
+          "36\" past interior wall line",
+          "48\" from eave",
+          "Full roof coverage"
+        ],
+        "correct": 1,
+        "explanation": "NBC Zone 6 requires ice protection membrane from the eave to minimum 36\" past the interior wall line."
+      },
+      {
+        "id": "ew06-q2",
+        "question": "What is the proper sequence for drip edge and ice shield at eaves?",
+        "options": [
+          "Ice shield, then drip edge",
+          "Drip edge, then ice shield",
+          "Underlayment, then both",
+          "Either order works"
+        ],
+        "correct": 1,
+        "explanation": "At eaves, drip edge goes directly on deck first, then ice & water shield overlaps it."
+      },
+      {
+        "id": "ew06-q3",
+        "question": "What is the minimum attic ventilation ratio per NBC?",
+        "options": [
+          "1:150",
+          "1:300",
+          "1:500",
+          "1:600"
+        ],
+        "correct": 1,
+        "explanation": "NBC requires minimum 1:300 ratio (1 sq ft of ventilation per 300 sq ft of attic floor area)."
+      },
+      {
+        "id": "ew06-q4",
+        "question": "How far should shingles overhang the drip edge?",
+        "options": [
+          "Flush with edge",
+          "1/4\" to 3/8\"",
+          "1/2\" to 3/4\"",
+          "1\" to 1-1/2\""
+        ],
+        "correct": 1,
+        "explanation": "Shingles should overhang drip edge 1/4\" to 3/8\" to ensure water drains into gutter."
+      },
+      {
+        "id": "ew06-q5",
+        "question": "In a closed-cut valley, how far back from the center should shingles be cut?",
+        "options": [
+          "1\"",
+          "2\"",
+          "3\"",
+          "4\""
+        ],
+        "correct": 1,
+        "explanation": "In a closed-cut valley, shingles from the steeper slope are cut 2\" back from the valley center."
+      },
+      {
+        "id": "ew06-q6",
+        "question": "What is the standard exposure for architectural shingles?",
+        "options": [
+          "4\" to 4-1/2\"",
+          "5\" to 5-5/8\"",
+          "6\" to 6-1/2\"",
+          "7\" to 7-1/2\""
+        ],
+        "correct": 1,
+        "explanation": "Standard exposure for architectural shingles is 5\" to 5-5/8\" (always verify with manufacturer specs)."
+      },
+      {
+        "id": "ew06-q7",
+        "question": "When is a chimney cricket required?",
+        "options": [
+          "All chimneys",
+          "Chimneys wider than 24\"",
+          "Chimneys wider than 30\"",
+          "Chimneys on steep roofs only"
+        ],
+        "correct": 2,
+        "explanation": "A cricket or saddle is required behind chimneys wider than 30\" to divert water around the chimney."
+      },
+      {
+        "id": "ew06-q8",
+        "question": "What is the minimum overlap for ice & water shield horizontal seams?",
+        "options": [
+          "3\"",
+          "4\"",
+          "6\"",
+          "12\""
+        ],
+        "correct": 2,
+        "explanation": "Ice & water shield horizontal seams require a minimum 6\" overlap."
+      },
+      {
+        "id": "ew06-q9",
+        "question": "Where should step flashing be nailed?",
+        "options": [
+          "Through the face into sheathing",
+          "Into the deck only, not the wall",
+          "Into the wall only",
+          "Both deck and wall"
+        ],
+        "correct": 1,
+        "explanation": "Step flashing should be nailed into the deck only. Nailing through the face or into the wall causes failures."
+      },
+      {
+        "id": "ew06-q10",
+        "question": "What is the ideal intake/exhaust ventilation balance?",
+        "options": [
+          "75% intake / 25% exhaust",
+          "50% intake / 50% exhaust",
+          "25% intake / 75% exhaust",
+          "100% exhaust"
+        ],
+        "correct": 1,
+        "explanation": "Balanced ventilation is 50% low (soffit intake) and 50% high (ridge/roof exhaust)."
+      },
+      {
+        "id": "ew06-q11",
+        "question": "What causes most ice dams in Zone 6?",
+        "options": [
+          "Too much insulation",
+          "Inadequate ventilation",
+          "Wrong shingle type",
+          "Metal drip edge"
+        ],
+        "correct": 1,
+        "explanation": "Inadequate ventilation is the #1 cause of ice dams. Heat in the attic melts snow on the roof, which refreezes at the cold eaves."
+      },
+      {
+        "id": "ew06-q12",
+        "question": "How many nails are required for high-wind shingle installation?",
+        "options": [
+          "4 nails",
+          "5 nails",
+          "6 nails",
+          "8 nails"
+        ],
+        "correct": 2,
+        "explanation": "High-wind installation requires 6 nails per shingle instead of the standard 4."
+      },
+      {
+        "id": "ew06-q13",
+        "question": "What is the minimum step flashing size?",
+        "options": [
+          "3\" x 5\"",
+          "4\" x 4\"",
+          "5\" x 7\"",
+          "6\" x 8\""
+        ],
+        "correct": 2,
+        "explanation": "Step flashing should be minimum 5\" x 7\" L-shaped pieces."
+      },
+      {
+        "id": "ew06-q14",
+        "question": "Where should rake drip edge be installed in relation to underlayment?",
+        "options": [
+          "Under underlayment",
+          "Over underlayment",
+          "Doesn't matter",
+          "No drip edge at rakes"
+        ],
+        "correct": 1,
+        "explanation": "At rakes, drip edge installs over the underlayment (opposite of eaves) to direct water onto the roof surface."
+      },
+      {
+        "id": "ew06-q15",
+        "question": "What should be done to shingle cut edges in valleys?",
+        "options": [
+          "Leave as cut",
+          "Prime with paint",
+          "Seal with roofing cement",
+          "Cover with tape"
+        ],
+        "correct": 2,
+        "explanation": "Cut shingle edges in valleys should be sealed with roofing cement to prevent water infiltration."
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "TI-04",
+  "phase": 5,
+  "slug": "backsplash-installation",
+  "title": "Backsplash Installation",
+  "category": "Tile Work Advanced",
+  "level": "Journeyman",
+  "priority": 2,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

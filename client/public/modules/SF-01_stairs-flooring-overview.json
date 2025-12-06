@@ -1,0 +1,16 @@
+{
+  "id": "SF-01",
+  "phase": 4,
+  "slug": "stairs-flooring-overview",
+  "title": "Stairs & Flooring Overview",
+  "category": "Stairs & Flooring",
+  "level": "Journeyman",
+  "priority": 3,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "TI-05",
+  "phase": 5,
+  "slug": "tile-repair-maintenance",
+  "title": "Tile Repair & Maintenance",
+  "category": "Tile Work Advanced",
+  "level": "Journeyman",
+  "priority": 2,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

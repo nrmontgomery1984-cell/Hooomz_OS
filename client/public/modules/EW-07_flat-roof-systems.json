@@ -1,0 +1,300 @@
+{
+  "id": "EW-07",
+  "title": "Flat Roof Systems",
+  "category": "Exterior & Weather",
+  "level": "Advanced",
+  "estimated_study_hours": 4,
+  "tags": [
+    "flat roof",
+    "EPDM",
+    "TPO",
+    "built-up",
+    "modified bitumen",
+    "low-slope"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "EW-06"
+  ],
+  "sections": [
+    {
+      "id": "ew07-s1",
+      "title": "Flat Roof Fundamentals",
+      "summary": "Understanding low-slope roofing principles, slope requirements, and system selection.",
+      "content_md": "## Flat Roof Fundamentals\n\n### What is a \"Flat\" Roof?\n\nTechnically, no roof should be truly flat. Low-slope roofing requires:\n\n- **Minimum Slope:** 1/4\" per foot (1:48 or 2%)\n- **Recommended:** 1/2\" per foot for better drainage\n- **Ponding:** Standing water after 48 hours indicates drainage problem\n\n### Zone 6 Considerations\n\n**Challenges in NB:**\n- Heavy snow loads\n- Freeze-thaw cycles\n- Ice damming potential\n- Wide temperature swings (-30°C to +30°C)\n\n**Design Requirements:**\n| Factor | Minimum | Recommended |\n|--------|---------|-------------|\n| Slope | 1/4\"/ft | 1/2\"/ft |\n| Insulation | R-31 | R-40+ |\n| Drains | 1 per 1000 sq ft | 1 per 500 sq ft |\n| Overflow | Required | Scuppers + internal |\n\n### Flat Roof System Types\n\n| System | Lifespan | Cost | Best For |\n|--------|----------|------|----------|\n| **EPDM** | 20-30 yrs | $$ | Large areas, simple shapes |\n| **TPO** | 15-25 yrs | $$ | Energy efficiency, white roofs |\n| **PVC** | 20-30 yrs | $$$ | Chemical resistance |\n| **Modified Bitumen** | 15-20 yrs | $$ | Variable temperatures |\n| **Built-Up (BUR)** | 20-30 yrs | $$$ | Maximum protection |\n\n> **For NB Residential:** EPDM and modified bitumen are most common due to performance in cold climates and ease of repair."
+    },
+    {
+      "id": "ew07-s2",
+      "title": "EPDM Roofing",
+      "summary": "Installing and maintaining EPDM rubber membrane roofing systems.",
+      "content_md": "## EPDM Roofing\n\n### What is EPDM?\n\nEthylene Propylene Diene Monomer - synthetic rubber membrane\n\n**Characteristics:**\n- Black or white colors\n- 45 mil or 60 mil thickness (60 mil preferred for Zone 6)\n- Excellent UV resistance\n- Flexible in cold temperatures\n- Long service life\n\n### Installation Methods\n\n**1. Fully Adhered (Best for Zone 6)**\n\n| Step | Action | Notes |\n|------|--------|-------|\n| 1 | Clean substrate | Remove dust, debris |\n| 2 | Apply bonding adhesive | To both surfaces |\n| 3 | Allow flash-off | Until tacky |\n| 4 | Roll membrane into adhesive | Work out air bubbles |\n| 5 | Roll with weighted roller | Ensures full contact |\n\n**2. Mechanically Fastened**\n- Plates and screws through membrane\n- Seams lapped and taped\n- Best for re-roofing\n- More vulnerable to wind\n\n**3. Ballasted**\n- Loose-laid membrane\n- Held by stone ballast (10 lbs/sq ft minimum)\n- Requires strong structure\n- Not common in Zone 6 (snow loads)\n\n### Seam Details\n\n**Seam Types:**\n- 6\" minimum overlap\n- Cleaned with EPDM cleaner\n- Primed with seam primer\n- Sealed with 3\" seam tape\n- Rolled firmly\n\n**Critical Points:**\n- Temperature above 40°F for adhesive application\n- No wrinkles in seams\n- Complete primer flash-off before tape\n- Secure corners and edges\n\n### Penetration Flashing\n\n**Pipe Boots:**\n1. Cut boot slightly undersized\n2. Stretch over pipe\n3. Prime both surfaces\n4. Apply EPDM flashing to deck and boot\n5. Seal edges with lap caulk"
+    },
+    {
+      "id": "ew07-s3",
+      "title": "Modified Bitumen Systems",
+      "summary": "Installing torch-applied and self-adhered modified bitumen roofing.",
+      "content_md": "## Modified Bitumen Systems\n\n### Types of Modified Bitumen\n\n| Type | Modifier | Application | Cold Flex |\n|------|----------|-------------|----------|\n| **SBS** | Styrene-Butadiene-Styrene | Torch, cold, self-adhered | Excellent (-40°F) |\n| **APP** | Atactic Polypropylene | Torch only | Good (-20°F) |\n\n> **Zone 6 Recommendation:** SBS modified bitumen for superior cold-weather flexibility.\n\n### Application Methods\n\n**1. Torch Applied**\n- Open flame melts adhesive backing\n- Professional installation only\n- Excellent adhesion\n- Fire permit required\n\n**2. Self-Adhered (Peel & Stick)**\n- No open flame\n- Temperature sensitive (above 40°F)\n- Easier DIY repairs\n- Lower adhesion than torch\n\n**3. Hot-Mopped**\n- Traditional hot asphalt application\n- Excellent adhesion\n- Specialized equipment needed\n- Odor and fume concerns\n\n### Two-Ply System (Standard)\n\n**Layer 1 - Base Sheet:**\n- Mechanically fastened or adhered\n- Provides waterproofing redundancy\n- Allows roof movement\n\n**Layer 2 - Cap Sheet:**\n- Granule surfaced (UV protection)\n- Applied over base\n- Fully adhered to base sheet\n\n### Flashing Details\n\n**Wall Flashings:**\n1. Install cant strip at wall base\n2. Run base sheet up cant\n3. Apply flashing over base, up wall 8\" minimum\n4. Install counter-flashing or termination bar\n5. Seal top edge with compatible sealant\n\n**Edge Details:**\n- Metal drip edge under membrane at perimeter\n- Membrane extends over drip edge\n- Terminate with edge bar and sealant\n\n### Repairs\n\n**Patching:**\n1. Clean area thoroughly\n2. Apply primer if required\n3. Cut patch 6\" larger than damage\n4. Round corners of patch\n5. Heat or adhere patch\n6. Seal edges with roof cement"
+    },
+    {
+      "id": "ew07-s4",
+      "title": "Drainage & Insulation",
+      "summary": "Designing proper drainage systems and insulation for flat roof assemblies.",
+      "content_md": "## Drainage & Insulation\n\n### Creating Slope\n\n**Methods to Achieve Slope:**\n\n| Method | Description | Best For |\n|--------|-------------|----------|\n| **Tapered Insulation** | Pre-cut wedge shapes | Most common, effective |\n| **Tapered Wood Sleepers** | Ripped 2x lumber | Small areas |\n| **Structural Slope** | Built into framing | New construction |\n| **Lightweight Concrete** | Sloped fill | Commercial |\n\n**Tapered Insulation System:**\n- Start at drain locations\n- Build up toward edges or high points\n- Create crickets to direct water\n- Minimum 1/4\" per foot\n\n### Drain Locations\n\n**Placement Guidelines:**\n- One drain per 10' x 10' square maximum\n- Away from structural members\n- At low points of tapered system\n- Accessible for maintenance\n\n**Drain Types:**\n\n| Type | Description | Use |\n|------|-------------|-----|\n| **Internal Drains** | Through-roof connection | Heated buildings |\n| **Scuppers** | Through-parapet opening | Primary or overflow |\n| **Gutters** | Edge-mounted | Small roofs |\n\n### Overflow Protection\n\n**Required by Code:**\n- Minimum 2\" above primary drain\n- Sized to handle 100% of drainage\n- Visible overflow indicates blockage\n- Scuppers preferred for reliability\n\n### Insulation Requirements\n\n**Zone 6 Minimum (NBC 2020):**\n- R-31 for residential\n- R-40+ recommended for energy efficiency\n\n**Insulation Types:**\n\n| Type | R-value/inch | Moisture Resistance | Notes |\n|------|--------------|---------------------|-------|\n| **Polyiso** | R-5.6 | Good | Most common, loses R in cold |\n| **XPS** | R-5.0 | Excellent | Better cold performance |\n| **EPS** | R-4.0 | Fair | Most economical |\n| **High-Density ISO** | R-5.7 | Good | For walkways, equipment |\n\n> **Zone 6 Note:** Polyiso loses R-value below 50°F. Consider hybrid system with XPS layer for cold-side performance."
+    },
+    {
+      "id": "ew07-s5",
+      "title": "Maintenance & Troubleshooting",
+      "summary": "Maintaining flat roof systems and addressing common problems.",
+      "content_md": "## Maintenance & Troubleshooting\n\n### Regular Maintenance Schedule\n\n**Bi-Annual Inspections (Spring & Fall):**\n\n| Item | What to Check | Action |\n|------|---------------|--------|\n| Drains | Clear of debris | Clean strainer baskets |\n| Membrane | Punctures, tears | Mark for repair |\n| Seams | Lifting, separation | Re-seal or patch |\n| Flashings | Integrity, adhesion | Re-seal edges |\n| Penetrations | Boot condition | Replace if cracked |\n| Ponding | Standing water >48hrs | Investigate slope |\n\n**After Major Weather Events:**\n- Inspect for debris damage\n- Check for displaced materials\n- Verify drainage is working\n- Look for ice dam evidence\n\n### Common Problems\n\n**1. Ponding Water**\n- **Cause:** Inadequate slope, blocked drains\n- **Fix:** Install tapered crickets, clear drains\n- **Prevention:** Proper initial slope design\n\n**2. Membrane Shrinkage**\n- **Cause:** Age, UV exposure, improper installation\n- **Fix:** Re-secure edges, patch tears\n- **Prevention:** Proper adhesion, edge details\n\n**3. Seam Failures**\n- **Cause:** Improper installation, movement\n- **Fix:** Clean and re-tape seams\n- **Prevention:** Follow manufacturer procedures\n\n**4. Flashing Failures**\n- **Cause:** Movement, poor adhesion, age\n- **Fix:** Remove and replace flashing\n- **Prevention:** Proper termination details\n\n### Emergency Repairs\n\n**Temporary Leak Mitigation:**\n1. Identify water entry point (often not directly above leak)\n2. Clean and dry area\n3. Apply emergency patch tape or roof cement\n4. Cover with polyethylene if needed\n5. Schedule permanent repair\n\n**When to Call Professional:**\n- Multiple or recurring leaks\n- Membrane beyond repair\n- Structural damage suspected\n- Warranty work\n\n### End-of-Life Indicators\n\n| Sign | What It Means |\n|------|---------------|\n| Widespread cracking | UV degradation, end of life |\n| Multiple patches | System failing |\n| Severe ponding | Structural or slope issues |\n| Blistering throughout | Moisture trapped, adhesion failure |\n| Felt exposure (BUR) | Granule loss, needs replacement |"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew07-c1",
+      "title": "Flat Roof Substrate Preparation Checklist",
+      "items": [
+        "Deck clean, dry, and free of debris",
+        "All fasteners flush or countersunk",
+        "Damaged sheathing replaced",
+        "Slope verified minimum 1/4\" per foot",
+        "Tapered insulation system designed",
+        "Drain locations marked and framed",
+        "Nailers installed at perimeter and penetrations",
+        "Cant strips installed at wall transitions"
+      ]
+    },
+    {
+      "id": "ew07-c2",
+      "title": "EPDM Installation Checklist",
+      "items": [
+        "Temperature above 40°F for adhesive work",
+        "Membrane laid out and relaxed",
+        "Bonding adhesive applied evenly to both surfaces",
+        "Proper flash-off time observed",
+        "Membrane rolled into adhesive without wrinkles",
+        "Weighted roller used for full adhesion",
+        "Seams cleaned with EPDM cleaner",
+        "Seam primer applied and flashed off",
+        "3\" seam tape applied and rolled",
+        "All edges and corners secured"
+      ]
+    },
+    {
+      "id": "ew07-c3",
+      "title": "Modified Bitumen Checklist",
+      "items": [
+        "Fire permit obtained (if torch applied)",
+        "Fire extinguisher on site",
+        "Base sheet mechanically fastened or adhered",
+        "Seams offset from base to cap sheet",
+        "Cap sheet fully adhered to base",
+        "Proper heat application (torch) or adhesion",
+        "Flashings installed with cant strips",
+        "Counter-flashing or termination bars installed",
+        "Perimeter edge detail complete",
+        "All penetrations properly flashed"
+      ]
+    },
+    {
+      "id": "ew07-c4",
+      "title": "Flat Roof Maintenance Checklist",
+      "items": [
+        "Drains clear and functional",
+        "Membrane free of punctures and tears",
+        "Seams intact and well-adhered",
+        "Flashings secure at all penetrations",
+        "No ponding water after 48 hours",
+        "Roof free of debris and vegetation",
+        "Boots and penetration seals intact",
+        "Edge details secure",
+        "Overflow drains/scuppers clear",
+        "Documentation of inspection updated"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew07-q1",
+        "question": "What is the minimum slope requirement for flat roofing?",
+        "options": [
+          "1/8\" per foot",
+          "1/4\" per foot",
+          "1/2\" per foot",
+          "1\" per foot"
+        ],
+        "correct": 1,
+        "explanation": "The minimum slope for flat roofing is 1/4\" per foot (2%), though 1/2\" per foot is recommended for better drainage."
+      },
+      {
+        "id": "ew07-q2",
+        "question": "What does ponding water on a flat roof indicate?",
+        "options": [
+          "Normal condition",
+          "Roof membrane failure",
+          "Drainage problem",
+          "Proper installation"
+        ],
+        "correct": 2,
+        "explanation": "Ponding water (standing water after 48 hours) indicates a drainage problem - inadequate slope or blocked drains."
+      },
+      {
+        "id": "ew07-q3",
+        "question": "Which modified bitumen type has the best cold-weather flexibility?",
+        "options": [
+          "APP",
+          "SBS",
+          "PVC",
+          "TPO"
+        ],
+        "correct": 1,
+        "explanation": "SBS (Styrene-Butadiene-Styrene) modified bitumen has excellent cold flexibility down to -40°F, making it ideal for Zone 6."
+      },
+      {
+        "id": "ew07-q4",
+        "question": "What is the minimum EPDM seam overlap?",
+        "options": [
+          "3\"",
+          "4\"",
+          "6\"",
+          "8\""
+        ],
+        "correct": 2,
+        "explanation": "EPDM seams require a minimum 6\" overlap to ensure proper waterproofing."
+      },
+      {
+        "id": "ew07-q5",
+        "question": "What is the minimum temperature for applying EPDM adhesive?",
+        "options": [
+          "32°F",
+          "40°F",
+          "50°F",
+          "60°F"
+        ],
+        "correct": 1,
+        "explanation": "EPDM adhesive should be applied when temperatures are above 40°F for proper bonding."
+      },
+      {
+        "id": "ew07-q6",
+        "question": "What thickness EPDM is preferred for Zone 6?",
+        "options": [
+          "30 mil",
+          "45 mil",
+          "60 mil",
+          "90 mil"
+        ],
+        "correct": 2,
+        "explanation": "60 mil EPDM is preferred for Zone 6 due to its greater durability and puncture resistance in harsh conditions."
+      },
+      {
+        "id": "ew07-q7",
+        "question": "How high should wall flashings extend above the roof surface?",
+        "options": [
+          "4\" minimum",
+          "6\" minimum",
+          "8\" minimum",
+          "12\" minimum"
+        ],
+        "correct": 2,
+        "explanation": "Wall flashings should extend a minimum of 8\" above the roof surface to prevent water infiltration."
+      },
+      {
+        "id": "ew07-q8",
+        "question": "What is the purpose of cant strips in flat roofing?",
+        "options": [
+          "Increase insulation",
+          "Create smooth transition at walls",
+          "Support heavy equipment",
+          "Add slope"
+        ],
+        "correct": 1,
+        "explanation": "Cant strips create a smooth 45-degree transition from the roof surface to vertical walls, preventing membrane stress and cracking."
+      },
+      {
+        "id": "ew07-q9",
+        "question": "Why might polyiso insulation underperform in Zone 6?",
+        "options": [
+          "Too expensive",
+          "Loses R-value in cold temperatures",
+          "Not waterproof",
+          "Too heavy"
+        ],
+        "correct": 1,
+        "explanation": "Polyiso loses R-value below 50°F. In Zone 6, a hybrid system with XPS for cold-side performance is often recommended."
+      },
+      {
+        "id": "ew07-q10",
+        "question": "How high should overflow drains be above primary drains?",
+        "options": [
+          "1\" minimum",
+          "2\" minimum",
+          "4\" minimum",
+          "6\" minimum"
+        ],
+        "correct": 1,
+        "explanation": "Overflow drains should be minimum 2\" above the primary drain to handle water if the primary drain becomes blocked."
+      },
+      {
+        "id": "ew07-q11",
+        "question": "Which EPDM installation method is best for Zone 6?",
+        "options": [
+          "Ballasted",
+          "Mechanically fastened",
+          "Fully adhered",
+          "Loose-laid"
+        ],
+        "correct": 2,
+        "explanation": "Fully adhered EPDM provides the best wind resistance and performs best in Zone 6's variable weather conditions."
+      },
+      {
+        "id": "ew07-q12",
+        "question": "What is the most common method to create slope on a flat roof?",
+        "options": [
+          "Structural slope",
+          "Tapered insulation",
+          "Lightweight concrete",
+          "Leveling compound"
+        ],
+        "correct": 1,
+        "explanation": "Tapered insulation is the most common method to create slope, using pre-cut wedge-shaped boards to direct water to drains."
+      },
+      {
+        "id": "ew07-q13",
+        "question": "What width seam tape is used for EPDM seams?",
+        "options": [
+          "2\"",
+          "3\"",
+          "4\"",
+          "6\""
+        ],
+        "correct": 1,
+        "explanation": "EPDM seams are sealed with 3\" wide seam tape after proper cleaning and priming."
+      },
+      {
+        "id": "ew07-q14",
+        "question": "What is the minimum R-value for flat roof insulation in Zone 6?",
+        "options": [
+          "R-20",
+          "R-25",
+          "R-31",
+          "R-38"
+        ],
+        "correct": 2,
+        "explanation": "NBC 2020 requires minimum R-31 for residential flat roofs in Zone 6, though R-40+ is recommended."
+      },
+      {
+        "id": "ew07-q15",
+        "question": "When should flat roof inspections be performed?",
+        "options": [
+          "Monthly",
+          "Quarterly",
+          "Bi-annually (spring and fall)",
+          "Annually"
+        ],
+        "correct": 2,
+        "explanation": "Flat roofs should be inspected bi-annually (spring and fall) plus after major weather events."
+      }
+    ]
+  }
+}

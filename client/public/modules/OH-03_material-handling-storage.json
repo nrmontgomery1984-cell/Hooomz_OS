@@ -1,0 +1,263 @@
+{
+  "id": "OH-03",
+  "phase": 1,
+  "slug": "material-handling-storage",
+  "title": "Material Handling & Storage",
+  "category": "Site Management",
+  "level": "Apprentice",
+  "priority": 3,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01"],
+  "estimated_study_hours": 3,
+  "status": "complete",
+  "tags": ["materials", "storage", "handling", "lifting", "delivery", "staging", "moisture-protection"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Proper material handling and storage prevents injuries, protects expensive materials from damage, and ensures efficient workflow on the jobsite.",
+      "content_md": "## What is Material Handling & Storage?\n\nMaterial handling encompasses all activities involved in receiving, moving, staging, and storing construction materials on a jobsite. Proper handling prevents worker injuries, protects materials from damage, and ensures efficient workflow.\n\n## Why Does It Matter?\n\n### Worker Safety:\n- **Back injuries** are the #1 cause of lost workdays in construction\n- Improper lifting causes 25% of all workplace injuries\n- Struck-by injuries from falling materials are common and severe\n- Proper techniques prevent 80% of material handling injuries\n\n### Material Protection:\n- Damaged materials = wasted money and project delays\n- Moisture damage is especially critical in NB's wet climate\n- Improperly stored materials can become safety hazards\n- Some materials (drywall, insulation) are ruined by moisture exposure\n\n### Project Efficiency:\n- Well-organized materials = faster work\n- Proper staging reduces double-handling\n- Good storage prevents searching for materials\n- Efficient delivery coordination prevents delays\n\n## NB Climate Considerations\n\n**Moisture is the Enemy:**\n- Annual precipitation: 1,100-1,400mm (rain and snow)\n- Humidity: 70-85% average\n- Freeze-thaw cycles: 50-80 per year\n- Materials left exposed will be damaged\n\n**Seasonal Challenges:**\n- **Winter:** Snow, ice, frozen ground makes handling difficult\n- **Spring:** Rain, mud, flooding risks\n- **Summer:** Heat affects some adhesives and sealants\n- **Fall:** Rain, early frost, shorter daylight\n\n## Certification Requirements\n\nTo earn Material Handling certification:\n1. Complete this guide\n2. Pass quiz with 80% (12/15)\n3. Demonstrate proper lifting techniques\n4. Organize a material staging area\n5. Properly protect materials from weather"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Covers safe lifting techniques, material weights, storage requirements by material type, and moisture protection strategies.",
+      "content_md": "## 2.1 Safe Lifting Techniques\n\n### The NIOSH Lifting Equation Basics:\n\n**Maximum recommended lift:** 51 lbs (23 kg) under ideal conditions\n\n**Ideal Conditions:**\n- Load close to body\n- Lifting from knuckle to shoulder height\n- Good grip, stable footing\n- No twisting required\n- Infrequent lifting\n\n### Proper Lifting Procedure:\n\n1. **Plan the lift:**\n   - Assess weight (if unknown, test by pushing)\n   - Clear path to destination\n   - Get help if over 50 lbs or awkward\n\n2. **Position yourself:**\n   - Feet shoulder-width apart\n   - One foot slightly ahead\n   - Close to load as possible\n\n3. **Grip the load:**\n   - Firm grip with whole hand (not fingertips)\n   - Opposite corners for boxes\n   - Use handles if available\n\n4. **Lift with legs:**\n   - Keep back straight (neutral spine)\n   - Bend at knees and hips\n   - Tighten core muscles\n   - Lift smoothly (no jerking)\n\n5. **Carry safely:**\n   - Keep load close to body\n   - Don't twist - pivot with feet\n   - Watch where you're going\n   - Set down using same technique (reverse)\n\n### Team Lifting:\n\n**When Required:**\n- Loads over 50 lbs\n- Awkward or bulky items\n- Long materials (lumber, drywall sheets)\n- Stairs or uneven surfaces\n\n**Coordination:**\n- One person calls commands\n- Lift on count of three\n- Move together, communicate obstacles\n- Set down together\n\n## 2.2 Common Material Weights\n\n| Material | Unit | Weight |\n|----------|------|--------|\n| 2x4 SPF 8' | Each | 9 lbs |\n| 2x6 SPF 8' | Each | 14 lbs |\n| 2x10 SPF 12' | Each | 32 lbs |\n| Plywood 1/2\" 4x8 | Sheet | 48 lbs |\n| OSB 7/16\" 4x8 | Sheet | 44 lbs |\n| Drywall 1/2\" 4x8 | Sheet | 52 lbs |\n| Drywall 5/8\" 4x8 | Sheet | 70 lbs |\n| Drywall 1/2\" 4x12 | Sheet | 77 lbs |\n| Cement bag | 80 lb bag | 80 lbs |\n| Shingles | Bundle | 65-80 lbs |\n| Batt insulation | Bundle | 15-25 lbs |\n| Rigid foam 2\" 4x8 | Sheet | 8 lbs |\n\n**Key Insight:** Drywall sheets are heavy and awkward - always team lift or use drywall cart.\n\n## 2.3 Storage Requirements by Material\n\n### Lumber:\n\n**Storage Requirements:**\n- Flat, level surface\n- Stickers (spacers) every 4' for air circulation\n- Off ground minimum 4\" (prevents moisture wicking)\n- Covered but ventilated (tarps with air gap)\n- Support prevents sagging/warping\n\n**Maximum Stack Height:** 6' or stable limit\n\n**NB Considerations:**\n- Lumber delivered wet will need to dry before interior use\n- Check moisture content before installing (target <19% framing, <12% trim)\n- Snow load on tarps can collapse stacks\n\n### Plywood/OSB:\n\n**Storage Requirements:**\n- Flat and level (prevents warping)\n- Fully supported (not hanging over edges)\n- Keep dry (OSB swells when wet)\n- Cover top of stack\n\n**Handling:**\n- Carry on edge (two people)\n- Never drag across ground\n- Stack flat, not on edge\n\n### Drywall:\n\n**Storage Requirements:**\n- MUST stay completely dry (ruined by moisture)\n- Store flat OR on edge against wall\n- If flat: fully supported, max 6 sheets per stack\n- If on edge: lean at slight angle against wall\n- Never store in unheated building during freeze\n\n**Critical:** Drywall that gets wet must be discarded - mold risk.\n\n### Insulation:\n\n**Fiberglass Batts:**\n- Keep in packaging until use\n- Store dry and off ground\n- Will expand when removed from package\n- Moisture reduces R-value permanently\n\n**Rigid Foam:**\n- Store flat\n- Keep dry\n- Protect from UV (degrades in sunlight)\n- Don't stack heavy items on top\n\n**Spray Foam:**\n- Store at room temperature (50-85°F)\n- Don't freeze\n- Keep away from heat sources\n- Check expiration dates\n\n### Cement/Concrete Products:\n\n**Bags:**\n- Store on pallets off ground\n- Keep dry (hardens if wet)\n- First in, first out (has shelf life)\n- Stack max 10 bags high\n\n**Ready-mix:**\n- Coordinate delivery with pour schedule\n- Ensure access for truck\n- Have crew ready when truck arrives\n\n## 2.4 Moisture Protection Strategies\n\n### Tarps and Covers:\n\n**Proper Tarping:**\n- Weighted down (won't blow off)\n- Sloped for drainage (no ponding)\n- Air gap underneath (prevents condensation)\n- Secured at edges\n\n**Types:**\n- Blue poly tarps: Temporary, tear easily\n- Silver tarps: Better UV resistance\n- Canvas: Breathable, good for lumber\n- Shrink wrap: Best protection, expensive\n\n### Staging and Timing:\n\n**Just-in-Time Delivery:**\n- Schedule materials to arrive when needed\n- Reduces storage time = less damage risk\n- Better cash flow\n\n**Interior vs. Exterior Staging:**\n- Move moisture-sensitive materials inside ASAP\n- Drywall, trim, flooring: Interior only\n- Framing lumber: Can be exterior with cover\n\n### Ground Protection:\n\n**Keep Materials Off Ground:**\n- Pallets (4\" minimum)\n- Stickers or sleepers\n- Gravel pad for long-term storage\n- Prevents wicking moisture from ground"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Procedures for receiving deliveries, organizing staging areas, protecting materials, and coordinating with suppliers.",
+      "content_md": "## 3.1 Receiving Material Deliveries\n\n### Before Delivery Arrives:\n\n**Step 1: Prepare Access**\n- Clear delivery path (vehicles, debris, obstacles)\n- Verify truck can access drop zone\n- Check overhead clearance (boom truck, crane)\n- Ensure ground can support weight\n\n**Step 2: Prepare Drop Zone**\n- Level area for pallets/stacks\n- Ground protection if needed (plywood on lawn)\n- Staging area organized\n- Pallets/stickers ready\n\n**Step 3: Prepare Documentation**\n- Have order/PO available\n- Know what's expected (quantities, materials)\n- Note any special requirements\n\n### When Delivery Arrives:\n\n**Step 4: Verify Order**\n- Count pieces/bundles before signing\n- Check for damage (note on delivery slip)\n- Verify correct materials (sizes, types)\n- Check quality (lumber grade, drywall condition)\n\n**Step 5: Direct Placement**\n- Tell driver where to place materials\n- Supervise unloading (boom placement)\n- Ensure proper stacking\n- Keep path clear for remaining loads\n\n**Step 6: Document**\n- Sign delivery slip (note any issues)\n- Photograph any damage\n- Update inventory\n- File paperwork\n\n## 3.2 Organizing Staging Areas\n\n### Site Layout Principles:\n\n**Zone 1: Active Materials**\n- Current day's materials\n- Within easy carry of work area\n- Organized by trade/task\n\n**Zone 2: Project Materials**\n- Next few days' materials\n- Protected storage\n- Easy access when needed\n\n**Zone 3: Long-term Storage**\n- Materials not needed soon\n- Maximum protection\n- Secure from theft\n\n### Staging Area Setup:\n\n**Step 1: Select Location**\n- Level ground\n- Good drainage\n- Access for deliveries\n- Close to work area but not in the way\n- Consider material flow (unload → store → use)\n\n**Step 2: Prepare Ground**\n- Clear debris\n- Level if needed\n- Gravel or plywood for high-traffic\n- Pallets positioned\n\n**Step 3: Organize by Material**\n- Lumber in one area (by size)\n- Sheet goods together\n- Drywall separate (moisture sensitive)\n- Heavy items near access\n\n**Step 4: Label and Document**\n- Mark stacks (\"2x6x10\", \"1/2 drywall\")\n- Inventory list posted\n- First-in-first-out rotation\n\n## 3.3 Protecting Materials from Weather\n\n### Daily Protection Routine:\n\n**End of Day:**\n1. Check weather forecast\n2. Cover all exposed materials\n3. Secure tarps (weighted, tied)\n4. Close building openings if possible\n5. Move moisture-sensitive items inside\n\n**After Rain/Snow:**\n1. Inspect for water intrusion\n2. Remove standing water from tarps\n3. Check under covers for condensation\n4. Allow wet materials to dry before covering tightly\n\n### Emergency Weather Protection:\n\n**Storm Approaching:**\n1. Prioritize moisture-sensitive materials\n2. Double-tarp if possible\n3. Weight tarps heavily (wind)\n4. Move what you can inside\n5. Document condition before storm\n\n**Winter Considerations:**\n- Snow load can collapse tarps/stacks\n- Remove snow regularly\n- Ice under tarps creates problems\n- Frozen ground = difficult handling\n\n## 3.4 Moving Materials Efficiently\n\n### Sheet Goods (Plywood, OSB, Drywall):\n\n**Two-Person Carry:**\n1. Stand at opposite ends\n2. Grip bottom edge and far edge\n3. Lift together on count\n4. Carry on edge (vertical)\n5. Communicate obstacles\n6. Set down together\n\n**Drywall Cart:**\n- Essential for multiple sheets\n- Load sheets on edge\n- Max 10-12 sheets per load\n- Strap to prevent sliding\n- Watch for bumps (damages edges)\n\n### Long Lumber:\n\n**Team Carry:**\n- One person each end minimum\n- For very long pieces: Add person in middle\n- Front person watches path\n- Rear person follows pace\n- Communicate turns, obstacles\n\n**Shoulder Carry:**\n- For 8-10' lengths by one person\n- Balance point on shoulder\n- One hand forward, one back\n- Watch ends (doorways, people)\n\n### Heavy Items:\n\n**Wheelbarrow/Hand Truck:**\n- Load toward wheels (balanced)\n- Don't overload\n- Push (don't pull) when possible\n- Watch for obstacles, slopes\n\n**Pallet Jack:**\n- Fork fully under pallet\n- Pump to lift\n- Push to move\n- Lower before leaving"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Checklists for material receiving, storage inspection, and common defects to watch for.",
+      "content_md": "## 4.1 Material Receiving Checklist\n\n### Before Signing:\n- [ ] Count matches order quantity\n- [ ] Material type/size matches order\n- [ ] Quality acceptable (grade stamps, condition)\n- [ ] No visible damage (cracks, breaks, water damage)\n- [ ] Packaging intact\n- [ ] Accessories included (hardware, instructions)\n\n### Damage Documentation:\n- [ ] Note damage on delivery slip BEFORE signing\n- [ ] Photograph all damage\n- [ ] Refuse severely damaged items\n- [ ] Report to supplier same day\n- [ ] Save damaged materials for inspection\n\n## 4.2 Storage Inspection Checklist\n\n### Daily Check:\n- [ ] Covers in place and secure\n- [ ] No water ponding on tarps\n- [ ] Stacks stable (not leaning)\n- [ ] Path clear to materials\n- [ ] No new damage visible\n\n### Weekly Check:\n- [ ] Moisture check (under covers)\n- [ ] Stack stability (settling, shifting)\n- [ ] Inventory accurate\n- [ ] Labels readable\n- [ ] Stickers/pallets in good condition\n- [ ] Security (no theft)\n\n## 4.3 Common Material Defects\n\n### Lumber Issues:\n\n| Defect | Cause | Action |\n|--------|-------|--------|\n| Warp/bow/twist | Improper storage, moisture | Use for blocking, cut short, or reject |\n| Checking (cracks) | Drying too fast | Minor OK, severe reject |\n| Blue stain | Fungus (wet storage) | Structural OK, appearance issue |\n| Wet/heavy | Not dried properly | Dry before interior use |\n| Bark edge (wane) | Mill defect | OK for hidden use, reject for exposed |\n\n### Sheet Goods Issues:\n\n| Defect | Cause | Action |\n|--------|-------|--------|\n| Swelling | Water exposure | Reject (won't flatten) |\n| Delamination | Water, impact | Reject |\n| Broken corners | Handling damage | Minor OK, severe reject |\n| Face damage | Handling | Use for hidden areas |\n\n### Drywall Issues:\n\n| Defect | Cause | Action |\n|--------|-------|--------|\n| Water damage | Rain, humidity | Reject (mold risk) |\n| Broken/cracked | Handling | Cut around or reject |\n| Paper torn | Handling | Minor OK, tape well |\n| Mold/mildew | Moisture | Reject immediately |\n\n## 4.4 Red Flags (Reject Material)\n\n**Lumber:**\n- Severe warp (>1\" over 8')\n- Large knots in structural members\n- Splits through more than half the length\n- Signs of insect damage\n- Rot or excessive decay\n\n**Drywall:**\n- ANY water staining\n- Mold or musty smell\n- Soft or crumbly core\n- Severe damage (more than corner chips)\n\n**Insulation:**\n- Wet or water damaged\n- Compressed and won't recover\n- Missing facing (if faced insulation)\n- Contaminated (oil, chemicals)\n\n**Concrete Products:**\n- Hardened or lumpy bags\n- Expired dates\n- Damaged packaging with moisture inside"
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "Quick reference for material weights, storage requirements, and supplier contact information.",
+      "content_md": "## APPENDIX A: MATERIAL WEIGHT REFERENCE\n\n### Lumber (SPF, 8' lengths):\n| Size | Weight |\n|------|--------|\n| 2x4 | 9 lbs |\n| 2x6 | 14 lbs |\n| 2x8 | 18 lbs |\n| 2x10 | 24 lbs |\n| 2x12 | 28 lbs |\n\n### Sheet Goods (4x8):\n| Material | Weight |\n|----------|--------|\n| 1/4\" plywood | 22 lbs |\n| 1/2\" plywood | 48 lbs |\n| 3/4\" plywood | 70 lbs |\n| 7/16\" OSB | 44 lbs |\n| 1/2\" drywall | 52 lbs |\n| 5/8\" drywall | 70 lbs |\n\n### Bulk Materials:\n| Material | Weight |\n|----------|--------|\n| Concrete | 150 lbs/cu ft |\n| Sand | 100 lbs/cu ft |\n| Gravel | 105 lbs/cu ft |\n| Topsoil | 75 lbs/cu ft |\n\n## APPENDIX B: STORAGE QUICK REFERENCE\n\n| Material | Ground Clear | Cover | Stack Limit | Moisture Sensitive |\n|----------|--------------|-------|-------------|--------------------|\n| Lumber | 4\" min | Yes (ventilated) | 6' | Moderate |\n| Plywood | 4\" min | Yes | Flat, supported | High |\n| OSB | 4\" min | Yes | Flat, supported | Very High |\n| Drywall | 4\" min | Interior only | 6 sheets flat | Critical |\n| Insulation | Off ground | Yes | Don't compress | High |\n| Cement | Pallets | Yes, sealed | 10 bags | Critical |\n| Shingles | Pallets | Optional | Per pallet | Low |\n\n## APPENDIX C: DELIVERY COORDINATION TIPS\n\n### Lead Times (Typical NB):\n| Material | Lead Time |\n|----------|----------|\n| Lumber (stock) | 1-2 days |\n| Lumber (special order) | 1-2 weeks |\n| Drywall | 1-2 days |\n| Windows/doors | 2-8 weeks |\n| Trusses | 2-4 weeks |\n| Concrete (ready-mix) | 24-48 hours |\n| Roofing | 1-3 days |\n\n### Scheduling Tips:\n- Order long-lead items first (windows, trusses)\n- Schedule concrete pours early (limited trucks)\n- Coordinate multiple deliveries to reduce delivery fees\n- Have site ready before materials arrive\n- Confirm delivery day before\n\n## APPENDIX D: ERGONOMIC LIFTING LIMITS\n\n### Single Person Lifts:\n| Condition | Max Weight |\n|-----------|------------|\n| Ideal conditions | 51 lbs |\n| Lifting from floor | 35 lbs |\n| Lifting overhead | 25 lbs |\n| Frequent lifting | 35 lbs |\n| Extended reach | 25 lbs |\n\n### When to Team Lift:\n- Over 50 lbs\n- Awkward shape\n- Long materials\n- Poor grip available\n- Unstable footing\n- Stairs or ladders"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "receiving",
+      "title": "Material Receiving Checklist",
+      "items": [
+        "Count matches order quantity",
+        "Material type and size matches order",
+        "Quality acceptable (grade stamps, condition)",
+        "No visible damage (cracks, breaks, water damage)",
+        "Packaging intact",
+        "Note any damage on delivery slip BEFORE signing",
+        "Photograph all damage",
+        "Report issues to supplier same day"
+      ]
+    },
+    {
+      "id": "delivery-prep",
+      "title": "Delivery Preparation Checklist",
+      "items": [
+        "Clear delivery path (vehicles, debris)",
+        "Verify truck can access drop zone",
+        "Check overhead clearance",
+        "Ensure ground can support weight",
+        "Level area prepared for pallets",
+        "Ground protection if needed",
+        "Pallets and stickers ready",
+        "Order/PO available for reference"
+      ]
+    },
+    {
+      "id": "staging-area",
+      "title": "Staging Area Setup Checklist",
+      "items": [
+        "Level ground selected",
+        "Good drainage",
+        "Access for deliveries",
+        "Close to work area",
+        "Ground cleared and prepared",
+        "Materials organized by type",
+        "Stacks labeled",
+        "Inventory list created"
+      ]
+    },
+    {
+      "id": "daily-storage",
+      "title": "Daily Storage Inspection Checklist",
+      "items": [
+        "Covers in place and secure",
+        "No water ponding on tarps",
+        "Stacks stable (not leaning)",
+        "Path clear to materials",
+        "No new damage visible",
+        "Weather forecast checked"
+      ]
+    },
+    {
+      "id": "weather-protection",
+      "title": "Weather Protection Checklist",
+      "items": [
+        "All exposed materials covered",
+        "Tarps weighted and secured",
+        "Moisture-sensitive items inside",
+        "Building openings closed",
+        "Drainage paths clear",
+        "Snow removed from tarps (winter)"
+      ]
+    },
+    {
+      "id": "lumber-storage",
+      "title": "Lumber Storage Checklist",
+      "items": [
+        "Off ground minimum 4 inches",
+        "Stickers placed every 4 feet",
+        "Stack level and stable",
+        "Covered but ventilated",
+        "Ends supported (no overhang)",
+        "Maximum stack height 6 feet"
+      ]
+    },
+    {
+      "id": "drywall-storage",
+      "title": "Drywall Storage Checklist",
+      "items": [
+        "Stored completely dry location",
+        "Off ground on pallets or stickers",
+        "Flat with full support OR on edge against wall",
+        "Maximum 6 sheets if stacked flat",
+        "Not in unheated building during freeze",
+        "Protected from any water source"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What is the maximum recommended weight for a single-person lift under ideal conditions?",
+        "type": "mcq",
+        "choices": ["A) 25 lbs", "B) 35 lbs", "C) 51 lbs", "D) 75 lbs"],
+        "answer": "C",
+        "explanation": "The NIOSH recommended maximum lift under ideal conditions is 51 lbs (23 kg). Heavier loads require team lifting or mechanical assistance."
+      },
+      {
+        "id": "q2",
+        "question": "What is the minimum clearance materials should have from the ground?",
+        "type": "mcq",
+        "choices": ["A) 1 inch", "B) 2 inches", "C) 4 inches", "D) 6 inches"],
+        "answer": "C",
+        "explanation": "Materials should be stored at least 4 inches off the ground on pallets or stickers. This prevents moisture wicking from the ground into the materials."
+      },
+      {
+        "id": "q3",
+        "question": "How should drywall sheets be stored on a jobsite?",
+        "type": "mcq",
+        "choices": ["A) Outside under a tarp", "B) Flat and fully supported OR on edge against wall, in a dry location", "C) Stacked directly on concrete floor", "D) In bundles still wrapped from factory"],
+        "answer": "B",
+        "explanation": "Drywall must be stored in a completely dry location, either flat with full support (max 6 sheets) or on edge leaning against a wall. Drywall is ruined by any moisture exposure."
+      },
+      {
+        "id": "q4",
+        "question": "When team lifting, who should give the commands?",
+        "type": "mcq",
+        "choices": ["A) The person at the front", "B) The strongest person", "C) One designated person", "D) Anyone can call commands"],
+        "answer": "C",
+        "explanation": "One designated person should call all commands during a team lift. This ensures coordination - everyone lifts and sets down together on the same count."
+      },
+      {
+        "id": "q5",
+        "question": "What should you do if materials arrive damaged?",
+        "type": "mcq",
+        "choices": ["A) Sign the delivery slip and sort it out later", "B) Note the damage on the delivery slip BEFORE signing, photograph it, and report same day", "C) Refuse the entire delivery", "D) Accept it and use the damaged materials"],
+        "answer": "B",
+        "explanation": "Document damage on the delivery slip before signing, photograph all damage, and report to the supplier the same day. This protects your ability to get credit or replacement."
+      },
+      {
+        "id": "q6",
+        "question": "What is the maximum stack height for lumber storage?",
+        "type": "mcq",
+        "choices": ["A) 3 feet", "B) 6 feet", "C) 10 feet", "D) No limit"],
+        "answer": "B",
+        "explanation": "Lumber should be stacked no higher than 6 feet or the stable limit, whichever is less. Taller stacks are unstable and create falling hazards."
+      },
+      {
+        "id": "q7",
+        "question": "Why should lumber be stored with stickers (spacers) between layers?",
+        "type": "mcq",
+        "choices": ["A) To make counting easier", "B) For air circulation to prevent moisture buildup", "C) To make the stack taller", "D) Because the code requires it"],
+        "answer": "B",
+        "explanation": "Stickers allow air circulation between layers of lumber, which helps prevent moisture buildup, mold growth, and allows wet lumber to dry properly."
+      },
+      {
+        "id": "q8",
+        "question": "How heavy is a standard 4x8 sheet of 1/2-inch drywall?",
+        "type": "mcq",
+        "choices": ["A) 32 lbs", "B) 42 lbs", "C) 52 lbs", "D) 72 lbs"],
+        "answer": "C",
+        "explanation": "A 4x8 sheet of 1/2-inch drywall weighs approximately 52 lbs. This is why drywall should always be team lifted or moved with a drywall cart."
+      },
+      {
+        "id": "q9",
+        "question": "What is the proper lifting technique?",
+        "type": "mcq",
+        "choices": ["A) Bend at waist, keep legs straight", "B) Keep back straight, bend at knees and hips, lift with legs", "C) Twist while lifting to turn toward destination", "D) Hold the load away from your body for better balance"],
+        "answer": "B",
+        "explanation": "Proper lifting: keep back straight (neutral spine), bend at knees and hips, lift with leg muscles, keep load close to body, don't twist - pivot with feet instead."
+      },
+      {
+        "id": "q10",
+        "question": "What should you do with drywall that has gotten wet?",
+        "type": "mcq",
+        "choices": ["A) Let it dry and use it", "B) Use it in hidden areas only", "C) Discard it - wet drywall must be rejected due to mold risk", "D) Use a dehumidifier to dry it"],
+        "answer": "C",
+        "explanation": "Wet drywall must be discarded. It will harbor mold even after drying, the paper facing weakens, and the gypsum core is compromised. Never use water-damaged drywall."
+      },
+      {
+        "id": "q11",
+        "question": "When should you use a team lift instead of lifting alone?",
+        "type": "mcq",
+        "choices": ["A) Only for items over 100 lbs", "B) Over 50 lbs, awkward shapes, long materials, or unstable conditions", "C) Only when specifically requested", "D) Never - proper technique allows solo lifting of any weight"],
+        "answer": "B",
+        "explanation": "Team lift for: loads over 50 lbs, awkward or bulky items, long materials, poor grip available, unstable footing, or when navigating stairs or obstacles."
+      },
+      {
+        "id": "q12",
+        "question": "How should tarps be installed to protect materials?",
+        "type": "mcq",
+        "choices": ["A) Draped loosely over materials", "B) Weighted down, sloped for drainage, with air gap underneath", "C) Wrapped tightly with no gaps", "D) Just on top, sides can be open"],
+        "answer": "B",
+        "explanation": "Tarps should be weighted to prevent blowing off, sloped so water drains away (no ponding), and have an air gap underneath to prevent condensation."
+      },
+      {
+        "id": "q13",
+        "question": "What is the maximum number of drywall sheets that should be stacked flat?",
+        "type": "mcq",
+        "choices": ["A) 3 sheets", "B) 6 sheets", "C) 10 sheets", "D) 15 sheets"],
+        "answer": "B",
+        "explanation": "When storing drywall flat, stack a maximum of 6 sheets. More sheets create too much weight on the bottom sheets and can cause damage or make handling difficult."
+      },
+      {
+        "id": "q14",
+        "question": "How should sheet goods like plywood be carried?",
+        "type": "mcq",
+        "choices": ["A) Flat, by one person", "B) On edge, carried by two people", "C) Dragged across the ground", "D) Stacked and carried multiple at once"],
+        "answer": "B",
+        "explanation": "Sheet goods should be carried on edge (vertical) by two people, one at each end. This provides better control and balance than carrying flat."
+      },
+      {
+        "id": "q15",
+        "question": "What is the typical lead time for ordering windows and doors in NB?",
+        "type": "mcq",
+        "choices": ["A) 1-2 days", "B) 1 week", "C) 2-8 weeks", "D) 3-6 months"],
+        "answer": "C",
+        "explanation": "Windows and doors typically have a 2-8 week lead time. They should be ordered early in the project to prevent delays once framing is complete."
+      }
+    ]
+  }
+}

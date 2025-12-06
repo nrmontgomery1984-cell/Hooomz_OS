@@ -1,0 +1,16 @@
+{
+  "id": "MW-01",
+  "phase": 4,
+  "slug": "millwork-overview",
+  "title": "Millwork Overview",
+  "category": "Millwork",
+  "level": "Journeyman",
+  "priority": 3,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

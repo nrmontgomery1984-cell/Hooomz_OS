@@ -1,0 +1,16 @@
+{
+  "id": "TI-03",
+  "phase": 5,
+  "slug": "shower-tile-installation",
+  "title": "Shower Tile Installation",
+  "category": "Tile Work Advanced",
+  "level": "Certified Professional",
+  "priority": 5,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

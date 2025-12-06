@@ -1,0 +1,269 @@
+{
+  "id": "IF-07",
+  "title": "Interior Doors & Hardware",
+  "category": "Interior Finish",
+  "level": "Intermediate",
+  "estimated_study_hours": 3.5,
+  "tags": [
+    "interior doors",
+    "prehung doors",
+    "door hardware",
+    "hinges",
+    "locksets",
+    "door installation"
+  ],
+  "prerequisites": [
+    "IF-04"
+  ],
+  "sections": [
+    {
+      "title": "Interior Door Types",
+      "content": "## Interior Door Styles & Materials\n\nSelecting the right interior door involves balancing aesthetics, function, privacy needs, and budget.\n\n### Door Construction Types\n\n| Type | Description | Sound Blocking | Cost |\n|------|-------------|----------------|------|\n| Hollow Core | Cardboard honeycomb interior | Poor | $ |\n| Solid Core | Composite/particle interior | Good | $$ |\n| Solid Wood | Full thickness wood | Excellent | $$$ |\n| MDF | Medium density fiberboard | Good | $$ |\n\n### Door Styles\n\n**Panel Doors:**\n- 2-panel, 4-panel, 6-panel configurations\n- Raised or flat panels\n- Traditional appearance\n\n**Flush Doors:**\n- Flat, smooth surface\n- Modern/contemporary look\n- Easier to paint\n\n**Glass Panel Doors:**\n- Full lite or partial glass\n- Privacy glass options\n- Light transmission between rooms\n\n### Standard Dimensions\n\n| Application | Width | Height |\n|-------------|-------|--------|\n| Bedroom | 30\" - 32\" | 80\" |\n| Bathroom | 28\" - 30\" | 80\" |\n| Closet (single) | 24\" - 30\" | 80\" |\n| Closet (bifold) | 24\" - 36\" each | 80\" |\n| Utility | 28\" - 32\" | 80\" |\n\n> **Pro Tip:** For accessibility, consider 36\" wide doors for bedrooms and bathrooms. This accommodates wheelchairs and makes moving furniture easier."
+    },
+    {
+      "title": "Prehung Door Installation",
+      "content": "## Installing Prehung Interior Doors\n\nPrehung doors come with the door already hung in the frame, making installation straightforward but requiring attention to plumb and level.\n\n### Components\n\n- Door slab (the door itself)\n- Jamb (frame around door)\n- Hinges (attached to jamb and slab)\n- Stop (molding that door closes against)\n- Threshold (not always included for interior)\n\n### Rough Opening Requirements\n\n**Standard Formula:**\n- Width: Door width + 2\" (for jamb + shimming)\n- Height: Door height + 2-1/2\" (for jamb + floor clearance)\n\n| Door Size | Rough Opening |\n|-----------|---------------|\n| 2'-6\" x 6'-8\" | 32\" x 82-1/2\" |\n| 2'-8\" x 6'-8\" | 34\" x 82-1/2\" |\n| 3'-0\" x 6'-8\" | 38\" x 82-1/2\" |\n\n### Installation Steps\n\n1. **Check rough opening** - Verify dimensions\n2. **Remove packaging** - Inspect for damage\n3. **Position door** - Set in opening\n4. **Check hinge side** - Plumb with level\n5. **Shim behind hinges** - At least 3 locations\n6. **Nail through shims** - Into jack studs\n7. **Check latch side** - Maintain even gap\n8. **Shim latch side** - Above/below strike\n9. **Verify operation** - Door should swing freely\n10. **Install casing** - Both sides\n\n### Critical Measurements\n\n| Location | Gap | Tolerance |\n|----------|-----|----------|\n| Top (head jamb) | 1/8\" | ± 1/16\" |\n| Sides (both) | 1/8\" | ± 1/16\" |\n| Bottom (floor) | 3/8\" - 3/4\" | Varies |\n\n> **Pro Tip:** Always check the door swing direction before installation. Stand on the side the door swings toward - hinges should be on the same side as the handle you reach for."
+    },
+    {
+      "title": "Door Hardware Installation",
+      "content": "## Installing Locksets & Hardware\n\nProper hardware installation ensures smooth operation and security. Most interior doors use passage or privacy locksets.\n\n### Lockset Types\n\n| Type | Function | Application |\n|------|----------|-------------|\n| Passage | No lock | Hallways, closets |\n| Privacy | Push-button/turn lock | Bedrooms, bathrooms |\n| Keyed Entry | Key lock | Exterior doors, offices |\n| Dummy | Non-functional | Closet doors, decorative |\n\n### Standard Measurements\n\n**Backset Options:**\n- 2-3/8\" (standard residential)\n- 2-3/4\" (commercial/some modern)\n\n**Bore Hole Sizes:**\n- Main bore: 2-1/8\" diameter\n- Latch bore: 1\" diameter\n- Edge bore: 7/8\" x 1\" (latch face)\n\n### Lockset Installation\n\n1. **Mark height** - 36\" standard (34-38\" acceptable)\n2. **Position template** - From lockset package\n3. **Drill main bore** - From both sides to prevent tearout\n4. **Drill latch bore** - Edge of door to main bore\n5. **Mortise latch face** - Chisel flush with edge\n6. **Install latch** - Secure with screws\n7. **Install interior/exterior knobs** - Connect through door\n8. **Test operation** - Smooth turn and latch\n\n### Strike Plate Installation\n\n1. Close door against frame\n2. Mark latch position on jamb\n3. Drill mortise hole (depth = latch throw + 1/8\")\n4. Chisel strike plate mortise\n5. Install strike plate\n6. Test door closure\n\n### Hinge Adjustments\n\n| Problem | Solution |\n|---------|----------|\n| Door sags | Tighten top hinge, longer screws |\n| Door springs open | Hinge side too close, adjust shims |\n| Door won't latch | Strike too far, reposition |\n| Hinge binds | Deepen mortise, check for paint |\n\n> **Pro Tip:** When door hinges are loose, replace short screws with 3\" screws that reach into the stud behind the jamb for solid grip."
+    },
+    {
+      "title": "Specialty Door Types",
+      "content": "## Bifold, Bypass & Pocket Doors\n\nSpecialty doors maximize space or provide unique functionality.\n\n### Bifold Doors\n\n**Applications:**\n- Closets\n- Laundry rooms\n- Pantries\n\n**Installation:**\n1. Install track at header\n2. Mount pivot brackets (floor and header)\n3. Hang doors on track\n4. Adjust alignment\n5. Install pulls/knobs\n\n**Adjustments:**\n| Issue | Adjustment |\n|-------|------------|\n| Doors not aligned | Pivot bracket height |\n| Gap at top | Lower pivot or track |\n| Rubbing floor | Raise pivot |\n| Won't close | Track guide position |\n\n### Bypass (Sliding) Doors\n\n**Applications:**\n- Wide closets\n- Room dividers\n- Pantries\n\n**Installation:**\n1. Mount track to header\n2. Install door hangers\n3. Hang doors on track\n4. Install floor guide\n5. Adjust for smooth operation\n\n**Track Types:**\n- Top-hung (doors hang from track)\n- Bottom-roll (doors roll on floor track)\n\n### Pocket Doors\n\n**Applications:**\n- Space-saving installations\n- Bathrooms with tight clearance\n- Between rooms\n\n**Installation Considerations:**\n- Requires wall cavity depth\n- Split studs or pocket frame\n- Must be planned during framing\n- Hardware quality critical\n\n**Common Issues:**\n| Problem | Cause | Solution |\n|---------|-------|----------|\n| Sticking | Track debris | Clean track |\n| Won't stay closed | Latch misaligned | Adjust strike |\n| Difficult to open | Hardware worn | Replace rollers |\n| Rattles | Loose guides | Adjust guides |\n\n> **Pro Tip:** For new construction, specify pocket door frames early. Retrofitting pocket doors into existing walls is possible but requires extensive wall modification."
+    },
+    {
+      "title": "Door Finishing & Troubleshooting",
+      "content": "## Finishing Doors & Common Problems\n\nProper finishing and maintenance keeps doors operating smoothly for years.\n\n### Painting Interior Doors\n\n**Preparation:**\n1. Remove door from hinges\n2. Remove hardware\n3. Clean and scuff sand\n4. Fill holes with wood filler\n5. Prime bare wood and filler\n\n**Painting Sequence:**\n1. Panel recesses first\n2. Panel faces\n3. Horizontal rails\n4. Vertical stiles\n5. Edges\n\n**Tips:**\n- Paint top and bottom edges to seal\n- Apply thin coats\n- Allow full dry between coats\n- Reinstall after 24+ hours\n\n### Common Problems & Solutions\n\n| Problem | Likely Cause | Solution |\n|---------|--------------|----------|\n| Sticking at top | Door swelled | Plane or sand top edge |\n| Sticking at latch | Frame shifted | Adjust strike, deepen mortise |\n| Won't stay closed | Warped door | Replace door or adjust stops |\n| Squeaky hinges | Lack of lubrication | WD-40 or silicone spray |\n| Drafts around door | Worn weatherstrip | Replace weatherstripping |\n| Light gaps | Door/frame not square | Adjust stops |\n\n### Seasonal Movement\n\n**NB Zone 6 Considerations:**\n- Doors may swell in summer humidity\n- May shrink in winter (heating season)\n- Allow 1/8\" clearance on sides\n- Avoid tight fits\n\n### Hardware Maintenance\n\n| Component | Maintenance | Frequency |\n|-----------|-------------|----------|\n| Hinges | Lubricate pins | Annually |\n| Locksets | Graphite in keyway | As needed |\n| Strike plates | Check screw tightness | Annually |\n| Door stops | Tighten or replace | As needed |\n\n> **Pro Tip:** If a door sticks seasonally, wait for the opposite season to make adjustments. A door that sticks in summer may gap in winter if planed down."
+    }
+  ],
+  "checklists": [
+    {
+      "title": "Prehung Door Installation Checklist",
+      "items": [
+        "Rough opening dimensions verified",
+        "Door inspected for damage before installation",
+        "Hinge side shimmed and plumb",
+        "Three shim points behind hinges minimum",
+        "Latch side shimmed with even gap",
+        "Head jamb level and shimmed",
+        "Door swings freely without rubbing",
+        "Door latches properly when closed",
+        "Gap consistent around all edges",
+        "Shims trimmed and ready for casing"
+      ]
+    },
+    {
+      "title": "Hardware Installation Checklist",
+      "items": [
+        "Lockset type appropriate for room function",
+        "Backset matches existing or template",
+        "Main bore drilled cleanly from both sides",
+        "Latch bore meets main bore properly",
+        "Latch face mortised flush",
+        "Knobs/levers installed and secure",
+        "Strike plate properly mortised in jamb",
+        "Door latches smoothly",
+        "Privacy lock functions (if applicable)",
+        "All screws tight and hardware aligned"
+      ]
+    },
+    {
+      "title": "Bifold/Bypass Door Checklist",
+      "items": [
+        "Track level and securely mounted",
+        "Pivot brackets properly positioned",
+        "Doors aligned vertically",
+        "Doors close fully against each other",
+        "Floor guide prevents swinging",
+        "Rollers move smoothly in track",
+        "Door pulls accessible and secure",
+        "No binding or rubbing",
+        "Consistent gap at top and bottom",
+        "All adjustments complete"
+      ]
+    },
+    {
+      "title": "Final Door Inspection",
+      "items": [
+        "Door swings open and closed smoothly",
+        "Latch engages strike plate properly",
+        "No rubbing on floor or jamb",
+        "Gap consistent and appropriate all around",
+        "Hardware functions correctly",
+        "Hinges tight with no sag",
+        "Casing installed on both sides",
+        "Paint/finish complete and undamaged",
+        "Doorstop positioned correctly",
+        "Customer walkthrough complete"
+      ]
+    }
+  ],
+  "quiz": [
+    {
+      "question": "What type of door provides the best sound blocking?",
+      "options": [
+        "Hollow core",
+        "Solid core",
+        "Glass panel",
+        "Bifold"
+      ],
+      "correct": 1,
+      "explanation": "Solid core doors have a composite or particle interior that provides good sound blocking, unlike hollow core doors with cardboard honeycomb construction."
+    },
+    {
+      "question": "What is the standard rough opening width formula for a prehung door?",
+      "options": [
+        "Door width + 1 inch",
+        "Door width + 2 inches",
+        "Door width + 3 inches",
+        "Exact door width"
+      ],
+      "correct": 1,
+      "explanation": "Standard rough opening is door width plus 2 inches to accommodate the jamb thickness and shimming space on both sides."
+    },
+    {
+      "question": "What lockset type is appropriate for a bedroom door?",
+      "options": [
+        "Passage",
+        "Privacy",
+        "Keyed entry",
+        "Dummy"
+      ],
+      "correct": 1,
+      "explanation": "Privacy locksets with push-button or turn locks are appropriate for bedrooms, providing security that can be easily unlocked from outside in emergencies."
+    },
+    {
+      "question": "What is the standard backset for residential interior doors?",
+      "options": [
+        "2 inches",
+        "2-3/8 inches",
+        "2-3/4 inches",
+        "3 inches"
+      ],
+      "correct": 1,
+      "explanation": "The standard residential backset is 2-3/8 inches, measured from the edge of the door to the center of the bore hole."
+    },
+    {
+      "question": "What is the standard main bore hole diameter for a lockset?",
+      "options": [
+        "1 inch",
+        "1-1/2 inches",
+        "2-1/8 inches",
+        "2-1/2 inches"
+      ],
+      "correct": 2,
+      "explanation": "The standard main bore hole for residential locksets is 2-1/8 inches in diameter."
+    },
+    {
+      "question": "What is the recommended gap between the door slab and jamb sides?",
+      "options": [
+        "1/16 inch",
+        "1/8 inch",
+        "1/4 inch",
+        "1/2 inch"
+      ],
+      "correct": 1,
+      "explanation": "A 1/8 inch gap is standard between the door slab and side jambs, allowing smooth operation while preventing excessive drafts."
+    },
+    {
+      "question": "How should a sagging door be repaired?",
+      "options": [
+        "Replace the door",
+        "Tighten top hinge with longer screws",
+        "Add more shims",
+        "Remove bottom hinge"
+      ],
+      "correct": 1,
+      "explanation": "A sagging door is typically fixed by tightening the top hinge, often using 3-inch screws that reach into the stud behind the jamb."
+    },
+    {
+      "question": "What is the standard door height for residential interior doors?",
+      "options": [
+        "78 inches",
+        "80 inches",
+        "82 inches",
+        "84 inches"
+      ],
+      "correct": 1,
+      "explanation": "Standard residential interior door height is 80 inches (6 feet 8 inches)."
+    },
+    {
+      "question": "Which door type requires planning during the framing stage?",
+      "options": [
+        "Prehung swing door",
+        "Bifold door",
+        "Bypass door",
+        "Pocket door"
+      ],
+      "correct": 3,
+      "explanation": "Pocket doors require a wall cavity and special framing, making them difficult to retrofit and requiring planning during initial construction."
+    },
+    {
+      "question": "What door width is recommended for accessibility?",
+      "options": [
+        "28 inches",
+        "30 inches",
+        "32 inches",
+        "36 inches"
+      ],
+      "correct": 3,
+      "explanation": "36-inch wide doors are recommended for accessibility, accommodating wheelchairs and making furniture movement easier."
+    },
+    {
+      "question": "In what order should panel doors be painted?",
+      "options": [
+        "Stiles, rails, panels",
+        "Panels, rails, stiles",
+        "Rails, panels, stiles",
+        "Any order"
+      ],
+      "correct": 1,
+      "explanation": "Panel doors should be painted panels first, then horizontal rails, then vertical stiles to properly blend brush strokes."
+    },
+    {
+      "question": "What should be done when a door sticks in summer but not winter?",
+      "options": [
+        "Plane immediately",
+        "Wait for winter to adjust",
+        "Replace the door",
+        "Add weatherstripping"
+      ],
+      "correct": 1,
+      "explanation": "Wait for the opposite season before adjusting, as a door that sticks from summer swelling may gap excessively in winter if planed down."
+    },
+    {
+      "question": "What is used to lubricate lockset keyholes?",
+      "options": [
+        "WD-40",
+        "Graphite",
+        "Machine oil",
+        "Grease"
+      ],
+      "correct": 1,
+      "explanation": "Graphite powder is used to lubricate keyholes as it doesn't attract dust and grime like liquid lubricants."
+    },
+    {
+      "question": "What type of doors are typically used for wide closets?",
+      "options": [
+        "Bifold doors",
+        "Bypass (sliding) doors",
+        "Pocket doors",
+        "French doors"
+      ],
+      "correct": 1,
+      "explanation": "Bypass or sliding doors are commonly used for wide closets as they don't require swing clearance and can span wider openings."
+    },
+    {
+      "question": "What is the minimum floor gap typically required for interior doors?",
+      "options": [
+        "1/8 inch",
+        "1/4 inch",
+        "3/8 to 3/4 inch",
+        "1 inch"
+      ],
+      "correct": 2,
+      "explanation": "Interior doors typically require 3/8 to 3/4 inch clearance at the floor to clear carpet or allow for seasonal swelling."
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+{
+  "id": "IF-01",
+  "title": "Drywall Installation",
+  "category": "Interior Finish",
+  "level": "Intermediate",
+  "estimated_study_hours": 4,
+  "tags": [
+    "drywall",
+    "gypsum",
+    "hanging",
+    "interior walls",
+    "ceilings"
+  ],
+  "prerequisites": [
+    "FF-03",
+    "EW-03"
+  ],
+  "sections": [
+    {
+      "id": "if01-s1",
+      "title": "Drywall Types & Selection",
+      "summary": "Understanding drywall types, sizes, and selection criteria for different applications.",
+      "content_md": "## Drywall Types & Selection\n\n### Standard Drywall Types\n\n| Type | Thickness | Paper Color | Use |\n|------|-----------|-------------|-----|\n| **Regular** | 1/2\", 5/8\" | Gray/White | Standard walls |\n| **Fire-Rated (Type X)** | 5/8\" | Gray | Garage, furnace rooms, rated assemblies |\n| **Moisture-Resistant** | 1/2\", 5/8\" | Green | Bathrooms, kitchens (not wet areas) |\n| **Mold-Resistant** | 1/2\", 5/8\" | Purple/Green | High humidity areas |\n| **Cement Board** | 1/4\", 1/2\" | Gray | Tile substrate, wet areas |\n| **Abuse-Resistant** | 1/2\", 5/8\" | Various | High-traffic commercial |\n\n### Thickness Selection\n\n| Application | Minimum Thickness |\n|-------------|------------------|\n| Walls (16\" OC framing) | 1/2\" |\n| Walls (24\" OC framing) | 5/8\" |\n| Ceilings (16\" OC framing) | 1/2\" |\n| Ceilings (24\" OC framing) | 5/8\" |\n| Fire-rated assemblies | 5/8\" Type X |\n| Over existing drywall | 1/4\" or 3/8\" |\n\n### Sheet Sizes\n\n**Standard Widths:** 4 feet\n\n**Lengths:**\n- 8 feet (most common residential)\n- 10 feet (reduces joints on 9' walls)\n- 12 feet (commercial, large rooms)\n- 14 and 16 feet (available special order)\n\n> **Pro Tip:** Using longer sheets reduces the number of butt joints, which are harder to finish. Plan sheet layout to minimize butt joints.\n\n### Code Requirements\n\n**Fire Separation:**\n- Attached garage: 5/8\" Type X on garage side\n- Furnace/utility rooms: Check local requirements\n- Ceiling below living space: Often 5/8\" Type X"
+    },
+    {
+      "id": "if01-s2",
+      "title": "Preparation & Layout",
+      "summary": "Preparing the work area and planning drywall layout for efficient installation.",
+      "content_md": "## Preparation & Layout\n\n### Pre-Installation Checklist\n\n**Framing Inspection:**\n- [ ] All framing complete and inspected\n- [ ] Blocking installed for cabinets, fixtures\n- [ ] Nailer plates on studs with wiring/plumbing\n- [ ] No twisted or bowed studs\n- [ ] Headers properly sized and level\n\n**Utilities Complete:**\n- [ ] Electrical rough-in inspected\n- [ ] Plumbing rough-in inspected\n- [ ] HVAC rough-in complete\n- [ ] Low-voltage wiring in place\n- [ ] Insulation installed (walls to exterior)\n\n### Layout Planning\n\n**Golden Rules:**\n1. Hang ceilings first, then walls\n2. Run sheets perpendicular to framing\n3. Stagger joints between rows\n4. Avoid joints at corners of openings\n5. Minimize butt joints (end-to-end)\n\n**Joint Placement:**\n\n| Location | Preference |\n|----------|------------|\n| Over doors/windows | Avoid joints at corners |\n| Ceiling/wall junction | Ceiling sheet to wall, wall sheet butts to ceiling |\n| Butt joints | On framing, stagger from adjacent rows |\n| Inside corners | One sheet overlaps other |\n\n### Material Calculation\n\n**Basic Formula:**\n- Calculate wall/ceiling square footage\n- Divide by 32 (sq ft per 4x8 sheet)\n- Add 10% for waste and cuts\n\n**Example:**\n- Room: 12' x 14' with 8' ceilings\n- Walls: (12+12+14+14) x 8 = 416 sq ft\n- Ceiling: 12 x 14 = 168 sq ft\n- Total: 584 sq ft ÷ 32 = 18.25 sheets\n- With 10%: 20 sheets\n\n### Material Storage\n\n- Store flat on level surface\n- Support entire length (no sagging)\n- Keep dry and climate-controlled\n- Acclimate to room temperature before hanging"
+    },
+    {
+      "id": "if01-s3",
+      "title": "Ceiling Installation",
+      "summary": "Techniques for hanging drywall on ceilings efficiently and safely.",
+      "content_md": "## Ceiling Installation\n\n### Why Ceilings First?\n\n- Wall sheets support ceiling edges\n- Cleaner corner joints\n- Easier to achieve tight fit\n- Standard professional practice\n\n### Tools for Ceiling Work\n\n**Essential:**\n- Drywall lift (highly recommended)\n- T-brace (deadman) for manual lifting\n- Screw gun with depth setting\n- Utility knife and T-square\n- Chalk line and tape measure\n\n### Using a Drywall Lift\n\n**Procedure:**\n1. Load sheet face-down on lift\n2. Position under ceiling location\n3. Crank to raise sheet\n4. Fine-tune position\n5. Drive fasteners\n6. Lower and move lift\n\n### Manual Installation (T-Brace)\n\n**Two-Person Method:**\n1. Measure and cut sheet\n2. Lift to ceiling with partner\n3. Wedge T-brace under sheet\n4. Adjust position\n5. Fasten while brace holds\n\n### Fastening Ceilings\n\n**Screw Pattern:**\n- Perimeter: 8\" on center\n- Field: 12\" on center\n- Start from center, work outward\n\n**Screw Depth:**\n- Just dimples paper\n- Doesn't break paper face\n- Head below surface\n\n### Common Ceiling Issues\n\n| Problem | Cause | Prevention |\n|---------|-------|------------|\n| Sagging | Screws too far apart | Follow fastening schedule |\n| Nail pops | Wood shrinkage | Use screws, not nails |\n| Cracks at edges | No floating | Float corners (screws 8\"+ from walls) |\n| Truss uplift cracks | Seasonal movement | Use floating corner detail |\n\n> **Floating Corners:** Keep screws 8\" from wall-ceiling intersection on ceiling, 12\" from ceiling on walls. This allows normal building movement without cracking."
+    },
+    {
+      "id": "if01-s4",
+      "title": "Wall Installation",
+      "summary": "Proper techniques for hanging drywall on walls including cuts and openings.",
+      "content_md": "## Wall Installation\n\n### Horizontal vs. Vertical\n\n**Horizontal (Preferred):**\n- Fewer linear feet of joints\n- Stronger joint at 48\" height (hitting more studs)\n- Easier to finish mid-wall joint\n- Standard professional practice\n\n**Vertical:**\n- May be required by fire code\n- Used when ceiling height equals sheet length\n- Commercial applications\n\n### Installation Sequence\n\n**1. Top Sheet First**\n- Tight to ceiling\n- Level bottom edge\n- Drive screws starting at top\n\n**2. Bottom Sheet**\n- Tight to top sheet\n- Use lifter/wedge at bottom\n- Leave 1/2\" gap at floor\n\n### Fastening Walls\n\n**Screw Pattern:**\n- Perimeter: 8\" on center\n- Field: 16\" on center (12\" for ceilings)\n- Minimum 3/8\" from edges\n\n**Screw Selection:**\n\n| Drywall | Screw Length |\n|---------|-------------|\n| 1/2\" single layer | 1-1/4\" |\n| 5/8\" single layer | 1-5/8\" |\n| Double layer (base) | 1\" |\n| Double layer (face) | 1-5/8\" |\n\n### Cutting Techniques\n\n**Score and Snap:**\n1. Mark measurement on face\n2. Score paper with knife along straightedge\n3. Snap away from score\n4. Cut back paper\n5. Smooth edge if needed\n\n**For Outlets/Boxes:**\n1. Measure from edges to box\n2. Transfer to sheet\n3. Score outline\n4. Cut with drywall saw or router\n5. Test fit before fastening\n\n### Around Openings\n\n**Windows and Doors:**\n- No joints at corners of openings\n- L-shaped or notched pieces around corners\n- Factory edges toward opening\n\n**Electrical Boxes:**\n- Tight fit (no more than 1/8\" gap)\n- Required for fire blocking\n- Use adjustable boxes if needed"
+    },
+    {
+      "id": "if01-s5",
+      "title": "Specialty Situations",
+      "summary": "Handling curved walls, soffits, multi-layer assemblies, and other special conditions.",
+      "content_md": "## Specialty Situations\n\n### Curved Walls\n\n**Options:**\n- 1/4\" drywall (bends easily)\n- Score back of standard drywall\n- Wet and form (allow to dry)\n\n**Minimum Radius:**\n| Thickness | Dry Bend | Wet Bend |\n|-----------|----------|----------|\n| 1/4\" | 5 feet | 3 feet |\n| 3/8\" | 7.5 feet | 4 feet |\n| 1/2\" | 10 feet | 6 feet |\n\n### Multi-Layer Assemblies\n\n**Fire-Rated and Sound:**\n- Base layer with fewer screws (field only)\n- Face layer with full pattern\n- Stagger joints between layers\n- Different screw lengths per layer\n\n**Installation:**\n1. Install base layer\n2. Offset face layer joints minimum 12\"\n3. Screws must penetrate framing 5/8\" minimum\n\n### Soffits and Bulkheads\n\n**Framing Check:**\n- Adequate backing at all corners\n- Blocking for drywall edges\n- Square and plumb construction\n\n**Installation Order:**\n1. Sides first\n2. Bottom last\n3. Use corner bead at all outside corners\n\n### Control Joints\n\n**When Required:**\n- Runs over 30 feet\n- Where walls change direction\n- Where dissimilar materials meet\n- At expansion joints in structure\n\n**Installation:**\n- Leave 1/4\" gap in drywall\n- Install control joint bead\n- Finish like corner bead\n\n### Cement Board Installation\n\n**For Tile Areas:**\n- 1/4\" for walls, 1/2\" for floors\n- Cement board screws required\n- 8\" OC field, 4\" OC edges\n- Tape joints with alkali-resistant tape\n- Waterproof membrane behind in wet areas\n\n> **Remember:** Cement board is NOT waterproof. Use proper waterproofing membrane behind cement board in showers and wet areas."
+    }
+  ],
+  "checklists": [
+    {
+      "id": "if01-c1",
+      "title": "Pre-Drywall Inspection Checklist",
+      "items": [
+        "All framing complete and inspected",
+        "Electrical rough-in complete and inspected",
+        "Plumbing rough-in complete and inspected",
+        "HVAC rough-in complete",
+        "Insulation installed in exterior walls",
+        "Vapor barrier installed (if required)",
+        "Blocking installed for cabinets and fixtures",
+        "Nailer plates on studs with utilities",
+        "Fire-stopping complete at penetrations",
+        "Framing straight and true (no major bows)"
+      ]
+    },
+    {
+      "id": "if01-c2",
+      "title": "Ceiling Installation Checklist",
+      "items": [
+        "Sheet layout planned to minimize butt joints",
+        "Drywall lift or T-braces ready",
+        "Sheets run perpendicular to joists/trusses",
+        "Screws 8\" OC at perimeter",
+        "Screws 12\" OC in field",
+        "Screws dimple paper without breaking",
+        "Joints fall on framing members",
+        "Floating corners maintained (8\" from walls)",
+        "No joints at corners of openings",
+        "All sheets tight to adjacent sheets"
+      ]
+    },
+    {
+      "id": "if01-c3",
+      "title": "Wall Installation Checklist",
+      "items": [
+        "Top sheet tight to ceiling",
+        "Horizontal installation (sheets run lengthwise)",
+        "Screws 8\" OC at perimeter",
+        "Screws 16\" OC in field",
+        "Correct screw length for drywall thickness",
+        "1/2\" gap maintained at floor",
+        "Electrical boxes cut tight (1/8\" max gap)",
+        "No joints at door/window corners",
+        "Factory edges at openings where possible",
+        "All joints on framing members"
+      ]
+    },
+    {
+      "id": "if01-c4",
+      "title": "Fire-Rated Assembly Checklist",
+      "items": [
+        "Correct Type X drywall used (5/8\")",
+        "Joints on framing members only",
+        "Proper screw pattern followed",
+        "All penetrations properly fire-stopped",
+        "Double-layer assemblies properly staggered",
+        "No openings without rated covers",
+        "Electrical boxes fire-rated type",
+        "Continuous coverage with no gaps",
+        "Assembly matches approved design",
+        "Documentation retained for inspection"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "if01-q1",
+        "question": "What minimum drywall thickness is required for ceilings with 24\" OC framing?",
+        "options": [
+          "3/8\"",
+          "1/2\"",
+          "5/8\"",
+          "3/4\""
+        ],
+        "correct": 2,
+        "explanation": "5/8\" drywall is required for ceilings with 24\" OC framing to prevent sagging between supports."
+      },
+      {
+        "id": "if01-q2",
+        "question": "When installing drywall, which should be hung first?",
+        "options": [
+          "Walls",
+          "Ceilings",
+          "Either - doesn't matter",
+          "Depends on room size"
+        ],
+        "correct": 1,
+        "explanation": "Ceilings should be hung first so wall sheets can support the ceiling edges, creating cleaner joints."
+      },
+      {
+        "id": "if01-q3",
+        "question": "What is the maximum screw spacing in the field for ceiling drywall?",
+        "options": [
+          "8\" OC",
+          "12\" OC",
+          "16\" OC",
+          "24\" OC"
+        ],
+        "correct": 1,
+        "explanation": "Ceiling drywall screws in the field should be 12\" on center (perimeter is 8\" OC)."
+      },
+      {
+        "id": "if01-q4",
+        "question": "What is the purpose of 'floating' corners in drywall installation?",
+        "options": [
+          "Saves screws",
+          "Allows for building movement",
+          "Easier finishing",
+          "Required by code"
+        ],
+        "correct": 1,
+        "explanation": "Floating corners (keeping screws 8\"+ from intersections) allows normal building movement without causing cracks."
+      },
+      {
+        "id": "if01-q5",
+        "question": "What type of drywall is required on the garage side of an attached garage wall?",
+        "options": [
+          "Regular 1/2\"",
+          "Moisture-resistant",
+          "5/8\" Type X",
+          "Cement board"
+        ],
+        "correct": 2,
+        "explanation": "5/8\" Type X (fire-rated) drywall is required on the garage side of walls separating an attached garage from living space."
+      },
+      {
+        "id": "if01-q6",
+        "question": "What is the maximum allowable gap around electrical boxes?",
+        "options": [
+          "1/16\"",
+          "1/8\"",
+          "1/4\"",
+          "1/2\""
+        ],
+        "correct": 1,
+        "explanation": "Maximum 1/8\" gap is allowed around electrical boxes for proper fire blocking."
+      },
+      {
+        "id": "if01-q7",
+        "question": "How should drywall sheets be oriented on walls?",
+        "options": [
+          "Vertically only",
+          "Horizontally preferred",
+          "Diagonally",
+          "Either orientation"
+        ],
+        "correct": 1,
+        "explanation": "Horizontal installation is preferred as it creates fewer linear feet of joints and stronger mid-wall joints."
+      },
+      {
+        "id": "if01-q8",
+        "question": "What screw length is needed for single-layer 1/2\" drywall on wood framing?",
+        "options": [
+          "1\"",
+          "1-1/4\"",
+          "1-5/8\"",
+          "2\""
+        ],
+        "correct": 1,
+        "explanation": "1-1/4\" screws are used for single-layer 1/2\" drywall on wood framing."
+      },
+      {
+        "id": "if01-q9",
+        "question": "What should be avoided when laying out drywall around windows and doors?",
+        "options": [
+          "Using factory edges",
+          "Joints at corners of openings",
+          "Horizontal orientation",
+          "Full sheets"
+        ],
+        "correct": 1,
+        "explanation": "Joints should not fall at the corners of window and door openings as these are stress points prone to cracking."
+      },
+      {
+        "id": "if01-q10",
+        "question": "How much gap should be left at the floor when installing wall drywall?",
+        "options": [
+          "None - tight to floor",
+          "1/4\"",
+          "1/2\"",
+          "1\""
+        ],
+        "correct": 2,
+        "explanation": "Leave approximately 1/2\" gap at the floor to prevent moisture wicking and allow for floor covering."
+      },
+      {
+        "id": "if01-q11",
+        "question": "What is the minimum dry bend radius for 1/2\" drywall?",
+        "options": [
+          "5 feet",
+          "7.5 feet",
+          "10 feet",
+          "15 feet"
+        ],
+        "correct": 2,
+        "explanation": "1/2\" drywall has a minimum dry bend radius of approximately 10 feet."
+      },
+      {
+        "id": "if01-q12",
+        "question": "When are drywall control joints required?",
+        "options": [
+          "Every 8 feet",
+          "Runs over 30 feet",
+          "At every corner",
+          "Only in commercial"
+        ],
+        "correct": 1,
+        "explanation": "Control joints are required for runs over 30 feet, at direction changes, and where dissimilar materials meet."
+      },
+      {
+        "id": "if01-q13",
+        "question": "What color paper identifies moisture-resistant drywall?",
+        "options": [
+          "White",
+          "Gray",
+          "Green",
+          "Purple"
+        ],
+        "correct": 2,
+        "explanation": "Moisture-resistant drywall is identified by green paper facing."
+      },
+      {
+        "id": "if01-q14",
+        "question": "Is cement board waterproof?",
+        "options": [
+          "Yes, completely",
+          "No, requires membrane behind in wet areas",
+          "Only the special type",
+          "Yes, if sealed properly"
+        ],
+        "correct": 1,
+        "explanation": "Cement board is NOT waterproof. Proper waterproofing membrane must be used behind cement board in showers and wet areas."
+      },
+      {
+        "id": "if01-q15",
+        "question": "By how much should joints be offset in multi-layer drywall assemblies?",
+        "options": [
+          "4\" minimum",
+          "8\" minimum",
+          "12\" minimum",
+          "24\" minimum"
+        ],
+        "correct": 2,
+        "explanation": "Joints in multi-layer assemblies should be offset by at least 12\" between the base and face layers."
+      }
+    ]
+  }
+}

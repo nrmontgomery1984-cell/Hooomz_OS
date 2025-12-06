@@ -1,0 +1,313 @@
+{
+  "id": "EW-03",
+  "phase": 2,
+  "slug": "insulation-installation",
+  "title": "Insulation Installation",
+  "category": "Exterior & Weather",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": [
+    "OH-01",
+    "EW-01",
+    "EW-02"
+  ],
+  "estimated_study_hours": 7,
+  "status": "complete",
+  "tags": [
+    "insulation",
+    "batt",
+    "blown-in",
+    "spray-foam",
+    "rigid",
+    "r-value",
+    "thermal-barrier",
+    "energy-efficiency",
+    "NBC-2020"
+  ],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Insulation is critical for energy efficiency, comfort, and moisture control in NB Zone 6's harsh climate.",
+      "content_md": "## Why Insulation Matters in NB Zone 6\n\nNew Brunswick's Zone 6 climate presents extreme challenges:\n- **Winter temperatures** regularly reach -20°C to -30°C\n- **Heating degree days** exceed 4,500 annually\n- **Energy costs** are among the highest in Canada\n- **Moisture management** is critical due to temperature differentials\n\n## NBC 2020 Minimum R-Values for Zone 6\n\n| Assembly | Minimum R-Value | Recommended R-Value |\n|----------|-----------------|---------------------|\n| Ceiling/Attic | R-50 | R-60 to R-80 |\n| Above-Grade Walls | R-24 (effective) | R-28+ |\n| Below-Grade Walls | R-20 | R-24 |\n| Floors over Unheated | R-31 | R-40 |\n| Slab Edge | R-10 | R-15 |\n\n> **Note:** These are minimums. Energy-efficient homes in NB typically exceed these values by 25-50%.\n\n## Types of Insulation\n\n### Batt Insulation\n- **Fiberglass batts** - Most common, R-3.2 to R-4.3 per inch\n- **Mineral wool batts** - R-4.0 per inch, fire resistant, moisture resistant\n- **Cotton/denim batts** - R-3.5 per inch, recycled content\n\n### Loose-Fill/Blown Insulation\n- **Cellulose** - R-3.7 per inch, recycled paper, treated for fire/pests\n- **Fiberglass** - R-2.5 to R-3.7 per inch, depending on density\n- **Mineral wool** - R-3.0 to R-3.3 per inch\n\n### Spray Foam Insulation\n- **Open-cell** - R-3.7 per inch, vapor permeable, requires vapor barrier\n- **Closed-cell** - R-6.0 to R-7.0 per inch, vapor barrier at 2\", structural strength\n\n### Rigid Board Insulation\n- **EPS (Expanded Polystyrene)** - R-4.0 per inch, moisture resistant\n- **XPS (Extruded Polystyrene)** - R-5.0 per inch, higher moisture resistance\n- **Polyisocyanurate (Polyiso)** - R-6.0 to R-6.5 per inch, foil-faced\n- **Mineral wool board** - R-4.0 per inch, fire resistant, vapor permeable"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Understanding R-value, thermal bridging, moisture dynamics, and how insulation works with air and vapor barriers.",
+      "content_md": "## Understanding R-Value\n\n**R-Value** measures thermal resistance—the ability to resist heat flow.\n\n### Nominal vs. Effective R-Value\n\n**Nominal R-Value:** The R-value of the insulation material itself\n- R-20 batt = R-20 nominal\n\n**Effective R-Value:** The actual R-value of the entire assembly\n- R-20 batt in 2x6 wall with 15% framing = R-15 effective\n- Why? Wood studs are only R-1.25 per inch\n\n### Thermal Bridging\n\nThermal bridges occur where framing creates paths for heat loss:\n\n| Framing Type | Framing Factor | R-Value Reduction |\n|--------------|----------------|-------------------|\n| 16\" OC studs | 25% | ~20-25% |\n| 24\" OC studs | 15% | ~15% |\n| Advanced framing | 10% | ~10% |\n\n**Solutions for Thermal Bridging:**\n- Continuous exterior insulation (best)\n- Advanced framing techniques\n- Insulated headers and corners\n- Thermal break materials\n\n## How Insulation Works with Air/Vapor Barriers\n\n### Critical Relationships\n\n**Air Barrier + Insulation:**\n- Insulation without air sealing loses 25-40% of effectiveness\n- Wind washing through insulation dramatically reduces R-value\n- Air barrier must be continuous and sealed\n\n**Vapor Barrier + Insulation:**\n- In Zone 6, vapor barrier goes on the WARM side (interior)\n- Vapor barrier prevents warm, moist interior air from reaching cold surfaces\n- At least 2/3 of total R-value should be on the cold side of vapor barrier\n\n### Exterior Insulation Rule for Zone 6\n\nTo prevent condensation:\n- **R-7.5 minimum** exterior insulation for 2x4 walls\n- **R-11.25 minimum** exterior insulation for 2x6 walls\n\nOr use the **ratio rule:**\n- At least 35% of total R-value should be outboard of structural sheathing\n\n## Material Properties Comparison\n\n| Insulation Type | R/inch | Vapor Perm | Best Application |\n|-----------------|--------|------------|------------------|\n| Fiberglass Batt | 3.2-3.8 | >10 | Walls, attics |\n| Mineral Wool Batt | 4.0 | >10 | Walls, fire-rated |\n| Cellulose (blown) | 3.7 | >10 | Attics, dense-pack walls |\n| Closed-Cell Spray | 6.5 | <1 | Foundations, roofing |\n| EPS | 4.0 | 2-5 | Exterior, below-grade |\n| XPS | 5.0 | 0.5-1.5 | Below-grade, roofing |\n| Polyiso | 6.0 | <1 (foil) | Exterior walls, roofing |"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Detailed installation procedures for batt, blown-in, and rigid insulation in walls, attics, and floors.",
+      "content_md": "## BATT INSULATION INSTALLATION\n\n### Wall Cavity Installation\n\n**Materials:**\n- Insulation batts (proper width for cavity)\n- Utility knife with fresh blade\n- Straightedge or drywall square\n- Staple gun (if using faced batts)\n- PPE: Safety glasses, N95 mask, gloves, long sleeves\n\n**Step 1: Prepare the Cavity**\n- Verify air sealing is complete (all penetrations sealed)\n- Check for electrical boxes, wires, pipes\n- Ensure cavity is clean and dry\n- Confirm vapor barrier plan (faced batts or separate poly)\n\n**Step 2: Measure and Cut**\n- Measure cavity depth (should match batt thickness)\n- For obstructions, split batt and fit around (not compress)\n- Cut batts 1\" longer than cavity height for friction fit\n- Use straightedge for clean cuts\n\n**Step 3: Install Batts**\n\n**Proper installation technique:**\n1. Hold batt at top of cavity\n2. Tuck top edge behind top plate\n3. Unfurl batt down into cavity\n4. Batt should fill cavity without compression\n5. Friction fit—no gaps, no voids, no compression\n\n**Around electrical boxes:**\n- Split batt thickness in half\n- Place half behind box, half in front\n- Cut notch for box, maintain contact on all sides\n\n### Common Batt Installation Errors\n\n| Error | Problem | Correction |\n|-------|---------|------------|\n| Compressed batts | Reduced R-value (R-20 at 80% = R-16) | Use correct batt thickness for cavity |\n| Gaps and voids | Thermal bypass, condensation | Fill completely, no gaps |\n| Missing insulation behind boxes | Cold spots, condensation | Split and fit around |\n\n## BLOWN-IN INSULATION\n\n### Attic Installation (Cellulose or Fiberglass)\n\n**Step 1: Preparation**\n- Complete all air sealing first (critical!)\n- Install baffles at every rafter bay with soffit vents\n- Install dam boards at attic hatch\n- Mark target depth on trusses/rafters\n- Cover any can lights with IC-rated covers or dam boxes\n\n**Step 2: Calculate Coverage**\n\nCellulose coverage (bags per 1000 sq ft):\n\n| Target R-Value | Settled Thickness | Bags/1000 sq ft |\n|----------------|-------------------|-----------------|\n| R-38 | 10.5\" | 22 |\n| R-49 | 13.5\" | 29 |\n| R-60 | 16.5\" | 35 |\n\n**Step 3: Blow Insulation**\n1. Start at far end of attic, work toward access\n2. Keep hose low, 1-2 feet above target depth\n3. Use slow, sweeping motion\n4. Build up to depth markers\n5. Fill completely around obstacles\n\n## RIGID INSULATION INSTALLATION\n\n### Exterior Wall Application\n\n**Step 1: Plan Layout**\n- Stagger joints from sheathing joints\n- Offset horizontal joints course to course\n- Plan cuts around windows and doors\n\n**Step 2: Install Boards**\n1. Start at corner or base\n2. Apply boards tight to sheathing\n3. Fasten with cap nails (4-6 per 4x8 sheet)\n4. Ensure edges align for taping\n\n**Step 3: Seal Joints**\n- Tape all seams with manufacturer-approved tape\n- Seal around windows and doors\n- Seal at top and bottom edges"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Quality control checklists, common defects, inspection criteria, and energy code compliance verification.",
+      "content_md": "## Pre-Insulation Inspection\n\nBefore any insulation is installed, verify:\n\n### Air Sealing Complete\n- [ ] Bottom plate sealed to subfloor\n- [ ] Top plates sealed (double top plate gap)\n- [ ] Electrical penetrations sealed\n- [ ] Plumbing penetrations sealed\n- [ ] Window and door rough openings sealed\n- [ ] Can lights sealed or IC-rated boxes installed\n- [ ] Duct penetrations sealed\n\n### Cavity Preparation\n- [ ] Cavities clean and dry\n- [ ] No debris or wood scraps\n- [ ] Utilities installed and inspected\n- [ ] Cavity dimensions correct for insulation\n\n## Batt Insulation Quality Checklist\n\n### Installation Quality\n- [ ] Correct R-value for assembly\n- [ ] Batts fill cavity completely (side to side)\n- [ ] Batts fill cavity completely (front to back)\n- [ ] No compression (batt thickness = cavity depth)\n- [ ] No gaps or voids\n- [ ] Batts split around wires and pipes (not compressed)\n- [ ] Batts fitted around electrical boxes (not crammed)\n\n### Grading System (RESNET/HERS)\n\n| Grade | Description | Criteria |\n|-------|-------------|----------|\n| Grade I | Proper | Fills cavity completely, no compression, no gaps |\n| Grade II | Defects | Minor gaps or compression (<2% area) |\n| Grade III | Major Defects | Significant gaps, compression, or voids (>2% area) |\n\n> **Goal:** Grade I installation in all cavities\n\n## Common Insulation Defects\n\n| Defect | Impact | Solution |\n|--------|--------|----------|\n| Compressed batts | 25-40% R-value loss | Remove and replace with correct thickness |\n| Gaps at framing | Cold spots, condensation | Fill all gaps completely |\n| Wind washing | Significant R-value loss | Install wind barrier, dense-pack |\n| Blocked soffit vents | Ice dams | Install proper baffles |"
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "R-value tables, coverage charts, troubleshooting guide, and NB climate-specific recommendations.",
+      "content_md": "## APPENDIX A: R-VALUE REFERENCE TABLES\n\n### Batt Insulation R-Values\n\n| Thickness | Fiberglass | Mineral Wool |\n|-----------|------------|--------------|\n| 3.5\" (2x4) | R-11 to R-15 | R-15 |\n| 5.5\" (2x6) | R-19 to R-21 | R-23 |\n| 7.25\" (2x8) | R-25 | R-30 |\n| 9.25\" (2x10) | R-30 | R-38 |\n| 11.25\" (2x12) | R-38 | R-45 |\n\n### Rigid Insulation R-Values\n\n| Thickness | EPS | XPS | Polyiso |\n|-----------|-----|-----|---------|\n| 1\" | R-4 | R-5 | R-6 |\n| 1.5\" | R-6 | R-7.5 | R-9 |\n| 2\" | R-8 | R-10 | R-12 |\n| 3\" | R-12 | R-15 | R-18 |\n| 4\" | R-16 | R-20 | R-24 |\n\n## APPENDIX B: NB ZONE 6 SPECIFIC GUIDANCE\n\n### High-Performance Wall Assemblies for NB\n\n**Option 1: 2x6 + Exterior Insulation**\n- R-23 mineral wool batts in cavity\n- R-10 rigid exterior insulation\n- Total: R-33 nominal, R-28+ effective\n- Dew point safely outside sheathing\n\n**Option 2: Double Stud Wall**\n- 2x4 exterior wall + 2x4 interior wall\n- 12\" total cavity\n- Dense-pack cellulose: R-44\n- Interior vapor barrier critical\n\n### Attic Recommendations for NB\n\n| Code Minimum | Recommended | High-Performance |\n|--------------|-------------|------------------|\n| R-50 | R-60 | R-80 |\n| 13.5\" cellulose | 16.5\" cellulose | 22\" cellulose |\n\n**Ice Dam Prevention:**\n- Air seal ceiling thoroughly\n- Insulate to R-60 or higher\n- Ensure continuous soffit-to-ridge ventilation\n- Consider cold roof design\n\n## APPENDIX C: TROUBLESHOOTING\n\n### Problem: Ice Dams\n\n**Causes:**\n1. Heat loss through ceiling\n2. Inadequate insulation\n3. Poor attic ventilation\n4. Air leaks into attic\n\n**Solutions:**\n1. Air seal ceiling penetrations\n2. Increase insulation to R-60+\n3. Install continuous soffit-to-ridge ventilation\n4. Verify baffles at all eave locations"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "pre-insulation",
+      "title": "Pre-Insulation Checklist",
+      "items": [
+        "Air sealing complete at all penetrations",
+        "Cavities clean and dry",
+        "Electrical and plumbing inspection complete",
+        "Vapor barrier plan determined",
+        "Correct insulation on site (type, R-value, quantity)",
+        "PPE available (mask, glasses, gloves, long sleeves)"
+      ]
+    },
+    {
+      "id": "batt-walls",
+      "title": "Batt Insulation - Walls",
+      "items": [
+        "Batts cut 1\" longer than cavity for friction fit",
+        "Batts fill cavity side-to-side completely",
+        "Batts fill cavity front-to-back without compression",
+        "No gaps or voids anywhere",
+        "Batts split around wires and pipes (not compressed)",
+        "Batts split and fit around electrical boxes",
+        "Faced batts: flanges stapled with proper overlap",
+        "All cavities insulated including headers"
+      ]
+    },
+    {
+      "id": "blown-attic",
+      "title": "Blown Insulation - Attic",
+      "items": [
+        "All air sealing complete before insulation",
+        "Baffles installed at every soffit vent location",
+        "Dam boards installed at attic access hatch",
+        "IC-rated lights protected with covers or dams",
+        "Target depth achieved throughout",
+        "Full coverage at eaves and perimeter",
+        "Bag count matches coverage calculation"
+      ]
+    },
+    {
+      "id": "vapor-barrier",
+      "title": "Vapor Barrier Installation",
+      "items": [
+        "6-mil polyethylene on warm (interior) side",
+        "All seams overlapped 6\" minimum",
+        "Seams sealed with acoustical sealant or approved tape",
+        "Perimeter sealed to framing",
+        "Penetrations sealed (electrical, plumbing)",
+        "No tears or holes"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What is the minimum required R-value for attic insulation in NB Zone 6 according to NBC 2020?",
+        "type": "mcq",
+        "choices": [
+          "A) R-38",
+          "B) R-49",
+          "C) R-50",
+          "D) R-60"
+        ],
+        "answer": "C",
+        "explanation": "NBC 2020 requires a minimum of R-50 for ceiling/attic insulation in Zone 6."
+      },
+      {
+        "id": "q2",
+        "question": "In Zone 6, which side of the wall assembly should the vapor barrier be installed?",
+        "type": "mcq",
+        "choices": [
+          "A) Exterior (cold) side",
+          "B) Middle of the assembly",
+          "C) Interior (warm) side",
+          "D) Both sides"
+        ],
+        "answer": "C",
+        "explanation": "In heating-dominated climates like Zone 6, the vapor barrier must be on the warm (interior) side."
+      },
+      {
+        "id": "q3",
+        "question": "What percentage of R-value is typically lost when batt insulation is compressed to 80% of its designed thickness?",
+        "type": "mcq",
+        "choices": [
+          "A) 5%",
+          "B) 10%",
+          "C) 20%",
+          "D) 40%"
+        ],
+        "answer": "C",
+        "explanation": "Compressing batt insulation to 80% of its designed thickness reduces its R-value by approximately 20%."
+      },
+      {
+        "id": "q4",
+        "question": "For a 2x6 wall in Zone 6, what is the minimum exterior insulation required to keep the dew point outside the sheathing?",
+        "type": "mcq",
+        "choices": [
+          "A) R-5",
+          "B) R-7.5",
+          "C) R-11.25",
+          "D) R-15"
+        ],
+        "answer": "C",
+        "explanation": "For 2x6 walls in Zone 6, at least R-11.25 of exterior insulation is required."
+      },
+      {
+        "id": "q5",
+        "question": "What is the approximate R-value per inch of closed-cell spray foam insulation?",
+        "type": "mcq",
+        "choices": [
+          "A) R-3.7 per inch",
+          "B) R-4.0 per inch",
+          "C) R-5.0 per inch",
+          "D) R-6.5 per inch"
+        ],
+        "answer": "D",
+        "explanation": "Closed-cell spray foam has an R-value of approximately R-6.0 to R-7.0 per inch."
+      },
+      {
+        "id": "q6",
+        "question": "Before installing blown-in attic insulation, what must be installed at soffit vents?",
+        "type": "mcq",
+        "choices": [
+          "A) Vapor barriers",
+          "B) Baffles",
+          "C) Dams",
+          "D) Screens"
+        ],
+        "answer": "B",
+        "explanation": "Baffles must be installed at every soffit vent location to maintain ventilation pathway."
+      },
+      {
+        "id": "q7",
+        "question": "What is the target density for dense-pack cellulose insulation in wall cavities?",
+        "type": "mcq",
+        "choices": [
+          "A) 1.5 lb/cu ft",
+          "B) 2.5 lb/cu ft",
+          "C) 3.5 lb/cu ft",
+          "D) 4.5 lb/cu ft"
+        ],
+        "answer": "C",
+        "explanation": "Dense-pack cellulose should be installed at 3.5 lb/cu ft."
+      },
+      {
+        "id": "q8",
+        "question": "When installing batt insulation around an electrical box, what is the correct technique?",
+        "type": "mcq",
+        "choices": [
+          "A) Compress the batt to fit",
+          "B) Cut a notch and leave back uninsulated",
+          "C) Split the batt and place half behind and half in front",
+          "D) Skip the cavity"
+        ],
+        "answer": "C",
+        "explanation": "Split the batt, place half behind and half in front of the box."
+      },
+      {
+        "id": "q9",
+        "question": "What causes 'wind washing' in insulation and how much R-value can it reduce?",
+        "type": "mcq",
+        "choices": [
+          "A) Water infiltration, 10%",
+          "B) Air movement through insulation, 25-40%",
+          "C) UV degradation, 5%",
+          "D) Settling, 15%"
+        ],
+        "answer": "B",
+        "explanation": "Wind washing is air moving through insulation, reducing effectiveness by 25-40%."
+      },
+      {
+        "id": "q10",
+        "question": "With 16\" OC stud spacing, approximately what percentage of a wall is framing?",
+        "type": "mcq",
+        "choices": [
+          "A) 10%",
+          "B) 15%",
+          "C) 25%",
+          "D) 35%"
+        ],
+        "answer": "C",
+        "explanation": "With 16\" on-center spacing, approximately 25% of the wall is framing."
+      },
+      {
+        "id": "q11",
+        "question": "What is a Grade I insulation installation according to RESNET/HERS?",
+        "type": "mcq",
+        "choices": [
+          "A) Exceeds code",
+          "B) No compression, gaps, or voids",
+          "C) Certified contractor",
+          "D) Less than 5% defects"
+        ],
+        "answer": "B",
+        "explanation": "Grade I means no compression, no gaps, no voids."
+      },
+      {
+        "id": "q12",
+        "question": "Which rigid insulation has the highest R-value per inch?",
+        "type": "mcq",
+        "choices": [
+          "A) EPS",
+          "B) XPS",
+          "C) Polyisocyanurate",
+          "D) Mineral wool board"
+        ],
+        "answer": "C",
+        "explanation": "Polyiso has R-6.0 to R-6.5 per inch."
+      },
+      {
+        "id": "q13",
+        "question": "Minimum vapor barrier seam overlap?",
+        "type": "mcq",
+        "choices": [
+          "A) 2\" minimum",
+          "B) 4\" minimum",
+          "C) 6\" minimum",
+          "D) 12\" minimum"
+        ],
+        "answer": "C",
+        "explanation": "Vapor barrier seams should overlap by 6\" minimum."
+      },
+      {
+        "id": "q14",
+        "question": "What is the primary cause of ice dams on roofs?",
+        "type": "mcq",
+        "choices": [
+          "A) Heavy snowfall",
+          "B) Steep roof pitch",
+          "C) Heat loss through the ceiling into the attic",
+          "D) Cold exterior temperatures"
+        ],
+        "answer": "C",
+        "explanation": "Ice dams form when heat loss through ceiling melts snow on the roof."
+      },
+      {
+        "id": "q15",
+        "question": "Why complete air sealing BEFORE blown-in attic insulation?",
+        "type": "mcq",
+        "choices": [
+          "A) Easier access to penetrations",
+          "B) Insulation loses R-value without air sealing",
+          "C) Code requires it",
+          "D) All of the above"
+        ],
+        "answer": "D",
+        "explanation": "All correct - easier access, insulation loses 25-40% without it, and code requires it."
+      }
+    ]
+  }
+}

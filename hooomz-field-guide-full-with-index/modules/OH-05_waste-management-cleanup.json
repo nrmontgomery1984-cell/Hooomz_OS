@@ -1,0 +1,265 @@
+{
+  "id": "OH-05",
+  "phase": 1,
+  "slug": "waste-management-cleanup",
+  "title": "Waste Management & Cleanup",
+  "category": "Site Management",
+  "level": "Apprentice",
+  "priority": 2,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01"],
+  "estimated_study_hours": 2,
+  "status": "complete",
+  "tags": ["waste", "cleanup", "recycling", "disposal", "hazardous", "environmental", "daily-cleanup"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "Proper waste management protects the environment, maintains client relations, ensures regulatory compliance, and keeps the jobsite safe and efficient.",
+      "content_md": "## What is Construction Waste Management?\n\nConstruction waste management encompasses all activities related to collecting, sorting, storing, and disposing of materials generated during construction and renovation projects. It includes daily cleanup routines, material recycling, hazardous waste handling, and final project cleanup.\n\n## Why Does It Matter?\n\n### Environmental Responsibility:\n- Construction generates 30-40% of landfill waste in Canada\n- Many materials can be recycled or reused\n- Improper disposal contaminates soil and water\n- NB Clean Environment Act requires proper disposal\n\n### Client Relations:\n- Clean site = professional impression\n- Daily cleanup shows respect for client's property\n- Dust and debris control protects client belongings\n- Final cleanup determines lasting impression\n\n### Safety:\n- Debris causes trips, falls, puncture wounds\n- Fire hazards from combustible waste\n- Respiratory hazards from dust accumulation\n- Falling hazards from improperly stored waste\n\n### Cost Control:\n- Proper sorting reduces disposal costs\n- Recycling can generate revenue\n- Efficient cleanup saves labor time\n- Avoiding fines for improper disposal\n\n## NB Regulatory Requirements\n\n### Clean Environment Act:\n- Prohibits illegal dumping\n- Requires proper disposal of designated materials\n- Fines up to $50,000 for violations\n- Directors/officers personally liable\n\n### Designated Materials (Special Handling Required):\n- Asbestos-containing materials\n- Lead paint waste\n- Electronics (e-waste)\n- Fluorescent bulbs\n- Batteries\n- Paint and solvents\n- Refrigerants (appliances)\n\n## Certification Requirements\n\nTo earn Waste Management certification:\n1. Complete this guide\n2. Pass quiz with 80% (12/15)\n3. Demonstrate proper waste sorting\n4. Complete a daily cleanup to standard\n5. Know locations of local disposal facilities"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Covers waste categories, bin sizing, recycling requirements, and hazardous material awareness.",
+      "content_md": "## 2.1 Construction Waste Categories\n\n### Category 1: General Construction Debris\n\n**Includes:**\n- Clean wood scraps (untreated)\n- Drywall scraps\n- Insulation scraps\n- Packaging materials\n- Mixed debris\n\n**Disposal:** Landfill (construction debris section)\n\n### Category 2: Recyclable Materials\n\n**Metal:**\n- Steel studs, flashing, ductwork\n- Copper pipe and wire\n- Aluminum (siding, flashing, cans)\n- Iron and steel\n\n**Disposal:** Scrap metal recycler (often pays you)\n\n**Cardboard/Paper:**\n- Material boxes\n- Paper packaging\n- Clean cardboard only (no food contamination)\n\n**Disposal:** Recycling depot\n\n**Clean Wood:**\n- Dimensional lumber scraps\n- Plywood/OSB scraps\n- NOT pressure-treated or painted\n\n**Disposal:** Wood recycler, biomass, or reuse\n\n### Category 3: Hazardous Materials\n\n**Requires Special Handling:**\n\n| Material | Hazard | Disposal |\n|----------|--------|----------|\n| Asbestos | Lung disease, cancer | Licensed contractor, approved site |\n| Lead paint | Neurotoxin | Hazardous waste facility |\n| Solvents/paints | Flammable, toxic | Household hazardous waste |\n| Fluorescent bulbs | Mercury | Special recycling |\n| Batteries | Acids, heavy metals | Battery recycler |\n| Refrigerants | Ozone depleting | Certified technician |\n\n### Category 4: Reusable Materials\n\n**Consider Reuse/Donation:**\n- Doors and windows (good condition)\n- Fixtures (sinks, toilets, lights)\n- Cabinets\n- Dimensional lumber (long pieces)\n- Hardware\n\n**Options:** Habitat ReStore, architectural salvage, other projects\n\n## 2.2 Bin Sizing and Selection\n\n### Standard Bin Sizes:\n\n| Size | Dimensions (L×W×H) | Capacity | Best For |\n|------|-------------------|----------|----------|\n| 10 yard | 12'×8'×3.5' | Small renos, cleanouts |\n| 20 yard | 22'×8'×4' | Medium renos, roofing |\n| 30 yard | 22'×8'×6' | Large renos, new construction |\n| 40 yard | 22'×8'×8' | Major demo, commercial |\n\n### Estimating Waste Volume:\n\n**Rules of Thumb:**\n- Kitchen reno: 10-20 yard bin\n- Bathroom reno: 10 yard bin\n- Basement finish: 10-20 yard bin\n- Full gut reno: 30-40 yard bin\n- Roofing (2,000 sf): 10-20 yard bin\n- New construction (2,000 sf): 20-30 yard bin\n\n### Bin Placement:\n\n**Considerations:**\n- Access for delivery truck (min 50' straight, 14' height)\n- Proximity to work area (minimize carrying distance)\n- Avoid blocking access (driveway, sidewalk)\n- Ground protection (plywood under bin on driveway)\n- Permit required if on street\n\n## 2.3 Recycling Requirements\n\n### NB Recycling Regulations:\n\n**Mandatory Recycling:**\n- Cardboard/paper (clean)\n- Metal (scrap yards)\n- Electronics (designated depots)\n- Tires\n- Oil and filters\n\n**Encouraged Recycling:**\n- Clean wood (biomass, mulch)\n- Concrete/masonry (crushing, fill)\n- Drywall (gypsum recycling)\n- Shingles (asphalt recycling)\n\n### Setting Up Recycling On-Site:\n\n**Minimum Setup:**\n1. General waste bin (mixed debris)\n2. Metal collection area (tarp or bin)\n3. Cardboard breakdown area\n4. Clean wood pile (if volume warrants)\n\n**Full Recycling Setup:**\n- Labeled bins/areas for each material\n- Brief crew on what goes where\n- Regular removal before overflow\n- Track volumes for reporting\n\n## 2.4 Hazardous Material Awareness\n\n### Asbestos:\n\n**Where Found:**\n- Vermiculite insulation (pre-1990)\n- Floor tiles (9×9 common indicator)\n- Pipe insulation\n- Ceiling tiles\n- Siding shingles\n- Roof felt\n\n**If Suspected:**\n1. STOP work immediately\n2. Don't disturb material\n3. Get professional testing\n4. If confirmed: Licensed abatement contractor only\n\n**Never:** Sand, cut, drill, or disturb suspected asbestos\n\n### Lead Paint:\n\n**Where Found:**\n- Pre-1978 buildings (any painted surface)\n- Higher risk: Windows, doors, trim (friction surfaces)\n\n**If Suspected:**\n1. Test with lead test kit (hardware store)\n2. If positive: Use lead-safe work practices\n3. Contain work area\n4. HEPA vacuum only\n5. Dispose as hazardous waste\n\n### Mold:\n\n**Where Found:**\n- Any damp/water-damaged area\n- Behind walls with moisture issues\n- Basements, bathrooms, attics\n\n**If Found:**\n- Small areas (<10 sf): Clean with proper PPE\n- Large areas (>10 sf): Professional remediation\n- Always find and fix moisture source\n- Document with photos"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Daily cleanup routines, waste sorting procedures, bin management, and final cleanup process.",
+      "content_md": "## 3.1 Daily Cleanup Routine\n\n### During Work (Continuous):\n\n**Every Worker's Responsibility:**\n1. Pick up scraps as you generate them\n2. Stack reusable cutoffs (don't throw away good material)\n3. Keep tools organized (not scattered)\n4. Sweep work area periodically\n5. Don't let debris accumulate\n\n**The 15-Minute Rule:** Never let more than 15 minutes of cleanup accumulate.\n\n### Mid-Day Cleanup (Lunch Break - 10 minutes):\n\n1. Quick sweep of main work area\n2. Organize tools and materials\n3. Remove full trash bags\n4. Stack lumber/material cutoffs\n5. Clear walkways\n\n### End of Day Cleanup (30-45 minutes):\n\n**Step 1: Collect All Debris (15 min)**\n- Gather all scraps from work area\n- Check adjacent rooms (dust travels)\n- Collect packaging, cutoffs, trash\n- Sort into appropriate piles\n\n**Step 2: Sort Materials (10 min)**\n- Metal to metal pile\n- Cardboard flattened and stacked\n- Clean wood to wood pile\n- Mixed debris to waste bin\n- Hazardous materials set aside\n\n**Step 3: Transport to Bins (10 min)**\n- Load debris into wheelbarrow/cart\n- Transport to appropriate bin/pile\n- Don't overfill bins (lid must close)\n- Flatten boxes to save space\n\n**Step 4: Final Sweep (5-10 min)**\n- HEPA vacuum work area (dust control)\n- Sweep non-work areas (if dust spread)\n- Wipe surfaces if dusty\n- Check client areas (kitchen, bath if accessible)\n\n**Step 5: Verify (5 min)**\n- Walk through all areas\n- Remove any remaining hazards\n- Ensure client can use their home safely\n- Lock up bins if required\n\n## 3.2 Waste Sorting Procedure\n\n### At Point of Generation:\n\n**Train Yourself to Sort Immediately:**\n- Metal cutoff? → Metal pile\n- Cardboard box? → Flatten, stack\n- Wood cutoff reusable? → Cutoff pile\n- Wood scrap too small? → Wood bin\n- Mixed debris? → General waste\n\n### Setting Up Sort Station:\n\n**Basic Setup (3 containers):**\n1. **Garbage bags/cans** - Mixed waste\n2. **Metal bin/tarp** - All metals\n3. **Cardboard area** - Flattened boxes\n\n**Enhanced Setup (5+ areas):**\n1. Mixed waste bin\n2. Metal collection\n3. Cardboard\n4. Clean wood\n5. Reusable materials\n6. Hazardous materials (separate, labeled)\n\n### Handling Specific Materials:\n\n**Drywall:**\n- Keep clean drywall separate if recycling available\n- No painted, wet, or contaminated drywall\n- Stack neatly (easier to handle)\n\n**Insulation:**\n- Bag fiberglass (prevents spreading)\n- Keep dry for recycling potential\n- Wear respirator when handling\n\n**Concrete/Masonry:**\n- Separate from other debris\n- Can be crushed and recycled\n- Heavy - don't overload bins\n\n## 3.3 Bin Management\n\n### Loading the Bin:\n\n**Do:**\n- Load heavy items first (bottom)\n- Distribute weight evenly\n- Flatten boxes to maximize space\n- Break down large items when safe\n- Fill to level with top (not heaping)\n\n**Don't:**\n- Overload beyond top edge\n- Put prohibited items in bin\n- Mix hazardous with regular waste\n- Create unstable piles\n- Block bin doors with debris\n\n### Prohibited Items (Most Bins):\n- Hazardous waste (paint, solvents)\n- Asbestos\n- Tires\n- Appliances with refrigerants\n- Electronics\n- Batteries\n- Fluorescent bulbs\n- Liquids\n\n### Scheduling Bin Service:\n\n**When to Call for Pickup:**\n- Bin is 80% full\n- Before weekends/holidays (limited service)\n- Weather event approaching (cover or empty)\n- Material type change (don't mix loads)\n\n**Swap vs. Empty:**\n- Swap: Exchange full bin for empty\n- Empty: Truck tips bin, returns it\n- Swap faster, empty more cost-effective\n\n## 3.4 Final Project Cleanup\n\n### Level 1: Rough Clean (End of Construction)\n\n**Scope:** Remove all construction debris and materials\n\n**Steps:**\n1. Remove all scraps, debris, packaging\n2. Remove all leftover materials\n3. Remove all protection (floor, plastic)\n4. Sweep all floors\n5. Remove bins and waste piles\n\n**Result:** Bare, clean surfaces ready for finishing\n\n### Level 2: Construction Clean (Pre-Occupancy)\n\n**Scope:** Remove dust and debris from all surfaces\n\n**Steps:**\n1. All Level 1 steps plus:\n2. Vacuum all floors (HEPA)\n3. Wipe all horizontal surfaces\n4. Clean windows (interior)\n5. Wipe cabinets (inside and out)\n6. Clean fixtures (lights, outlets, switches)\n7. Vacuum/clean HVAC registers\n\n**Result:** Presentable, but not spotless\n\n### Level 3: Final Clean (Client Move-In Ready)\n\n**Scope:** Professional cleaning standard\n\n**Steps:**\n1. All Level 2 steps plus:\n2. Mop all hard floors\n3. Clean all glass (windows, mirrors, shower)\n4. Detail clean all fixtures\n5. Clean appliances (inside and out)\n6. Dust all surfaces including tops\n7. Clean light fixtures\n8. Touch-up any scuffs or marks\n9. Final walk-through inspection\n\n**Result:** Move-in ready, client satisfied\n\n### Final Cleanup Checklist:\n\n- [ ] All debris removed\n- [ ] All materials removed or stored per client\n- [ ] Floors swept and vacuumed\n- [ ] Surfaces wiped\n- [ ] Windows cleaned\n- [ ] Fixtures cleaned\n- [ ] Cabinets cleaned inside\n- [ ] Appliances cleaned\n- [ ] Lights/switches/outlets wiped\n- [ ] Final walk-through complete\n- [ ] Client sign-off obtained"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY",
+      "summary": "Cleanup standards, inspection checklists, and common issues.",
+      "content_md": "## 4.1 Cleanup Standards\n\n### Daily Cleanup Standard:\n\n**Passing:**\n- No loose debris on floors\n- Tools organized\n- Materials stacked neatly\n- Walkways clear\n- Work area swept\n- Client areas clean and safe\n\n**Failing:**\n- Debris scattered on floor\n- Tools left out\n- Materials disorganized\n- Walkways blocked\n- Visible dust accumulation\n- Client areas affected\n\n### Final Cleanup Standard:\n\n**The White Glove Test:**\n- Run finger across any surface\n- No visible dust = pass\n- Dust residue = fail (re-clean)\n\n**Visual Inspection:**\n- Stand in doorway of each room\n- Scan floor, walls, ceiling\n- Check corners and edges\n- Look at light angle (shows dust)\n- If you can see it, client can see it\n\n## 4.2 Self-Inspection Checklist\n\n### Daily Cleanup:\n- [ ] Work area floor clean and swept\n- [ ] Tools returned to designated spots\n- [ ] Materials stacked/stored properly\n- [ ] Debris sorted to correct bins\n- [ ] Walkways clear and safe\n- [ ] Client areas unaffected by dust\n- [ ] Bins not overflowing\n- [ ] No trip hazards remain\n\n### Weekly Check:\n- [ ] Bin levels checked, pickup scheduled if needed\n- [ ] Recycling removed to depot\n- [ ] Metal pile growing (scrap run needed?)\n- [ ] Hazardous materials properly stored\n- [ ] Sort station organized\n- [ ] Cardboard broken down and stacked\n\n### Final Cleanup:\n- [ ] All debris and materials removed\n- [ ] Floors vacuumed and mopped\n- [ ] All surfaces wiped\n- [ ] Windows cleaned\n- [ ] Fixtures cleaned\n- [ ] Cabinets cleaned inside and out\n- [ ] Appliances cleaned\n- [ ] Final walk-through complete\n- [ ] Touch-ups done\n- [ ] Client sign-off obtained\n\n## 4.3 Common Cleanup Issues\n\n| Issue | Cause | Prevention |\n|-------|-------|------------|\n| Dust everywhere | Inadequate dust control | Use barriers, HEPA vac, daily cleanup |\n| Client complaint | Cleanup skipped/rushed | Follow daily routine, take time |\n| Bin overflow | Didn't schedule pickup | Monitor levels, call at 80% |\n| Wrong items in bin | No sorting, no training | Label bins, brief crew |\n| Scratched floors | Dragged debris | Lift, don't drag; use protection |\n| Recycling contaminated | Mixed materials | Keep streams separate |\n| Hazardous improper disposal | Lack of awareness | Training, separate storage |\n\n## 4.4 Environmental Compliance\n\n### Documentation Required:\n\n**For All Projects:**\n- Waste bin receipts (proof of proper disposal)\n- Recycling receipts\n- Hazardous waste manifests\n\n**For Projects with Hazardous Materials:**\n- Testing reports (asbestos, lead)\n- Abatement contractor certificates\n- Disposal manifests\n- Clearance testing\n\n### If Inspected:\n\n**Have Ready:**\n- Waste disposal receipts\n- Recycling documentation\n- Hazardous material handling records\n- Bin rental agreement\n\n**Know:**\n- Where waste goes (landfill name/location)\n- Recycling procedures\n- Hazardous waste procedures\n- Contact for waste hauler"
+    },
+    {
+      "id": "appendices",
+      "title": "APPENDICES",
+      "summary": "Local disposal facilities, bin sizing guide, and hazardous materials reference.",
+      "content_md": "## APPENDIX A: NB DISPOSAL FACILITIES\n\n### Greater Moncton Area:\n\n| Facility | Type | Location |\n|----------|------|----------|\n| Berry Mills Landfill | C&D Waste | Berry Mills |\n| Moncton Metal Recyclers | Scrap Metal | Moncton |\n| Westmorland-Albert SWC | Recycling | Multiple locations |\n| Household Hazardous Waste | Hazardous | Scheduled events |\n\n### Fredericton Area:\n\n| Facility | Type | Location |\n|----------|------|----------|\n| Fredericton Region SWC | C&D Waste | Fredericton |\n| Various scrap yards | Metal | Multiple |\n| Household Hazardous Waste | Hazardous | Scheduled events |\n\n### Saint John Area:\n\n| Facility | Type | Location |\n|----------|------|----------|\n| Crane Mountain Landfill | C&D Waste | Saint John |\n| Fundy Region SWC | Recycling | Multiple |\n| Household Hazardous Waste | Hazardous | Scheduled events |\n\n## APPENDIX B: BIN SIZING GUIDE\n\n### Quick Reference:\n\n| Project Type | Recommended Size |\n|--------------|------------------|\n| Bathroom reno | 10 yard |\n| Kitchen reno | 10-20 yard |\n| Basement finish | 10-20 yard |\n| Full gut reno | 30-40 yard |\n| Roof replacement (25 sq) | 10-20 yard |\n| Addition (500 sf) | 20-30 yard |\n| New home (2000 sf) | 30-40 yard |\n\n### Bin Costs (Approximate, NB 2024):\n\n| Size | Rental (7 days) | Disposal (per ton) |\n|------|-----------------|--------------------|\n| 10 yard | $300-400 | $80-100 |\n| 20 yard | $400-500 | $80-100 |\n| 30 yard | $500-600 | $80-100 |\n| 40 yard | $600-750 | $80-100 |\n\n## APPENDIX C: HAZARDOUS MATERIALS QUICK REFERENCE\n\n### Identification:\n\n| Material | Visual Clues | Testing |\n|----------|-------------|--------|\n| Asbestos | Pre-1990, pipe wrap, 9x9 tiles, vermiculite | Lab testing required |\n| Lead paint | Pre-1978, alligatoring, chalking | Lead test kit |\n| Mold | Visible growth, musty smell, water stains | Visual, air testing |\n| PCBs | Old caulking, ballasts pre-1979 | Lab testing |\n\n### Response:\n\n| Material | If Found |\n|----------|----------|\n| Asbestos | STOP. Don't disturb. Get testing. Licensed removal only. |\n| Lead paint | Contain area. Lead-safe practices. Dispose as hazardous. |\n| Mold | Assess size. <10sf = DIY with PPE. >10sf = professional. |\n| PCBs | Don't disturb. Report. Professional removal. |\n\n## APPENDIX D: CLEANUP TIME ESTIMATES\n\n### Daily Cleanup (Per Crew Member):\n\n| Task | Time |\n|------|------|\n| Mid-day tidy | 10 min |\n| End of day cleanup | 30-45 min |\n| Weekly deep clean | 1-2 hours |\n\n### Final Cleanup (Per 1,000 SF):\n\n| Level | Time |\n|-------|------|\n| Level 1 (Rough) | 2-3 hours |\n| Level 2 (Construction) | 4-6 hours |\n| Level 3 (Final) | 6-10 hours |\n\n**Budget:** Include cleanup time in project estimates. Typically 5-10% of total labor hours."
+    }
+  ],
+  "checklists": [
+    {
+      "id": "daily-cleanup",
+      "title": "Daily Cleanup Checklist",
+      "items": [
+        "Work area floor clean and swept",
+        "Tools returned to designated spots",
+        "Materials stacked/stored properly",
+        "Debris sorted to correct bins",
+        "Walkways clear and safe",
+        "Client areas unaffected by dust",
+        "Bins not overflowing",
+        "No trip hazards remain"
+      ]
+    },
+    {
+      "id": "waste-sorting",
+      "title": "Waste Sorting Checklist",
+      "items": [
+        "Metal separated (copper, steel, aluminum)",
+        "Cardboard flattened and stacked",
+        "Clean wood separated (not painted/treated)",
+        "Drywall separated if recycling available",
+        "Hazardous materials isolated and labeled",
+        "Electronics set aside for proper disposal",
+        "General waste to appropriate bin"
+      ]
+    },
+    {
+      "id": "bin-management",
+      "title": "Bin Management Checklist",
+      "items": [
+        "Bin placed on protected surface",
+        "Loading evenly distributed",
+        "Not overfilled past top edge",
+        "No prohibited items added",
+        "Pickup scheduled when 80% full",
+        "Lid/door can close properly"
+      ]
+    },
+    {
+      "id": "hazardous-materials",
+      "title": "Hazardous Materials Checklist",
+      "items": [
+        "Suspected materials identified before disturbance",
+        "Testing completed if required",
+        "Proper PPE available and used",
+        "Work area contained",
+        "Materials stored separately",
+        "Proper disposal arranged",
+        "Documentation completed"
+      ]
+    },
+    {
+      "id": "final-cleanup-rough",
+      "title": "Final Cleanup - Level 1 (Rough)",
+      "items": [
+        "All construction debris removed",
+        "All leftover materials removed",
+        "Floor protection removed",
+        "All floors swept",
+        "Bins and waste piles removed"
+      ]
+    },
+    {
+      "id": "final-cleanup-construction",
+      "title": "Final Cleanup - Level 2 (Construction Clean)",
+      "items": [
+        "All Level 1 items complete",
+        "All floors vacuumed (HEPA)",
+        "All horizontal surfaces wiped",
+        "Windows cleaned (interior)",
+        "Cabinets wiped inside and out",
+        "Fixtures cleaned (lights, switches, outlets)",
+        "HVAC registers vacuumed"
+      ]
+    },
+    {
+      "id": "final-cleanup-move-in",
+      "title": "Final Cleanup - Level 3 (Move-In Ready)",
+      "items": [
+        "All Level 2 items complete",
+        "All hard floors mopped",
+        "All glass cleaned (windows, mirrors, shower)",
+        "All fixtures detail cleaned",
+        "Appliances cleaned inside and out",
+        "All surfaces dusted including tops",
+        "Light fixtures cleaned",
+        "Touch-ups complete",
+        "Final walk-through with client",
+        "Client sign-off obtained"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "What percentage of landfill waste in Canada comes from construction?",
+        "type": "mcq",
+        "choices": ["A) 10-15%", "B) 20-25%", "C) 30-40%", "D) 50-60%"],
+        "answer": "C",
+        "explanation": "Construction and demolition generates 30-40% of landfill waste in Canada. This is why proper sorting and recycling is so important."
+      },
+      {
+        "id": "q2",
+        "question": "When should you call for a bin pickup?",
+        "type": "mcq",
+        "choices": ["A) When completely full", "B) When 80% full", "C) At the end of the project", "D) Once a week regardless of level"],
+        "answer": "B",
+        "explanation": "Schedule pickup when the bin is 80% full. This ensures you don't overfill (which causes extra charges) and maintains continuous workflow."
+      },
+      {
+        "id": "q3",
+        "question": "Which of these is a sign of potential asbestos?",
+        "type": "mcq",
+        "choices": ["A) Any insulation", "B) 9x9 inch floor tiles in a pre-1990 building", "C) Pink fiberglass batts", "D) Modern spray foam"],
+        "answer": "B",
+        "explanation": "9x9 inch floor tiles in buildings from before 1990 are a common indicator of asbestos-containing materials. Modern insulation products (fiberglass, spray foam) do not contain asbestos."
+      },
+      {
+        "id": "q4",
+        "question": "What should you do if you discover suspected asbestos material?",
+        "type": "mcq",
+        "choices": ["A) Carefully remove it yourself with a respirator", "B) STOP work, don't disturb it, get professional testing", "C) Wet it down and bag it", "D) Put it in the regular construction bin"],
+        "answer": "B",
+        "explanation": "If you suspect asbestos, STOP work immediately, do not disturb the material, and get professional testing. Only licensed abatement contractors can remove confirmed asbestos."
+      },
+      {
+        "id": "q5",
+        "question": "How should cardboard be prepared for recycling?",
+        "type": "mcq",
+        "choices": ["A) Left in boxes", "B) Flattened and stacked", "C) Mixed with other debris", "D) Wet to compress it"],
+        "answer": "B",
+        "explanation": "Cardboard should be flattened and stacked for recycling. This saves space and makes handling easier. Keep it dry and clean - contaminated cardboard can't be recycled."
+      },
+      {
+        "id": "q6",
+        "question": "What is the \"15-Minute Rule\" for cleanup?",
+        "type": "mcq",
+        "choices": ["A) Take a break every 15 minutes", "B) Never let more than 15 minutes of cleanup accumulate", "C) Spend at least 15 minutes on final cleanup", "D) Check bins every 15 minutes"],
+        "answer": "B",
+        "explanation": "The 15-Minute Rule means never letting more than 15 minutes worth of cleanup accumulate. Clean as you go rather than letting debris pile up."
+      },
+      {
+        "id": "q7",
+        "question": "What items are typically PROHIBITED from standard construction bins?",
+        "type": "mcq",
+        "choices": ["A) Wood scraps", "B) Drywall pieces", "C) Asbestos, paint, electronics, appliances with refrigerants", "D) Cardboard boxes"],
+        "answer": "C",
+        "explanation": "Hazardous materials, electronics, appliances with refrigerants, tires, batteries, and fluorescent bulbs are typically prohibited from standard construction bins and require special disposal."
+      },
+      {
+        "id": "q8",
+        "question": "What is Level 2 (Construction Clean) cleanup?",
+        "type": "mcq",
+        "choices": ["A) Just removing debris", "B) Removing debris plus vacuuming and wiping all surfaces", "C) Professional cleaning with move-in ready standard", "D) Only sweeping floors"],
+        "answer": "B",
+        "explanation": "Level 2 Construction Clean includes removing all debris (Level 1) plus vacuuming floors, wiping all surfaces, cleaning windows and cabinets, and cleaning fixtures."
+      },
+      {
+        "id": "q9",
+        "question": "What size bin is typically needed for a kitchen renovation?",
+        "type": "mcq",
+        "choices": ["A) 5 yard", "B) 10-20 yard", "C) 30 yard", "D) 40 yard"],
+        "answer": "B",
+        "explanation": "A kitchen renovation typically requires a 10-20 yard bin, depending on the scope. Full gut renovations may need the larger size."
+      },
+      {
+        "id": "q10",
+        "question": "How should you load a waste bin?",
+        "type": "mcq",
+        "choices": ["A) Light items first, heavy on top", "B) Heavy items first, distribute weight evenly, don't overfill", "C) Fill one side completely before starting the other", "D) Pack as tightly as possible"],
+        "answer": "B",
+        "explanation": "Load heavy items first (on the bottom), distribute weight evenly, and don't fill past the top edge. Uneven loading creates safety hazards and can damage the bin."
+      },
+      {
+        "id": "q11",
+        "question": "In buildings built before what year should you assume lead paint may be present?",
+        "type": "mcq",
+        "choices": ["A) 1960", "B) 1978", "C) 1990", "D) 2000"],
+        "answer": "B",
+        "explanation": "Lead paint was banned for residential use in 1978. Any building from before 1978 should be assumed to have lead paint until testing proves otherwise."
+      },
+      {
+        "id": "q12",
+        "question": "What is the best way to handle scrap metal from a construction site?",
+        "type": "mcq",
+        "choices": ["A) Put it in the regular bin", "B) Separate it and take to a scrap metal recycler (often pays you)", "C) Bury it on site", "D) Leave it for the client"],
+        "answer": "B",
+        "explanation": "Scrap metal should be separated and taken to a metal recycler. Scrap yards often pay for metals like copper, aluminum, and steel, turning waste into income."
+      },
+      {
+        "id": "q13",
+        "question": "How much time should be budgeted for daily end-of-day cleanup?",
+        "type": "mcq",
+        "choices": ["A) 5-10 minutes", "B) 15-20 minutes", "C) 30-45 minutes", "D) 1-2 hours"],
+        "answer": "C",
+        "explanation": "End-of-day cleanup should take 30-45 minutes. This includes collecting debris, sorting materials, transporting to bins, and sweeping the work area."
+      },
+      {
+        "id": "q14",
+        "question": "What is the \"White Glove Test\" for final cleanup?",
+        "type": "mcq",
+        "choices": ["A) Wearing white gloves while cleaning", "B) Running a finger across surfaces - no visible dust means pass", "C) Using white cloths for wiping", "D) A test administered by inspectors"],
+        "answer": "B",
+        "explanation": "The White Glove Test involves running your finger across any surface. If there's no visible dust residue, it passes. If you can see or feel dust, that area needs to be re-cleaned."
+      },
+      {
+        "id": "q15",
+        "question": "What percentage of total labor hours should be budgeted for cleanup?",
+        "type": "mcq",
+        "choices": ["A) 1-2%", "B) 5-10%", "C) 15-20%", "D) 25-30%"],
+        "answer": "B",
+        "explanation": "Budget 5-10% of total labor hours for cleanup activities. This includes daily cleanup, waste management, and final cleaning. Underestimating cleanup time leads to rushed work and poor client impressions."
+      }
+    ]
+  }
+}

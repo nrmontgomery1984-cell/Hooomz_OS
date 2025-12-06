@@ -1,0 +1,348 @@
+{
+  "id": "FF-03",
+  "phase": 2,
+  "slug": "wall-framing",
+  "title": "Wall Framing Systems",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-01", "FF-02"],
+  "estimated_study_hours": 8,
+  "status": "complete",
+  "tags": ["wall framing", "stud walls", "load-bearing", "partition walls", "headers", "king studs", "jack studs", "cripple studs", "sheathing", "bracing", "NBC 2020"],
+  "sections": [
+    {
+      "id": "FF-03-01",
+      "title": "Introduction to Wall Framing",
+      "summary": "Overview of wall framing systems, load paths, and NB construction requirements",
+      "content_md": "## Wall Framing Fundamentals\n\nWall framing forms the vertical structural skeleton of the building, transferring roof and upper floor loads down to the foundation while defining interior spaces and supporting the building envelope.\n\n### Load Path Continuity\n\nEvery wall frame must maintain a continuous load path from roof to foundation:\n\n- **Roof loads** → Top plates → Studs → Bottom plate → Floor system\n- **Point loads** require direct stud support or engineered headers\n- **Lateral loads** (wind, seismic) transfer through sheathing and connections\n\n### Wall Types in Residential Construction\n\n#### Load-Bearing Walls\n- Support structural loads from above\n- Typically exterior walls and some interior walls\n- Cannot be modified without engineering review\n- Require continuous support to foundation\n\n#### Non-Load-Bearing (Partition) Walls\n- Define interior spaces only\n- Can be parallel to floor joists without direct support\n- Easier to modify during renovations\n- Still require proper framing for stability\n\n### NBC 2020 Requirements for NB Zone 6\n\n**Section 9.23 - Wood-Frame Construction**\n\n| Component | Minimum Requirement |\n|-----------|--------------------|\n| Stud size (exterior) | 2×6 minimum for R-24 insulation |\n| Stud spacing | 16\" o.c. (24\" with engineering) |\n| Top plates | Double 2× required |\n| Bottom plate | Single 2× minimum |\n| Bracing | Let-in bracing or structural sheathing |\n\n### Climate Considerations for NB\n\nNew Brunswick's climate demands specific wall framing approaches:\n\n- **Thermal bridging**: 2×6 walls with cavity insulation + continuous exterior insulation\n- **Wind loads**: Coastal areas require enhanced connections\n- **Snow loads**: Headers sized for accumulated loads\n- **Moisture management**: Proper drainage plane details\n\n### Platform vs. Balloon Framing\n\n**Platform Framing** (Standard in NB):\n- Each floor is built as a platform\n- Walls are framed on deck, then tilted up\n- Fire stops naturally at each floor\n- Most common method for residential\n\n**Balloon Framing** (Historic/Special Applications):\n- Studs run continuously from sill to roof\n- Requires fire blocking at each floor\n- Sometimes used for tall walls or renovations\n- Shrinkage concentrated at sill and top plate"
+    },
+    {
+      "id": "FF-03-02",
+      "title": "Wall Components and Layout",
+      "summary": "Detailed specifications for studs, plates, headers, and wall assembly layout",
+      "content_md": "## Wall Framing Components\n\n### Lumber Specifications\n\n**Studs (Vertical Members)**\n\n| Application | Size | Grade | Spacing |\n|-------------|------|-------|--------|\n| Exterior walls | 2×6 | SPF #2 or better | 16\" o.c. |\n| Interior bearing | 2×4 or 2×6 | SPF #2 or better | 16\" o.c. |\n| Partition walls | 2×4 | SPF Stud grade | 16\" or 24\" o.c. |\n| Tall walls (>10') | 2×6 minimum | SPF #2 | Per engineering |\n\n**Plates**\n\n- **Top plate (double)**: 2× material matching stud width\n- **Bottom plate**: 2× material, pressure-treated if on concrete\n- **Minimum overlap**: 4' between joints in top plates\n- **Joints**: Staggered minimum 4' between plates\n\n### Critical Framing Members\n\n#### King Studs\n- Full-height studs at sides of openings\n- Support header loads at bearing points\n- Nailed to both top and bottom plates\n- Never cut or notched\n\n#### Jack Studs (Trimmers)\n- Support header directly\n- Height = rough opening height + 1-1/2\" (for header bearing)\n- Nailed to king stud with 10d nails @ 12\" o.c.\n- Number based on header span\n\n| Header Span | Jack Studs Each Side |\n|-------------|---------------------|\n| Up to 4' | 1 |\n| 4' to 6' | 2 |\n| 6' to 8' | 2 (verify engineering) |\n| Over 8' | Per engineering |\n\n#### Cripple Studs\n- Short studs above or below openings\n- Maintain 16\" o.c. spacing through opening\n- Support header or sill loads\n- Same material as wall studs\n\n### Header Sizing for NB\n\n**Standard Headers (Single Floor Above)**\n\n| Opening Width | Header Size | Notes |\n|--------------|-------------|-------|\n| Up to 4' | (2) 2×8 | Standard windows |\n| 4' to 6' | (2) 2×10 | Large windows |\n| 6' to 8' | (2) 2×12 | Sliding doors |\n| 8' to 10' | LVL or engineered | Requires engineering |\n| Over 10' | Steel or engineered | Structural design required |\n\n**Header Construction**\n- Build up with 1/2\" plywood spacer for 2×6 walls\n- Headers flush with interior face\n- Insulation space on exterior side\n- Nail through king studs into header ends\n\n### Wall Layout Process\n\n**Step 1: Mark Plate Layout**\n```\n1. Snap chalk line on subfloor for wall location\n2. Mark corner locations\n3. Mark door and window rough openings\n4. Mark stud layout starting from corner (16\" o.c.)\n5. Transfer marks to both top and bottom plates\n```\n\n**Step 2: Rough Opening Sizing**\n\n| Opening Type | Width Formula | Height Formula |\n|--------------|---------------|----------------|\n| Windows | Unit width + 1\" | Unit height + 1\" |\n| Exterior doors | Unit width + 2-1/2\" | Unit height + 2\" |\n| Interior doors | Unit width + 2\" | Unit height + 1-1/2\" |\n\n**Step 3: Layout Marks**\n- X = stud location\n- K = king stud\n- J = jack stud\n- C = cripple\n- T = trimmer\n\n### Corner Details\n\n**Standard Three-Stud Corner**\n- Provides nailing for interior finish\n- Uses blocking between studs\n- Allows insulation continuity\n\n**California Corner (Preferred)**\n- Two studs with flat blocking\n- Better insulation continuity\n- Adequate nailing surface\n- Reduced thermal bridging\n\n**Partition Intersections**\n- Ladder blocking between studs\n- Provides backing for drywall\n- Maintains insulation cavity\n- Avoid solid blocking when possible"
+    },
+    {
+      "id": "FF-03-03",
+      "title": "Wall Assembly Procedures",
+      "summary": "Step-by-step procedures for framing, squaring, and raising walls",
+      "content_md": "## Wall Assembly Methods\n\n### Pre-Assembly Preparation\n\n**Material Staging**\n1. Sort studs for straightness (crown up)\n2. Cull twisted or damaged lumber\n3. Stage headers and specialty components\n4. Organize hardware and fasteners\n5. Clear work area on subfloor\n\n**Layout Transfer**\n1. Cut top and bottom plates to length\n2. Tack plates together for simultaneous marking\n3. Transfer all stud, opening, and corner marks\n4. Mark king, jack, and cripple locations\n5. Separate plates for assembly\n\n### Assembly Sequence\n\n**Standard Wall Assembly (Platform Method)**\n\n```\nStep 1: Position Bottom Plate\n- Align with chalk line on subfloor\n- Tack temporarily if needed\n- Mark snap line extends to wall location\n\nStep 2: Position Top Plates\n- Layout matching bottom plate\n- Double top plate overlaps at corners\n- Stagger joints minimum 4'\n\nStep 3: Install King Studs\n- Full-height studs at openings\n- Nail through plates (2) 16d each end\n- Check plumb as installed\n\nStep 4: Install Headers\n- Set header on jack stud marks\n- Nail through king studs (4) 16d each end\n- Verify level\n\nStep 5: Install Jack Studs\n- Cut to rough opening height\n- Nail to king stud (10d @ 12\" o.c.)\n- Check header support is solid\n\nStep 6: Install Common Studs\n- Crown up, straight edge to interior\n- (2) 16d through plates each end\n- Or end-nail with (4) 8d toenails\n\nStep 7: Install Cripples\n- Above and below openings\n- Maintain 16\" o.c. layout\n- Nail through headers/sills\n\nStep 8: Install Window Sills\n- Double 2× flat, or single on edge\n- Level and secure to jack studs\n- Cripples below support sill\n```\n\n### Nailing Schedule (NBC 2020)\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Stud to plate (end nail) | 16d common | 2 per end |\n| Stud to plate (toenail) | 8d common | 4 per end |\n| Double top plate | 10d common | 16\" o.c. |\n| Header to king stud | 16d common | 4 each end |\n| Jack to king stud | 10d common | 12\" o.c. |\n| Cripple to header | 8d common | 2 each end |\n| Let-in brace | 8d common | 2 per stud |\n\n### Squaring the Wall\n\n**Diagonal Measurement Method**\n1. Measure both diagonals corner to corner\n2. Difference should be less than 1/8\"\n3. Rack wall until diagonals match\n4. Tack brace to hold square\n\n**3-4-5 Triangle Method**\n1. Measure 3' along bottom plate from corner\n2. Measure 4' up from same corner\n3. Diagonal should equal exactly 5'\n4. Scale up: 6-8-10 or 9-12-15 for accuracy\n\n### Raising Walls\n\n**Safety Requirements**\n- Minimum 2 workers for walls over 8'\n- Wall jacks for long/heavy walls\n- Clear swing path before lifting\n- Temporary braces ready\n\n**Raising Procedure**\n```\n1. Slide wall to edge of floor platform\n2. Nail bottom plate to rim joist temporarily\n3. Lift wall in unison\n4. Push to vertical position\n5. Install temporary braces immediately\n6. Check plumb at multiple points\n7. Adjust and secure bracing\n8. Nail bottom plate to floor system\n```\n\n### Temporary Bracing\n\n- 2×4 diagonal braces minimum\n- Brace every 8' of wall length\n- Extend brace to floor, stake or block\n- Maintain bracing until:\n  - Sheathing installed\n  - Walls tied together\n  - Roof system in place\n\n### Straightening Walls\n\n**String Line Method**\n1. Set blocks at wall ends (same thickness)\n2. Stretch tight string along top plate\n3. Check gap at each stud location\n4. Push or pull wall to match string\n5. Brace to hold position\n\n**Tolerance**: ±1/8\" in 8' is acceptable"
+    },
+    {
+      "id": "FF-03-04",
+      "title": "Sheathing and Bracing",
+      "summary": "Structural sheathing requirements, installation procedures, and lateral bracing systems",
+      "content_md": "## Wall Sheathing Systems\n\n### Structural Sheathing Functions\n\n1. **Lateral resistance** - Resists wind and seismic forces\n2. **Racking resistance** - Prevents wall parallelogram movement\n3. **Stud support** - Reduces buckling length\n4. **Nail base** - For siding and trim attachment\n5. **Weather barrier substrate** - WRB attachment surface\n\n### Sheathing Materials for NB\n\n| Material | Thickness | Nail Spacing | R-Value | Cost |\n|----------|-----------|--------------|---------|------|\n| OSB (Structural 1) | 7/16\" | 6\"/12\" | ~1.0 | $ |\n| Plywood (CDX) | 1/2\" | 6\"/12\" | ~0.6 | $$ |\n| Structural fiberboard | 1/2\" | 4\"/8\" | ~1.3 | $$ |\n| Rigid foam (w/ bracing) | 1\" to 2\" | Per mfr | R-5 to R-10 | $$$ |\n\n**NBC 2020 Requirements**\n- Minimum 7/16\" OSB or 3/8\" plywood\n- Structural 1 rated or equivalent\n- Nail penetration minimum 1-1/2\" into framing\n\n### OSB/Plywood Installation\n\n**Panel Orientation**\n- Vertical installation (long edge vertical)\n- Strength axis perpendicular to studs\n- Horizontal acceptable with blocking at joints\n\n**Installation Procedure**\n```\n1. Start at corner, align with framing edge\n2. Leave 1/8\" gap at all panel edges\n3. Stagger vertical joints by minimum 4'\n4. Nail from center outward to prevent buckling\n5. Mark stud locations on sheathing face\n6. Drive nails flush - no overdriving\n```\n\n**Nailing Schedule**\n\n| Location | Nail Size | Spacing |\n|----------|-----------|--------|\n| Panel edges | 8d common | 6\" o.c. |\n| Intermediate studs | 8d common | 12\" o.c. |\n| Blocking at joints | 8d common | 6\" o.c. |\n\n**Critical Details**\n- Nails minimum 3/8\" from panel edge\n- No nails in gaps between panels\n- Replace overdriven nails (add adjacent nail)\n- Panel joints must fall on framing\n\n### Let-In Bracing (Alternative)\n\nWhen structural sheathing is not full coverage:\n\n**1×4 Let-In Brace**\n- 45° angle from top plate to bottom plate\n- Notched into stud faces\n- Extends corner to corner minimum\n- (2) 8d nails at each stud crossing\n\n**Metal T-Bracing**\n- Manufactured metal brace\n- Installed in saw kerf\n- Follow manufacturer specifications\n- Typically 45° to 60° angle\n\n### Braced Wall Panel Requirements\n\n**NBC 2020 Section 9.23.13**\n\n| Building Width | Braced Wall Panel Spacing |\n|----------------|---------------------------|\n| Up to 50' | 25' maximum |\n| Over 50' | Per engineering |\n\n**Minimum Braced Wall Panel Width**\n- 4' minimum with 4:1 height-to-width ratio\n- 2'-8\" with steel strapping or hold-downs\n- Full-height sheathing required\n\n### Continuous Exterior Insulation Integration\n\nFor NB Zone 6 energy compliance:\n\n**Approach 1: Structural Sheathing + Rigid Foam**\n```\nWall Assembly (inside to out):\n1. Drywall\n2. Vapor retarder\n3. 2×6 stud cavity (R-24 batt)\n4. OSB sheathing (structural)\n5. WRB/Air barrier\n6. Rigid foam (R-7.5 to R-10)\n7. Furring strips (rainscreen)\n8. Siding\n```\n\n**Approach 2: Structural Foam Sheathing**\n- Nailbase panels (OSB + foam)\n- Requires supplemental bracing at corners\n- Consult manufacturer for structural ratings\n\n### Window and Door Flashing Integration\n\n**Pre-Sheathing Preparation**\n1. Install sheathing with openings cut out\n2. Keep cuts clean and accurate\n3. Prime/seal OSB cut edges in wet climates\n4. Install sill pan flashing\n5. Integrate with WRB system\n\n### Quality Checklist - Sheathing\n\n- [ ] Correct panel thickness and grade\n- [ ] Proper orientation (strength axis)\n- [ ] 1/8\" gaps at all joints\n- [ ] Nails properly spaced and set\n- [ ] No overdriven nails\n- [ ] Joints fall on framing members\n- [ ] Full nailing at corners and openings\n- [ ] Sheathing tight to framing (no gaps)"
+    },
+    {
+      "id": "FF-03-05",
+      "title": "Inspection and Quality Control",
+      "summary": "Inspection checklists, common defects, and code compliance verification",
+      "content_md": "## Wall Framing Inspection\n\n### Pre-Cover Inspection Requirements\n\nWall framing must be inspected before:\n- Insulation installation\n- Vapor barrier application\n- Interior finish (drywall)\n- Exterior finish installation\n\n### Inspection Categories\n\n#### 1. Structural Compliance\n\n**Load-Bearing Wall Verification**\n- [ ] Studs properly sized (2×6 exterior, 2×4+ interior)\n- [ ] Spacing correct (16\" o.c. standard)\n- [ ] Double top plates with staggered joints\n- [ ] Bottom plate anchored to floor system\n- [ ] Load path continuity verified\n\n**Header Inspection**\n- [ ] Headers properly sized for span\n- [ ] King studs full height\n- [ ] Jack studs support header bearing\n- [ ] Number of jacks per span requirement\n- [ ] Header level and properly secured\n\n#### 2. Opening Compliance\n\n**Window Openings**\n- [ ] Rough opening within 1/4\" of specifications\n- [ ] Opening square (diagonals within 1/8\")\n- [ ] Sill height consistent\n- [ ] Cripple studs maintain 16\" layout\n- [ ] Sill properly supported\n\n**Door Openings**\n- [ ] Rough opening width and height correct\n- [ ] Plumb king studs (level within 1/8\" per 8')\n- [ ] Jack studs properly nailed\n- [ ] No header sag or deflection\n\n#### 3. Fastening Verification\n\n**Nailing Schedule Compliance**\n| Connection | Required | Inspector Checks |\n|------------|----------|------------------|\n| Studs to plates | Per schedule | Random sample 10% |\n| Double top plate | 10d @ 16\" | Full length |\n| Sheathing edges | 8d @ 6\" | All perimeter |\n| Sheathing field | 8d @ 12\" | Random sample |\n\n#### 4. Geometry and Alignment\n\n**Tolerances (NBC/Industry Standard)**\n| Measurement | Tolerance |\n|-------------|----------|\n| Wall plumb | 1/8\" per 8' |\n| Wall straight | 1/8\" in 8' |\n| Opening square | 1/8\" diagonal |\n| Stud spacing | ±1/4\" |\n| Plate alignment | ±1/4\" |\n\n### Common Defects and Corrections\n\n#### Structural Defects\n\n**Missing or Undersized Headers**\n- *Cause*: Layout error or span miscalculation\n- *Fix*: Install proper header before proceeding\n- *Prevention*: Verify header schedule before framing\n\n**Inadequate Jack Studs**\n- *Cause*: Misunderstanding of span requirements\n- *Fix*: Add required jack studs\n- *Prevention*: Follow jack stud chart for all openings\n\n**Cut or Notched King Studs**\n- *Cause*: Plumbing/electrical routing errors\n- *Fix*: Sister full stud or replace\n- *Prevention*: Plan utility routing before framing\n\n#### Assembly Defects\n\n**Overdriven Sheathing Nails**\n- *Cause*: Air pressure too high\n- *Fix*: Add nail within 2\" of overdriven nail\n- *Prevention*: Adjust compressor, check depth\n\n**Missing Blocking at Sheathing Joints**\n- *Cause*: Horizontal sheathing without blocking\n- *Fix*: Add blocking behind all horizontal joints\n- *Prevention*: Use vertical sheathing orientation\n\n**Walls Out of Plumb**\n- *Cause*: Inadequate bracing during assembly\n- *Fix*: Loosen connections, plumb, re-brace\n- *Prevention*: Check plumb before permanent fastening\n\n### Documentation Requirements\n\n**Required for Permit File**\n1. Framing inspection approval\n2. Engineering documents (if applicable)\n3. Hardware installation verification\n4. Hold-down and strap locations\n5. Shear wall schedule compliance\n\n### NB-Specific Considerations\n\n**High Wind Areas (Coastal)**\n- Enhanced connections may be required\n- Hurricane straps at roof connections\n- Verify hold-down anchor embedment\n\n**Energy Code Compliance**\n- 2×6 exterior walls for R-24 cavity\n- Thermal bridging addressed\n- Air barrier continuity plan\n\n### Red Flags Requiring Engineering\n\n- Headers spanning over 10'\n- Walls over 10' height\n- Point loads without direct support\n- Significant notching or boring\n- Load-bearing wall modifications\n- Unusual geometry or angles\n\n### Post-Inspection Responsibilities\n\n1. Address all noted deficiencies\n2. Request re-inspection if required\n3. Document corrections made\n4. Proceed with insulation/finishing\n5. Maintain inspection records"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "FF-03-CL01",
+      "title": "Wall Layout Checklist",
+      "items": [
+        "Chalk lines snapped for all wall locations",
+        "Corner positions verified against plans",
+        "Door and window openings marked with dimensions",
+        "Stud layout marked on plates (16\" o.c. from designated corner)",
+        "King, jack, and cripple positions identified",
+        "Plate lengths cut with joints at stud locations",
+        "Top plate overlap at corners planned (4' minimum)",
+        "Partition intersections marked"
+      ]
+    },
+    {
+      "id": "FF-03-CL02",
+      "title": "Header Assembly Checklist",
+      "items": [
+        "Header size verified for span (see header chart)",
+        "Built-up header with 1/2\" spacer for 2×6 walls",
+        "Headers nailed with adequate fasteners",
+        "Jack stud quantity matches span requirement",
+        "King studs full height (not cut)",
+        "Header flush with interior stud face",
+        "Insulation space provided at exterior headers"
+      ]
+    },
+    {
+      "id": "FF-03-CL03",
+      "title": "Wall Assembly Checklist",
+      "items": [
+        "Studs sorted for crown direction (up)",
+        "Damaged or twisted studs culled",
+        "Studs nailed through plates (2×16d or 4×8d toenail)",
+        "Double top plate with staggered joints",
+        "Cripples maintain 16\" spacing through openings",
+        "Window sills level and properly supported",
+        "Corner framing provides insulation space",
+        "Partition backing/blocking installed"
+      ]
+    },
+    {
+      "id": "FF-03-CL04",
+      "title": "Wall Raising Checklist",
+      "items": [
+        "Work area clear of obstructions",
+        "Bottom plate temporarily secured",
+        "Adequate workers for wall size (2+ for walls over 8')",
+        "Temporary braces cut and ready",
+        "Swing path clear",
+        "Adjacent walls braced and secure",
+        "First wall raised and braced before second",
+        "Plumb checked immediately after raising"
+      ]
+    },
+    {
+      "id": "FF-03-CL05",
+      "title": "Squaring and Straightening Checklist",
+      "items": [
+        "Diagonal measurements taken (both directions)",
+        "Diagonals within 1/8\" of equal",
+        "Wall racked to square if needed",
+        "String line set for straightening",
+        "Blocks of equal thickness at ends",
+        "Wall adjusted to string at each stud",
+        "Permanent bracing installed after straightening",
+        "Plumb verified after straightening"
+      ]
+    },
+    {
+      "id": "FF-03-CL06",
+      "title": "Sheathing Installation Checklist",
+      "items": [
+        "Panel grade and thickness verified",
+        "Panels oriented correctly (strength axis perpendicular to studs)",
+        "1/8\" gap at all panel edges",
+        "Vertical joints staggered minimum 4'",
+        "Nails at 6\" o.c. on edges",
+        "Nails at 12\" o.c. in field",
+        "No overdriven nails",
+        "Nails minimum 3/8\" from panel edges",
+        "All joints on framing members"
+      ]
+    },
+    {
+      "id": "FF-03-CL07",
+      "title": "Pre-Inspection Checklist",
+      "items": [
+        "All studs properly spaced and secured",
+        "Headers sized correctly for spans",
+        "Jack studs support all headers",
+        "Rough openings within tolerance",
+        "Walls plumb (1/8\" per 8' maximum)",
+        "Walls straight (string line check)",
+        "Sheathing properly nailed",
+        "Braced wall panels meet requirements",
+        "Bottom plates anchored to floor",
+        "Double top plates with staggered joints"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "FF-03-Q01",
+        "question": "What is the standard stud spacing for residential wall framing in NB?",
+        "type": "multiple_choice",
+        "choices": [
+          "12\" on center",
+          "16\" on center",
+          "19.2\" on center",
+          "24\" on center"
+        ],
+        "answer": "16\" on center",
+        "explanation": "16\" on center is the standard stud spacing for most residential wall framing per NBC 2020. This spacing aligns with standard 48\" panel widths and provides adequate structural support."
+      },
+      {
+        "id": "FF-03-Q02",
+        "question": "What is the primary function of a king stud in wall framing?",
+        "type": "multiple_choice",
+        "choices": [
+          "To support the header at its bearing points",
+          "To provide a full-height stud at the side of an opening",
+          "To maintain 16\" on center spacing through openings",
+          "To support the window sill"
+        ],
+        "answer": "To provide a full-height stud at the side of an opening",
+        "explanation": "King studs are full-height studs that run from bottom plate to top plate at the sides of openings. They anchor the header assembly and transfer loads through the jack studs to the floor system."
+      },
+      {
+        "id": "FF-03-Q03",
+        "question": "How many jack studs are required on each side of a 5-foot wide opening?",
+        "type": "multiple_choice",
+        "choices": [
+          "1 jack stud each side",
+          "2 jack studs each side",
+          "3 jack studs each side",
+          "Per engineering only"
+        ],
+        "answer": "2 jack studs each side",
+        "explanation": "For openings between 4' and 6', two jack studs are required on each side to adequately support the header loads. Openings up to 4' require only one jack stud per side."
+      },
+      {
+        "id": "FF-03-Q04",
+        "question": "What is the minimum overlap required between joints in the double top plate?",
+        "type": "multiple_choice",
+        "choices": [
+          "2 feet",
+          "3 feet",
+          "4 feet",
+          "6 feet"
+        ],
+        "answer": "4 feet",
+        "explanation": "Joints in the double top plate must be staggered by a minimum of 4 feet to maintain structural continuity and properly transfer loads across the joint."
+      },
+      {
+        "id": "FF-03-Q05",
+        "question": "When installing structural sheathing, what gap should be left between panels?",
+        "type": "multiple_choice",
+        "choices": [
+          "No gap - panels should be tight",
+          "1/16\" gap",
+          "1/8\" gap",
+          "1/4\" gap"
+        ],
+        "answer": "1/8\" gap",
+        "explanation": "A 1/8\" gap should be left between all sheathing panels to allow for expansion due to moisture and temperature changes. Without this gap, panels can buckle."
+      },
+      {
+        "id": "FF-03-Q06",
+        "question": "What is the nail spacing requirement for structural sheathing at panel edges?",
+        "type": "multiple_choice",
+        "choices": [
+          "4\" on center",
+          "6\" on center",
+          "8\" on center",
+          "12\" on center"
+        ],
+        "answer": "6\" on center",
+        "explanation": "Structural sheathing requires 8d nails at 6\" on center at panel edges and 12\" on center at intermediate studs (field nailing) per NBC 2020."
+      },
+      {
+        "id": "FF-03-Q07",
+        "question": "What is the tolerance for wall plumb per NBC standards?",
+        "type": "multiple_choice",
+        "choices": [
+          "1/16\" per 8 feet",
+          "1/8\" per 8 feet",
+          "1/4\" per 8 feet",
+          "1/2\" per 8 feet"
+        ],
+        "answer": "1/8\" per 8 feet",
+        "explanation": "Walls must be plumb within 1/8\" per 8 feet of height. Greater deviation can affect door and window installation, drywall finishing, and structural performance."
+      },
+      {
+        "id": "FF-03-Q08",
+        "question": "What is a California corner and why is it preferred?",
+        "type": "multiple_choice",
+        "choices": [
+          "Three full studs for maximum strength",
+          "Two studs with flat blocking for better insulation",
+          "Four studs for earthquake resistance",
+          "Single stud with metal brackets"
+        ],
+        "answer": "Two studs with flat blocking for better insulation",
+        "explanation": "A California corner uses two studs with flat blocking between them, providing adequate nailing for interior finish while allowing continuous insulation in the corner cavity, reducing thermal bridging."
+      },
+      {
+        "id": "FF-03-Q09",
+        "question": "What should be done when a sheathing nail is overdriven?",
+        "type": "multiple_choice",
+        "choices": [
+          "Remove it and replace in same hole",
+          "Leave it - overdriven nails are acceptable",
+          "Add a nail within 2\" of the overdriven nail",
+          "Fill the hole with caulk"
+        ],
+        "answer": "Add a nail within 2\" of the overdriven nail",
+        "explanation": "Overdriven nails lose holding power because the head breaks through the panel face. The solution is to add a properly driven nail within 2\" of the overdriven nail, not to remove and replace in the same hole."
+      },
+      {
+        "id": "FF-03-Q10",
+        "question": "Why must studs be installed with the crown facing up?",
+        "type": "multiple_choice",
+        "choices": [
+          "For aesthetics only",
+          "To match manufacturer specifications",
+          "To ensure consistent deflection direction under load",
+          "To make drywall installation easier"
+        ],
+        "answer": "To ensure consistent deflection direction under load",
+        "explanation": "Installing studs crown-up ensures any natural bow deflects consistently upward when loaded. This creates a more uniform wall surface and predictable structural behavior."
+      },
+      {
+        "id": "FF-03-Q11",
+        "question": "What is the minimum header size for a 6-foot wide opening with one floor above?",
+        "type": "multiple_choice",
+        "choices": [
+          "(2) 2×8",
+          "(2) 2×10",
+          "(2) 2×12",
+          "Engineered beam required"
+        ],
+        "answer": "(2) 2×12",
+        "explanation": "For openings 6' to 8' with one floor above, (2) 2×12 headers are typically required. Always verify with local requirements and engineering for specific load conditions."
+      },
+      {
+        "id": "FF-03-Q12",
+        "question": "How do you verify a wall is square during assembly?",
+        "type": "multiple_choice",
+        "choices": [
+          "Use a framing square at each corner",
+          "Measure both diagonals - they should be equal",
+          "Check with a laser level",
+          "Verify stud spacing is consistent"
+        ],
+        "answer": "Measure both diagonals - they should be equal",
+        "explanation": "A square wall will have equal diagonal measurements from corner to corner. If diagonals differ by more than 1/8\", the wall should be racked until they match."
+      },
+      {
+        "id": "FF-03-Q13",
+        "question": "What is the function of cripple studs?",
+        "type": "multiple_choice",
+        "choices": [
+          "To support headers",
+          "To frame corners",
+          "To maintain stud spacing above/below openings",
+          "To provide backing for electrical boxes"
+        ],
+        "answer": "To maintain stud spacing above/below openings",
+        "explanation": "Cripple studs are short studs above or below openings that maintain the 16\" on center layout through the opening area, providing support for headers, sills, and sheathing."
+      },
+      {
+        "id": "FF-03-Q14",
+        "question": "What is required when a load-bearing wall is modified in a renovation?",
+        "type": "multiple_choice",
+        "choices": [
+          "Replace studs with same size",
+          "Add blocking only",
+          "Engineering review and design",
+          "Permit is not required for interior walls"
+        ],
+        "answer": "Engineering review and design",
+        "explanation": "Any modification to a load-bearing wall requires engineering review and design to ensure the load path is maintained and appropriate headers or structural solutions are implemented."
+      },
+      {
+        "id": "FF-03-Q15",
+        "question": "Why is 2×6 wall framing required for exterior walls in NB Zone 6?",
+        "type": "multiple_choice",
+        "choices": [
+          "For stronger walls",
+          "To accommodate R-24 cavity insulation",
+          "For better fire resistance",
+          "To support heavier siding"
+        ],
+        "answer": "To accommodate R-24 cavity insulation",
+        "explanation": "NBC 2020 energy requirements for Zone 6 typically require R-24 cavity insulation, which requires a 2×6 wall cavity. 2×4 walls cannot accommodate this insulation depth."
+      }
+    ]
+  }
+}

@@ -1,0 +1,345 @@
+{
+  "id": "FF-06",
+  "phase": 2,
+  "slug": "window-door-framing",
+  "title": "Window & Door Framing",
+  "category": "Structural Framing",
+  "level": "Journeyman",
+  "priority": 4,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["OH-01", "OH-02", "FF-03"],
+  "estimated_study_hours": 4,
+  "status": "complete",
+  "tags": ["window framing", "door framing", "rough opening", "headers", "king studs", "jack studs", "sill", "threshold", "prehung doors", "NBC 2020"],
+  "sections": [
+    {
+      "id": "FF-06-01",
+      "title": "Introduction to Opening Framing",
+      "summary": "Overview of window and door opening requirements and terminology",
+      "content_md": "## Opening Framing Fundamentals\n\nProper framing of window and door openings is critical for both structural integrity and successful installation of the finish units.\n\n### Why Opening Framing Matters\n\n1. **Structural support** - Headers transfer loads around openings\n2. **Weather resistance** - Proper sizing allows for sealing\n3. **Operation** - Square openings ensure doors/windows work properly\n4. **Energy efficiency** - Tight openings reduce air leakage\n5. **Installation ease** - Correct rough openings save time\n\n### Key Terminology\n\n**Rough Opening (R.O.)**\n- The framed opening size\n- Slightly larger than finish unit\n- Allows for shimming and sealing\n\n**King Stud**\n- Full-height stud beside opening\n- Runs from bottom plate to top plate\n- Supports header at its ends\n\n**Jack Stud (Trimmer)**\n- Shortened stud supporting header directly\n- Nailed to king stud\n- Height determines opening height\n\n**Header**\n- Horizontal beam spanning opening\n- Transfers loads to jack/king studs\n- Size based on span and loads\n\n**Sill**\n- Bottom of window opening\n- Supports window weight\n- May be single or double\n\n**Cripple Stud**\n- Short studs above or below openings\n- Maintain stud spacing (16\" o.c.)\n- Support header or sill loads\n\n### Opening Framing Components\n\n```\n         ┌─────────────────────────────────┐\n         │          TOP PLATE              │\n         ├─────────────────────────────────┤\n         │           CRIPPLES              │\n         ├─────────────────────────────────┤\n    K    │           HEADER                │    K\n    I    ├─────────────────────────────────┤    I\n    N    │         J    R.O.     J         │    N\n    G    │         A             A         │    G\n         │         C             C         │\n    S    │         K    WINDOW   K         │    S\n    T    │                                 │    T\n    U    ├─────────────────────────────────┤    U\n    D    │           SILL                  │    D\n         ├─────────────────────────────────┤\n         │           CRIPPLES              │\n         ├─────────────────────────────────┤\n         │          BOTTOM PLATE           │\n         └─────────────────────────────────┘\n```\n\n### NBC 2020 Requirements\n\n**Section 9.23 - Opening Framing**\n\n- Headers sized for span and loads\n- Minimum jack stud requirements\n- Proper nailing connections\n- Maintain load path continuity"
+    },
+    {
+      "id": "FF-06-02",
+      "title": "Rough Opening Calculations",
+      "summary": "How to calculate rough opening sizes for windows and doors",
+      "content_md": "## Rough Opening Sizing\n\n### General Formula\n\n**Rough Opening = Unit Size + Clearance**\n\n### Window Rough Openings\n\n**Standard Window R.O. Calculation**\n\n| Dimension | Formula |\n|-----------|--------|\n| Width | Unit width + 1/2\" to 1\" |\n| Height | Unit height + 1/2\" to 1\" |\n\n**Example: 36\" × 48\" Window**\n- R.O. Width: 36-1/2\" to 37\"\n- R.O. Height: 48-1/2\" to 49\"\n\n**Always Verify with Manufacturer**\n- Check spec sheet for exact R.O.\n- Custom windows may vary\n- Energy-efficient units may differ\n\n### Door Rough Openings\n\n**Exterior Door R.O.**\n\n| Unit Width | R.O. Width | R.O. Height |\n|------------|------------|-------------|\n| 2'-8\" (32\") | 34-1/2\" | 82-1/2\" |\n| 3'-0\" (36\") | 38-1/2\" | 82-1/2\" |\n| 3'-6\" (42\") | 44-1/2\" | 82-1/2\" |\n\n*Standard 6'-8\" door height*\n\n**Interior Door R.O.**\n\n| Unit Width | R.O. Width | R.O. Height |\n|------------|------------|-------------|\n| 2'-4\" (28\") | 30\" | 82\" |\n| 2'-6\" (30\") | 32\" | 82\" |\n| 2'-8\" (32\") | 34\" | 82\" |\n| 3'-0\" (36\") | 38\" | 82\" |\n\n*Standard 6'-8\" door height*\n\n### Sliding/Patio Door R.O.\n\n| Unit Size | Approx R.O. |\n|-----------|-------------|\n| 5' sliding | 60-1/2\" × 80-1/2\" |\n| 6' sliding | 72-1/2\" × 80-1/2\" |\n| 8' sliding | 96-1/2\" × 80-1/2\" |\n\n*Always verify with specific manufacturer*\n\n### Standard Sill Heights\n\n| Window Location | Sill Height from Floor |\n|-----------------|------------------------|\n| Living areas | 36\" to 42\" |\n| Bedrooms | 24\" minimum (egress) |\n| Bathroom | 48\" to 60\" |\n| Kitchen (over counter) | 42\" to 48\" |\n| Transom windows | 80\" or higher |\n\n### Egress Window Requirements (NBC)\n\n**Minimum Egress Opening**\n- Clear opening: 0.35 m² (3.77 sq ft) minimum\n- Minimum dimension: 380 mm (15\") in any direction\n- Sill height: Maximum 1000 mm (39\") from floor\n- Required in each bedroom\n\n### Layout Tips\n\n**Before Cutting**\n1. Confirm unit size (measure if on-site)\n2. Check manufacturer R.O. specs\n3. Verify header height for opening\n4. Mark layout on plates before assembly\n\n**Common Mistakes**\n- Using nominal sizes (use actual R.O.)\n- Forgetting door jamb thickness\n- Not accounting for flooring thickness\n- Sill too high for egress"
+    },
+    {
+      "id": "FF-06-03",
+      "title": "Header Sizing and Installation",
+      "summary": "Proper header sizing for NB loads and installation procedures",
+      "content_md": "## Header Requirements\n\n### Header Function\n\n- Transfer roof/floor loads around opening\n- Distribute load to jack studs\n- Maintain structural integrity\n- Support cripple studs above\n\n### Header Sizing for NB\n\n**Single Story or Top Floor**\n\n| Opening Width | Header Size | Notes |\n|--------------|-------------|-------|\n| Up to 4' | (2) 2×6 | Light loads |\n| 4' to 5' | (2) 2×8 | Standard windows |\n| 5' to 6' | (2) 2×10 | Large windows |\n| 6' to 8' | (2) 2×12 | Sliding doors |\n| Over 8' | Engineered | LVL or steel |\n\n**With Floor or Roof Above**\n\n| Opening Width | Header Size | Notes |\n|--------------|-------------|-------|\n| Up to 4' | (2) 2×8 | Heavier loads |\n| 4' to 5' | (2) 2×10 | |\n| 5' to 6' | (2) 2×12 | |\n| 6' to 8' | Engineered | LVL required |\n| Over 8' | Steel | Engineer design |\n\n*Verify with NBC span tables for specific conditions*\n\n### Header Construction\n\n**Built-Up Headers**\n\n```\nFor 2×4 walls:\n(2) 2× lumber + 1/2\" plywood spacer = 3-1/2\"\n\nFor 2×6 walls:\n(2) 2× lumber + 1/2\" plywood + 1-1/2\" rigid foam = 5-1/2\"\nOR\n(2) 2× lumber + 2\" rigid foam = 5-1/2\"\n```\n\n**Insulated Header Option**\n- Provides R-value in header cavity\n- Rigid foam between lumber\n- Flush with both faces\n- Good for exterior walls in NB\n\n### Header Installation\n\n**Step 1: Cut Header Components**\n- Two pieces of 2× lumber\n- Spacer material (plywood/foam)\n- Length = R.O. width + 3\" (for jack studs)\n\n**Step 2: Assemble Header**\n- Nail through lumber into spacer\n- 16d nails, staggered pattern\n- Check for square and straight\n\n**Step 3: Install Jack Studs**\n- Cut to: Floor to header bottom\n- Nail to king stud: 10d @ 12\" o.c.\n- Number per side based on span\n\n**Step 4: Set Header**\n- Position on jack studs\n- Level check\n- Nail through king stud into header ends\n\n**Step 5: Install Cripples**\n- Above header to top plate\n- Maintain 16\" o.c. layout\n- Nail through top plate and header\n\n### Jack Stud Requirements\n\n| Header Span | Jack Studs Each Side |\n|-------------|---------------------|\n| Up to 4' | 1 |\n| 4' to 6' | 2 |\n| 6' to 8' | 2-3 |\n| Over 8' | Per engineering |\n\n### Nailing Schedule\n\n| Connection | Fastener | Quantity |\n|------------|----------|----------|\n| Jack to king | 10d | 12\" o.c. |\n| Header to king (end nail) | 16d | 4 each end |\n| Cripple to header (toenail) | 8d | 2 each side |\n| Cripple to plate (end nail) | 16d | 2 |"
+    },
+    {
+      "id": "FF-06-04",
+      "title": "Window and Door Installation Prep",
+      "summary": "Preparing framed openings for window and door installation",
+      "content_md": "## Pre-Installation Preparation\n\n### Window Opening Preparation\n\n**Sill Framing**\n\n*Single Sill*\n- One 2× flat (wide face up)\n- Adequate for small windows\n- Easier drainage\n\n*Double Sill*\n- Two 2× flat or one on edge\n- Better for large windows\n- More structural support\n\n**Sill Installation**\n1. Position between jack studs\n2. Level check (critical for drainage)\n3. Nail through jacks into sill ends\n4. Install cripples below sill\n\n### Door Opening Preparation\n\n**Floor Considerations**\n- Interior: Opening to subfloor\n- Exterior: Account for threshold/sill\n- Factor in finish floor thickness\n\n**Subfloor Condition**\n- Clean and flat\n- No humps or dips\n- Solid bearing for threshold\n\n### Opening Inspection\n\n**Before Installation**\n\n| Check | Requirement |\n|-------|-------------|\n| Width | R.O. ± 1/4\" |\n| Height | R.O. ± 1/4\" |\n| Square | Diagonals equal ± 1/8\" |\n| Plumb | King studs plumb |\n| Level | Header/sill level |\n| Flat | Jamb faces in plane |\n\n### Flashing Integration\n\n**Weather Barrier Sequence**\n\n1. Install wall sheathing\n2. Cut sheathing at opening\n3. Apply WRB (housewrap)\n4. Cut WRB at opening (special cuts)\n5. Install sill pan flashing\n6. Install window\n7. Integrate WRB with window flange\n8. Top flashing over window\n\n**Sill Pan Details**\n- Slope to exterior (1/4\" per foot)\n- Corners sealed\n- Back dam prevents interior leaks\n- End dams at jambs\n\n### Common Issues to Address\n\n**Out of Square Opening**\n- Re-frame if significantly off\n- Minor issues: shim during install\n- Check diagonals before proceeding\n\n**Twisted King Studs**\n- Plane high spots\n- Add blocking if needed\n- Ensures flat installation surface\n\n**Incorrect R.O. Size**\n- Too small: Re-frame required\n- Too large: Use extension jambs\n- Slightly large: OK with shimming\n\n### Installation Fastening Points\n\n**Window Nailing Fin**\n- Nail through fin into framing\n- Pattern per manufacturer\n- Typically 6\" to 12\" spacing\n\n**Door Jamb**\n- Shim at hinge locations\n- Shim at strike location\n- Nail/screw through shims\n\n### Energy Considerations for NB\n\n**Insulation Around Openings**\n- Low-expansion foam at jambs\n- Backer rod + sealant alternative\n- Never use high-expansion foam\n\n**Air Sealing**\n- Continuous seal at all edges\n- Interior vapor barrier to window\n- Exterior WRB to window flange"
+    },
+    {
+      "id": "FF-06-05",
+      "title": "Inspection and Quality Control",
+      "summary": "Verification procedures and common framing defects",
+      "content_md": "## Opening Inspection\n\n### Pre-Cover Checklist\n\n**Structural Verification**\n\n- [ ] Header size adequate for span\n- [ ] King studs full height, not cut\n- [ ] Jack studs proper quantity\n- [ ] Jack studs nailed to king studs\n- [ ] Header level and properly supported\n- [ ] Nailing schedule met\n\n**Geometry Verification**\n\n- [ ] R.O. width correct (± 1/4\")\n- [ ] R.O. height correct (± 1/4\")\n- [ ] Opening square (diagonals equal)\n- [ ] King studs plumb\n- [ ] Sill/header level\n\n### Measuring for Verification\n\n**Width Measurement**\n- Measure at top (under header)\n- Measure at bottom (above sill/floor)\n- Compare: should be within 1/4\"\n\n**Height Measurement**\n- Measure at left jamb\n- Measure at right jamb\n- Compare: should be within 1/4\"\n\n**Square Check**\n- Measure both diagonals\n- Difference should be < 1/8\"\n\n### Common Defects\n\n**Undersized Header**\n- *Cause*: Wrong span table reference\n- *Fix*: Install proper header\n- *Prevention*: Verify before framing\n\n**Missing Jack Studs**\n- *Cause*: Span requirements misunderstood\n- *Fix*: Add required jacks\n- *Prevention*: Follow jack chart\n\n**Opening Out of Square**\n- *Cause*: Layout error, wall racked\n- *Fix*: Re-frame or plane studs\n- *Prevention*: Check square before nailing\n\n**Wrong R.O. Size**\n- *Cause*: Using nominal vs. actual\n- *Fix*: Reframe if too small\n- *Prevention*: Verify R.O. with specs\n\n**Sill Not Level**\n- *Cause*: Uneven cripples\n- *Fix*: Re-level and re-secure\n- *Prevention*: Check level during install\n\n### Egress Verification\n\n**Bedroom Windows Must Meet:**\n\n| Requirement | Minimum |\n|-------------|--------|\n| Clear opening area | 0.35 m² (3.77 sq ft) |\n| Minimum dimension | 380 mm (15\") |\n| Maximum sill height | 1000 mm (39\") |\n\n**Verification Process**\n1. Measure R.O. dimensions\n2. Check window specifications\n3. Verify net clear opening meets code\n4. Measure sill height from finish floor\n\n### Documentation\n\n**Record for Each Opening**\n- Location (room/wall)\n- R.O. width and height\n- Header size\n- Square check result\n- Egress verification (if applicable)\n\n### Post-Installation Inspection\n\n**Window Installation**\n- [ ] Centered in opening\n- [ ] Plumb and level\n- [ ] Shimmed at all fastening points\n- [ ] Proper nail/screw spacing\n- [ ] Flashing properly integrated\n- [ ] Insulation/air sealing complete\n\n**Door Installation**\n- [ ] Jamb plumb both directions\n- [ ] Head level\n- [ ] Correct clearances (hinge side, strike side)\n- [ ] Threshold sealed to floor\n- [ ] Weather-stripping intact\n- [ ] Hardware functions properly"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "FF-06-CL01",
+      "title": "Opening Layout Checklist",
+      "items": [
+        "R.O. size verified with manufacturer specs",
+        "Opening location marked on plates",
+        "King stud positions marked",
+        "Jack stud positions marked",
+        "Sill height calculated and marked",
+        "Header height verified",
+        "Egress requirements checked (bedrooms)",
+        "Layout transferred to both top and bottom plates"
+      ]
+    },
+    {
+      "id": "FF-06-CL02",
+      "title": "Header Assembly Checklist",
+      "items": [
+        "Header size verified for span and loads",
+        "Lumber straight and free of defects",
+        "Spacer material ready (plywood/foam)",
+        "Length calculated (R.O. + 3\" for jacks)",
+        "Components assembled square",
+        "Nailing pattern adequate (16d staggered)",
+        "Insulation installed in exterior headers",
+        "Header checked for straight and square"
+      ]
+    },
+    {
+      "id": "FF-06-CL03",
+      "title": "Opening Framing Checklist",
+      "items": [
+        "King studs installed full height",
+        "King studs plumb",
+        "Jack studs cut to correct height",
+        "Jack studs nailed to king studs (10d @ 12\" o.c.)",
+        "Header installed level",
+        "Header nailed through king studs (4×16d each end)",
+        "Cripples installed above header",
+        "Cripples maintain 16\" o.c. spacing"
+      ]
+    },
+    {
+      "id": "FF-06-CL04",
+      "title": "Window Opening Checklist",
+      "items": [
+        "Sill installed level",
+        "Sill supported by cripples below",
+        "Sill nailed through jack studs",
+        "Cripples maintain 16\" o.c. below sill",
+        "R.O. width verified at top and bottom",
+        "R.O. height verified at both sides",
+        "Diagonals checked for square",
+        "Opening ready for flashing/installation"
+      ]
+    },
+    {
+      "id": "FF-06-CL05",
+      "title": "Door Opening Checklist",
+      "items": [
+        "R.O. width correct for door unit",
+        "R.O. height accounts for threshold and flooring",
+        "King studs plumb",
+        "Jack studs plumb",
+        "Header level",
+        "Subfloor flat and solid at threshold",
+        "No bottom plate across exterior doors",
+        "Anchor/threshold fastening considered"
+      ]
+    },
+    {
+      "id": "FF-06-CL06",
+      "title": "Egress Window Verification",
+      "items": [
+        "Window is in bedroom or required location",
+        "Net clear opening ≥ 0.35 m² (3.77 sq ft)",
+        "Minimum dimension ≥ 380 mm (15\")",
+        "Sill height ≤ 1000 mm (39\") from finish floor",
+        "Window operable from inside without tools",
+        "Opening provides unobstructed egress",
+        "Documentation complete"
+      ]
+    },
+    {
+      "id": "FF-06-CL07",
+      "title": "Pre-Installation Verification",
+      "items": [
+        "All opening dimensions verified",
+        "Headers properly sized and installed",
+        "Openings square (diagonals checked)",
+        "Studs plumb and flat",
+        "Sills level",
+        "Sheathing cut cleanly at openings",
+        "WRB properly prepared",
+        "Flashing materials ready"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "FF-06-Q01",
+        "question": "What is the typical clearance added to a window unit size to determine rough opening width?",
+        "type": "multiple_choice",
+        "choices": [
+          "1/4 inch",
+          "1/2 to 1 inch",
+          "2 inches",
+          "3 inches"
+        ],
+        "answer": "1/2 to 1 inch",
+        "explanation": "The rough opening for windows is typically 1/2 to 1 inch larger than the unit size in both width and height. This allows for shimming, insulation, and adjustment during installation."
+      },
+      {
+        "id": "FF-06-Q02",
+        "question": "What is the function of a jack stud (trimmer)?",
+        "type": "multiple_choice",
+        "choices": [
+          "To provide full-height support at the opening side",
+          "To directly support the header bearing",
+          "To maintain 16\" on center spacing",
+          "To support the window sill"
+        ],
+        "answer": "To directly support the header bearing",
+        "explanation": "Jack studs (trimmers) are shortened studs that directly support the ends of the header. They transfer the header loads down to the floor system while the king stud provides lateral support."
+      },
+      {
+        "id": "FF-06-Q03",
+        "question": "How many jack studs are required on each side of a 5-foot wide opening?",
+        "type": "multiple_choice",
+        "choices": [
+          "1 jack stud",
+          "2 jack studs",
+          "3 jack studs",
+          "4 jack studs"
+        ],
+        "answer": "2 jack studs",
+        "explanation": "Openings between 4 and 6 feet wide require 2 jack studs on each side to adequately support the header. Spans up to 4 feet need only 1, while spans over 6 feet may need more."
+      },
+      {
+        "id": "FF-06-Q04",
+        "question": "What is the maximum sill height for an egress window in a bedroom?",
+        "type": "multiple_choice",
+        "choices": [
+          "600 mm (24 inches)",
+          "800 mm (32 inches)",
+          "1000 mm (39 inches)",
+          "1200 mm (48 inches)"
+        ],
+        "answer": "1000 mm (39 inches)",
+        "explanation": "Per NBC, egress windows in bedrooms must have a maximum sill height of 1000 mm (approximately 39 inches) from the finish floor to allow occupants to escape in an emergency."
+      },
+      {
+        "id": "FF-06-Q05",
+        "question": "What header size is typically required for a 6-foot wide opening on a single-story home?",
+        "type": "multiple_choice",
+        "choices": [
+          "(2) 2×6",
+          "(2) 2×8",
+          "(2) 2×10",
+          "(2) 2×12"
+        ],
+        "answer": "(2) 2×12",
+        "explanation": "A 6-foot span on a single-story home typically requires (2) 2×12 headers. Always verify with NBC span tables for specific load conditions and locations."
+      },
+      {
+        "id": "FF-06-Q06",
+        "question": "What is the acceptable tolerance for rough opening dimensions?",
+        "type": "multiple_choice",
+        "choices": [
+          "± 1/8 inch",
+          "± 1/4 inch",
+          "± 1/2 inch",
+          "± 1 inch"
+        ],
+        "answer": "± 1/4 inch",
+        "explanation": "Rough opening dimensions should be accurate to within ± 1/4 inch. Greater variance can cause installation problems, air leakage, or operational issues with windows and doors."
+      },
+      {
+        "id": "FF-06-Q07",
+        "question": "Why should high-expansion foam NOT be used around window openings?",
+        "type": "multiple_choice",
+        "choices": [
+          "It's not waterproof",
+          "It can bow or distort the frame",
+          "It's too expensive",
+          "It doesn't provide insulation"
+        ],
+        "answer": "It can bow or distort the frame",
+        "explanation": "High-expansion foam can exert significant pressure as it cures, potentially bowing window and door frames. This can cause binding, improper operation, and seal failures. Use only low-expansion foam."
+      },
+      {
+        "id": "FF-06-Q08",
+        "question": "What is the purpose of cripple studs above a window header?",
+        "type": "multiple_choice",
+        "choices": [
+          "To support the window weight",
+          "To maintain 16\" o.c. stud spacing and transfer loads to header",
+          "To provide nailing for interior trim",
+          "To create space for curtain rods"
+        ],
+        "answer": "To maintain 16\" o.c. stud spacing and transfer loads to header",
+        "explanation": "Cripple studs above headers maintain the 16\" on center layout through the opening area and transfer loads from the top plate to the header, then to the jack studs."
+      },
+      {
+        "id": "FF-06-Q09",
+        "question": "How do you verify a window opening is square?",
+        "type": "multiple_choice",
+        "choices": [
+          "Use a framing square at each corner",
+          "Measure both diagonals - they should be equal",
+          "Check if studs are plumb",
+          "Measure width at top and bottom only"
+        ],
+        "answer": "Measure both diagonals - they should be equal",
+        "explanation": "To verify an opening is square, measure both diagonals from corner to corner. If the opening is square, both diagonal measurements will be equal (within 1/8 inch tolerance)."
+      },
+      {
+        "id": "FF-06-Q10",
+        "question": "What is the minimum clear opening area for an egress window?",
+        "type": "multiple_choice",
+        "choices": [
+          "0.25 m² (2.7 sq ft)",
+          "0.35 m² (3.77 sq ft)",
+          "0.45 m² (4.8 sq ft)",
+          "0.55 m² (5.9 sq ft)"
+        ],
+        "answer": "0.35 m² (3.77 sq ft)",
+        "explanation": "NBC requires egress windows to have a minimum clear opening area of 0.35 m² (approximately 3.77 square feet) with no dimension less than 380 mm (15 inches)."
+      },
+      {
+        "id": "FF-06-Q11",
+        "question": "What nailing is required for jack studs to king studs?",
+        "type": "multiple_choice",
+        "choices": [
+          "8d nails at 6\" o.c.",
+          "10d nails at 12\" o.c.",
+          "16d nails at 16\" o.c.",
+          "No nailing required - friction fit"
+        ],
+        "answer": "10d nails at 12\" o.c.",
+        "explanation": "Jack studs should be nailed to king studs with 10d nails at 12 inch spacing. This secure connection ensures loads transfer properly from the header through the jack and king studs to the floor."
+      },
+      {
+        "id": "FF-06-Q12",
+        "question": "What additional length should be added to header dimensions beyond the R.O. width?",
+        "type": "multiple_choice",
+        "choices": [
+          "Nothing - header equals R.O.",
+          "1-1/2 inches for king studs",
+          "3 inches for jack studs (1-1/2\" each side)",
+          "6 inches for both king and jack studs"
+        ],
+        "answer": "3 inches for jack studs (1-1/2\" each side)",
+        "explanation": "Headers must extend past the rough opening to bear on the jack studs. With 1-1/2\" thickness jack studs on each side, the header length is R.O. width plus 3 inches total."
+      },
+      {
+        "id": "FF-06-Q13",
+        "question": "What slope should a window sill pan have for proper drainage?",
+        "type": "multiple_choice",
+        "choices": [
+          "Level is preferred",
+          "1/8 inch per foot to exterior",
+          "1/4 inch per foot to exterior",
+          "1/2 inch per foot to exterior"
+        ],
+        "answer": "1/4 inch per foot to exterior",
+        "explanation": "Sill pan flashing should slope 1/4 inch per foot toward the exterior to ensure any water that enters drains to the outside rather than to the interior."
+      },
+      {
+        "id": "FF-06-Q14",
+        "question": "When framing an exterior door opening, what should be done with the bottom plate?",
+        "type": "multiple_choice",
+        "choices": [
+          "Install it completely across the opening",
+          "Cut it out after the wall is raised",
+          "Do not install bottom plate across the door opening",
+          "Install pressure-treated plate only"
+        ],
+        "answer": "Do not install bottom plate across the door opening",
+        "explanation": "For exterior doors, the bottom plate should not extend across the door opening. The opening should be left clear for the threshold and to allow proper door installation and operation."
+      },
+      {
+        "id": "FF-06-Q15",
+        "question": "What is the standard rough opening height for a 6'-8\" interior door with standard jamb?",
+        "type": "multiple_choice",
+        "choices": [
+          "80 inches",
+          "82 inches",
+          "84 inches",
+          "86 inches"
+        ],
+        "answer": "82 inches",
+        "explanation": "A 6'-8\" (80\") interior door with standard jamb typically requires an 82\" rough opening height. The extra 2\" allows for the head jamb thickness and shimming clearance."
+      }
+    ]
+  }
+}

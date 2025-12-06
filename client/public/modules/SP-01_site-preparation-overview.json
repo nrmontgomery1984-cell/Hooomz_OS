@@ -1,0 +1,16 @@
+{
+  "id": "SP-01",
+  "phase": 1,
+  "slug": "site-preparation-overview",
+  "title": "Site Preparation Overview",
+  "category": "Site Preparation",
+  "level": "Apprentice",
+  "priority": 4,
+  "status": "todo",
+  "sections": [],
+  "checklists": [],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": []
+  }
+}

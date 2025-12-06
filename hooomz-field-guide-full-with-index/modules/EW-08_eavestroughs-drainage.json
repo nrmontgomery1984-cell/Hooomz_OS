@@ -1,0 +1,299 @@
+{
+  "id": "EW-08",
+  "title": "Eavestroughs & Drainage",
+  "category": "Exterior & Weather",
+  "level": "Intermediate",
+  "estimated_study_hours": 3,
+  "tags": [
+    "gutters",
+    "eavestroughs",
+    "downspouts",
+    "drainage",
+    "water management"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "EW-06"
+  ],
+  "sections": [
+    {
+      "id": "ew08-s1",
+      "title": "Eavestrough Systems Overview",
+      "summary": "Understanding eavestrough types, sizing, and material selection for NB climate.",
+      "content_md": "## Eavestrough Systems Overview\n\n### Purpose of Eavestroughs\n\nEavestroughs (gutters) collect roof runoff and direct it away from:\n- Foundation walls\n- Basement/crawlspace\n- Landscaping and walkways\n- Siding and exterior finishes\n\n### Material Options\n\n| Material | Lifespan | Cost | Pros | Cons |\n|----------|----------|------|------|------|\n| **Aluminum** | 20-30 yrs | $$ | Light, no rust, many colors | Dents, expands |\n| **Vinyl** | 10-20 yrs | $ | DIY-friendly, no rust | Brittle in cold, sags |\n| **Steel** | 20-30 yrs | $$ | Strong, holds shape | Can rust, heavy |\n| **Copper** | 50+ yrs | $$$$ | Beautiful, durable | Expensive, patinas |\n| **Zinc** | 40+ yrs | $$$ | Self-healing, durable | Cost |\n\n> **Zone 6 Recommendation:** Aluminum is the most common choice - durable, affordable, and performs well in freeze-thaw cycles. Vinyl should be avoided in NB due to brittleness in cold.\n\n### Profile Types\n\n**K-Style (Ogee):**\n- Most common residential profile\n- Decorative front face\n- Available in 5\" and 6\" widths\n- Handles more water than half-round\n\n**Half-Round:**\n- Traditional/historic appearance\n- Easier to clean\n- Less capacity than K-style\n- Often used with copper\n\n**Box/Commercial:**\n- Maximum capacity\n- Used for large roof areas\n- Industrial appearance\n\n### Sizing Guidelines\n\n| Roof Area | Minimum Gutter | Minimum Downspout |\n|-----------|----------------|-------------------|\n| Up to 600 sq ft | 5\" K-style | 2\" x 3\" |\n| 600-1000 sq ft | 5\" K-style | 3\" x 4\" |\n| Over 1000 sq ft | 6\" K-style | 3\" x 4\" or 4\" round |\n\n**One downspout per 40 linear feet of gutter maximum**"
+    },
+    {
+      "id": "ew08-s2",
+      "title": "Installation Fundamentals",
+      "summary": "Proper slope, hanger spacing, and installation techniques for reliable performance.",
+      "content_md": "## Installation Fundamentals\n\n### Slope Requirements\n\n**Proper Slope:**\n- Minimum 1/16\" per foot toward downspout\n- Recommended 1/8\" per foot for heavy rain areas\n- Maximum run: 40 feet to single downspout\n\n**Setting Slope:**\n1. Mark high point at gutter start\n2. Calculate drop (length x slope)\n3. Mark low point at downspout\n4. Snap chalk line between points\n5. Install hangers along line\n\n**Example:** 32' gutter run at 1/8\" per foot\n- Drop = 32 x 0.125 = 4 inches total\n- High end 4\" above low end\n\n### Hanger Types & Spacing\n\n| Hanger Type | Best For | Spacing |\n|-------------|----------|--------|\n| **Hidden Hangers** | K-style, clean look | 24\" OC (18\" in snow areas) |\n| **Spike & Ferrule** | Old-style, repairs | 24\" OC |\n| **Strap Hangers** | Half-round, metal roofs | 30\" OC |\n| **Fascia Brackets** | No fascia board | 24\" OC |\n\n> **Zone 6 Critical:** Use 18\" hanger spacing in NB to support ice and snow loads. Standard 24\" spacing leads to sagging and failure.\n\n### Fascia Board Requirements\n\n**Proper Backing:**\n- Fascia must be solid (not rotted)\n- Minimum 1\" thick nominal lumber\n- Paint/prime before gutter installation\n- Repair any soft spots\n\n**Drip Edge Integration:**\n- Back edge of gutter tucks under drip edge\n- Water flows from roof directly into gutter\n- No gap between drip edge and gutter back\n\n### End Cap & Seam Sealing\n\n**Sealing Requirements:**\n- Apply gutter sealant to all seams\n- Both inside and outside of joints\n- End caps sealed before installation\n- Use silicone or butyl-based sealant"
+    },
+    {
+      "id": "ew08-s3",
+      "title": "Downspouts & Extensions",
+      "summary": "Installing downspouts, elbows, and extensions for proper water discharge.",
+      "content_md": "## Downspouts & Extensions\n\n### Downspout Placement\n\n**Location Guidelines:**\n- At low points of gutter runs\n- Away from walkways and entries\n- Near drainage areas\n- Not directly against foundation\n\n**Frequency:**\n- One per 40' of gutter (maximum)\n- Additional at valleys and corners\n- Large roof sections may need more\n\n### Connection to Gutter\n\n**Outlet Installation:**\n1. Mark outlet location on gutter bottom\n2. Cut hole with snips or hole saw\n3. Insert drop outlet from top\n4. Crimp tabs and seal joints\n\n**Elbow Configuration:**\n- Two elbows typically needed\n- \"A\" elbow at gutter (front-facing)\n- \"B\" elbow at wall (side-facing)\n- Short section between elbows\n\n### Securing Downspouts\n\n**Strap Spacing:**\n- Top: At elbow connection\n- Middle: Every 10 feet\n- Bottom: 12\" above discharge\n\n**Fastening:**\n- Use appropriate fasteners for siding type\n- Pre-drill to prevent cracking\n- Stainless screws for aluminum downspouts\n\n### Discharge Requirements\n\n**Extensions Minimum:**\n- 4 feet from foundation (code minimum)\n- 6-10 feet recommended\n- Direct to drainage swale if possible\n\n**Extension Options:**\n\n| Type | Pros | Cons |\n|------|------|------|\n| **Rigid Extension** | Durable, permanent | Visible, trip hazard |\n| **Flip-Up** | Folds for mowing | Can get stuck down |\n| **Roll-Out** | Auto-deploys | May not roll back |\n| **Underground Pipe** | Hidden, effective | Cost, clogging |\n| **Splash Block** | Simple, cheap | Minimal protection |\n\n> **Best Practice:** Underground drainage to daylight (exposed pipe away from foundation) is the most reliable solution for NB's heavy rain events."
+    },
+    {
+      "id": "ew08-s4",
+      "title": "Gutter Guards & Maintenance",
+      "summary": "Understanding gutter protection options and ongoing maintenance requirements.",
+      "content_md": "## Gutter Guards & Maintenance\n\n### Gutter Guard Types\n\n| Type | Description | Effectiveness | Maintenance |\n|------|-------------|---------------|-------------|\n| **Screen/Mesh** | Metal or plastic grid | Good | Clean screens seasonally |\n| **Micro-Mesh** | Fine stainless mesh | Excellent | Brush off debris |\n| **Reverse Curve** | Water follows curve, debris falls | Good | May need cleaning inside |\n| **Brush Insert** | Bristles fill gutter | Fair | Remove and clean periodically |\n| **Foam Insert** | Porous foam block | Poor | Clogs, degrades, replace often |\n\n> **Zone 6 Consideration:** Gutter guards can contribute to ice damming by preventing proper melt drainage. Consider heated cables with guards.\n\n### Regular Maintenance Schedule\n\n**Spring:**\n- Clear winter debris\n- Check for ice damage\n- Verify slope and alignment\n- Flush system with hose\n\n**Fall:**\n- Remove leaves and debris\n- Check and clear downspouts\n- Inspect seams and end caps\n- Verify extensions in place\n\n**After Storms:**\n- Clear debris buildup\n- Check for damage\n- Verify drainage function\n\n### Cleaning Procedure\n\n1. **Safety First**\n   - Stable ladder, proper angle\n   - Gloves and eye protection\n   - Spotter if possible\n\n2. **Remove Debris**\n   - Scoop out by hand or trowel\n   - Work toward downspout\n   - Bag debris as you go\n\n3. **Flush System**\n   - Garden hose from high end\n   - Verify water flows to downspout\n   - Check for leaks at seams\n\n4. **Clear Downspouts**\n   - Flush from top\n   - Use plumber's snake if clogged\n   - Verify discharge at extension\n\n### Ice Dam Prevention\n\n**Heat Cables:**\n- Self-regulating type preferred\n- Zigzag pattern along eave edge\n- Run through gutters and downspouts\n- Thermostat control for efficiency\n\n**Installation Pattern:**\n- Loops extend 12-24\" up roof\n- Cable in gutter bottom\n- Down entire downspout length\n- Power source with GFCI protection"
+    },
+    {
+      "id": "ew08-s5",
+      "title": "Troubleshooting & Repairs",
+      "summary": "Diagnosing and fixing common eavestrough problems.",
+      "content_md": "## Troubleshooting & Repairs\n\n### Common Problems\n\n**1. Overflowing Gutters**\n\n| Cause | Solution |\n|-------|----------|\n| Debris buildup | Clean gutters and downspouts |\n| Insufficient slope | Re-hang with proper pitch |\n| Undersized system | Upgrade to larger gutters/downspouts |\n| Too few downspouts | Add additional downspouts |\n\n**2. Leaking Seams**\n\n| Cause | Solution |\n|-------|----------|\n| Old sealant failure | Clean and re-seal joints |\n| Physical damage | Patch or replace section |\n| Thermal movement | Use flexible sealant |\n\n**3. Sagging Gutters**\n\n| Cause | Solution |\n|-------|----------|\n| Hanger spacing too wide | Add intermediate hangers |\n| Ice/snow damage | Replace bent sections, add hangers |\n| Rotted fascia | Repair fascia, reinstall |\n\n**4. Water Behind Gutter**\n\n| Cause | Solution |\n|-------|----------|\n| Missing drip edge | Install proper drip edge |\n| Gutter too low | Raise gutter to catch drip edge |\n| Gap at back | Seal or adjust positioning |\n\n### Repair Techniques\n\n**Sealing Leaks:**\n1. Clean area thoroughly (remove old sealant)\n2. Dry completely\n3. Apply gutter sealant liberally\n4. Smooth with gloved finger\n5. Allow cure before water exposure\n\n**Patching Holes:**\n- Small holes: Roofing cement + mesh patch\n- Larger damage: Aluminum patch riveted and sealed\n- Severe damage: Replace section\n\n**Re-sloping:**\n1. Remove old hangers\n2. Mark new slope line\n3. Fill old screw holes\n4. Install new hangers along line\n5. Verify water flow\n\n### When to Replace\n\n**Signs It's Time:**\n- Multiple sections with holes\n- Extensive rust (steel gutters)\n- Severe sagging throughout\n- Seams pulling apart repeatedly\n- Paint peeling/chalking severely\n\n> **Upgrade Tip:** When replacing, consider upgrading to seamless gutters. More expensive initially but fewer leak points and longer lifespan."
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew08-c1",
+      "title": "Eavestrough Installation Checklist",
+      "items": [
+        "Fascia board inspected and repaired if needed",
+        "Drip edge properly installed at eaves",
+        "Gutter slope calculated (min 1/16\"/ft)",
+        "High and low points marked",
+        "Chalk line snapped for hanger placement",
+        "Hangers installed at 18\" spacing (Zone 6)",
+        "Gutter sections joined with sealant",
+        "End caps sealed and installed",
+        "Gutter tucked under drip edge"
+      ]
+    },
+    {
+      "id": "ew08-c2",
+      "title": "Downspout Installation Checklist",
+      "items": [
+        "Drop outlet holes cut cleanly",
+        "Outlets sealed to gutter",
+        "Elbows configured properly (A and B)",
+        "Downspout sections connected and sealed",
+        "Straps installed at top, middle, and bottom",
+        "Downspout extends minimum 4' from foundation",
+        "Extension directs water away from building",
+        "Underground drainage connected (if applicable)",
+        "System flushed and tested"
+      ]
+    },
+    {
+      "id": "ew08-c3",
+      "title": "Eavestrough Maintenance Checklist",
+      "items": [
+        "Debris removed from all gutters",
+        "Downspouts clear and flowing",
+        "All seams checked for leaks",
+        "End caps secure and sealed",
+        "Hangers tight and gutter level",
+        "No visible sagging in runs",
+        "Extensions in place and functional",
+        "Splash blocks positioned correctly",
+        "Gutter guards cleaned (if installed)",
+        "Ice dam prevention system tested (if installed)"
+      ]
+    },
+    {
+      "id": "ew08-c4",
+      "title": "Eavestrough Troubleshooting Checklist",
+      "items": [
+        "Water overflow location identified",
+        "Slope verified with level and water test",
+        "Downspout capacity checked",
+        "Seams inspected for leaks",
+        "Fascia condition assessed",
+        "Drip edge integration verified",
+        "Hanger condition and spacing checked",
+        "Underground drainage tested (if present)",
+        "Root cause of problem identified",
+        "Repair plan documented"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew08-q1",
+        "question": "What is the minimum eavestrough slope toward the downspout?",
+        "options": [
+          "1/32\" per foot",
+          "1/16\" per foot",
+          "1/8\" per foot",
+          "1/4\" per foot"
+        ],
+        "correct": 1,
+        "explanation": "Minimum slope is 1/16\" per foot, though 1/8\" per foot is recommended for heavy rain areas."
+      },
+      {
+        "id": "ew08-q2",
+        "question": "What is the recommended hanger spacing for Zone 6?",
+        "options": [
+          "12\" OC",
+          "18\" OC",
+          "24\" OC",
+          "36\" OC"
+        ],
+        "correct": 1,
+        "explanation": "18\" hanger spacing is recommended for Zone 6 to support ice and snow loads. Standard 24\" often leads to sagging."
+      },
+      {
+        "id": "ew08-q3",
+        "question": "What is the maximum gutter run length to a single downspout?",
+        "options": [
+          "20 feet",
+          "30 feet",
+          "40 feet",
+          "50 feet"
+        ],
+        "correct": 2,
+        "explanation": "Maximum gutter run to a single downspout is 40 feet. Longer runs need additional downspouts."
+      },
+      {
+        "id": "ew08-q4",
+        "question": "What is the minimum downspout extension distance from the foundation?",
+        "options": [
+          "2 feet",
+          "4 feet",
+          "6 feet",
+          "10 feet"
+        ],
+        "correct": 1,
+        "explanation": "Minimum extension is 4 feet from foundation (code minimum), though 6-10 feet is recommended."
+      },
+      {
+        "id": "ew08-q5",
+        "question": "Which gutter material should be avoided in NB due to cold brittleness?",
+        "options": [
+          "Aluminum",
+          "Steel",
+          "Vinyl",
+          "Copper"
+        ],
+        "correct": 2,
+        "explanation": "Vinyl becomes brittle in cold temperatures and should be avoided in NB's Zone 6 climate."
+      },
+      {
+        "id": "ew08-q6",
+        "question": "What size gutter is recommended for roof areas over 1000 sq ft?",
+        "options": [
+          "4\" K-style",
+          "5\" K-style",
+          "6\" K-style",
+          "8\" K-style"
+        ],
+        "correct": 2,
+        "explanation": "6\" K-style gutters are recommended for roof areas over 1000 square feet to handle the increased water volume."
+      },
+      {
+        "id": "ew08-q7",
+        "question": "Where should the back edge of the gutter be positioned?",
+        "options": [
+          "Against the fascia",
+          "Under the drip edge",
+          "Above the shingles",
+          "Away from the roof"
+        ],
+        "correct": 1,
+        "explanation": "The back edge of the gutter should tuck under the drip edge so water flows directly into the gutter."
+      },
+      {
+        "id": "ew08-q8",
+        "question": "How often should gutters be cleaned in a typical year?",
+        "options": [
+          "Once a year",
+          "Twice a year (spring and fall)",
+          "Quarterly",
+          "Monthly"
+        ],
+        "correct": 1,
+        "explanation": "Gutters should be cleaned twice a year - in spring after winter debris and in fall after leaves drop."
+      },
+      {
+        "id": "ew08-q9",
+        "question": "What is the most reliable solution for water discharge in heavy rain areas?",
+        "options": [
+          "Splash blocks",
+          "Roll-out extensions",
+          "Underground drainage to daylight",
+          "Flip-up extensions"
+        ],
+        "correct": 2,
+        "explanation": "Underground drainage to daylight (exposed pipe away from foundation) is the most reliable solution for heavy rain events."
+      },
+      {
+        "id": "ew08-q10",
+        "question": "What type of heat cable is preferred for ice dam prevention?",
+        "options": [
+          "Constant wattage",
+          "Self-regulating",
+          "Variable output",
+          "Manual control"
+        ],
+        "correct": 1,
+        "explanation": "Self-regulating heat cables are preferred as they automatically adjust output based on temperature."
+      },
+      {
+        "id": "ew08-q11",
+        "question": "What causes water to flow behind the gutter instead of into it?",
+        "options": [
+          "Too much slope",
+          "Missing or improper drip edge",
+          "Oversized gutters",
+          "Too many downspouts"
+        ],
+        "correct": 1,
+        "explanation": "Water behind the gutter is typically caused by missing drip edge, gutter too low, or improper gap at the back."
+      },
+      {
+        "id": "ew08-q12",
+        "question": "What is a potential issue with gutter guards in Zone 6?",
+        "options": [
+          "They're too expensive",
+          "They can contribute to ice damming",
+          "They make gutters too heavy",
+          "They reduce water capacity"
+        ],
+        "correct": 1,
+        "explanation": "Gutter guards can contribute to ice damming by preventing proper melt drainage. Heat cables may be needed with guards."
+      },
+      {
+        "id": "ew08-q13",
+        "question": "When repairing a leaking seam, what is the first step?",
+        "options": [
+          "Apply new sealant immediately",
+          "Clean area and remove old sealant",
+          "Install a patch over the seam",
+          "Replace the entire section"
+        ],
+        "correct": 1,
+        "explanation": "The first step is to clean the area thoroughly and remove old sealant before applying new sealant."
+      },
+      {
+        "id": "ew08-q14",
+        "question": "What type of gutter profile handles the most water?",
+        "options": [
+          "Half-round",
+          "K-style",
+          "Box/Commercial",
+          "All are equal"
+        ],
+        "correct": 2,
+        "explanation": "Box/commercial profile gutters have maximum capacity and are used for large roof areas."
+      },
+      {
+        "id": "ew08-q15",
+        "question": "What should be done with old screw holes when re-sloping gutters?",
+        "options": [
+          "Leave them empty",
+          "Fill them",
+          "Use larger screws",
+          "Install hangers in same holes"
+        ],
+        "correct": 1,
+        "explanation": "Old screw holes should be filled before installing new hangers in new locations to maintain fascia integrity."
+      }
+    ]
+  }
+}

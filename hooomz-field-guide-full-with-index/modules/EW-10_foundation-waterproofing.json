@@ -1,0 +1,301 @@
+{
+  "id": "EW-10",
+  "title": "Foundation Waterproofing",
+  "category": "Exterior & Weather",
+  "level": "Advanced",
+  "estimated_study_hours": 4,
+  "tags": [
+    "foundation",
+    "waterproofing",
+    "damp-proofing",
+    "basement",
+    "moisture control"
+  ],
+  "prerequisites": [
+    "EW-01",
+    "FF-01"
+  ],
+  "sections": [
+    {
+      "id": "ew10-s1",
+      "title": "Waterproofing vs. Damp-proofing",
+      "summary": "Understanding the critical difference between waterproofing and damp-proofing systems.",
+      "content_md": "## Waterproofing vs. Damp-proofing\n\n### Key Definitions\n\n**Damp-proofing:**\n- Resists moisture vapor and minor dampness\n- Does NOT withstand hydrostatic pressure\n- Typically asphalt-based coating\n- Minimum code requirement for many areas\n\n**Waterproofing:**\n- Resists water under hydrostatic pressure\n- Creates true water barrier\n- Required where water table issues exist\n- Significantly more protection\n\n### When Each is Required\n\n| Condition | Minimum Requirement |\n|-----------|--------------------|\n| Well-drained soil, low water table | Damp-proofing |\n| High water table (seasonal) | Waterproofing |\n| Clay soils, poor drainage | Waterproofing |\n| Finished basement planned | Waterproofing (strongly recommended) |\n| History of water problems | Waterproofing |\n\n> **NB Reality:** Given New Brunswick's high rainfall, clay soils in many areas, and freeze-thaw cycles, true waterproofing is strongly recommended for all basement construction.\n\n### System Comparison\n\n| Feature | Damp-proofing | Waterproofing |\n|---------|---------------|---------------|\n| **Material Cost** | $ | $$-$$$ |\n| **Labor Cost** | $ | $$ |\n| **Water Resistance** | Vapor only | Full water pressure |\n| **Crack Bridging** | None | Yes (membrane systems) |\n| **Lifespan** | 10-15 years | 20-50+ years |\n| **Warranty** | Limited | Often 10-25 years |\n| **Repairability** | Difficult | Depends on system |"
+    },
+    {
+      "id": "ew10-s2",
+      "title": "Waterproofing Systems",
+      "summary": "Overview of waterproofing system types including membranes, coatings, and drainage boards.",
+      "content_md": "## Waterproofing Systems\n\n### Liquid-Applied Membranes\n\n**Types:**\n- Asphalt-modified polyurethane\n- Rubberized asphalt\n- Polymer-modified asphalt\n\n**Application:**\n1. Clean and prepare concrete surface\n2. Fill honeycombs and voids\n3. Apply primer if required\n4. Spray or roller-apply membrane\n5. Build to required thickness (60+ mils)\n6. Install protection board\n\n**Pros:**\n- Seamless coverage\n- Conforms to irregular surfaces\n- Self-healing (some products)\n\n**Cons:**\n- Weather dependent application\n- Thickness verification needed\n- Quality depends on applicator skill\n\n### Sheet Membranes\n\n**Types:**\n- Self-adhering (peel-and-stick)\n- Heat-welded (torch applied)\n- Mechanically fastened\n\n**Application:**\n1. Surface must be clean, dry, smooth\n2. Apply primer per manufacturer\n3. Roll out membrane horizontally\n4. Overlap seams 3-4\" minimum\n5. Roll firmly for adhesion\n6. Seal all penetrations\n\n**Pros:**\n- Consistent thickness\n- Visible coverage verification\n- Factory quality control\n\n**Cons:**\n- Seams are potential weak points\n- Requires smoother substrate\n- Temperature sensitive application\n\n### Drainage Mat Systems\n\n**Components:**\n- Dimpled HDPE core\n- Geotextile fabric filter\n- Provides drainage plane\n\n**Installation:**\n- Over waterproofing membrane\n- Dimples face wall\n- Fabric faces soil\n- Overlaps minimum 4\"\n- Extends to footer drain\n\n> **Best Practice:** In Zone 6, combine waterproofing membrane WITH drainage mat for maximum protection against NB's wet conditions."
+    },
+    {
+      "id": "ew10-s3",
+      "title": "Surface Preparation",
+      "summary": "Critical surface preparation steps for successful waterproofing application.",
+      "content_md": "## Surface Preparation\n\n### Concrete Condition Requirements\n\n**Cure Time:**\n- Minimum 7 days cure before coating\n- 28 days preferred for full strength\n- Moisture testing may be required\n\n**Surface Defects to Address:**\n\n| Defect | Repair Method |\n|--------|---------------|\n| Honeycombs | Chip out, fill with non-shrink grout |\n| Bug holes | Fill with compatible patching compound |\n| Form tie holes | Remove ties, plug holes, grout |\n| Cracks (non-structural) | Route and seal, or flex membrane |\n| Fins/protrusions | Grind smooth |\n| Loose material | Wire brush, remove |\n\n### Cleaning Procedure\n\n1. **Remove form release agents**\n   - Pressure wash or chemical clean\n   - Verify adhesion with tape test\n\n2. **Remove efflorescence**\n   - Wire brush dry deposits\n   - Acid wash if severe\n   - Neutralize and rinse\n\n3. **Final cleaning**\n   - Blow off debris\n   - Allow to dry\n   - Verify no contaminants\n\n### Cove Joint Treatment\n\n**The wall-footer joint is critical:**\n\n1. Clean joint thoroughly\n2. Apply hydraulic cement cove\n3. Shape 45° or rounded profile\n4. Minimum 2\" leg each direction\n5. Allow to cure\n6. Extend membrane over cove\n\n### Penetration Preparation\n\n**Pipes, conduits, anchors:**\n- Clean around penetration\n- Apply compatible sealant\n- Install boot or collar\n- Integrate with membrane system\n\n> **Critical:** All penetrations must be sealed BEFORE membrane application. Adding waterproofing around existing penetrations requires extra detail."
+    },
+    {
+      "id": "ew10-s4",
+      "title": "Application Procedures",
+      "summary": "Step-by-step waterproofing application procedures for different system types.",
+      "content_md": "## Application Procedures\n\n### Liquid-Applied Membrane\n\n**Preparation:**\n- Temperature: Above 40°F (some products lower)\n- No rain expected for 24 hours\n- Surface dry, no standing water\n- Primer applied and flashed off\n\n**Application Steps:**\n\n| Step | Action | Check Point |\n|------|--------|-------------|\n| 1 | Mix material per specs | Correct ratio, mixed thoroughly |\n| 2 | Apply detail coat at joints | Cove, corners, penetrations |\n| 3 | Embed reinforcing (if required) | Fabric at stress points |\n| 4 | Apply first coat | Even coverage, no holidays |\n| 5 | Allow to cure | Per manufacturer (2-24 hrs) |\n| 6 | Apply second coat | Cross-hatch direction |\n| 7 | Verify thickness | Wet-mil gauge, minimum 60 mils dry |\n\n**Coverage Areas:**\n- Full height below grade\n- Minimum 4\" above grade\n- Over all cove details\n- Around all penetrations\n\n### Sheet Membrane\n\n**Preparation:**\n- Same temperature requirements\n- Apply primer, allow flash time\n- Plan layout to minimize seams\n\n**Application Steps:**\n\n1. **Start at footer:**\n   - First course on cove joint\n   - Extend onto footer 6\" minimum\n\n2. **Work upward:**\n   - Horizontal courses\n   - Overlap each course 3-4\"\n   - Roll firmly, eliminate air bubbles\n\n3. **At penetrations:**\n   - Cut membrane, don't fold\n   - Apply additional patches\n   - Seal all edges\n\n4. **At top:**\n   - Extend above grade\n   - Terminate with termination bar\n   - Seal top edge\n\n### Protection Board\n\n**Required over all membrane types:**\n- XPS insulation board (also adds R-value)\n- Fiberglass protection board\n- Drainage mat (serves dual purpose)\n\n**Installation:**\n- Apply while membrane is tacky, OR\n- Use construction adhesive spots\n- Butt joints tight\n- Extend full height"
+    },
+    {
+      "id": "ew10-s5",
+      "title": "Quality Control & Inspection",
+      "summary": "Inspection points and quality control measures for foundation waterproofing.",
+      "content_md": "## Quality Control & Inspection\n\n### Pre-Application Inspection\n\n**Concrete Checklist:**\n- [ ] Minimum cure time achieved\n- [ ] Surface defects repaired\n- [ ] Form tie holes plugged\n- [ ] Honeycombs filled\n- [ ] Cracks addressed\n- [ ] Surface clean and dry\n- [ ] Cove joint installed\n- [ ] Penetrations prepared\n\n### During Application\n\n**Liquid-Applied:**\n- Verify material temperature\n- Check wet-film thickness regularly\n- Watch for holidays (missed spots)\n- Ensure proper cure between coats\n- Document coverage rates\n\n**Sheet Membrane:**\n- Verify primer flash-off\n- Check seam overlaps (measure)\n- Watch for air bubbles/wrinkles\n- Verify corner and penetration details\n- Test seam adhesion\n\n### Post-Application Inspection\n\n**Before Backfilling:**\n- [ ] Full coverage verified\n- [ ] Dry film thickness meets spec\n- [ ] All seams properly sealed\n- [ ] Penetrations completely detailed\n- [ ] Top termination complete\n- [ ] Protection board installed\n- [ ] Drainage system in place\n- [ ] No visible damage\n\n### Common Defects to Avoid\n\n| Defect | Cause | Prevention |\n|--------|-------|------------|\n| Holidays | Poor technique | Use flashlight inspection |\n| Thin coverage | Rushing, poor spreading | Wet-mil gauge checks |\n| Seam failure | Inadequate overlap/adhesion | Follow specs, roll firmly |\n| Punctures | Careless protection board install | Install carefully, inspect |\n| Fish-mouths | Air trapped under membrane | Work out bubbles, use roller |\n\n### Documentation Requirements\n\n**Record and retain:**\n- Product data sheets\n- Application temperature log\n- Coverage calculations\n- Inspection photos\n- Installer certification\n- Warranty documentation\n\n> **Warranty Tip:** Most manufacturer warranties require professional installation with documented inspection. Keep all records for future claims."
+    }
+  ],
+  "checklists": [
+    {
+      "id": "ew10-c1",
+      "title": "Surface Preparation Checklist",
+      "items": [
+        "Concrete cured minimum 7 days (28 preferred)",
+        "Honeycombs chipped out and filled",
+        "Bug holes filled with patching compound",
+        "Form tie holes plugged with hydraulic cement",
+        "Cracks routed and sealed",
+        "Fins and protrusions ground smooth",
+        "Form release agents removed",
+        "Efflorescence removed",
+        "Surface clean, dry, dust-free",
+        "Cove joint installed at wall-footer"
+      ]
+    },
+    {
+      "id": "ew10-c2",
+      "title": "Liquid Membrane Application Checklist",
+      "items": [
+        "Temperature above minimum (40°F typical)",
+        "No rain expected for 24+ hours",
+        "Primer applied and fully flashed off",
+        "Detail coat applied at coves and corners",
+        "Reinforcing fabric embedded where required",
+        "First coat applied evenly",
+        "Proper cure time between coats",
+        "Second coat applied cross-hatch",
+        "Wet-mil thickness verified (60+ mils dry)",
+        "No holidays or thin spots visible"
+      ]
+    },
+    {
+      "id": "ew10-c3",
+      "title": "Sheet Membrane Application Checklist",
+      "items": [
+        "Surface clean, dry, and primed",
+        "First course on cove joint extending to footer",
+        "Horizontal courses overlapping 3-4\" minimum",
+        "All seams firmly rolled",
+        "No air bubbles or wrinkles",
+        "Penetrations cut and patched properly",
+        "Corners detailed with additional patches",
+        "Top extends minimum 4\" above grade",
+        "Termination bar installed and sealed",
+        "All edges properly adhered"
+      ]
+    },
+    {
+      "id": "ew10-c4",
+      "title": "Pre-Backfill Inspection Checklist",
+      "items": [
+        "Complete coverage verified",
+        "Thickness meets specifications",
+        "All seams inspected and sealed",
+        "All penetrations fully detailed",
+        "Top termination complete and sealed",
+        "Protection board installed full height",
+        "Drainage mat installed (if specified)",
+        "Footer drain system connected",
+        "No visible damage to membrane",
+        "Photos taken for documentation"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 80,
+    "questions": [
+      {
+        "id": "ew10-q1",
+        "question": "What is the key difference between waterproofing and damp-proofing?",
+        "options": [
+          "Cost",
+          "Color",
+          "Ability to resist hydrostatic pressure",
+          "Application method"
+        ],
+        "correct": 2,
+        "explanation": "Waterproofing resists water under hydrostatic pressure, while damp-proofing only resists moisture vapor and minor dampness."
+      },
+      {
+        "id": "ew10-q2",
+        "question": "What is the minimum concrete cure time before waterproofing application?",
+        "options": [
+          "1 day",
+          "3 days",
+          "7 days",
+          "14 days"
+        ],
+        "correct": 2,
+        "explanation": "Minimum 7 days cure time is required before waterproofing, though 28 days for full strength is preferred."
+      },
+      {
+        "id": "ew10-q3",
+        "question": "What is the minimum dry film thickness for liquid-applied waterproofing?",
+        "options": [
+          "20 mils",
+          "40 mils",
+          "60 mils",
+          "100 mils"
+        ],
+        "correct": 2,
+        "explanation": "Liquid-applied waterproofing should achieve minimum 60 mils dry film thickness for proper protection."
+      },
+      {
+        "id": "ew10-q4",
+        "question": "What is the minimum seam overlap for sheet membranes?",
+        "options": [
+          "1-2\"",
+          "3-4\"",
+          "6-8\"",
+          "12\""
+        ],
+        "correct": 1,
+        "explanation": "Sheet membrane seams require 3-4\" minimum overlap to ensure waterproof continuity."
+      },
+      {
+        "id": "ew10-q5",
+        "question": "What is a 'holiday' in waterproofing terminology?",
+        "options": [
+          "A rest day for workers",
+          "A missed spot in coverage",
+          "A type of membrane",
+          "A warranty period"
+        ],
+        "correct": 1,
+        "explanation": "A holiday is a missed spot or thin area in the waterproofing coverage that can allow water infiltration."
+      },
+      {
+        "id": "ew10-q6",
+        "question": "What should be installed at the wall-to-footer joint before waterproofing?",
+        "options": [
+          "Expansion joint",
+          "Cove (fillet)",
+          "Steel plate",
+          "Drainage pipe"
+        ],
+        "correct": 1,
+        "explanation": "A hydraulic cement cove (fillet) should be installed at the wall-footer joint to create a smooth transition for the membrane."
+      },
+      {
+        "id": "ew10-q7",
+        "question": "What is the minimum recommended temperature for most waterproofing application?",
+        "options": [
+          "32°F",
+          "40°F",
+          "50°F",
+          "60°F"
+        ],
+        "correct": 1,
+        "explanation": "Most waterproofing products require application temperatures above 40°F for proper adhesion and curing."
+      },
+      {
+        "id": "ew10-q8",
+        "question": "How far should waterproofing membrane extend above grade?",
+        "options": [
+          "Flush with grade",
+          "2\" minimum",
+          "4\" minimum",
+          "12\" minimum"
+        ],
+        "correct": 2,
+        "explanation": "Waterproofing membrane should extend a minimum of 4\" above finished grade."
+      },
+      {
+        "id": "ew10-q9",
+        "question": "Why is protection board installed over waterproofing membrane?",
+        "options": [
+          "For appearance",
+          "To protect membrane during backfill",
+          "To add insulation only",
+          "Code requirement only"
+        ],
+        "correct": 1,
+        "explanation": "Protection board shields the waterproofing membrane from damage during backfilling and from soil movement."
+      },
+      {
+        "id": "ew10-q10",
+        "question": "What type of repair is needed for honeycombed concrete?",
+        "options": [
+          "Paint over it",
+          "Chip out and fill with non-shrink grout",
+          "Apply extra membrane",
+          "Ignore if small"
+        ],
+        "correct": 1,
+        "explanation": "Honeycombed areas must be chipped out to sound concrete and filled with non-shrink grout before waterproofing."
+      },
+      {
+        "id": "ew10-q11",
+        "question": "How should form tie holes be treated before waterproofing?",
+        "options": [
+          "Leave open for drainage",
+          "Remove ties and plug with hydraulic cement",
+          "Cover with tape",
+          "Fill with caulk"
+        ],
+        "correct": 1,
+        "explanation": "Form ties must be removed and holes plugged with hydraulic cement to create a continuous waterproofing surface."
+      },
+      {
+        "id": "ew10-q12",
+        "question": "What should be done between coats of liquid-applied membrane?",
+        "options": [
+          "Apply immediately",
+          "Wait for full cure per manufacturer",
+          "Wait 1 hour only",
+          "Sand the surface"
+        ],
+        "correct": 1,
+        "explanation": "Proper cure time between coats (per manufacturer specs) ensures proper bonding and film formation."
+      },
+      {
+        "id": "ew10-q13",
+        "question": "What direction should the second coat of liquid membrane be applied?",
+        "options": [
+          "Same as first coat",
+          "Cross-hatch to first coat",
+          "Diagonal only",
+          "Vertical only"
+        ],
+        "correct": 1,
+        "explanation": "The second coat should be applied perpendicular (cross-hatch) to the first coat for even coverage."
+      },
+      {
+        "id": "ew10-q14",
+        "question": "What faces the soil when installing drainage mat?",
+        "options": [
+          "Dimpled side",
+          "Geotextile fabric side",
+          "Smooth side",
+          "Either side"
+        ],
+        "correct": 1,
+        "explanation": "The geotextile fabric faces the soil to filter fine particles while dimples face the wall for drainage."
+      },
+      {
+        "id": "ew10-q15",
+        "question": "Why is waterproofing recommended over damp-proofing for NB basements?",
+        "options": [
+          "Lower cost",
+          "Faster installation",
+          "High rainfall, clay soils, freeze-thaw cycles",
+          "Better appearance"
+        ],
+        "correct": 2,
+        "explanation": "NB's high rainfall, clay soils in many areas, and freeze-thaw cycles make true waterproofing strongly recommended."
+      }
+    ]
+  }
+}

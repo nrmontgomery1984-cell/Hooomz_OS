@@ -1,0 +1,227 @@
+{
+  "id": "EW-01",
+  "phase": 3,
+  "slug": "building-science-fundamentals",
+  "title": "Building Envelope Basics & Air Sealing",
+  "category": "Exterior & Weather Proofing",
+  "level": "Journeyman",
+  "priority": 5,
+  "climate_zone": "NB Zone 6 (Moncton)",
+  "prerequisites": ["FF-01", "FF-02", "FF-03", "FF-04", "FF-05", "FF-06", "FF-07", "FF-08", "OH-01"],
+  "estimated_study_hours": 11,
+  "status": "complete",
+  "tags": ["building-envelope", "air-sealing", "vapor-barrier", "energy-code", "blower-door", "critical"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "SECTION 1: INTRODUCTION",
+      "summary": "The building envelope is the physical barrier between conditioned interior and unconditioned exterior, controlling air, water, vapor, and heat flow. In NB's harsh climate, poor envelope means mold, rot, high bills, and failed inspections.",
+      "content_md": "## What is the Building Envelope?\n\nThe building envelope is the physical barrier between the conditioned interior space and the unconditioned exterior environment. It includes all components that provide resistance to air, water, vapor, and heat flow:\n\n- Foundation walls and basement slabs\n- Wall assemblies (sheathing, WRB, insulation, air barrier, siding)\n- Roof assemblies (sheathing, underlayment, insulation, roofing)\n- Windows and doors\n- All penetrations (electrical, plumbing, HVAC)\n\nThe envelope must control four critical flows: **air movement**, **water intrusion**, **vapor diffusion**, and **heat transfer**.\n\n> **Critical Concept:** The building envelope is a system. Every component must work together. A perfect wall assembly with leaky windows fails. Perfect windows with gaps at the rim joist fail. The weakest link determines overall performance.\n\n## Why Building Envelope Matters\n\nIn New Brunswick, our climate is one of the harshest for building envelopes in North America:\n\n| Challenge | Impact |\n|-----------|--------|\n| Extreme temperature swings | -30°C winters to +30°C summers (60°C / 108°F range) |\n| High humidity | Coastal location, frequent rain, snow |\n| Freeze-thaw cycles | 50-80 cycles per year (water infiltration = ice damage) |\n| Wind-driven rain | Nor'easters push water through tiny gaps |\n| Heavy snow loads | Ice damming, roof leaks |\n| High heating costs | 6,500+ heating degree days |\n\n### Consequences of Poor Envelope:\n\n- **Mold and rot** - Moisture accumulation destroys structures\n- **High energy costs** - Air leakage accounts for 25-40% of heating loss\n- **Uncomfortable homes** - Drafts, cold spots, humidity issues\n- **Structural damage** - Water infiltration weakens framing\n- **Health issues** - Mold, poor air quality\n- **Failed inspections** - NB Energy Code requires blower door testing\n\n## Certification Requirements\n\nTo earn Henderson Contracting Building Envelope certification, you must:\n\n1. **Complete this guide** - Understand building science, air sealing principles\n2. **Pass written exam** - 80% minimum (12/15 questions)\n3. **Complete practical assessment:**\n   - Identify envelope weak points in existing building\n   - Properly seal rim joist area (most common leak)\n   - Install air barrier continuity at critical transitions\n   - Conduct smoke pencil test to verify air sealing\n   - Document before/after with thermal imaging\n4. **Safety compliance** - Proper PPE for spray foam, caulking\n5. **Document work** - Photos of 10 air sealing details\n\n### Upon completion, certified to:\n\n- Understand building science fundamentals (stack effect, vapor drive, heat flow)\n- Identify air leakage pathways in buildings\n- Select appropriate air sealing materials for applications\n- Install continuous air barriers at critical transitions\n- Coordinate with insulation installation\n- Interpret blower door test results"
+    },
+    {
+      "id": "fundamentals",
+      "title": "SECTION 2: FUNDAMENTALS",
+      "summary": "Covers the four control layers (water, air, vapor, thermal), stack effect, vapor drive, condensation prevention, air barrier systems, and NB Energy Code requirements including blower door testing.",
+      "content_md": "## 2.1 Building Science Basics\n\n### The Four Control Layers\n\nEvery building envelope must control four distinct flows:\n\n#### 1. Water Control Layer (Most Important)\n\n- **Purpose:** Keep bulk water (rain, snow melt, ground water) out of assembly\n- **Components:** Roof, WRB/housewrap, flashings, drainage plane, foundation waterproofing\n- **Principle:** Water always finds a way in - provide drainage paths OUT\n- **NB Challenge:** Wind-driven rain pushes water through smallest gaps\n\n#### 2. Air Control Layer (Second Most Important)\n\n- **Purpose:** Stop air leakage between inside and outside\n- **Components:** Sealed polyethylene, taped sheathing, gaskets, spray foam, caulking\n- **Principle:** Must be continuous (no gaps) and durable\n- **NB Challenge:** Air leakage carries 50-100× more moisture than vapor diffusion\n\n#### 3. Vapor Control Layer (Third)\n\n- **Purpose:** Control vapor diffusion through assemblies\n- **Components:** Vapor barriers (poly), vapor retarders (painted drywall, Kraft paper)\n- **Principle:** Slows moisture movement, allows drying\n- **NB Challenge:** Cold climate = vapor barrier required interior side\n\n#### 4. Thermal Control Layer (Fourth)\n\n- **Purpose:** Resist heat flow (keep warmth inside winter, outside summer)\n- **Components:** Insulation (fiberglass, cellulose, spray foam, rigid foam)\n- **Principle:** More is better, eliminate thermal bridges\n- **NB Challenge:** Zone 6 = RSI 3.5 (R-20) walls, RSI 7 (R-40) attic minimum\n\n### Critical Relationships:\n\n- Air barrier and vapor barrier can be same component (sealed poly)\n- Air barrier MUST be continuous (gaps void entire system)\n- Water and air barriers work together (water drains on exterior, air sealed interior)\n- Thermal layer reduces temperature difference (reduces condensation risk)\n\n## Stack Effect and Air Movement\n\n**Stack Effect:** Natural air movement driven by temperature difference\n\n- **Winter:** Warm air rises and escapes through ceiling/attic (negative pressure at bottom)\n- **Summer:** Less pronounced but reversed (hot air sinks)\n- **Result:** Air infiltration at bottom, exfiltration at top\n\n### Pressure Zones in Building:\n\n- **Neutral pressure plane:** ~Middle of building (no air flow)\n- **Below neutral:** Negative pressure (air leaks IN)\n- **Above neutral:** Positive pressure (air leaks OUT)\n\n### Why This Matters:\n\n- Air leaking OUT in winter carries moisture (condensation in walls/attic)\n- Air leaking IN in summer carries moisture (condensation on cool surfaces)\n- Seal top and bottom (attic and rim joist) = biggest impact\n\n### Quantifying Air Leakage:\n\n| Standard | ACH50 |\n|----------|-------|\n| NB Energy Code Maximum | 2.5 |\n| Typical uninsulated house | 8-12 |\n| Well-sealed house | 1.5-2.0 |\n| Passive House | <0.6 |\n\n## Vapor Drive and Condensation\n\n**Vapor Drive:** Movement of water vapor from high concentration to low\n\n- **Winter NB:** Interior 20°C, 40% RH (high vapor) → Exterior -10°C (low vapor)\n- **Summer NB:** Can reverse (humid exterior air, air-conditioned interior)\n\n### Condensation Risk:\n\n- Occurs when warm moist air contacts surface below dew point\n- **Dew point:** Temperature at which air reaches 100% RH (water condenses)\n- **Example:** Interior 20°C, 40% RH = 6°C dew point\n- Any surface below 6°C = condensation\n- Uninsulated wall cavity in winter = condensation = mold\n\n### Preventing Condensation:\n\n1. Air sealing (stops bulk moisture movement - most important)\n2. Vapor barrier (slows vapor diffusion)\n3. Insulation (keeps surfaces warm)\n4. Ventilation (removes interior moisture)\n\n### NB Code Requirements:\n\n- Vapor barrier interior side (warm side) in heating climates\n- 6 mil polyethylene or equivalent (0.60 perm or less)\n- Sealed at all penetrations and edges\n\n## Heat Flow Mechanisms\n\n**Conduction:** Heat flow through materials\n- Measured by R-value (resistance to heat flow)\n- Higher R = better insulation\n- Wood studs \"short circuit\" insulation (thermal bridging)\n\n**Convection:** Heat carried by moving air\n- Air leakage = major heat loss\n- 1 square inch hole = loses as much heat as 1 square foot of R-13 insulated wall\n\n**Radiation:** Heat transferred by electromagnetic waves\n- Shiny surfaces reflect radiant heat (radiant barriers)\n- Dark surfaces absorb (black roof gets very hot)\n\n### NB Climate Implications:\n\n- Heating dominates (6,500 HDD vs. 200 CDD)\n- Focus on heat retention (high R-values, stop air leaks)\n- Thermal mass less beneficial than in moderate climates\n\n## 2.2 Air Barrier Systems\n\n### What is an Air Barrier?\n\n**Definition:** Continuous layer throughout envelope that stops air movement\n\n**Performance Requirements:**\n- **Air impermeable:** <0.02 L/s/m² at 75 Pa (virtually no air flow)\n- **Continuous:** No gaps, sealed at all transitions\n- **Durable:** Lasts life of building (50+ years)\n- **Structural:** Withstands pressure differences\n\n### Common Air Barrier Materials:\n\n**Interior Air Barriers:**\n- **Polyethylene (6 mil):** Most common NB, acts as air + vapor barrier\n- **Taped gypsum:** Drywall with sealed joints (US approach)\n- **Peel-and-stick membranes:** At critical details\n\n**Exterior Air Barriers:**\n- **Taped sheathing:** OSB/plywood with taped seams\n- **Fluid-applied membranes:** Sprayed or rolled on sheathing\n- **Exterior rigid foam:** Taped joints\n- **Self-adhered WRB:** Peel-and-stick housewrap alternative\n\n**Hybrid Approach (Common NB):**\n- Exterior: Taped sheathing (drainage, backup air barrier)\n- Interior: Sealed poly (primary air barrier, vapor barrier)\n- Advantage: Redundancy, easier installation\n\n### Air Barrier Continuity\n\n> **The Golden Rule:** Air barrier must be continuous - no breaks, no gaps, no exceptions\n\n**Critical Transitions (Where Air Barriers Commonly Fail):**\n\n1. **Foundation to Wall:**\n   - Poly must seal to foundation wall (caulk or spray foam)\n   - Sill gasket or sill seal provides backup\n   - Rim joist must be sealed (spray foam typical)\n\n2. **Wall to Wall (Corners):**\n   - Poly must wrap corners continuously\n   - No gaps where walls meet\n   - Acoustical sealant at corners\n\n3. **Wall to Ceiling:**\n   - Poly must run up wall and across ceiling\n   - OR seal drywall to top plate (airtight drywall approach)\n   - Attic hatch requires weather-stripping and insulated cover\n\n4. **Wall to Roof:**\n   - Difficult detail (slope change)\n   - Poly must run up wall and onto underside of roof sheathing\n   - OR cathedral ceiling spray foam (eliminates transition)\n\n5. **Penetrations:**\n   - Electrical boxes: Sealed boxes or gaskets\n   - Plumbing: Foam around pipes\n   - HVAC ducts: Sealed with mastic\n   - Windows/doors: Spray foam perimeter\n\n### Common Air Leakage Locations (Biggest Offenders)\n\n**In Order of Impact (NB homes):**\n\n| Location | % of Total Leakage |\n|----------|-------------------|\n| Attic Penetrations | 25-30% |\n| Rim Joist Area | 15-20% |\n| Windows and Doors | 15-20% |\n| Plumbing Penetrations | 10-15% |\n| Electrical Penetrations | 10% |\n| Basement/Crawl Space | 10% |\n\n## 2.3 Air Sealing Materials and Methods\n\n### Caulks and Sealants\n\n| Type | Use | Lifespan | Cost | NB Application |\n|------|-----|----------|------|----------------|\n| Acrylic Latex | Interior joints, paintable | 5-10 years | $3-5/tube | Interior trim, less critical gaps |\n| Polyurethane | Exterior, high-movement | 20+ years | $6-9/tube | Exterior trim, window perimeters |\n| Acoustical Sealant | Air barrier sealed joints | 50+ years | $8-12/tube | Critical air barrier connections |\n| Expanding Spray Foam | Gaps, penetrations | 50+ years | $6-10/can | Rim joists, penetrations, R.O. |\n\n### Spray Foam Insulation (Professional)\n\n**Closed-Cell Spray Foam:**\n- R-value: R-6 to R-7 per inch (highest)\n- Vapor barrier: Yes (at 2\"+ thickness)\n- Air barrier: Excellent\n- Cost: $1.50-2.50/board foot\n- NB Use: Rim joists, cathedral ceilings, problem areas\n\n**Open-Cell Spray Foam:**\n- R-value: R-3.5 per inch\n- Vapor barrier: No\n- Air barrier: Excellent\n- Cost: $0.80-1.50/board foot\n- NB Use: Wall cavities, attics (with poly vapor barrier)\n\n### Tapes and Membranes\n\n| Type | Use | Cost |\n|------|-----|------|\n| Housewrap Tape | Sheathing seams, housewrap overlaps | $10-15/roll |\n| Vapor Barrier Tape | Poly overlaps, poly to framing | $8-12/roll |\n| Peel-and-Stick Membranes | Windows, decks, complex flashings | $100-150/roll |\n\n## 2.4 NB Energy Code Requirements\n\n### Air Leakage Testing (Blower Door)\n\n**Requirement:** All new construction and major renovations must be tested\n\n**Test Standard:** CGSB 149.10 (Canadian standard)\n1. Depressurize house to 50 pascals\n2. Measure air flow required to maintain pressure\n3. Calculate ACH50 (air changes per hour)\n\n**Maximum Allowed:**\n- Houses: 2.5 ACH50 (3.0 ACH50 if HRV installed)\n- Multi-unit: 2.0 ACH50 per unit\n\n**When Testing Occurs:**\n- After air barrier installed\n- Before insulation in some cases\n- Often during construction (can fix issues while open)\n- Final test before occupancy\n\n**What Happens If You Fail:**\n1. Identify leaks (IR camera, smoke pencil)\n2. Seal leaks\n3. Re-test ($200-400 per test)\n4. Cannot occupy until pass\n\n### Insulation Requirements (Zone 6 - Moncton)\n\n| Assembly | Minimum R-Value |\n|----------|----------------|\n| Attic/Ceiling | RSI 7.0 (R-40) |\n| Cathedral Ceiling | RSI 5.3 (R-30) |\n| Walls | RSI 3.5 (R-20) |\n| Basement Walls | RSI 2.1 (R-12) |\n| Basement Floor (heated) | RSI 1.75 (R-10) |\n| Crawl Space Walls | RSI 3.5 (R-20) |\n| Foundation (Exterior) | RSI 2.1 (R-12) to frost depth |\n\n### Ventilation Requirements\n\n**Minimum Ventilation Rates (NBC 2020):**\n- Continuous: 0.3 ACH (air changes per hour)\n- Intermittent: 0.5 ACH when operating\n- Kitchen: 50 L/s (100 cfm) intermittent\n- Bath: 25 L/s (50 cfm) intermittent\n\n**HRV/ERV (Heat/Energy Recovery Ventilator):**\n- Required if ACH50 < 3.0 (tight house needs mechanical ventilation)\n- Recovers 60-95% of heat from exhaust air\n- Balances pressure (equal supply and exhaust)\n- NB Climate: HRV recommended (cold climate, long heating season)\n\n## 2.5 Tools and Materials\n\n### Air Sealing Tools:\n- Caulking guns (standard, ratcheting)\n- Spray foam gun (for cans)\n- Utility knife (cut foam, poly)\n- Putty knife (smooth sealants)\n- Tape measure\n- Flashlight/headlamp (attics, crawl spaces)\n\n### Testing Equipment:\n- Smoke pencil/smoke stick (visual air leak detection)\n- Infrared camera (thermal imaging identifies cold spots = leaks)\n- Blower door (professional testing equipment)\n\n### Safety Equipment:\n- Respirator (spray foam, confined spaces)\n- Safety glasses\n- Gloves (chemical resistance for foam)\n- Tyvek suit (attic work, spray foam)\n- Knee pads"
+    },
+    {
+      "id": "procedures",
+      "title": "SECTION 3: STEP-BY-STEP PROCEDURES",
+      "summary": "Detailed procedures for sealing rim joists, attic penetrations, and window/door rough openings with photo stop points.",
+      "content_md": "## 3.1 Air Sealing the Rim Joist\n\n> **Why Rim Joist?** Single biggest air leakage location, difficult to insulate properly\n\n### STEP 1: Assess Current Condition\n\n- Inspect rim joist from basement/crawl space\n- Look for:\n  - Gaps between sill plate and foundation\n  - Gaps between rim joist and subfloor\n  - Penetrations (wiring, plumbing, gas lines)\n  - Old fiberglass insulation (ineffective - pull out)\n- Photograph before condition\n\n📸 **PHOTO STOP:** Rim joist area before sealing\n\n### STEP 2: Prepare Surface\n\n- Remove old fiberglass insulation (doesn't air seal)\n- Clean surfaces (dust, cobwebs reduce foam adhesion)\n- Identify all penetrations (electrical, plumbing, HVAC)\n- Seal penetrations first:\n  - Electrical: Foam around wires\n  - Plumbing: Foam around pipes\n  - HVAC: Mastic seal ductwork, foam gaps\n\n### STEP 3: Seal Sill Plate to Foundation\n\n- Apply bead of polyurethane caulk along sill/foundation joint\n- Use backer rod for gaps >¼\"\n- Smooth with finger or putty knife\n- This stops air and water infiltration from outside\n\n### STEP 4: Apply Spray Foam to Rim Joist\n\n**Method 1: Closed-cell spray foam (professional)**\n- 2-3\" thickness provides R-12 to R-18\n- Also serves as vapor barrier\n- Most expensive but best performance\n\n**Method 2: Rigid foam board + canned spray foam**\n- Cut rigid foam (1-2\" XPS or polyiso) to fit between joists\n- Spray foam perimeter gaps (all four sides)\n- Less expensive, DIY-friendly\n\n- Apply foam in layers if needed (thick applications require multiple passes)\n- Overfill slightly (trim flush after curing)\n\n📸 **PHOTO STOP:** Rim joist sealed with foam\n\n### STEP 5: Trim and Finish\n\n- After foam cures (1-2 hours), trim flush with framing\n- Use utility knife or foam saw\n- For fire-rated assemblies: Cover foam with drywall or intumescent paint\n\n### STEP 6: Verify Seal\n\n- Visual inspection (no gaps, complete coverage)\n- Tactile check (foam adhered to all surfaces)\n- Smoke pencil test (before and after)\n\n📸 **PHOTO STOP:** Completed rim joist, trimmed and finished\n\n---\n\n## 3.2 Sealing Attic Penetrations\n\n> **Why Attic?** Hot air rises and escapes here, carries massive moisture\n\n### STEP 7: Identify All Penetrations\n\nMap attic penetrations:\n- Plumbing stacks (typically 2-4 per house)\n- Bath fan housings\n- Recessed lights (pot lights) - biggest offenders\n- Electrical wiring (top plates drilled)\n- Attic hatch\n- Chimney chase (if present)\n\nMark each with tape or note location\n\n### STEP 8: Seal Plumbing Stacks\n\n- Clear insulation around stack (6\" radius)\n- For PVC stacks (most common):\n  - High-temperature flexible flashing boot\n  - OR spray foam (check foam temp rating)\n- For cast iron or ABS:\n  - Fire-rated caulk or foam\n- Seal around penetration at ceiling level\n- Replace insulation around sealed area\n\n### STEP 9: Seal Recessed Lights\n\n**Best Practice:** Replace with IC-rated airtight fixtures (sealed cans)\n\n**If Replacing Not Possible:**\n- Build airtight box around fixture (drywall or rigid foam)\n- Box must be 3\" clear of fixture (heat)\n- Caulk box seams (airtight)\n- Insulate over box (not inside)\n\n⚠️ **NEVER:** Spray foam directly onto non-IC fixture (fire hazard)\n\n📸 **PHOTO STOP:** Recessed light sealed with box\n\n### STEP 10: Seal Bath Fan Housing\n\n1. Remove bath fan from below (disconnect wiring)\n2. From attic: Seal housing to drywall with caulk or foam\n3. Seal duct connection (aluminum tape or mastic)\n4. Verify damper works (should close when not running)\n5. Reinstall fan from below\n\n### STEP 11: Seal Attic Hatch\n\n- Weather-strip perimeter (foam tape or adhesive strip)\n- Insulate hatch cover:\n  - Rigid foam glued to back of hatch\n  - OR build insulated box over hatch from attic side\n- Ensure tight seal when closed (should compress weather-strip)\n- Consider spring latches to maintain compression\n\n### STEP 12: Seal Top Plates\n\n- Walls have holes drilled through top plates (wiring)\n- Locate plates below insulation\n- Spray foam or caulk holes\n- Common locations:\n  - Electrical wires entering attic\n  - Behind walls where wires run\n\n📸 **PHOTO STOP:** Top plates sealed\n\n---\n\n## 3.3 Sealing Window and Door Rough Openings\n\n### STEP 13: Prepare Rough Opening\n\n- After framing, before window installation\n- Rough opening should be sized per window specs (typically 1\" larger than frame)\n- Check for:\n  - Plumb and square (shim if needed)\n  - Structural (header adequate, jack studs present)\n  - Drainage (sill sloped out 5°)\n\n### STEP 14: Install Sill Pan Flashing\n\n- Cut peel-and-stick membrane to size:\n  - Width: R.O. width + 12\" (6\" up each side)\n  - Length: R.O. height + 6\" (wraps onto face)\n- Install with corners sloped to drain\n- Press firmly (no bubbles or wrinkles)\n- Up sides: 6\" minimum\n- Out onto face: Provides drainage plane\n\n### STEP 15: Install Window\n\n1. Set window in opening (centered, level, plumb)\n2. Check diagonal measurements (must be equal = square)\n3. Shim as needed (shims at hinge points minimum)\n4. Secure with screws (follow manufacturer specs)\n\n### STEP 16: Spray Foam Perimeter\n\n- Use **minimal expanding foam** (doesn't bow frame)\n- Fill gap around entire perimeter\n- Fill 50-70% of gap (foam expands)\n- Don't overfill (can bow jamb)\n- Let cure before trimming\n\n### STEP 17: Flash Window Head and Sides\n\n- Head: Install drip cap or flashing above window\n- Sides: Tape or membrane from sill pan up to drip cap\n- Ensure shingle-lap (upper layers over lower)\n- **Critical:** Water must drain OUT, never pool\n\n📸 **PHOTO STOP:** Window sealed and flashed"
+    },
+    {
+      "id": "inspection",
+      "title": "SECTION 4: INSPECTION & QUALITY CONTROL",
+      "summary": "Self-inspection checklists, common defects, and blower door testing procedures.",
+      "content_md": "## 4.1 Self-Inspection Checklist\n\n### Air Barrier Continuity:\n- [ ] Can trace continuous air barrier around entire envelope (no gaps)\n- [ ] All transitions sealed (foundation-wall, wall-ceiling, wall-roof)\n- [ ] Poly overlaps minimum 6\" and sealed\n- [ ] Poly sealed to framing at perimeter\n\n### Rim Joist:\n- [ ] Fully sealed (no gaps visible)\n- [ ] Penetrations sealed (wiring, plumbing)\n- [ ] Insulated to minimum R-12\n\n### Attic:\n- [ ] All penetrations sealed (plumbing, electrical, HVAC)\n- [ ] Recessed lights sealed or replaced\n- [ ] Bath fans sealed\n- [ ] Attic hatch weather-stripped and insulated\n- [ ] Top plates sealed\n\n### Windows and Doors:\n- [ ] All rough openings spray foamed\n- [ ] Sill pan flashing installed\n- [ ] Head and side flashing proper\n- [ ] No voids in foam\n\n### Testing:\n- [ ] Smoke pencil test shows no air movement at critical areas\n- [ ] IR camera shows no cold spots (if available)\n- [ ] Blower door test scheduled (pre-insulation or final)\n\n## 4.2 Common Air Sealing Defects\n\n### 1. Incomplete Rim Joist Sealing\n- **Cause:** Difficult access, missed sections\n- **Identification:** Cold in winter, condensation\n- **Fix:** Complete sealing (spray foam entire perimeter)\n\n### 2. Poly Not Sealed at Edges\n- **Cause:** Forgot sealant, used wrong tape\n- **Identification:** Visible gaps, blower door fails\n- **Fix:** Caulk or tape all edges\n\n### 3. Recessed Lights Not Sealed\n- **Cause:** Unaware of heat restriction, forgot\n- **Identification:** Major heat loss, blower door fails\n- **Fix:** Build airtight boxes or replace fixtures\n\n### 4. Window Rough Openings Not Foamed\n- **Cause:** Relied on shims alone\n- **Identification:** Drafts, cold around windows\n- **Fix:** Inject foam (remove trim if needed)\n\n## 4.3 Blower Door Testing\n\n### Test Process:\n1. Close all windows and doors\n2. Open interior doors\n3. Install blower door fan in exterior door\n4. Depressurize house to 50 pascals\n5. Measure air flow (cfm) to maintain pressure\n6. Calculate ACH50\n\n### Interpreting Results:\n\n| ACH50 | Rating |\n|-------|--------|\n| <1.5 | Excellent (may need HRV) |\n| 1.5-2.5 | Good (meets code) |\n| 2.5-4.0 | Fair (needs improvement) |\n| >4.0 | Poor (major air leaks) |\n\n### Finding Leaks During Test:\n- Use smoke pencil (shows air flow)\n- IR camera (cold spots)\n- Feel for drafts (sensitive areas)"
+    },
+    {
+      "id": "appendices",
+      "title": "SECTION 7: APPENDICES",
+      "summary": "Material costs for Moncton 2025 and typical house air sealing costs with ROI.",
+      "content_md": "## APPENDIX A: Material Costs (Moncton 2025)\n\n### Sealants:\n| Material | Cost |\n|----------|------|\n| Acoustical sealant | $8-12/tube |\n| Polyurethane caulk | $6-9/tube |\n| Spray foam (cans) | $6-10 each |\n\n### Spray Foam (Professional):\n| Type | Cost |\n|------|------|\n| Closed-cell | $1.50-2.50/board foot |\n| Open-cell | $0.80-1.50/board foot |\n\n### Tapes/Membranes:\n| Material | Cost |\n|----------|------|\n| Housewrap tape | $10-15/roll |\n| Peel-and-stick | $100-150/roll |\n\n### Testing:\n| Service | Cost |\n|---------|------|\n| Blower door test | $200-400 per test |\n| IR camera scan | $300-500 |\n\n## APPENDIX B: Typical House Air Sealing Costs\n\n### 1,200 SF House:\n\n| Item | Cost |\n|------|------|\n| Rim joist (spray foam) | $800-1,200 |\n| Attic penetrations | $400-600 |\n| Window/door R.O. | $300-500 |\n| Poly sealing | $200-400 |\n| **Total** | **$1,700-2,700** |\n\n**Savings:** $400-800/year in heating costs\n\n---\n\n## CONCLUSION\n\nBuilding envelope and air sealing is the foundation of energy-efficient, durable buildings. In NB's harsh climate, poor envelope = mold, rot, high bills, and failed inspections. The good news: Air sealing is straightforward if you understand the principles and do the work thoroughly.\n\n### Key Takeaways:\n\n1. Air barrier must be continuous\n2. Rim joist and attic are critical\n3. Test your work (blower door)\n4. Water control protects the assembly\n5. NB requires 2.5 ACH50 maximum\n\n**Next:** EW-02 Air Sealing & Vapor Barriers"
+    }
+  ],
+  "checklists": [
+    {
+      "id": "air-barrier-continuity",
+      "title": "Air Barrier Continuity Checklist",
+      "items": [
+        "Can trace continuous air barrier around entire envelope (no gaps)",
+        "All transitions sealed (foundation-wall, wall-ceiling, wall-roof)",
+        "Poly overlaps minimum 6\" and sealed",
+        "Poly sealed to framing at perimeter"
+      ]
+    },
+    {
+      "id": "rim-joist",
+      "title": "Rim Joist Checklist",
+      "items": [
+        "Fully sealed (no gaps visible)",
+        "Penetrations sealed (wiring, plumbing)",
+        "Insulated to minimum R-12"
+      ]
+    },
+    {
+      "id": "attic-sealing",
+      "title": "Attic Sealing Checklist",
+      "items": [
+        "All penetrations sealed (plumbing, electrical, HVAC)",
+        "Recessed lights sealed or replaced with IC-rated airtight",
+        "Bath fans sealed",
+        "Attic hatch weather-stripped and insulated",
+        "Top plates sealed"
+      ]
+    },
+    {
+      "id": "windows-doors",
+      "title": "Windows & Doors Checklist",
+      "items": [
+        "All rough openings spray foamed",
+        "Sill pan flashing installed",
+        "Head and side flashing proper",
+        "No voids in foam"
+      ]
+    },
+    {
+      "id": "practical-assessment",
+      "title": "Practical Assessment Requirements",
+      "items": [
+        "Safety: Respirator, glasses, gloves",
+        "Rim Joist Sealing: Complete seal, R-12+ insulation",
+        "Attic Penetration Sealing: All sealed properly",
+        "Window R.O. Sealing: Foamed, flashed correctly",
+        "Air Barrier Continuity: Trace continuous path",
+        "Material Selection: Correct products for applications",
+        "Testing: Smoke pencil shows no leaks",
+        "Documentation: Before/after photos"
+      ]
+    }
+  ],
+  "quiz": {
+    "passing_score": 0.8,
+    "questions": [
+      {
+        "id": "q1",
+        "question": "Which control layer is MOST important in the building envelope?",
+        "type": "mcq",
+        "choices": ["A) Water", "B) Air", "C) Vapor", "D) Thermal"],
+        "answer": "A",
+        "explanation": "Water control is most important because bulk water intrusion causes the most damage. However, air sealing is second most important because air leakage carries 50-100× more moisture than vapor diffusion."
+      },
+      {
+        "id": "q2",
+        "question": "What is the maximum ACH50 allowed under NB Energy Code?",
+        "type": "mcq",
+        "choices": ["A) 1.5", "B) 2.5", "C) 3.5", "D) 5.0"],
+        "answer": "B",
+        "explanation": "NB Energy Code requires maximum 2.5 ACH50 (air changes per hour at 50 pascals). If HRV is installed, 3.0 ACH50 is allowed."
+      },
+      {
+        "id": "q3",
+        "question": "Stack effect causes what in winter?",
+        "type": "mcq",
+        "choices": ["A) Cold air rises", "B) Warm air rises and escapes through ceiling", "C) Pressure equalizes throughout", "D) Air movement stops"],
+        "answer": "B",
+        "explanation": "Stack effect causes warm air to rise and escape through the ceiling/attic, creating negative pressure at the bottom of the building and positive pressure at the top."
+      },
+      {
+        "id": "q4",
+        "question": "What is the single biggest air leakage location in most NB homes?",
+        "type": "mcq",
+        "choices": ["A) Attic penetrations", "B) Windows", "C) Electrical outlets", "D) Foundation"],
+        "answer": "A",
+        "explanation": "Attic penetrations account for 25-30% of total air leakage, including recessed lights, plumbing stacks, bath fan housings, and electrical wiring through top plates."
+      },
+      {
+        "id": "q5",
+        "question": "What is the best method to seal a rim joist?",
+        "type": "mcq",
+        "choices": ["A) Fiberglass batts", "B) Acoustical sealant only", "C) Spray foam", "D) Weather stripping"],
+        "answer": "C",
+        "explanation": "Spray foam (closed-cell) is best for rim joists because it provides both air sealing and insulation (R-6 to R-7 per inch) in one application."
+      },
+      {
+        "id": "q6",
+        "question": "Where must vapor barriers be installed in NB's cold climate?",
+        "type": "mcq",
+        "choices": ["A) Exterior side", "B) Middle of wall", "C) Interior side (warm side)", "D) Not required"],
+        "answer": "C",
+        "explanation": "In heating climates like NB, vapor barriers must be on the interior (warm) side to prevent moisture from condensing inside the wall assembly."
+      },
+      {
+        "id": "q7",
+        "question": "An air barrier must be:",
+        "type": "mcq",
+        "choices": ["A) Permeable", "B) Continuous with no gaps", "C) Only at penetrations", "D) Temporary"],
+        "answer": "B",
+        "explanation": "Air barriers must be continuous with no breaks, gaps, or exceptions. Even small gaps void the effectiveness of the entire air barrier system."
+      },
+      {
+        "id": "q8",
+        "question": "What is dew point?",
+        "type": "mcq",
+        "choices": ["A) Maximum humidity level", "B) Temperature at which condensation occurs", "C) Minimum ventilation rate", "D) Air pressure measurement"],
+        "answer": "B",
+        "explanation": "Dew point is the temperature at which air reaches 100% relative humidity and water vapor condenses into liquid water."
+      },
+      {
+        "id": "q9",
+        "question": "What is the minimum poly overlap required at seams?",
+        "type": "mcq",
+        "choices": ["A) 2 inches", "B) 4 inches", "C) 6 inches (150mm)", "D) 12 inches"],
+        "answer": "C",
+        "explanation": "NB Code requires minimum 150mm (6 inch) overlap at all polyethylene seams, sealed with acoustical sealant or approved tape."
+      },
+      {
+        "id": "q10",
+        "question": "How should recessed lights be sealed if they cannot be replaced?",
+        "type": "mcq",
+        "choices": ["A) Spray foam directly on fixture", "B) Fiberglass around fixture", "C) Airtight box with 3\" clearance from fixture", "D) Ignore them"],
+        "answer": "C",
+        "explanation": "Build an airtight box (drywall or rigid foam) around non-IC-rated recessed lights with 3\" clearance for heat, then insulate over the box. Never spray foam directly on fixtures due to fire hazard."
+      },
+      {
+        "id": "q11",
+        "question": "What type of spray foam should be used around window rough openings?",
+        "type": "mcq",
+        "choices": ["A) High-expanding foam", "B) Minimal expanding foam", "C) Fire-rated foam only", "D) No foam needed"],
+        "answer": "B",
+        "explanation": "Minimal expanding foam must be used around windows and doors to prevent bowing the frame. High-expanding foam can distort the jamb and prevent proper operation."
+      },
+      {
+        "id": "q12",
+        "question": "What is the primary use of acoustical sealant?",
+        "type": "mcq",
+        "choices": ["A) Sound insulation", "B) Exterior weatherproofing", "C) Sealing poly seams (stays flexible)", "D) Structural adhesive"],
+        "answer": "C",
+        "explanation": "Acoustical sealant is a non-hardening sealant that stays flexible for 50+ years, making it ideal for sealing poly vapor barrier seams and edges."
+      },
+      {
+        "id": "q13",
+        "question": "What is the purpose of an HRV?",
+        "type": "mcq",
+        "choices": ["A) Heating only", "B) Ventilation with heat recovery", "C) Humidity control only", "D) Air conditioning"],
+        "answer": "B",
+        "explanation": "HRV (Heat Recovery Ventilator) provides controlled ventilation while recovering 60-95% of heat from exhaust air. Required in NB when ACH50 < 3.0."
+      },
+      {
+        "id": "q14",
+        "question": "What is the minimum wall R-value required in NB Zone 6?",
+        "type": "mcq",
+        "choices": ["A) RSI 2.1 (R-12)", "B) RSI 3.0 (R-17)", "C) RSI 3.5 (R-20)", "D) RSI 5.0 (R-28)"],
+        "answer": "C",
+        "explanation": "NB Energy Code requires minimum RSI 3.5 (R-20) for walls in Zone 6. This typically requires 2x6 framing at 24\" o.c. to accommodate R-22 batts."
+      },
+      {
+        "id": "q15",
+        "question": "Air leakage carries how much more moisture than vapor diffusion?",
+        "type": "mcq",
+        "choices": ["A) 2-5×", "B) 50-100×", "C) 10-20×", "D) Same amount"],
+        "answer": "B",
+        "explanation": "Air leakage carries 50-100× more moisture than vapor diffusion, which is why air sealing is MORE important than vapor control for moisture management."
+      }
+    ]
+  }
+}
