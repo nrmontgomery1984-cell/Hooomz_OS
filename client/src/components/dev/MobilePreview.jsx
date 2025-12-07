@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Smartphone, Monitor, X, RotateCcw } from 'lucide-react';
+import { Smartphone, Monitor, X, RotateCcw, RotateCw } from 'lucide-react';
 
 // Common device presets
 const DEVICE_PRESETS = {
@@ -13,6 +13,7 @@ const DEVICE_PRESETS = {
 
 /**
  * MobilePreviewToggle - Floating button to toggle mobile preview mode
+ * Uses iframe approach for accurate responsive behavior
  */
 export function MobilePreviewToggle() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ export function MobilePreviewToggle() {
   const [device, setDevice] = useState(() => {
     return localStorage.getItem('hooomz-preview-device') || 'iphone-14';
   });
+  const [isRotated, setIsRotated] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('hooomz-preview-mode', previewMode);
@@ -29,9 +31,14 @@ export function MobilePreviewToggle() {
 
     // Dispatch custom event for the wrapper to listen to
     window.dispatchEvent(new CustomEvent('preview-mode-change', {
-      detail: { mode: previewMode, device }
+      detail: { mode: previewMode, device, isRotated }
     }));
-  }, [previewMode, device]);
+  }, [previewMode, device, isRotated]);
+
+  // Don't render the toggle if we're inside the iframe
+  if (window.location.search.includes('mobilePreview=true')) {
+    return null;
+  }
 
   const currentDevice = DEVICE_PRESETS[device];
 
@@ -89,27 +96,38 @@ export function MobilePreviewToggle() {
 
             {/* Device Selector (only in mobile mode) */}
             {previewMode === 'mobile' && (
-              <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Device</label>
-                <select
-                  value={device}
-                  onChange={(e) => setDevice(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                >
-                  {Object.entries(DEVICE_PRESETS).map(([key, { name, width, height }]) => (
-                    <option key={key} value={key}>
-                      {name} ({width}x{height})
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
+              <>
+                <div>
+                  <label className="block text-xs font-medium text-gray-500 mb-1">Device</label>
+                  <select
+                    value={device}
+                    onChange={(e) => setDevice(e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    {Object.entries(DEVICE_PRESETS).map(([key, { name, width, height }]) => (
+                      <option key={key} value={key}>
+                        {name} ({width}x{height})
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            {/* Current Device Info */}
-            {previewMode === 'mobile' && currentDevice && (
-              <div className="text-xs text-gray-500 text-center">
-                {currentDevice.width} x {currentDevice.height}px
-              </div>
+                {/* Rotation Toggle */}
+                <button
+                  onClick={() => setIsRotated(!isRotated)}
+                  className="w-full py-2 px-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all"
+                >
+                  <RotateCw className="w-4 h-4" />
+                  {isRotated ? 'Landscape' : 'Portrait'}
+                </button>
+
+                {/* Current Device Info */}
+                {currentDevice && (
+                  <div className="text-xs text-gray-500 text-center">
+                    {isRotated ? currentDevice.height : currentDevice.width} x {isRotated ? currentDevice.width : currentDevice.height}px
+                  </div>
+                )}
+              </>
             )}
 
             {/* Reset Button */}
@@ -117,6 +135,7 @@ export function MobilePreviewToggle() {
               onClick={() => {
                 setPreviewMode('desktop');
                 setDevice('iphone-14');
+                setIsRotated(false);
               }}
               className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 flex items-center justify-center gap-1"
             >
@@ -131,7 +150,7 @@ export function MobilePreviewToggle() {
 }
 
 /**
- * MobilePreviewWrapper - Wraps app content in a mobile frame when preview mode is active
+ * MobilePreviewWrapper - Uses iframe for accurate responsive preview
  */
 export function MobilePreviewWrapper({ children }) {
   const [previewMode, setPreviewMode] = useState(() => {
@@ -140,55 +159,84 @@ export function MobilePreviewWrapper({ children }) {
   const [device, setDevice] = useState(() => {
     return localStorage.getItem('hooomz-preview-device') || 'iphone-14';
   });
+  const [isRotated, setIsRotated] = useState(false);
 
   useEffect(() => {
     const handleChange = (e) => {
       setPreviewMode(e.detail.mode);
       setDevice(e.detail.device);
+      setIsRotated(e.detail.isRotated || false);
     };
     window.addEventListener('preview-mode-change', handleChange);
     return () => window.removeEventListener('preview-mode-change', handleChange);
   }, []);
 
+  // If we're inside the iframe, just render children normally
+  if (window.location.search.includes('mobilePreview=true')) {
+    return children;
+  }
+
+  // Desktop mode - render normally
   if (previewMode !== 'mobile') {
     return children;
   }
 
   const deviceConfig = DEVICE_PRESETS[device] || DEVICE_PRESETS['iphone-14'];
+  const frameWidth = isRotated ? deviceConfig.height : deviceConfig.width;
+  const frameHeight = isRotated ? deviceConfig.width : deviceConfig.height;
+
+  // Build the iframe URL - same page but with a query param
+  const currentUrl = new URL(window.location.href);
+  currentUrl.searchParams.set('mobilePreview', 'true');
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-8">
+    <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4 overflow-auto">
       {/* Device Frame */}
       <div
-        className="relative bg-black rounded-[40px] p-3 shadow-2xl"
+        className="relative bg-black rounded-[40px] p-3 shadow-2xl flex-shrink-0"
         style={{
-          width: deviceConfig.width + 24,
-          height: deviceConfig.height + 24
+          width: frameWidth + 24,
+          height: frameHeight + 24
         }}
       >
-        {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-10" />
+        {/* Notch (only for portrait mode on phones) */}
+        {!isRotated && deviceConfig.width < 500 && (
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-10" />
+        )}
 
-        {/* Screen */}
+        {/* Screen - iframe for accurate responsive behavior */}
         <div
           className="bg-white rounded-[32px] overflow-hidden relative"
           style={{
-            width: deviceConfig.width,
-            height: deviceConfig.height
+            width: frameWidth,
+            height: frameHeight
           }}
         >
-          <div className="w-full h-full overflow-auto">
-            {children}
-          </div>
+          <iframe
+            src={currentUrl.toString()}
+            title="Mobile Preview"
+            className="w-full h-full border-0"
+            style={{
+              width: frameWidth,
+              height: frameHeight
+            }}
+          />
         </div>
 
-        {/* Home Indicator */}
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-600 rounded-full" />
+        {/* Home Indicator (only for portrait mode on phones) */}
+        {!isRotated && deviceConfig.width < 500 && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-gray-600 rounded-full" />
+        )}
       </div>
 
       {/* Device Label */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm">
-        {deviceConfig.name} Preview
+      <div className="mt-4 text-white/60 text-sm">
+        {deviceConfig.name} {isRotated ? '(Landscape)' : '(Portrait)'} - {frameWidth}x{frameHeight}
+      </div>
+
+      {/* Instructions */}
+      <div className="mt-2 text-white/40 text-xs">
+        Use the purple button to change device or return to desktop
       </div>
     </div>
   );
