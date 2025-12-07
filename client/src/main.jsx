@@ -4,7 +4,7 @@ import { registerSW } from 'virtual:pwa-register'
 import './index.css'
 import App from './App.jsx'
 import { DevAuthProvider } from './contexts/DevAuthContext'
-import { DevPersonaSwitcher, DevBorder } from './components/dev'
+import { DevPersonaSwitcher, DevBorder, MobilePreviewToggle, MobilePreviewWrapper } from './components/dev'
 
 // Register service worker for PWA
 if ('serviceWorker' in navigator) {
@@ -23,10 +23,13 @@ if ('serviceWorker' in navigator) {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <DevAuthProvider>
-      <DevBorder>
-        <App />
-        <DevPersonaSwitcher />
-      </DevBorder>
+      <MobilePreviewWrapper>
+        <DevBorder>
+          <App />
+          <DevPersonaSwitcher />
+          <MobilePreviewToggle />
+        </DevBorder>
+      </MobilePreviewWrapper>
     </DevAuthProvider>
   </StrictMode>,
 )
