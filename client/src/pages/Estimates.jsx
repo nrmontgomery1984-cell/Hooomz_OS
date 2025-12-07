@@ -42,9 +42,9 @@ export function Estimates() {
     async function loadEstimates() {
       setLoading(true);
       const { data } = await getProjects();
-      // Filter to estimate phase projects (both 'estimate' and 'estimating' variations)
+      // Filter to estimate status projects (check both status and phase for backwards compatibility)
       const estimateProjects = (data || []).filter(p =>
-        p.phase === 'estimate' || p.phase === 'estimating'
+        p.status === 'estimate' || p.phase === 'estimate' || p.phase === 'estimating'
       );
       setEstimates(estimateProjects);
       setLoading(false);
@@ -57,7 +57,7 @@ export function Estimates() {
     // intake_type, build_tier, and intake_data from the mini-wizard
     const { data, error } = await createProject({
       ...projectData,
-      phase: 'estimate', // Start directly in estimate phase
+      status: 'estimate', // Start directly in estimate status
     });
 
     if (!error && data) {

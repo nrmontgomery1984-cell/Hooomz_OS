@@ -19,8 +19,8 @@ export function Sales() {
     async function loadLeads() {
       setLoading(true);
       const { data } = await getProjects();
-      // Filter to only intake phase projects
-      const intakeProjects = (data || []).filter(p => p.phase === 'intake');
+      // Filter to only intake status projects
+      const intakeProjects = (data || []).filter(p => p.status === 'intake' || p.phase === 'intake');
       setLeads(intakeProjects);
       setLoading(false);
     }
