@@ -17,7 +17,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { Card, Button, Input, TextArea } from '../components/ui';
-import { clearAllMockData } from '../services/mockData';
+import { clearAllMockData, restoreMockData } from '../services/mockData';
 
 // Storage key for settings
 const STORAGE_KEY = 'hooomz_company_settings';
@@ -733,6 +733,33 @@ export function Settings() {
                       >
                         <Trash2 className="w-4 h-4 mr-2" />
                         Clear All Data
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Restore Demo Data */}
+                <div className="p-4 border border-blue-200 bg-blue-50 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <Database className="w-5 h-5 text-blue-500 mt-0.5" />
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-blue-800">Restore Demo Data</h3>
+                      <p className="text-sm text-blue-600 mt-1">
+                        Restore the sample projects and demo data that comes with the app.
+                        Useful for testing or seeing how the app works.
+                      </p>
+                      <Button
+                        variant="secondary"
+                        className="mt-4"
+                        onClick={() => {
+                          if (window.confirm('Restore demo projects and sample data?')) {
+                            restoreMockData();
+                            window.location.reload();
+                          }
+                        }}
+                      >
+                        <Database className="w-4 h-4 mr-2" />
+                        Restore Demo Data
                       </Button>
                     </div>
                   </div>

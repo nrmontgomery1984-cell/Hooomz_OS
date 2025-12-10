@@ -15,13 +15,23 @@ const STORAGE_KEYS = {
   timeEntries: 'hooomz_time_entries',
   activeTimeEntry: 'hooomz_active_time_entry',
   materialSelections: 'hooomz_material_selections',
+  dataCleared: 'hooomz_data_cleared', // Marker to prevent defaults from loading
 };
+
+// Check if data has been explicitly cleared by user
+function isDataCleared() {
+  return localStorage.getItem(STORAGE_KEYS.dataCleared) === 'true';
+}
 
 function loadFromStorage(key, defaultValue) {
   try {
     const stored = localStorage.getItem(key);
     if (stored) {
       return JSON.parse(stored);
+    }
+    // If data was cleared, return empty default (not mock defaults)
+    if (isDataCleared()) {
+      return Array.isArray(defaultValue) ? [] : (typeof defaultValue === 'object' && defaultValue !== null ? {} : defaultValue);
     }
   } catch (e) {
     console.error(`Error loading ${key} from localStorage:`, e);
@@ -36,6 +46,10 @@ function loadTaskInstancesFromStorage(key, defaultValue) {
     const stored = localStorage.getItem(key);
     if (stored) {
       const storedData = JSON.parse(stored);
+      // If data was cleared, don't merge with defaults - just return stored (empty) data
+      if (isDataCleared()) {
+        return storedData;
+      }
       // Merge: keep stored data, but add any missing projects from defaults
       const merged = { ...storedData };
       for (const projectId of Object.keys(defaultValue)) {
@@ -44,6 +58,10 @@ function loadTaskInstancesFromStorage(key, defaultValue) {
         }
       }
       return merged;
+    }
+    // If data was cleared but nothing stored yet, return empty object
+    if (isDataCleared()) {
+      return {};
     }
   } catch (e) {
     console.error(`Error loading ${key} from localStorage:`, e);
@@ -64,27 +82,39 @@ export function saveProjectsToStorage() {
 // Clear all mock data and reset to empty state
 export function clearAllMockData() {
   try {
+    // Set the "data cleared" marker FIRST - this prevents defaults from loading
+    localStorage.setItem(STORAGE_KEYS.dataCleared, 'true');
+
     // Set empty arrays in localStorage so defaults don't load on refresh
     localStorage.setItem(STORAGE_KEYS.projects, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.loops, JSON.stringify({}));
     localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify({}));
     localStorage.setItem(STORAGE_KEYS.taskTrackerInstances, JSON.stringify({}));
     localStorage.setItem(STORAGE_KEYS.taskTrackerLocations, JSON.stringify({}));
+    localStorage.setItem(STORAGE_KEYS.taskTrackerTemplates, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.timeEntries, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.materialSelections, JSON.stringify([]));
     localStorage.removeItem(STORAGE_KEYS.activeTimeEntry);
 
     // Reset in-memory arrays to empty
     mockProjects.length = 0;
-    mockLoops = {};
-    mockTasks = {};
     mockTimeEntries.length = 0;
     mockMaterialSelections.length = 0;
     mockActiveTimeEntry = null;
 
+    // Clear object-type data by deleting all keys
+    Object.keys(mockLoops).forEach(key => delete mockLoops[key]);
+    Object.keys(mockTasks).forEach(key => delete mockTasks[key]);
+
     // Clear task tracker data
     if (typeof mockTaskInstances !== 'undefined') {
       Object.keys(mockTaskInstances).forEach(key => delete mockTaskInstances[key]);
+    }
+    if (typeof mockTaskTrackerLocations !== 'undefined') {
+      Object.keys(mockTaskTrackerLocations).forEach(key => delete mockTaskTrackerLocations[key]);
+    }
+    if (typeof mockTaskTemplates !== 'undefined' && Array.isArray(mockTaskTemplates)) {
+      mockTaskTemplates.length = 0;
     }
 
     console.log('All mock data cleared successfully');
@@ -95,9 +125,29 @@ export function clearAllMockData() {
   }
 }
 
+// Restore mock data by removing the cleared marker and reloading
+export function restoreMockData() {
+  try {
+    // Remove the cleared marker
+    localStorage.removeItem(STORAGE_KEYS.dataCleared);
+    // Remove all stored data so defaults will load on refresh
+    Object.values(STORAGE_KEYS).forEach(key => {
+      if (key !== STORAGE_KEYS.dataCleared) {
+        localStorage.removeItem(key);
+      }
+    });
+    console.log('Mock data will be restored on next page reload');
+    return true;
+  } catch (e) {
+    console.error('Error restoring mock data:', e);
+    return false;
+  }
+}
+
 // Expose to window for easy console access
 if (typeof window !== 'undefined') {
   window.clearAllMockData = clearAllMockData;
+  window.restoreMockData = restoreMockData;
 }
 
 // =============================================================================
