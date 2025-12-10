@@ -64,15 +64,20 @@ export function saveProjectsToStorage() {
 // Clear all mock data and reset to empty state
 export function clearAllMockData() {
   try {
-    // Clear all localStorage keys
-    Object.values(STORAGE_KEYS).forEach(key => {
-      localStorage.removeItem(key);
-    });
+    // Set empty arrays in localStorage so defaults don't load on refresh
+    localStorage.setItem(STORAGE_KEYS.projects, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.loops, JSON.stringify({}));
+    localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify({}));
+    localStorage.setItem(STORAGE_KEYS.taskTrackerInstances, JSON.stringify({}));
+    localStorage.setItem(STORAGE_KEYS.taskTrackerLocations, JSON.stringify({}));
+    localStorage.setItem(STORAGE_KEYS.timeEntries, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.materialSelections, JSON.stringify([]));
+    localStorage.removeItem(STORAGE_KEYS.activeTimeEntry);
 
     // Reset in-memory arrays to empty
     mockProjects.length = 0;
-    mockLoops.length = 0;
-    mockTasks.length = 0;
+    mockLoops = {};
+    mockTasks = {};
     mockTimeEntries.length = 0;
     mockMaterialSelections.length = 0;
     mockActiveTimeEntry = null;
