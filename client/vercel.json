@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/((?!modules|assets|favicon|vite|sw|workbox|manifest).*)", "destination": "/index.html" }
+    { "source": "/((?!modules|assets|favicon|vite|sw|workbox|.*\\.webmanifest).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
