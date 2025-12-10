@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/((?!modules|assets|favicon|vite|sw|workbox).*)", "destination": "/index.html" }
+    { "source": "/((?!modules|assets|favicon|vite|sw|workbox|manifest).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
@@ -21,6 +21,13 @@
       "headers": [
         { "key": "Cache-Control", "value": "no-cache" },
         { "key": "Service-Worker-Allowed", "value": "/" }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        { "key": "Content-Type", "value": "application/manifest+json" },
+        { "key": "Cache-Control", "value": "no-cache" }
       ]
     }
   ]
