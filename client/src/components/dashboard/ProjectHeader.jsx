@@ -43,57 +43,108 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition }) 
   };
 
   return (
-    <Card className="p-4 mb-4">
-      {/* Top row: Name, type badge, health */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-start gap-3">
-          {/* Project type icon */}
-          <div className={`
-            p-2 rounded-lg
-            ${isNewConstruction ? 'bg-blue-100' : 'bg-amber-100'}
-          `}>
-            {isNewConstruction ? (
-              <Home className="w-5 h-5 text-blue-600" />
-            ) : (
-              <Hammer className="w-5 h-5 text-amber-600" />
-            )}
-          </div>
-
-          <div>
-            <h1 className="text-lg font-semibold text-charcoal">{header.projectName}</h1>
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <MapPin className="w-3.5 h-3.5" />
-              {header.address}
-            </div>
-          </div>
+    <Card className="p-3 lg:p-4 mb-2">
+      {/* Mobile: Compact layout without redundant name */}
+      <div className="lg:hidden">
+        {/* Phase progress - full width */}
+        <div className="mb-3">
+          <PhaseIndicator currentPhase={header.phase} healthStatus={header.healthStatus} />
         </div>
 
-        <HealthIndicator
-          status={header.healthStatus}
-          reason={header.healthReason}
-          size="md"
-        />
-      </div>
-
-      {/* Phase progress */}
-      <div className="mb-4 py-3 border-t border-b border-gray-100">
-        <PhaseIndicator currentPhase={header.phase} healthStatus={header.healthStatus} />
-      </div>
-
-      {/* Bottom row: Phase info + quick actions */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4 text-sm">
+        {/* Phase chip + days + health in one row - wrap if needed */}
+        <div className="flex items-center flex-wrap gap-2 mb-3">
           <div className="flex items-center gap-2">
             <PhaseChip phase={header.phase} />
-            <span className="text-gray-500">
-              {header.daysInPhase} days in phase
-            </span>
+            <span className="text-xs text-gray-500">{header.daysInPhase}d</span>
           </div>
-          {header.phaseStartDate && (
-            <div className="flex items-center gap-1 text-gray-400">
-              <Calendar className="w-3.5 h-3.5" />
-              Started {formatDate(header.phaseStartDate)}
+          <HealthIndicator
+            status={header.healthStatus}
+            reason={header.healthReason}
+            size="sm"
+          />
+        </div>
+
+        {/* Quick Actions - wrap instead of scroll */}
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant={hasEstimate ? 'secondary' : 'primary'}
+            size="sm"
+            onClick={() => onAction?.('view_estimate')}
+            className="text-xs"
+          >
+            <FileText className="w-3.5 h-3.5 mr-1" />
+            {hasEstimate ? 'Estimate' : 'Create'}
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => onAction?.('message_client')}
+            className="text-xs"
+          >
+            <MessageSquare className="w-3.5 h-3.5 mr-1" />
+            Message
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => onAction?.('add_note')}
+            className="text-xs"
+          >
+            <Plus className="w-3.5 h-3.5 mr-1" />
+            Log
+          </Button>
+        </div>
+      </div>
+
+      {/* Desktop: Full layout */}
+      <div className="hidden lg:block">
+        {/* Top row: Name, type badge, health */}
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-start gap-3">
+            {/* Project type icon */}
+            <div className={`
+              p-2 rounded-lg
+              ${isNewConstruction ? 'bg-blue-100' : 'bg-amber-100'}
+            `}>
+              {isNewConstruction ? (
+                <Home className="w-5 h-5 text-blue-600" />
+              ) : (
+                <Hammer className="w-5 h-5 text-amber-600" />
+              )}
             </div>
+
+            <div>
+              <h1 className="text-lg font-semibold text-charcoal">{header.projectName}</h1>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <MapPin className="w-3.5 h-3.5" />
+                {header.address}
+              </div>
+            </div>
+          </div>
+
+          <HealthIndicator
+            status={header.healthStatus}
+            reason={header.healthReason}
+            size="md"
+          />
+        </div>
+
+        {/* Phase progress */}
+        <div className="mb-4 py-3 border-t border-b border-gray-100">
+          <PhaseIndicator currentPhase={header.phase} healthStatus={header.healthStatus} />
+        </div>
+
+        {/* Phase info row */}
+        <div className="flex flex-wrap items-center gap-2 text-sm mb-3">
+          <PhaseChip phase={header.phase} />
+          <span className="text-gray-500">
+            {header.daysInPhase}d in phase
+          </span>
+          {header.phaseStartDate && (
+            <span className="text-gray-400 flex items-center gap-1">
+              <Calendar className="w-3.5 h-3.5" />
+              {formatDate(header.phaseStartDate)}
+            </span>
           )}
           {/* Phase selector for manual transitions */}
           {project && onPhaseTransition && (
@@ -125,7 +176,7 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition }) 
             onClick={() => onAction?.('add_note')}
           >
             <Plus className="w-4 h-4 mr-1" />
-            Log Activity
+            Log
           </Button>
           {/* Primary phase transition action */}
           {project && onPhaseTransition && (

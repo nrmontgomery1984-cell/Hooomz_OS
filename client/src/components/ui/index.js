@@ -7,3 +7,4 @@ export { Input, DateInput, TextArea } from './Input';
 export { Select, MultiSelect } from './Select';
 export { Logo } from './Logo';
 export { Modal } from './Modal';
+export { AddressInput } from './AddressInput';

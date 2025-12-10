@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { updateProjectPhase, createActivityEntry, signContract } from '../services/api';
+import { updateProjectPhase, createActivityEntry, signContract, startProduction } from '../services/api';
 import {
   validateTransition,
   isValidTransition,
@@ -79,6 +79,22 @@ export function usePhaseTransition(project, onUpdate) {
         // Log additional info about generated scope
         if (data?.loops?.length > 0) {
           console.log(`Generated ${data.loops.length} loops and ${data.tasks?.length || 0} tasks from estimate`);
+        }
+      }
+      // Special handling for starting construction (contracted → active)
+      // This generates loops/tasks from estimate if they don't exist
+      else if (toPhase === 'active' && fromPhase === 'contracted') {
+        const { data, error } = await startProduction(project.id, project);
+
+        if (error) {
+          throw new Error(error);
+        }
+
+        resultData = data?.project;
+
+        // Log info about generated scope
+        if (data?.loops?.length > 0 || data?.tasks?.length > 0) {
+          console.log(`Production started: ${data.loops?.length || 0} loops, ${data.tasks?.length || 0} tasks`);
         }
       } else {
         // Standard phase transition

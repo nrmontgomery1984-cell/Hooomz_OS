@@ -123,11 +123,11 @@ export const TRANSITION_GATES = {
     hard: [
       {
         check: (project) => !project.estimate_high && !project.estimate_low,
-        message: 'No estimate value set - cannot send quote without pricing',
+        message: 'No estimate value set - cannot send estimate without pricing',
       },
     ],
-    action: 'Send Quote',
-    description: 'Send the quote to the client for review.',
+    action: 'Send Estimate',
+    description: 'Send the estimate to the client for review.',
     requiresDate: 'quote_sent_at',
   },
 

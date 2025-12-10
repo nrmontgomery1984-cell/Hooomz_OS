@@ -13,7 +13,7 @@ import {
   Info,
 } from 'lucide-react';
 import { Card, Button, Checkbox } from '../ui';
-import { formatDate, daysUntil } from '../../lib/dashboardHelpers';
+import { daysUntil } from '../../lib/dashboardHelpers';
 import { getSeverityColors } from '../../lib/alertRules';
 
 /**

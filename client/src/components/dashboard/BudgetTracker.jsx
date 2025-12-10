@@ -291,22 +291,18 @@ export function BudgetSummaryCard({ budget }) {
     : 0;
 
   return (
-    <div className="p-3 bg-white border border-gray-200 rounded-lg">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-gray-600">Budget</span>
-        <span className={`text-sm font-medium ${usedPct > 80 ? 'text-amber-600' : 'text-emerald-600'}`}>
-          {Math.round(usedPct)}% used
+    <div className="p-2 bg-white border border-gray-200 rounded-lg min-w-0">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs text-gray-500">Budget</span>
+        <span className={`text-xs font-medium ${usedPct > 80 ? 'text-amber-600' : 'text-emerald-600'}`}>
+          {Math.round(usedPct)}%
         </span>
       </div>
-      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${usedPct > 95 ? 'bg-red-500' : usedPct > 80 ? 'bg-amber-500' : 'bg-emerald-500'}`}
           style={{ width: `${Math.min(usedPct, 100)}%` }}
         />
-      </div>
-      <div className="flex justify-between mt-2 text-xs text-gray-500">
-        <span>{formatCurrency(budget.totalSpent + budget.totalCommitted)}</span>
-        <span>{formatCurrency(budget.contractValue)}</span>
       </div>
     </div>
   );

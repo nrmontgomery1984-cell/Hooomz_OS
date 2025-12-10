@@ -12,7 +12,7 @@ export function PageContainer({
   const navigate = useNavigate();
 
   return (
-    <div className={`min-h-screen bg-white pb-16 lg:pb-0 ${className}`}>
+    <div className={`min-h-screen bg-white pb-16 lg:pb-0 overflow-x-hidden ${className}`}>
       {/* Header */}
       {(title || backTo || action) && (
         <header className="px-4 lg:px-6 pt-6 pb-4">

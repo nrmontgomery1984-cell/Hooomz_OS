@@ -807,6 +807,12 @@ export function generateEstimateFromIntake(project) {
   }
 
   const intake = project.intake_data || {};
+
+  // Handle contractor intake - convert taskInstances to line items
+  if (project.intake_type === 'contractor') {
+    return generateContractorEstimate(project, intake);
+  }
+
   const hasIntakeData = intake.form_type || intake.project || intake.renovation || intake.layout;
 
   // No intake data - return blank template
@@ -820,6 +826,112 @@ export function generateEstimateFromIntake(project) {
     return generateNewConstructionEstimate(project, intake);
   } else {
     return generateRenovationEstimate(project, intake);
+  }
+}
+
+/**
+ * Generate estimate from contractor intake scope data
+ * Converts contractor scope items to line items for the estimate builder
+ */
+function generateContractorEstimate(project, intake) {
+  try {
+    const lineItems = [];
+    const scope = intake?.scope || {};
+    const specLevel = intake?.project?.specLevel || project?.build_tier || 'standard';
+
+    // Tier multipliers for Good/Better/Best pricing
+    const tierMultipliers = {
+      good: specLevel === 'standard' ? 0.85 : specLevel === 'premium' ? 0.9 : 0.8,
+      better: 1.0,
+      best: specLevel === 'standard' ? 1.15 : specLevel === 'premium' ? 1.2 : 1.25,
+    };
+
+    // If project has taskInstances (from mock mode), convert those
+    if (project?.taskInstances?.length > 0) {
+      project.taskInstances.forEach((task, index) => {
+        const basePrice = task.estimate_total || 0;
+        lineItems.push({
+          id: task.id || `contractor-${index}`,
+          category: task.categoryCode || 'General',
+          name: task.name || 'Unnamed Item',
+          description: task.notes || '',
+          unit: task.unit || 'ea',
+          quantity: task.quantity || 1,
+          unitPriceGood: Math.round(basePrice * tierMultipliers.good),
+          unitPriceBetter: Math.round(basePrice * tierMultipliers.better),
+          unitPriceBest: Math.round(basePrice * tierMultipliers.best),
+          tradeCode: task.categoryCode,
+          source: 'contractor_intake',
+        });
+      });
+    } else if (scope && typeof scope === 'object') {
+      // No taskInstances, create from scope data directly
+      // scope[categoryCode].items is an OBJECT keyed by itemId, not an array
+      Object.entries(scope).forEach(([categoryCode, categoryData]) => {
+        if (!categoryData || typeof categoryData !== 'object') return;
+        if (!categoryData.enabled || !categoryData.items) return;
+
+        const items = categoryData.items;
+        if (!items || typeof items !== 'object') return;
+
+        // items is an object like { "item-id": { qty: 2, notes: "..." } }
+        Object.entries(items).forEach(([itemId, itemData]) => {
+          if (!itemData || typeof itemData !== 'object') return;
+          if (!itemData.qty || itemData.qty <= 0) return;
+
+          // Estimate cost based on quantity and a base rate
+          const baseRate = itemData.unitCost || 50;
+          const basePrice = itemData.qty * baseRate;
+
+          lineItems.push({
+            id: `${categoryCode}-${itemId}`,
+            category: categoryCode,
+            name: itemData.name || itemId,
+            description: itemData.notes || '',
+            unit: itemData.unit || 'ea',
+            quantity: itemData.qty,
+            unitPriceGood: Math.round(basePrice * tierMultipliers.good),
+            unitPriceBetter: Math.round(basePrice * tierMultipliers.better),
+            unitPriceBest: Math.round(basePrice * tierMultipliers.best),
+            tradeCode: categoryCode,
+            source: 'contractor_intake',
+          });
+        });
+      });
+    }
+
+    // If no items found, return a blank template with starter categories
+    if (lineItems.length === 0) {
+      return {
+        lineItems: [
+          { id: 'starter-0', category: 'Labor', name: 'Labor', description: 'Project labor costs', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+          { id: 'starter-1', category: 'Materials', name: 'Materials', description: 'Building materials', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+          { id: 'starter-2', category: 'Subcontractors', name: 'Subcontractor Work', description: 'Subcontracted trades', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+        ],
+        projectType: 'contractor',
+        selectedTier: project?.build_tier || 'better',
+        source: 'blank',
+      };
+    }
+
+    return {
+      lineItems,
+      projectType: 'contractor',
+      selectedTier: project?.build_tier || 'better',
+      source: 'contractor_intake',
+    };
+  } catch (error) {
+    console.error('generateContractorEstimate error:', error);
+    // Return blank estimate on any error
+    return {
+      lineItems: [
+        { id: 'starter-0', category: 'Labor', name: 'Labor', description: 'Project labor costs', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+        { id: 'starter-1', category: 'Materials', name: 'Materials', description: 'Building materials', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+      ],
+      projectType: 'contractor',
+      selectedTier: project?.build_tier || 'better',
+      source: 'blank',
+    };
   }
 }
 

@@ -126,51 +126,51 @@ export function HomeownerQuote() {
   const quoteDate = project.updated_at ? new Date(project.updated_at).toLocaleDateString() : new Date().toLocaleDateString();
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 pb-16 lg:pb-0">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 print:static">
-        <div className="max-w-3xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="max-w-3xl mx-auto px-4 lg:px-6 py-3 lg:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 lg:gap-4 min-w-0">
               <button
                 onClick={() => navigate(-1)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors print:hidden"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors print:hidden flex-shrink-0"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <div>
-                <h1 className="text-xl font-semibold text-charcoal">Project Quote</h1>
-                <p className="text-sm text-gray-500">Quote #{projectId?.slice(-8)}</p>
+              <div className="min-w-0">
+                <h1 className="text-lg lg:text-xl font-semibold text-charcoal truncate">Project Quote</h1>
+                <p className="text-xs lg:text-sm text-gray-500">#{projectId?.slice(-8)}</p>
               </div>
             </div>
 
-            <Button variant="secondary" onClick={() => window.print()} className="print:hidden">
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
+            <Button variant="secondary" size="sm" onClick={() => window.print()} className="print:hidden flex-shrink-0">
+              <Download className="w-4 h-4 lg:mr-2" />
+              <span className="hidden lg:inline">Download PDF</span>
             </Button>
           </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-8">
+      <div className="max-w-3xl mx-auto px-4 lg:px-6 py-4 lg:py-8">
         {/* Company Header */}
-        <Card className="p-6 mb-6">
-          <div className="flex justify-between items-start">
+        <Card className="p-4 lg:p-6 mb-4 lg:mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
             <div>
-              <h2 className="text-2xl font-bold text-charcoal">Hooomz Construction</h2>
-              <p className="text-gray-500 mt-1">Quality Home Building & Renovation</p>
+              <h2 className="text-xl lg:text-2xl font-bold text-charcoal">Hooomz Construction</h2>
+              <p className="text-sm text-gray-500 mt-1">Quality Home Building & Renovation</p>
               <div className="mt-3 space-y-1 text-sm text-gray-600">
                 <p className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4 flex-shrink-0" />
                   (506) 555-0123
                 </p>
                 <p className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-4 h-4 flex-shrink-0" />
                   quotes@hooomz.com
                 </p>
               </div>
             </div>
-            <div className="text-right">
+            <div className="sm:text-right">
               <p className="text-sm text-gray-500">Quote Date</p>
               <p className="font-medium text-charcoal">{quoteDate}</p>
               <p className="text-sm text-gray-500 mt-2">Valid For</p>
@@ -180,25 +180,25 @@ export function HomeownerQuote() {
         </Card>
 
         {/* Client & Project Info */}
-        <Card className="p-6 mb-6">
-          <div className="grid grid-cols-2 gap-6">
+        <Card className="p-4 lg:p-6 mb-4 lg:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
             <div>
-              <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">
+              <h3 className="text-xs lg:text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">
                 Prepared For
               </h3>
               <p className="font-semibold text-charcoal">{project.client_name}</p>
-              {project.client_email && <p className="text-gray-600">{project.client_email}</p>}
-              {project.client_phone && <p className="text-gray-600">{project.client_phone}</p>}
+              {project.client_email && <p className="text-sm text-gray-600 truncate">{project.client_email}</p>}
+              {project.client_phone && <p className="text-sm text-gray-600">{project.client_phone}</p>}
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">
+              <h3 className="text-xs lg:text-sm font-medium text-gray-500 uppercase tracking-wide mb-2">
                 Project Location
               </h3>
               <p className="font-semibold text-charcoal flex items-center gap-2">
-                <Home className="w-4 h-4 text-gray-400" />
-                {project.address || 'Address pending'}
+                <Home className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                <span className="truncate">{project.address || 'Address pending'}</span>
               </p>
-              <p className="text-gray-600 mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 {project.intake_type === 'new_construction' ? 'New Construction' : 'Renovation'}
               </p>
             </div>
@@ -206,7 +206,7 @@ export function HomeownerQuote() {
         </Card>
 
         {/* Selected Package */}
-        <Card className="p-6 mb-6">
+        <Card className="p-4 lg:p-6 mb-4 lg:mb-6">
           <h3 className="text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
             <FileText className="w-5 h-5 text-gray-400" />
             Your Quote
@@ -230,20 +230,20 @@ export function HomeownerQuote() {
         </Card>
 
         {/* Scope Breakdown */}
-        <Card className="p-6 mb-6">
-          <h3 className="text-lg font-semibold text-charcoal mb-4">What's Included</h3>
+        <Card className="p-4 lg:p-6 mb-4 lg:mb-6">
+          <h3 className="text-base lg:text-lg font-semibold text-charcoal mb-4">What's Included</h3>
 
           <div className="divide-y divide-gray-100">
             {Object.entries(groupedItems).map(([category, items]) => (
               <div key={category} className="py-3 first:pt-0 last:pb-0">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-charcoal">{category}</p>
-                    <p className="text-sm text-gray-500">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="font-medium text-charcoal truncate">{category}</p>
+                    <p className="text-xs lg:text-sm text-gray-500">
                       {items.length} {items.length === 1 ? 'item' : 'items'} included
                     </p>
                   </div>
-                  <p className="font-semibold text-charcoal">
+                  <p className="font-semibold text-charcoal flex-shrink-0">
                     {formatCurrency(getCategoryTotal(items))}
                   </p>
                 </div>
@@ -252,7 +252,7 @@ export function HomeownerQuote() {
           </div>
 
           <div className="border-t border-gray-200 mt-4 pt-4">
-            <div className="flex items-center justify-between text-lg">
+            <div className="flex items-center justify-between text-base lg:text-lg">
               <span className="font-semibold text-charcoal">Total</span>
               <span className="font-bold text-charcoal">{formatCurrency(quoteTotal)}</span>
             </div>
@@ -261,14 +261,13 @@ export function HomeownerQuote() {
 
         {/* Response Section */}
         {!responded ? (
-          <Card className="p-6 mb-6 print:hidden">
-            <h3 className="text-lg font-semibold text-charcoal mb-2">What do you think?</h3>
-            <p className="text-gray-600 mb-4">
+          <Card className="p-4 lg:p-6 mb-4 lg:mb-6 print:hidden">
+            <h3 className="text-base lg:text-lg font-semibold text-charcoal mb-2">What do you think?</h3>
+            <p className="text-sm lg:text-base text-gray-600 mb-4">
               Let us know if this quote looks good or if you have questions.
-              We'll follow up to discuss next steps.
             </p>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button onClick={handleApprove} className="flex-1">
                 <ThumbsUp className="w-4 h-4 mr-2" />
                 Looks Good
@@ -280,23 +279,23 @@ export function HomeownerQuote() {
             </div>
           </Card>
         ) : (
-          <Card className={`p-6 mb-6 ${responseType === 'approved' ? 'bg-emerald-50 border-emerald-200' : 'bg-blue-50 border-blue-200'}`}>
-            <div className="flex items-start gap-4">
-              <div className={`p-3 rounded-full ${responseType === 'approved' ? 'bg-emerald-100' : 'bg-blue-100'}`}>
+          <Card className={`p-4 lg:p-6 mb-4 lg:mb-6 ${responseType === 'approved' ? 'bg-emerald-50 border-emerald-200' : 'bg-blue-50 border-blue-200'}`}>
+            <div className="flex items-start gap-3 lg:gap-4">
+              <div className={`p-2 lg:p-3 rounded-full flex-shrink-0 ${responseType === 'approved' ? 'bg-emerald-100' : 'bg-blue-100'}`}>
                 {responseType === 'approved' ? (
-                  <CheckCircle className="w-6 h-6 text-emerald-600" />
+                  <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-600" />
                 ) : (
-                  <MessageSquare className="w-6 h-6 text-blue-600" />
+                  <MessageSquare className="w-5 h-5 lg:w-6 lg:h-6 text-blue-600" />
                 )}
               </div>
-              <div>
-                <h3 className={`text-lg font-semibold ${responseType === 'approved' ? 'text-emerald-800' : 'text-blue-800'}`}>
+              <div className="min-w-0">
+                <h3 className={`text-base lg:text-lg font-semibold ${responseType === 'approved' ? 'text-emerald-800' : 'text-blue-800'}`}>
                   {responseType === 'approved' ? 'Thanks for your response!' : 'We\'ll be in touch!'}
                 </h3>
-                <p className={responseType === 'approved' ? 'text-emerald-700' : 'text-blue-700'}>
+                <p className={`text-sm lg:text-base ${responseType === 'approved' ? 'text-emerald-700' : 'text-blue-700'}`}>
                   {responseType === 'approved'
-                    ? 'Your contractor has been notified that you\'re ready to move forward. They\'ll be in touch shortly to discuss the contract and next steps.'
-                    : 'Your contractor has been notified that you have questions. They\'ll reach out soon to address your concerns.'}
+                    ? 'Your contractor has been notified. They\'ll be in touch shortly.'
+                    : 'Your contractor has been notified. They\'ll reach out soon.'}
                 </p>
               </div>
             </div>
@@ -304,12 +303,12 @@ export function HomeownerQuote() {
         )}
 
         {/* Contact Info */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold text-charcoal mb-4">Questions?</h3>
-          <p className="text-gray-600 mb-4">
-            We're here to help. Reach out anytime if you'd like to discuss this quote.
+        <Card className="p-4 lg:p-6">
+          <h3 className="text-base lg:text-lg font-semibold text-charcoal mb-3 lg:mb-4">Questions?</h3>
+          <p className="text-sm lg:text-base text-gray-600 mb-4">
+            Reach out anytime to discuss this quote.
           </p>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button variant="secondary" onClick={() => window.location.href = 'mailto:quotes@hooomz.com'}>
               <Mail className="w-4 h-4 mr-2" />
               Email Us

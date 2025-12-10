@@ -252,8 +252,6 @@ export function PhaseTransitionButton({ project, onTransition, size = 'md' }) {
 
   if (!primaryTransition) return null;
 
-  const colors = getPhaseColors(primaryTransition.id);
-
   return (
     <Button
       size={size}

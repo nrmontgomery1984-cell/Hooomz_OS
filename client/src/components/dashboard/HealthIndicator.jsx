@@ -4,6 +4,7 @@ import { CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
  * HealthIndicator - Visual health status with icon and label
  *
  * Shows green/yellow/red status with optional tooltip.
+ * On mobile (sm size), uses abbreviated labels to fit better.
  */
 export function HealthIndicator({ status, reason, size = 'md', showLabel = true }) {
   const config = {
@@ -13,6 +14,7 @@ export function HealthIndicator({ status, reason, size = 'md', showLabel = true 
       border: 'border-emerald-200',
       icon: CheckCircle2,
       label: 'On Track',
+      shortLabel: 'OK',
     },
     at_risk: {
       color: 'text-amber-500',
@@ -20,6 +22,7 @@ export function HealthIndicator({ status, reason, size = 'md', showLabel = true 
       border: 'border-amber-200',
       icon: AlertTriangle,
       label: 'At Risk',
+      shortLabel: 'Risk',
     },
     behind: {
       color: 'text-red-500',
@@ -27,29 +30,31 @@ export function HealthIndicator({ status, reason, size = 'md', showLabel = true 
       border: 'border-red-200',
       icon: XCircle,
       label: 'Behind',
+      shortLabel: 'Late',
     },
   };
 
   const sizes = {
-    sm: { icon: 'w-4 h-4', text: 'text-xs', padding: 'px-2 py-1' },
-    md: { icon: 'w-5 h-5', text: 'text-sm', padding: 'px-3 py-1.5' },
-    lg: { icon: 'w-6 h-6', text: 'text-base', padding: 'px-4 py-2' },
+    sm: { icon: 'w-4 h-4', text: 'text-xs', padding: 'px-2 py-1', useShortLabel: true },
+    md: { icon: 'w-5 h-5', text: 'text-sm', padding: 'px-3 py-1.5', useShortLabel: false },
+    lg: { icon: 'w-6 h-6', text: 'text-base', padding: 'px-4 py-2', useShortLabel: false },
   };
 
-  const { color, bg, border, icon: Icon, label } = config[status] || config.on_track;
-  const { icon: iconSize, text: textSize, padding } = sizes[size];
+  const { color, bg, border, icon: Icon, label, shortLabel } = config[status] || config.on_track;
+  const { icon: iconSize, text: textSize, padding, useShortLabel } = sizes[size];
+  const displayLabel = useShortLabel ? shortLabel : label;
 
   return (
-    <div className="group relative inline-flex">
+    <div className="group relative inline-flex flex-shrink-0">
       <div
         className={`
-          inline-flex items-center gap-1.5 rounded-full border
+          inline-flex items-center gap-1 rounded-full border whitespace-nowrap
           ${bg} ${border} ${padding}
         `}
       >
-        <Icon className={`${iconSize} ${color}`} />
+        <Icon className={`${iconSize} ${color} flex-shrink-0`} />
         {showLabel && (
-          <span className={`font-medium ${textSize} ${color}`}>{label}</span>
+          <span className={`font-medium ${textSize} ${color}`}>{displayLabel}</span>
         )}
       </div>
 

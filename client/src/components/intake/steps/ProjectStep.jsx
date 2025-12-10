@@ -1,4 +1,4 @@
-import { Input, Select, Checkbox } from '../../ui';
+import { Input, Select, Checkbox, AddressInput } from '../../ui';
 import { Card } from '../../ui';
 import {
   BUDGET_RANGES_NEW,
@@ -26,12 +26,12 @@ export function ProjectStep({ data, formType, onChange }) {
 
   return (
     <div className="space-y-6">
-      {/* Address */}
-      <Input
+      {/* Address with Google Places Autocomplete */}
+      <AddressInput
         label={isNewConstruction ? "Site / Lot Address" : "Property Address"}
-        placeholder="123 Main Street, Moncton, NB"
+        placeholder="Start typing an address..."
         value={data.address || ''}
-        onChange={(e) => handleChange('address', e.target.value)}
+        onChange={(address) => handleChange('address', address)}
         required
       />
 

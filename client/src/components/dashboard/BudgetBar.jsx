@@ -10,7 +10,6 @@ export function BudgetBar({ spent, committed, remaining, contractValue, showLabe
   const total = spent + committed + remaining;
   const spentPct = total > 0 ? (spent / total) * 100 : 0;
   const committedPct = total > 0 ? (committed / total) * 100 : 0;
-  const remainingPct = total > 0 ? (remaining / total) * 100 : 0;
 
   // Determine health color based on usage
   const usedPct = (spent + committed) / contractValue;
@@ -78,7 +77,6 @@ export function BudgetBar({ spent, committed, remaining, contractValue, showLabe
  */
 export function BudgetMini({ spent, committed, total }) {
   const usedPct = total > 0 ? ((spent + committed) / total) * 100 : 0;
-  const spentPct = total > 0 ? (spent / total) * 100 : 0;
 
   const getColor = () => {
     if (usedPct >= 95) return 'red';

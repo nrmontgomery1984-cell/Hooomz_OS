@@ -8,6 +8,8 @@ import {
   Contracts,
   Production,
   Completed,
+  LoopTracker,
+  TimeTrackerPage,
   ProjectView,
   LoopDetail,
   TaskDetail,
@@ -15,6 +17,7 @@ import {
   HomeownerQuote,
   Profile,
   Intake,
+  ContractorIntake,
   CostCatalogue,
   Settings,
   FieldGuide,
@@ -24,10 +27,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Intake wizard - standalone, no app layout */}
+        {/* Intake wizards - standalone, no app layout */}
         <Route path="/intake" element={<Intake />} />
         <Route path="/intake/new-construction" element={<Intake />} />
         <Route path="/intake/renovation" element={<Intake />} />
+
+        {/* Contractor intake - scope-of-work focused */}
+        <Route path="/contractor/intake" element={<ContractorIntake />} />
 
         {/* Main app with layout */}
         <Route element={<AppLayout />}>
@@ -43,6 +49,8 @@ function App() {
           {/* Production - Post-Contract */}
           <Route path="/production" element={<Production />} />
           <Route path="/completed" element={<Completed />} />
+          <Route path="/loop-tracker" element={<LoopTracker />} />
+          <Route path="/time-tracker" element={<TimeTrackerPage />} />
 
           {/* Project Detail Views */}
           <Route path="/projects/:projectId" element={<ProjectView />} />

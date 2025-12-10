@@ -10,6 +10,8 @@ export { Contracts } from './Contracts';
 // Production
 export { Production } from './Production';
 export { Completed } from './Completed';
+export { LoopTracker } from './LoopTracker';
+export { TimeTrackerPage } from './TimeTrackerPage';
 
 // Detail views
 export { ProjectView } from './ProjectView';
@@ -21,6 +23,7 @@ export { HomeownerQuote } from './HomeownerQuote';
 // Other
 export { Profile } from './Profile';
 export { Intake } from './Intake';
+export { ContractorIntake } from './ContractorIntake';
 
 // Settings & Tools
 export { CostCatalogue } from './CostCatalogue';

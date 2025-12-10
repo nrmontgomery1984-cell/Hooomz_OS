@@ -17,7 +17,6 @@ export function ScopeSummary({ scope, onViewFullScope }) {
   };
 
   const {
-    projectType,
     buildTier,
     rooms,
     specialFeatures,

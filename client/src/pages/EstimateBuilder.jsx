@@ -119,7 +119,14 @@ export function EstimateBuilder() {
         } else {
           setProject(data);
         }
-        setSelectedTier(data.build_tier || 'better');
+        // Map contractor spec levels to estimate tiers
+        // standard/premium/luxury → good/better/best
+        const tierMap = { standard: 'good', premium: 'better', luxury: 'best' };
+        const rawTier = data.build_tier || 'better';
+        const mappedTier = tierMap[rawTier] || rawTier;
+        // Ensure tier is valid
+        const validTier = ['good', 'better', 'best'].includes(mappedTier) ? mappedTier : 'better';
+        setSelectedTier(validTier);
         setNotes(data.estimate_notes || '');
 
         // Generate initial estimate from intake or load saved
@@ -339,29 +346,30 @@ export function EstimateBuilder() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pb-16 lg:pb-0">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="max-w-6xl mx-auto px-4 lg:px-6 py-3 lg:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 lg:gap-4 min-w-0">
               <button
                 onClick={() => navigate(`/projects/${projectId}`)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
-              <div>
-                <h1 className="text-xl font-semibold text-charcoal">
-                  {effectiveViewMode === 'homeowner' ? 'Project Quote' : 'Estimate Builder'}
+              <div className="min-w-0">
+                <h1 className="text-lg lg:text-xl font-semibold text-charcoal truncate">
+                  {effectiveViewMode === 'homeowner' ? 'Quote' : 'Estimate'}
                 </h1>
-                <p className="text-sm text-gray-500">
-                  {project.name} • {project.client_name}
+                <p className="text-xs lg:text-sm text-gray-500 truncate">
+                  {project.name}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            {/* Desktop actions */}
+            <div className="hidden lg:flex items-center gap-3">
               {/* View Mode Toggle - Only for Contractors */}
               {isContractor && (
                 <div className="flex items-center gap-2 mr-2">
@@ -421,7 +429,21 @@ export function EstimateBuilder() {
                   </Button>
                   <Button size="sm" onClick={handleSendQuote}>
                     <Send className="w-4 h-4 mr-1" />
-                    {project?.phase === 'quoted' || project?.phase === 'quote' ? 'Send Quote' : 'Send Estimate'}
+                    Send Estimate
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Mobile actions - simplified */}
+            <div className="flex lg:hidden items-center gap-2">
+              {canEdit && (
+                <>
+                  <Button variant="secondary" size="sm" onClick={handleSave} disabled={saving} className="px-2">
+                    <Save className="w-4 h-4" />
+                  </Button>
+                  <Button size="sm" onClick={handleSendQuote} className="px-2">
+                    <Send className="w-4 h-4" />
                   </Button>
                 </>
               )}
@@ -430,7 +452,7 @@ export function EstimateBuilder() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-6">
+      <div className="max-w-6xl mx-auto px-4 lg:px-6 py-4 lg:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content - Line Items */}
           <div className="lg:col-span-2 space-y-4">

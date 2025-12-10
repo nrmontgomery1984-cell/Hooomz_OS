@@ -10,6 +10,8 @@ import {
   Settings,
   BookOpen,
   GraduationCap,
+  ListTodo,
+  Timer,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 
@@ -65,6 +67,8 @@ const navSections = [
     label: 'Production',
     items: [
       { to: '/production', icon: HardHat, label: 'In Progress', badge: 'active' },
+      { to: '/loop-tracker', icon: ListTodo, label: 'Loop Tracker' },
+      { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
       { to: '/completed', icon: CheckCircle2, label: 'Completed' },
     ],
   },

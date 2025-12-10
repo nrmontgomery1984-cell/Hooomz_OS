@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, UserPlus, ArrowRight, Phone, Mail, Calendar } from 'lucide-react';
+import { Plus, UserPlus, ArrowRight, Phone, Mail, Calendar, HardHat, Home, X } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card, Button } from '../components/ui';
 import { getProjects } from '../services/api';
@@ -14,13 +14,17 @@ import { getProjects } from '../services/api';
 export function Sales() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showIntakeChoice, setShowIntakeChoice] = useState(false);
 
   useEffect(() => {
     async function loadLeads() {
       setLoading(true);
       const { data } = await getProjects();
-      // Filter to only intake status projects
-      const intakeProjects = (data || []).filter(p => p.status === 'intake' || p.phase === 'intake');
+      // Filter to only intake status projects, exclude cancelled
+      const intakeProjects = (data || []).filter(p =>
+        (p.status === 'intake' || p.phase === 'intake') &&
+        p.status !== 'cancelled' && p.phase !== 'cancelled'
+      );
       setLeads(intakeProjects);
       setLoading(false);
     }
@@ -32,12 +36,10 @@ export function Sales() {
       title="Sales / Leads"
       subtitle="New inquiries and intake forms"
       action={
-        <Link to="/intake">
-          <Button size="sm">
-            <Plus className="w-4 h-4 mr-1" />
-            New Intake
-          </Button>
-        </Link>
+        <Button size="sm" onClick={() => setShowIntakeChoice(true)}>
+          <Plus className="w-4 h-4 mr-1" />
+          New Project
+        </Button>
       }
     >
       {/* Quick Stats */}
@@ -99,6 +101,65 @@ export function Sales() {
           {leads.map((lead) => (
             <LeadCard key={lead.id} lead={lead} />
           ))}
+        </div>
+      )}
+
+      {/* Intake Type Choice Modal */}
+      {showIntakeChoice && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md p-6 relative">
+            <button
+              onClick={() => setShowIntakeChoice(false)}
+              className="absolute top-4 right-4 p-1 hover:bg-gray-100 rounded-md transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+
+            <h2 className="text-lg font-semibold text-charcoal mb-2">
+              Start New Project
+            </h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Choose how you want to create this project
+            </p>
+
+            <div className="space-y-3">
+              {/* Homeowner Intake Option */}
+              <Link to="/intake" onClick={() => setShowIntakeChoice(false)}>
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50/50 transition-colors cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Home className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-charcoal">Homeowner Intake</h3>
+                      <p className="text-sm text-gray-500 mt-0.5">
+                        Customer-facing form for new inquiries. Collects contact info, project vision, and preferences.
+                      </p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
+                  </div>
+                </div>
+              </Link>
+
+              {/* Contractor Intake Option */}
+              <Link to="/contractor/intake" onClick={() => setShowIntakeChoice(false)}>
+                <div className="p-4 border border-gray-200 rounded-lg hover:border-amber-300 hover:bg-amber-50/50 transition-colors cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-amber-100 rounded-lg">
+                      <HardHat className="w-5 h-5 text-amber-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-charcoal">Contractor Intake</h3>
+                      <p className="text-sm text-gray-500 mt-0.5">
+                        Detailed scope-of-work entry with quantities. Auto-generates cost estimates from the Cost Catalogue.
+                      </p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </Card>
         </div>
       )}
     </PageContainer>

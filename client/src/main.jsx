@@ -6,6 +6,16 @@ import App from './App.jsx'
 import { DevAuthProvider } from './contexts/DevAuthContext'
 import { DevPersonaSwitcher, DevBorder, MobilePreviewToggle, MobilePreviewWrapper } from './components/dev'
 
+// Load Google Maps Places API for address autocomplete
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+if (GOOGLE_MAPS_API_KEY && GOOGLE_MAPS_API_KEY !== 'your_google_maps_api_key') {
+  const script = document.createElement('script')
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`
+  script.async = true
+  script.defer = true
+  document.head.appendChild(script)
+}
+
 // Register service worker for PWA
 if ('serviceWorker' in navigator) {
   registerSW({

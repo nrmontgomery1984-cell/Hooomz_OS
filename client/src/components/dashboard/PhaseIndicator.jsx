@@ -64,57 +64,88 @@ export function PhaseIndicator({ currentPhase, healthStatus = 'on_track', compac
     );
   }
 
+  // Mobile: Simple progress bar with dots
+  // Desktop: Full labeled stepper
   return (
-    <div className="flex items-center w-full">
-      {PROJECT_PHASES.map((phase, index) => {
-        const isCompleted = index < currentIndex;
-        const isCurrent = index === currentIndex;
+    <>
+      {/* Mobile: Compact dot progress */}
+      <div className="lg:hidden">
+        <div className="flex items-center justify-center gap-1.5">
+          {PROJECT_PHASES.map((phase, index) => {
+            const isCompleted = index < currentIndex;
+            const isCurrent = index === currentIndex;
 
-        return (
-          <div key={phase.id} className="flex items-center flex-1 last:flex-none">
-            {/* Phase node */}
-            <div className="flex flex-col items-center">
+            return (
               <div
+                key={phase.id}
                 className={`
-                  w-7 h-7 rounded-full flex items-center justify-center transition-colors
+                  w-2 h-2 rounded-full transition-colors
                   ${isCompleted
-                    ? 'bg-emerald-200 text-emerald-700'
+                    ? 'bg-emerald-400'
                     : isCurrent
-                      ? `${currentHealthColor.solid} text-white`
-                      : 'bg-gray-100 text-gray-400'
+                      ? currentHealthColor.solid
+                      : 'bg-gray-200'
                   }
                 `}
-              >
-                <span className="text-xs font-semibold">{index + 1}</span>
-              </div>
-              <span
-                className={`
-                  text-xs mt-1 whitespace-nowrap
-                  ${isCurrent
-                    ? `${currentHealthColor.text} font-medium`
-                    : isCompleted
-                      ? 'text-emerald-600'
-                      : 'text-gray-400'
-                  }
-                `}
-              >
-                {phase.label}
-              </span>
-            </div>
-
-            {/* Connector line */}
-            {index < PROJECT_PHASES.length - 1 && (
-              <div
-                className={`
-                  flex-1 h-0.5 mx-2 transition-colors
-                  ${isCompleted ? 'bg-emerald-300' : 'bg-gray-200'}
-                `}
+                title={phase.label}
               />
-            )}
-          </div>
-        );
-      })}
-    </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Desktop: Full labeled stepper */}
+      <div className="hidden lg:block overflow-x-auto scrollbar-hide">
+        <div className="flex items-center min-w-max">
+          {PROJECT_PHASES.map((phase, index) => {
+            const isCompleted = index < currentIndex;
+            const isCurrent = index === currentIndex;
+
+            return (
+              <div key={phase.id} className="flex items-center">
+                <div className="flex flex-col items-center">
+                  <div
+                    className={`
+                      w-7 h-7 rounded-full flex items-center justify-center transition-colors
+                      ${isCompleted
+                        ? 'bg-emerald-200 text-emerald-700'
+                        : isCurrent
+                          ? `${currentHealthColor.solid} text-white`
+                          : 'bg-gray-100 text-gray-400'
+                      }
+                    `}
+                  >
+                    <span className="text-xs font-semibold">{index + 1}</span>
+                  </div>
+                  <span
+                    className={`
+                      text-xs mt-1 whitespace-nowrap
+                      ${isCurrent
+                        ? `${currentHealthColor.text} font-medium`
+                        : isCompleted
+                          ? 'text-emerald-600'
+                          : 'text-gray-400'
+                      }
+                    `}
+                  >
+                    {phase.label}
+                  </span>
+                </div>
+
+                {index < PROJECT_PHASES.length - 1 && (
+                  <div
+                    className={`
+                      w-8 h-0.5 mx-2 transition-colors flex-shrink-0
+                      ${isCompleted ? 'bg-emerald-300' : 'bg-gray-200'}
+                    `}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
   );
 }
 

@@ -9,6 +9,11 @@ const STORAGE_KEYS = {
   projects: 'hooomz_mock_projects',
   loops: 'hooomz_mock_loops',
   tasks: 'hooomz_mock_tasks',
+  taskTrackerTemplates: 'hooomz_task_templates',
+  taskTrackerInstances: 'hooomz_task_instances',
+  taskTrackerLocations: 'hooomz_task_locations',
+  timeEntries: 'hooomz_time_entries',
+  activeTimeEntry: 'hooomz_active_time_entry',
 };
 
 function loadFromStorage(key, defaultValue) {
@@ -16,6 +21,28 @@ function loadFromStorage(key, defaultValue) {
     const stored = localStorage.getItem(key);
     if (stored) {
       return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error(`Error loading ${key} from localStorage:`, e);
+  }
+  return defaultValue;
+}
+
+// Special loader for task instances that merges stored data with defaults
+// This ensures new projects in defaults are always included
+function loadTaskInstancesFromStorage(key, defaultValue) {
+  try {
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      const storedData = JSON.parse(stored);
+      // Merge: keep stored data, but add any missing projects from defaults
+      const merged = { ...storedData };
+      for (const projectId of Object.keys(defaultValue)) {
+        if (!merged[projectId]) {
+          merged[projectId] = defaultValue[projectId];
+        }
+      }
+      return merged;
     }
   } catch (e) {
     console.error(`Error loading ${key} from localStorage:`, e);
@@ -38,7 +65,249 @@ export function saveProjectsToStorage() {
 // =============================================================================
 
 const defaultProjects = [
-  // PROJECT 1: New Construction - The Hendersons
+  // ============================================================================
+  // PROJECT 1: INTAKE PHASE (New Lead / Sales)
+  // ============================================================================
+  {
+    id: 'proj-intake-001',
+    name: 'Thompson Kitchen Reno - 92 Main Street',
+    status: 'intake',
+    phase: 'intake',
+    progress: 0,
+
+    // Contact info
+    client_name: 'David Thompson',
+    client_email: 'dthompson@email.com',
+    client_phone: '506-555-9999',
+    preferred_contact: 'phone',
+
+    // Project details
+    address: '92 Main Street, Saint John, NB',
+    build_tier: 'good',
+    budget_range: '50_100k',
+    target_start: '2025-04',
+    target_completion: '2025-06',
+    priorities: ['affordability', 'durability'],
+
+    // Estimate from intake (rough)
+    estimate_low: 25000,
+    estimate_high: 35000,
+
+    // Intake metadata
+    intake_type: 'renovation',
+    intake_data: {
+      form_type: 'renovation',
+      contact: {
+        full_name: 'David Thompson',
+        email: 'dthompson@email.com',
+        phone: '506-555-9999',
+        preferred_contact: 'phone',
+      },
+      project: {
+        address: '92 Main Street, Saint John, NB',
+        desired_start_month: '2025-04',
+        target_completion_month: '2025-06',
+        budget_range: '50_100k',
+        build_tier: 'good',
+        priorities: ['affordability', 'durability'],
+      },
+      renovation: {
+        home_age: '1990_2010',
+        home_style: 'bungalow',
+        selected_rooms: ['kitchen'],
+        room_tiers: {
+          kitchen: 'full',
+        },
+      },
+      notes: {
+        must_haves: ['More counter space', 'New appliances'],
+        pain_points: ['Cabinets falling apart', 'No dishwasher'],
+        style_notes: 'Simple and functional',
+      },
+    },
+
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+
+  // ============================================================================
+  // PROJECT 2: ESTIMATING PHASE
+  // ============================================================================
+  {
+    id: 'proj-estimate-001',
+    name: 'Wilson Basement Finish - 34 Oak Lane',
+    status: 'estimating',
+    phase: 'estimating',
+    progress: 0,
+
+    // Contact info
+    client_name: 'Karen Wilson',
+    client_email: 'kwilson@email.com',
+    client_phone: '506-555-7777',
+    preferred_contact: 'email',
+
+    // Project details
+    address: '34 Oak Lane, Hampton, NB',
+    build_tier: 'better',
+    budget_range: '50_100k',
+    target_start: '2025-05',
+    target_completion: '2025-08',
+    priorities: ['aesthetics', 'resale_value'],
+
+    // Estimate being developed
+    estimate_low: 45000,
+    estimate_high: 65000,
+    estimate_breakdown: [
+      { room: 'basement', tier: 'full', low: 45000, high: 65000 },
+    ],
+    // Line items for estimate builder
+    estimate_line_items: [
+      { id: 'eli-001', name: 'Demo & Prep', tradeCode: 'DM', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 1800, unitPriceBetter: 2250, unitPriceBest: 2790 },
+      { id: 'eli-002', name: 'Framing - Walls & Bulkheads', tradeCode: 'FI', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 4500, unitPriceBetter: 5625, unitPriceBest: 6975 },
+      { id: 'eli-003', name: 'Electrical Rough-in', tradeCode: 'EL', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 3200, unitPriceBetter: 4000, unitPriceBest: 4960 },
+      { id: 'eli-004', name: 'Plumbing Rough-in (Bathroom)', tradeCode: 'PL', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 2800, unitPriceBetter: 3500, unitPriceBest: 4340 },
+      { id: 'eli-005', name: 'Insulation', tradeCode: 'IA', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 2400, unitPriceBetter: 3000, unitPriceBest: 3720 },
+      { id: 'eli-006', name: 'Drywall & Finishing', tradeCode: 'DW', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 5600, unitPriceBetter: 7000, unitPriceBest: 8680 },
+      { id: 'eli-007', name: 'Painting', tradeCode: 'PT', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 2000, unitPriceBetter: 2500, unitPriceBest: 3100 },
+      { id: 'eli-008', name: 'Flooring - LVP', tradeCode: 'FL', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 4800, unitPriceBetter: 6000, unitPriceBest: 7440 },
+      { id: 'eli-009', name: 'Bathroom Tile', tradeCode: 'TL', room: 'basement', roomLabel: 'Basement Bath', quantity: 1, unitPriceGood: 2400, unitPriceBetter: 3000, unitPriceBest: 3720 },
+      { id: 'eli-010', name: 'Bathroom Fixtures', tradeCode: 'PL', subCode: 'PL-02', room: 'basement', roomLabel: 'Basement Bath', quantity: 1, unitPriceGood: 1800, unitPriceBetter: 2250, unitPriceBest: 2790 },
+      { id: 'eli-011', name: 'Vanity & Top', tradeCode: 'CM', subCode: 'CM-02', room: 'basement', roomLabel: 'Basement Bath', quantity: 1, unitPriceGood: 1200, unitPriceBetter: 1500, unitPriceBest: 1860 },
+      { id: 'eli-012', name: 'Trim Electrical', tradeCode: 'EL', subCode: 'EL-02', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 1600, unitPriceBetter: 2000, unitPriceBest: 2480 },
+      { id: 'eli-013', name: 'Doors & Trim', tradeCode: 'FC', room: 'basement', roomLabel: 'Basement', quantity: 1, unitPriceGood: 2800, unitPriceBetter: 3500, unitPriceBest: 4340 },
+    ],
+
+    // Intake metadata
+    intake_type: 'renovation',
+    intake_data: {
+      form_type: 'renovation',
+      contact: {
+        full_name: 'Karen Wilson',
+        email: 'kwilson@email.com',
+        phone: '506-555-7777',
+        preferred_contact: 'email',
+      },
+      project: {
+        address: '34 Oak Lane, Hampton, NB',
+        desired_start_month: '2025-05',
+        target_completion_month: '2025-08',
+        budget_range: '50_100k',
+        build_tier: 'better',
+        priorities: ['aesthetics', 'resale_value'],
+      },
+      renovation: {
+        home_age: '2000_2015',
+        home_style: 'two_storey',
+        selected_rooms: ['basement'],
+        room_tiers: {
+          basement: 'full',
+        },
+      },
+      notes: {
+        must_haves: ['Home theatre area', 'Bedroom for guests', 'Full bathroom'],
+        pain_points: ['Unfinished space', 'Cold in winter'],
+        style_notes: 'Modern but warm, good lighting',
+      },
+    },
+
+    created_at: '2025-01-25T10:00:00Z',
+    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+
+  // ============================================================================
+  // PROJECT 3: CONTRACTED PHASE (Ready to Start)
+  // ============================================================================
+  {
+    id: 'proj-contract-001',
+    name: 'Patel Primary Bath Reno - 56 Maple Drive',
+    status: 'contracted',
+    phase: 'contracted',
+    progress: 0,
+
+    // Contact info
+    client_name: 'Raj & Priya Patel',
+    client_email: 'patels@email.com',
+    client_phone: '506-555-3333',
+    preferred_contact: 'email',
+
+    // Project details
+    address: '56 Maple Drive, Fredericton, NB',
+    build_tier: 'better',
+    budget_range: '25_50k',
+    target_start: '2025-02',
+    target_completion: '2025-03',
+    priorities: ['aesthetics', 'durability', 'resale_value'],
+
+    // Estimate & Contract
+    estimate_low: 28000,
+    estimate_high: 38000,
+    contract_value: 34500,
+    contract_signed_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    quote_sent_at: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
+    quote_response: 'approved',
+    quote_response_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+
+    // Line items for scope generation
+    estimate_line_items: [
+      { id: 'eli-100', name: 'Demo & Prep', tradeCode: 'DM', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 2200, unitPriceBetter: 2750, unitPriceBest: 3410 },
+      { id: 'eli-101', name: 'Plumbing Rough & Finish', tradeCode: 'PL', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 5600, unitPriceBetter: 7000, unitPriceBest: 8680 },
+      { id: 'eli-102', name: 'Electrical', tradeCode: 'EL', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 2800, unitPriceBetter: 3500, unitPriceBest: 4340 },
+      { id: 'eli-103', name: 'Drywall & Backer Board', tradeCode: 'DW', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 2240, unitPriceBetter: 2800, unitPriceBest: 3472 },
+      { id: 'eli-104', name: 'Tile - Shower', tradeCode: 'TL', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 5040, unitPriceBetter: 6300, unitPriceBest: 7812 },
+      { id: 'eli-105', name: 'Tile - Floor', tradeCode: 'TL', subCode: 'TL-03', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 2240, unitPriceBetter: 2800, unitPriceBest: 3472 },
+      { id: 'eli-106', name: 'Vanity & Quartz Top', tradeCode: 'CM', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 3360, unitPriceBetter: 4200, unitPriceBest: 5208 },
+      { id: 'eli-107', name: 'Painting', tradeCode: 'PT', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 1120, unitPriceBetter: 1400, unitPriceBest: 1736 },
+      { id: 'eli-108', name: 'Glass Shower Door', tradeCode: 'GN', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 1600, unitPriceBetter: 2000, unitPriceBest: 2480 },
+      { id: 'eli-109', name: 'Fixtures & Accessories', tradeCode: 'GN', room: 'primary_bath', roomLabel: 'Primary Bathroom', quantity: 1, unitPriceGood: 1800, unitPriceBetter: 2250, unitPriceBest: 2790 },
+    ],
+
+    // Intake metadata
+    intake_type: 'renovation',
+    intake_data: {
+      form_type: 'renovation',
+      contact: {
+        full_name: 'Raj & Priya Patel',
+        email: 'patels@email.com',
+        phone: '506-555-3333',
+        preferred_contact: 'email',
+      },
+      project: {
+        address: '56 Maple Drive, Fredericton, NB',
+        desired_start_month: '2025-02',
+        target_completion_month: '2025-03',
+        budget_range: '25_50k',
+        build_tier: 'better',
+        priorities: ['aesthetics', 'durability', 'resale_value'],
+      },
+      renovation: {
+        home_age: '1990_2010',
+        home_style: 'two_storey',
+        selected_rooms: ['primary_bath'],
+        room_tiers: {
+          primary_bath: 'full',
+        },
+      },
+      selections: {
+        bathrooms: {
+          primary_shower: 'walk_in_tile',
+          vanity_type: 'semi_custom',
+          vanity_top: 'quartz',
+        },
+      },
+      notes: {
+        must_haves: ['Walk-in shower', 'Double vanity', 'Heated floors'],
+        pain_points: ['Dated 90s tub/shower combo', 'Poor ventilation'],
+        style_notes: 'Clean modern look, white subway tile, black fixtures',
+      },
+    },
+
+    created_at: '2025-01-10T10:00:00Z',
+    updated_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+
+  // ============================================================================
+  // PROJECT 4: ACTIVE PHASE (In Progress) - New Construction
+  // ============================================================================
   {
     id: 'proj-nc-001',
     name: 'Henderson Family - 45 Riverside Drive',
@@ -66,17 +335,17 @@ const defaultProjects = [
     contract_value: 525000,
     spent: 185000,
     committed: 95000,
+    contract_signed_at: '2025-02-15T10:00:00Z',
+    actual_start: '2025-03-01',
 
     // Dashboard-specific data
     dashboard: {
-      // Schedule
       schedule: {
         projectStart: '2025-03-01',
         targetCompletion: '2025-11-15',
         currentCompletion: '2025-11-22',
         slippageDays: 7,
       },
-      // Change Orders
       changeOrders: [
         {
           id: 'co-001',
@@ -93,7 +362,6 @@ const defaultProjects = [
           dateSubmitted: '2025-06-15',
         },
       ],
-      // Pending Decisions
       pendingDecisions: [
         {
           id: 'dec-001',
@@ -112,14 +380,12 @@ const defaultProjects = [
           status: 'pending',
         },
       ],
-      // Milestones
       milestones: [
         { id: 'ms-001', name: 'Framing Inspection', date: '2025-07-02', type: 'inspection', status: 'upcoming' },
         { id: 'ms-002', name: 'Cabinet Delivery', date: '2025-07-15', type: 'delivery', status: 'upcoming' },
         { id: 'ms-003', name: 'Electrician Start', date: '2025-07-08', type: 'sub_start', status: 'upcoming' },
         { id: 'ms-004', name: 'Progress Payment #3', date: '2025-07-20', type: 'payment', status: 'upcoming' },
       ],
-      // Team
       team: {
         projectLead: {
           id: 'team-001',
@@ -219,10 +485,12 @@ const defaultProjects = [
     },
 
     created_at: '2025-01-15T10:00:00Z',
-    updated_at: '2025-01-28T14:30:00Z',
+    updated_at: new Date().toISOString(),
   },
 
-  // PROJECT 2: Renovation - The MacDonalds
+  // ============================================================================
+  // PROJECT 5: ACTIVE PHASE (In Progress) - Renovation
+  // ============================================================================
   {
     id: 'proj-reno-001',
     name: 'MacDonald Renovation - 78 King Street',
@@ -244,9 +512,14 @@ const defaultProjects = [
     target_completion: '2025-06',
     priorities: ['aesthetics', 'resale_value', 'energy_efficiency'],
 
-    // Estimate
+    // Estimate & Contract
     estimate_low: 127000,
     estimate_high: 178000,
+    contract_value: 152000,
+    spent: 33440,
+    committed: 45000,
+    contract_signed_at: '2025-01-25T10:00:00Z',
+    actual_start: '2025-02-03',
     estimate_breakdown: [
       { room: 'kitchen', tier: 'full', low: 45000, high: 65000 },
       { room: 'primary_bath', tier: 'full', low: 25000, high: 35000 },
@@ -329,124 +602,97 @@ const defaultProjects = [
     },
 
     created_at: '2025-01-20T09:00:00Z',
-    updated_at: '2025-01-28T16:45:00Z',
-  },
-
-  // PROJECT 3: New Lead in Intake Phase (just submitted)
-  {
-    id: 'proj-intake-001',
-    name: 'Thompson Kitchen Reno - 92 Main Street',
-    status: 'intake',
-    phase: 'intake',
-    progress: 0,
-
-    // Contact info
-    client_name: 'David Thompson',
-    client_email: 'dthompson@email.com',
-    client_phone: '506-555-9999',
-    preferred_contact: 'phone',
-
-    // Project details
-    address: '92 Main Street, Saint John, NB',
-    build_tier: 'good',
-    budget_range: '50_100k',
-    target_start: '2025-04',
-    target_completion: '2025-06',
-    priorities: ['affordability', 'durability'],
-
-    // Estimate from intake
-    estimate_low: 25000,
-    estimate_high: 35000,
-
-    // Intake metadata
-    intake_type: 'renovation',
-    intake_data: {
-      form_type: 'renovation',
-      contact: {
-        full_name: 'David Thompson',
-        email: 'dthompson@email.com',
-        phone: '506-555-9999',
-        preferred_contact: 'phone',
-      },
-      project: {
-        address: '92 Main Street, Saint John, NB',
-        desired_start_month: '2025-04',
-        target_completion_month: '2025-06',
-        budget_range: '50_100k',
-        build_tier: 'good',
-        priorities: ['affordability', 'durability'],
-      },
-      renovation: {
-        home_age: '1990_2010',
-        home_style: 'bungalow',
-        selected_rooms: ['kitchen'],
-        room_tiers: {
-          kitchen: 'full',
-        },
-      },
-      notes: {
-        must_haves: ['More counter space', 'New appliances'],
-        pain_points: ['Cabinets falling apart', 'No dishwasher'],
-        style_notes: 'Simple and functional',
-      },
-    },
-
-    created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
 
-  // PROJECT 4: In Estimate Phase
+  // ============================================================================
+  // PROJECT 6: COMPLETE PHASE
+  // ============================================================================
   {
-    id: 'proj-estimate-001',
-    name: 'Wilson Basement Finish - 34 Oak Lane',
-    status: 'estimate',
-    phase: 'estimate',
-    progress: 0,
+    id: 'proj-complete-001',
+    name: 'Roberts Kitchen & Bath - 123 Cedar Lane',
+    status: 'complete',
+    phase: 'complete',
+    progress: 100,
 
     // Contact info
-    client_name: 'Karen Wilson',
-    client_email: 'kwilson@email.com',
-    client_phone: '506-555-7777',
-    preferred_contact: 'email',
+    client_name: 'Tom & Lisa Roberts',
+    client_email: 'roberts.family@email.com',
+    client_phone: '506-555-4444',
+    preferred_contact: 'text',
 
     // Project details
-    address: '34 Oak Lane, Hampton, NB',
-    build_tier: 'better',
-    budget_range: '50_100k',
-    target_start: '2025-05',
-    target_completion: '2025-08',
-    priorities: ['aesthetics', 'resale_value'],
+    address: '123 Cedar Lane, Rothesay, NB',
+    build_tier: 'best',
+    budget_range: '100_200k',
+    target_start: '2024-09',
+    target_completion: '2024-12',
+    priorities: ['aesthetics', 'quality', 'resale_value'],
 
-    // Estimate being developed
-    estimate_low: 45000,
-    estimate_high: 65000,
-    estimate_breakdown: [
-      { room: 'basement', tier: 'full', low: 45000, high: 65000 },
-    ],
+    // Final numbers
+    estimate_low: 95000,
+    estimate_high: 125000,
+    contract_value: 115000,
+    spent: 118500, // Slightly over due to upgrades
+    committed: 0,
+    contract_signed_at: '2024-08-20T10:00:00Z',
+    actual_start: '2024-09-05',
+    actual_completion: '2024-12-18',
 
     // Intake metadata
     intake_type: 'renovation',
     intake_data: {
       form_type: 'renovation',
       contact: {
-        full_name: 'Karen Wilson',
-        email: 'kwilson@email.com',
-        phone: '506-555-7777',
-        preferred_contact: 'email',
+        full_name: 'Tom & Lisa Roberts',
+        email: 'roberts.family@email.com',
+        phone: '506-555-4444',
+        preferred_contact: 'text',
+      },
+      project: {
+        address: '123 Cedar Lane, Rothesay, NB',
+        desired_start_month: '2024-09',
+        target_completion_month: '2024-12',
+        budget_range: '100_200k',
+        build_tier: 'best',
+        priorities: ['aesthetics', 'quality', 'resale_value'],
       },
       renovation: {
-        selected_rooms: ['basement'],
+        home_age: '2000_2015',
+        home_style: 'two_storey',
+        selected_rooms: ['kitchen', 'primary_bath'],
         room_tiers: {
-          basement: 'full',
+          kitchen: 'full',
+          primary_bath: 'full',
+        },
+      },
+      selections: {
+        kitchen: {
+          cabinet_construction: 'custom',
+          cabinet_style: 'modern',
+          countertop: 'quartz',
+          island_size: 'large',
+          backsplash: 'full',
+        },
+        bathrooms: {
+          primary_shower: 'walk_in_tile',
+          vanity_type: 'custom',
+          vanity_top: 'quartz',
         },
       },
       notes: {
-        must_haves: ['Home theatre area', 'Bedroom for guests', 'Full bathroom'],
+        must_haves: ['Large island with seating', 'Spa-like primary bath', 'Premium finishes'],
+        pain_points: ['Kitchen feels dated', 'Want more storage'],
+        style_notes: 'Modern luxury, clean lines, high-end finishes',
       },
     },
 
-    created_at: '2025-01-25T10:00:00Z',
-    updated_at: '2025-01-28T14:00:00Z',
+    // Completion notes
+    completion_notes: 'Project completed successfully. Client very happy with results. Minor punch list items addressed within 1 week of substantial completion.',
+    warranty_end: '2025-12-18',
+
+    created_at: '2024-08-01T10:00:00Z',
+    updated_at: '2024-12-18T16:00:00Z',
   },
 ];
 
@@ -638,6 +884,110 @@ const defaultLoops = {
       progress: 100,
     },
   ],
+
+  // Roberts Completed Project Loops (all complete)
+  'proj-complete-001': [
+    {
+      id: 'loop-complete-001',
+      project_id: 'proj-complete-001',
+      name: 'Demo & Prep',
+      category_code: 'DM',
+      status: 'completed',
+      display_order: 1,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-002',
+      project_id: 'proj-complete-001',
+      name: 'Electrical',
+      category_code: 'EL',
+      status: 'completed',
+      display_order: 2,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-003',
+      project_id: 'proj-complete-001',
+      name: 'Plumbing',
+      category_code: 'PL',
+      status: 'completed',
+      display_order: 3,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-004',
+      project_id: 'proj-complete-001',
+      name: 'Drywall',
+      category_code: 'DW',
+      status: 'completed',
+      display_order: 4,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-005',
+      project_id: 'proj-complete-001',
+      name: 'Tile',
+      category_code: 'TL',
+      status: 'completed',
+      display_order: 5,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-006',
+      project_id: 'proj-complete-001',
+      name: 'Cabinetry & Millwork',
+      category_code: 'CM',
+      status: 'completed',
+      display_order: 6,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-007',
+      project_id: 'proj-complete-001',
+      name: 'Flooring',
+      category_code: 'FL',
+      status: 'completed',
+      display_order: 7,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-008',
+      project_id: 'proj-complete-001',
+      name: 'Painting',
+      category_code: 'PT',
+      status: 'completed',
+      display_order: 8,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-009',
+      project_id: 'proj-complete-001',
+      name: 'Finish Carpentry',
+      category_code: 'FC',
+      status: 'completed',
+      display_order: 9,
+      source: 'estimate',
+      progress: 100,
+    },
+    {
+      id: 'loop-complete-010',
+      project_id: 'proj-complete-001',
+      name: 'Final Completion',
+      category_code: 'FZ',
+      status: 'completed',
+      display_order: 10,
+      source: 'estimate',
+      progress: 100,
+    },
+  ],
 };
 
 // Load loops from localStorage or use defaults
@@ -804,18 +1154,93 @@ export const mockTodayTasks = [
 ];
 
 // =============================================================================
-// TIME ENTRY
+// TIME ENTRIES - Full time tracking system
 // =============================================================================
 
-export const mockTimeEntry = {
+// Default time entries - sample historical data
+const defaultTimeEntries = [
+  {
+    id: 'te-001',
+    taskId: 'inst-proj-nc-001-el-001',
+    taskName: 'Rough-In Electrical - Kitchen',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson New Construction',
+    categoryCode: 'EL',
+    subcategoryCode: 'EL-SVC',
+    userId: 'c1', // Joe Martinez
+    userName: 'Joe Martinez',
+    startTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 2 days ago, 8am
+    endTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 12 * 60 * 60 * 1000).toISOString(), // 2 days ago, 12pm
+    durationMinutes: 240, // 4 hours
+    notes: 'Ran wiring for kitchen outlets and lighting',
+    billable: true,
+  },
+  {
+    id: 'te-002',
+    taskId: 'inst-proj-nc-001-el-001',
+    taskName: 'Rough-In Electrical - Kitchen',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson New Construction',
+    categoryCode: 'EL',
+    subcategoryCode: 'EL-SVC',
+    userId: 'c1',
+    userName: 'Joe Martinez',
+    startTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 13 * 60 * 60 * 1000).toISOString(), // 2 days ago, 1pm
+    endTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 17 * 60 * 60 * 1000).toISOString(), // 2 days ago, 5pm
+    durationMinutes: 240, // 4 hours
+    notes: 'Completed kitchen rough-in, started panel work',
+    billable: true,
+  },
+  {
+    id: 'te-003',
+    taskId: 'inst-proj-nc-001-pl-002',
+    taskName: 'Rough-In Plumbing - Primary Bath',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson New Construction',
+    categoryCode: 'PL',
+    subcategoryCode: 'PL-DWV',
+    userId: 'c2', // Mike Thompson
+    userName: 'Mike Thompson',
+    startTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 7 * 60 * 60 * 1000).toISOString(), // yesterday, 7am
+    endTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 15 * 60 * 60 * 1000).toISOString(), // yesterday, 3pm
+    durationMinutes: 480, // 8 hours
+    notes: 'DWV rough-in for primary bath, shower drain and supply lines',
+    billable: true,
+  },
+];
+
+// Load time entries from storage
+export const mockTimeEntries = loadFromStorage(STORAGE_KEYS.timeEntries, defaultTimeEntries);
+
+// Active time entry (currently running timer) - null if no active timer
+export let mockActiveTimeEntry = loadFromStorage(STORAGE_KEYS.activeTimeEntry, null);
+
+// Legacy single entry for backwards compatibility
+export const mockTimeEntry = mockActiveTimeEntry || {
   id: 'te1',
   task_id: 'task-reno-005',
   task_title: 'Rough electrical relocations',
   project_name: 'MacDonald Renovation - 78 King Street',
-  start_time: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3 hours ago
-  allocated_minutes: 480, // 8 hours allocated
-  duration_minutes: 180, // 3 hours elapsed
+  start_time: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+  allocated_minutes: 480,
+  duration_minutes: 180,
 };
+
+// Save time entries to localStorage
+export function saveTimeEntriesToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEYS.timeEntries, JSON.stringify(mockTimeEntries));
+    localStorage.setItem(STORAGE_KEYS.activeTimeEntry, JSON.stringify(mockActiveTimeEntry));
+  } catch (e) {
+    console.error('Error saving time entries to localStorage:', e);
+  }
+}
+
+// Update active time entry reference
+export function setActiveTimeEntry(entry) {
+  mockActiveTimeEntry = entry;
+  saveTimeEntriesToStorage();
+}
 
 // =============================================================================
 // CONTACTS
@@ -1033,4 +1458,1002 @@ export const mockActivityLog = {
       created_at: '2025-01-20T09:00:00Z',
     },
   ],
+
+  // Thompson - Intake Phase (New Lead)
+  'proj-intake-001': [
+    {
+      id: 'a-intake-001',
+      event_type: 'project.created_from_intake',
+      event_data: {
+        project_name: 'Thompson Kitchen Reno - 92 Main Street',
+        intake_type: 'renovation',
+        estimate_low: 25000,
+        estimate_high: 35000,
+      },
+      actor_name: 'David Thompson',
+      created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  ],
+
+  // Wilson - Estimating Phase
+  'proj-estimate-001': [
+    {
+      id: 'a-est-001',
+      event_type: 'project.created_from_intake',
+      event_data: {
+        project_name: 'Wilson Basement Finish - 34 Oak Lane',
+        intake_type: 'renovation',
+        estimate_low: 45000,
+        estimate_high: 65000,
+      },
+      actor_name: 'Karen Wilson',
+      created_at: '2025-01-25T10:00:00Z',
+    },
+    {
+      id: 'a-est-002',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'intake',
+        to_phase: 'estimating',
+        from_label: 'New Lead',
+        to_label: 'Estimating',
+      },
+      actor_name: 'You',
+      created_at: '2025-01-26T09:00:00Z',
+    },
+    {
+      id: 'a-est-003',
+      event_type: 'note.added',
+      event_data: { note: 'Site visit completed. Basement is 850 sqft, 8ft ceilings. Good condition, no moisture issues.' },
+      category_code: 'GN',
+      actor_name: 'You',
+      created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  ],
+
+  // Patel - Contracted Phase
+  'proj-contract-001': [
+    {
+      id: 'a-con-001',
+      event_type: 'project.created_from_intake',
+      event_data: {
+        project_name: 'Patel Primary Bath Reno - 56 Maple Drive',
+        intake_type: 'renovation',
+        estimate_low: 28000,
+        estimate_high: 38000,
+      },
+      actor_name: 'Raj Patel',
+      created_at: '2025-01-10T10:00:00Z',
+    },
+    {
+      id: 'a-con-002',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'intake',
+        to_phase: 'estimating',
+        from_label: 'New Lead',
+        to_label: 'Estimating',
+      },
+      actor_name: 'You',
+      created_at: '2025-01-12T09:00:00Z',
+    },
+    {
+      id: 'a-con-003',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'estimating',
+        to_phase: 'quoted',
+        from_label: 'Estimating',
+        to_label: 'Quoted',
+      },
+      actor_name: 'You',
+      created_at: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'a-con-004',
+      event_type: 'quote.response',
+      event_data: {
+        response: 'approved',
+        client_name: 'Raj & Priya Patel',
+      },
+      actor_name: 'Raj Patel',
+      created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'a-con-005',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'quoted',
+        to_phase: 'contracted',
+        from_label: 'Quoted',
+        to_label: 'Contracted',
+        contract_value: 34500,
+      },
+      actor_name: 'You',
+      created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'a-con-006',
+      event_type: 'note.added',
+      event_data: { note: 'Materials ordered. Tile and vanity lead time is 2 weeks. Scheduled start for Feb 15.' },
+      category_code: 'GN',
+      actor_name: 'You',
+      created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  ],
+
+  // Roberts - Completed Project
+  'proj-complete-001': [
+    {
+      id: 'a-comp-001',
+      event_type: 'project.created_from_intake',
+      event_data: {
+        project_name: 'Roberts Kitchen & Bath - 123 Cedar Lane',
+        intake_type: 'renovation',
+        estimate_low: 95000,
+        estimate_high: 125000,
+      },
+      actor_name: 'Tom Roberts',
+      created_at: '2024-08-01T10:00:00Z',
+    },
+    {
+      id: 'a-comp-002',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'contracted',
+        to_phase: 'active',
+        from_label: 'Contracted',
+        to_label: 'In Progress',
+      },
+      actor_name: 'You',
+      created_at: '2024-09-05T08:00:00Z',
+    },
+    {
+      id: 'a-comp-003',
+      event_type: 'project.started',
+      event_data: {
+        loops_created: 10,
+        tasks_created: 45,
+      },
+      actor_name: 'System',
+      created_at: '2024-09-05T08:00:00Z',
+    },
+    {
+      id: 'a-comp-004',
+      event_type: 'loop.completed',
+      event_data: { name: 'Demo & Prep' },
+      category_code: 'DM',
+      actor_name: 'System',
+      created_at: '2024-09-15T16:00:00Z',
+    },
+    {
+      id: 'a-comp-005',
+      event_type: 'loop.completed',
+      event_data: { name: 'Cabinetry & Millwork' },
+      category_code: 'CM',
+      actor_name: 'System',
+      created_at: '2024-11-20T16:00:00Z',
+    },
+    {
+      id: 'a-comp-006',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'active',
+        to_phase: 'punch_list',
+        from_label: 'In Progress',
+        to_label: 'Punch List',
+      },
+      actor_name: 'You',
+      created_at: '2024-12-10T14:00:00Z',
+    },
+    {
+      id: 'a-comp-007',
+      event_type: 'note.added',
+      event_data: { note: 'Final walkthrough completed with clients. 8 punch list items identified.' },
+      category_code: 'FZ',
+      actor_name: 'You',
+      created_at: '2024-12-12T10:00:00Z',
+    },
+    {
+      id: 'a-comp-008',
+      event_type: 'phase.changed',
+      event_data: {
+        from_phase: 'punch_list',
+        to_phase: 'complete',
+        from_label: 'Punch List',
+        to_label: 'Complete',
+      },
+      actor_name: 'You',
+      created_at: '2024-12-18T16:00:00Z',
+    },
+    {
+      id: 'a-comp-009',
+      event_type: 'project.completed',
+      event_data: {
+        final_value: 118500,
+        duration_days: 104,
+        client_satisfaction: 'Very satisfied',
+      },
+      actor_name: 'System',
+      created_at: '2024-12-18T16:00:00Z',
+    },
+  ],
 };
+
+// =============================================================================
+// TASK TRACKER - THREE AXIS MODEL DATA
+// =============================================================================
+
+// Work Categories (Axis 1) - NEVER changes after creation
+export const workCategories = [
+  { code: 'SW', name: 'Site Work', color: '#78716C', icon: 'Shovel', displayOrder: 1 },
+  { code: 'FN', name: 'Foundation', color: '#A1A1AA', icon: 'Building', displayOrder: 2 },
+  { code: 'FR', name: 'Framing', color: '#F59E0B', icon: 'Frame', displayOrder: 3 },
+  { code: 'RF', name: 'Roofing', color: '#6366F1', icon: 'Home', displayOrder: 4 },
+  { code: 'EX', name: 'Exterior', color: '#14B8A6', icon: 'Building2', displayOrder: 5 },
+  { code: 'WD', name: 'Windows & Doors', color: '#06B6D4', icon: 'DoorOpen', displayOrder: 6 },
+  { code: 'IN', name: 'Insulation', color: '#F97316', icon: 'Layers', displayOrder: 7 },
+  { code: 'EL', name: 'Electrical', color: '#EAB308', icon: 'Zap', displayOrder: 8 },
+  { code: 'PL', name: 'Plumbing', color: '#3B82F6', icon: 'Droplets', displayOrder: 9 },
+  { code: 'HV', name: 'HVAC', color: '#22C55E', icon: 'Wind', displayOrder: 10 },
+  { code: 'DW', name: 'Drywall', color: '#A855F7', icon: 'Square', displayOrder: 11 },
+  { code: 'PT', name: 'Painting', color: '#EC4899', icon: 'Paintbrush', displayOrder: 12 },
+  { code: 'FL', name: 'Flooring', color: '#84CC16', icon: 'LayoutGrid', displayOrder: 13 },
+  { code: 'TL', name: 'Tile', color: '#0EA5E9', icon: 'Grid3X3', displayOrder: 14 },
+  { code: 'FC', name: 'Finish Carpentry', color: '#D946EF', icon: 'Hammer', displayOrder: 15 },
+  { code: 'CB', name: 'Cabinetry', color: '#10B981', icon: 'Package', displayOrder: 16 },
+  { code: 'CT', name: 'Countertops', color: '#8B5CF6', icon: 'Layers3', displayOrder: 17 },
+  { code: 'FX', name: 'Fixtures', color: '#0891B2', icon: 'Lightbulb', displayOrder: 18 },
+  { code: 'CL', name: 'Cleaning & Closeout', color: '#64748B', icon: 'Sparkles', displayOrder: 19 },
+];
+
+// Work Subcategories - nested under categories
+export const workSubcategories = [
+  // Electrical
+  { id: 'sub-el-svc', categoryCode: 'EL', code: 'EL-SVC', name: 'Service & Panel', displayOrder: 1 },
+  { id: 'sub-el-rgh', categoryCode: 'EL', code: 'EL-RGH', name: 'Rough-In', displayOrder: 2 },
+  { id: 'sub-el-low', categoryCode: 'EL', code: 'EL-LOW', name: 'Low Voltage', displayOrder: 3 },
+  { id: 'sub-el-ltg', categoryCode: 'EL', code: 'EL-LTG', name: 'Lighting', displayOrder: 4 },
+  { id: 'sub-el-fin', categoryCode: 'EL', code: 'EL-FIN', name: 'Devices & Finish', displayOrder: 5 },
+  // Plumbing
+  { id: 'sub-pl-svc', categoryCode: 'PL', code: 'PL-SVC', name: 'Service & Main Lines', displayOrder: 1 },
+  { id: 'sub-pl-sup', categoryCode: 'PL', code: 'PL-SUP', name: 'Supply Lines', displayOrder: 2 },
+  { id: 'sub-pl-drn', categoryCode: 'PL', code: 'PL-DRN', name: 'Drain Lines', displayOrder: 3 },
+  { id: 'sub-pl-gas', categoryCode: 'PL', code: 'PL-GAS', name: 'Gas Lines', displayOrder: 4 },
+  { id: 'sub-pl-fix', categoryCode: 'PL', code: 'PL-FIX', name: 'Fixtures', displayOrder: 5 },
+  // Drywall
+  { id: 'sub-dw-hng', categoryCode: 'DW', code: 'DW-HNG', name: 'Hanging', displayOrder: 1 },
+  { id: 'sub-dw-tap', categoryCode: 'DW', code: 'DW-TAP', name: 'Taping', displayOrder: 2 },
+  { id: 'sub-dw-fin', categoryCode: 'DW', code: 'DW-FIN', name: 'Finishing', displayOrder: 3 },
+  // Framing
+  { id: 'sub-fr-str', categoryCode: 'FR', code: 'FR-STR', name: 'Structural', displayOrder: 1 },
+  { id: 'sub-fr-int', categoryCode: 'FR', code: 'FR-INT', name: 'Interior Walls', displayOrder: 2 },
+  { id: 'sub-fr-clg', categoryCode: 'FR', code: 'FR-CLG', name: 'Ceiling', displayOrder: 3 },
+  // Tile
+  { id: 'sub-tl-flr', categoryCode: 'TL', code: 'TL-FLR', name: 'Floor Tile', displayOrder: 1 },
+  { id: 'sub-tl-wal', categoryCode: 'TL', code: 'TL-WAL', name: 'Wall Tile', displayOrder: 2 },
+  { id: 'sub-tl-shw', categoryCode: 'TL', code: 'TL-SHW', name: 'Shower', displayOrder: 3 },
+  { id: 'sub-tl-bsp', categoryCode: 'TL', code: 'TL-BSP', name: 'Backsplash', displayOrder: 4 },
+];
+
+// Construction Stages (Axis 2) - NEVER changes after creation
+export const stages = [
+  { code: 'ST-DM', name: 'Demolition', stageOrder: 1, typicalDays: 3 },
+  { code: 'ST-SS', name: 'Site & Structure', stageOrder: 2, typicalDays: 5 },
+  { code: 'ST-EW', name: 'Envelope', stageOrder: 3, typicalDays: 5 },
+  { code: 'ST-RO', name: 'Rough-In', stageOrder: 4, typicalDays: 7 },
+  { code: 'ST-IS', name: 'Insulation', stageOrder: 5, typicalDays: 3 },
+  { code: 'ST-DW', name: 'Drywall', stageOrder: 6, typicalDays: 10 },
+  { code: 'ST-PR', name: 'Prime & Prep', stageOrder: 7, typicalDays: 2 },
+  { code: 'ST-FN', name: 'Finish', stageOrder: 8, typicalDays: 15 },
+  { code: 'ST-FX', name: 'Fixtures', stageOrder: 9, typicalDays: 4 },
+  { code: 'ST-PL', name: 'Punch List', stageOrder: 10, typicalDays: 3 },
+  { code: 'ST-CL', name: 'Closeout', stageOrder: 11, typicalDays: 1 },
+];
+
+// Phases (for checklists - orthogonal to stages)
+export const phases = [
+  { code: 'rough_in', name: 'Rough-In', displayOrder: 1 },
+  { code: 'finish', name: 'Finish', displayOrder: 2 },
+  { code: 'inspection', name: 'Inspection', displayOrder: 3 },
+  { code: 'final', name: 'Final', displayOrder: 4 },
+];
+
+// Default locations for MacDonald Renovation (proj-reno-001)
+const defaultLocations = {
+  'proj-reno-001': [
+    { id: 'loc-reno-main', projectId: 'proj-reno-001', parentId: null, name: 'Main House', locationType: 'building', path: 'Main House', displayOrder: 1 },
+    { id: 'loc-reno-1f', projectId: 'proj-reno-001', parentId: 'loc-reno-main', name: '1st Floor', locationType: 'floor', path: 'Main House.1st Floor', displayOrder: 1 },
+    { id: 'loc-reno-kit', projectId: 'proj-reno-001', parentId: 'loc-reno-1f', name: 'Kitchen', locationType: 'room', path: 'Main House.1st Floor.Kitchen', displayOrder: 1 },
+    { id: 'loc-reno-dining', projectId: 'proj-reno-001', parentId: 'loc-reno-1f', name: 'Dining Room', locationType: 'room', path: 'Main House.1st Floor.Dining Room', displayOrder: 2 },
+    { id: 'loc-reno-powder', projectId: 'proj-reno-001', parentId: 'loc-reno-1f', name: 'Powder Room', locationType: 'room', path: 'Main House.1st Floor.Powder Room', displayOrder: 3 },
+    { id: 'loc-reno-laundry', projectId: 'proj-reno-001', parentId: 'loc-reno-1f', name: 'Laundry', locationType: 'room', path: 'Main House.1st Floor.Laundry', displayOrder: 4 },
+    { id: 'loc-reno-2f', projectId: 'proj-reno-001', parentId: 'loc-reno-main', name: '2nd Floor', locationType: 'floor', path: 'Main House.2nd Floor', displayOrder: 2 },
+    { id: 'loc-reno-primary', projectId: 'proj-reno-001', parentId: 'loc-reno-2f', name: 'Primary Suite', locationType: 'room', path: 'Main House.2nd Floor.Primary Suite', displayOrder: 1 },
+    { id: 'loc-reno-pbath', projectId: 'proj-reno-001', parentId: 'loc-reno-2f', name: 'Primary Bath', locationType: 'room', path: 'Main House.2nd Floor.Primary Bath', displayOrder: 2 },
+    { id: 'loc-reno-sbath', projectId: 'proj-reno-001', parentId: 'loc-reno-2f', name: 'Secondary Bath', locationType: 'room', path: 'Main House.2nd Floor.Secondary Bath', displayOrder: 3 },
+    { id: 'loc-reno-base', projectId: 'proj-reno-001', parentId: 'loc-reno-main', name: 'Basement', locationType: 'floor', path: 'Main House.Basement', displayOrder: 3 },
+    { id: 'loc-reno-rec', projectId: 'proj-reno-001', parentId: 'loc-reno-base', name: 'Rec Room', locationType: 'room', path: 'Main House.Basement.Rec Room', displayOrder: 1 },
+    { id: 'loc-reno-guest', projectId: 'proj-reno-001', parentId: 'loc-reno-base', name: 'Guest Bedroom', locationType: 'room', path: 'Main House.Basement.Guest Bedroom', displayOrder: 2 },
+    // Systems (spatial anchors)
+    { id: 'loc-reno-elec-panel', projectId: 'proj-reno-001', parentId: null, name: 'Electrical Panel', locationType: 'system', path: 'Electrical Panel', physicalAnchorId: 'loc-reno-base', displayOrder: 100 },
+    { id: 'loc-reno-mech', projectId: 'proj-reno-001', parentId: null, name: 'Mechanical Room', locationType: 'system', path: 'Mechanical Room', physicalAnchorId: 'loc-reno-base', displayOrder: 101 },
+  ],
+  'proj-nc-001': [
+    { id: 'loc-nc-main', projectId: 'proj-nc-001', parentId: null, name: 'Main House', locationType: 'building', path: 'Main House', displayOrder: 1 },
+    { id: 'loc-nc-1f', projectId: 'proj-nc-001', parentId: 'loc-nc-main', name: '1st Floor', locationType: 'floor', path: 'Main House.1st Floor', displayOrder: 1 },
+    { id: 'loc-nc-kit', projectId: 'proj-nc-001', parentId: 'loc-nc-1f', name: 'Kitchen', locationType: 'room', path: 'Main House.1st Floor.Kitchen', displayOrder: 1 },
+    { id: 'loc-nc-living', projectId: 'proj-nc-001', parentId: 'loc-nc-1f', name: 'Living Room', locationType: 'room', path: 'Main House.1st Floor.Living Room', displayOrder: 2 },
+    { id: 'loc-nc-mudroom', projectId: 'proj-nc-001', parentId: 'loc-nc-1f', name: 'Mudroom', locationType: 'room', path: 'Main House.1st Floor.Mudroom', displayOrder: 3 },
+    { id: 'loc-nc-powder', projectId: 'proj-nc-001', parentId: 'loc-nc-1f', name: 'Powder Room', locationType: 'room', path: 'Main House.1st Floor.Powder Room', displayOrder: 4 },
+    { id: 'loc-nc-2f', projectId: 'proj-nc-001', parentId: 'loc-nc-main', name: '2nd Floor', locationType: 'floor', path: 'Main House.2nd Floor', displayOrder: 2 },
+    { id: 'loc-nc-primary', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Primary Suite', locationType: 'room', path: 'Main House.2nd Floor.Primary Suite', displayOrder: 1 },
+    { id: 'loc-nc-pbath', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Primary Bath', locationType: 'room', path: 'Main House.2nd Floor.Primary Bath', displayOrder: 2 },
+    { id: 'loc-nc-bed2', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Bedroom 2', locationType: 'room', path: 'Main House.2nd Floor.Bedroom 2', displayOrder: 3 },
+    { id: 'loc-nc-bed3', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Bedroom 3', locationType: 'room', path: 'Main House.2nd Floor.Bedroom 3', displayOrder: 4 },
+    { id: 'loc-nc-bed4', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Bedroom 4', locationType: 'room', path: 'Main House.2nd Floor.Bedroom 4', displayOrder: 5 },
+    { id: 'loc-nc-bath2', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Hall Bath', locationType: 'room', path: 'Main House.2nd Floor.Hall Bath', displayOrder: 6 },
+    { id: 'loc-nc-laundry', projectId: 'proj-nc-001', parentId: 'loc-nc-2f', name: 'Laundry', locationType: 'room', path: 'Main House.2nd Floor.Laundry', displayOrder: 7 },
+    { id: 'loc-nc-garage', projectId: 'proj-nc-001', parentId: 'loc-nc-main', name: 'Garage', locationType: 'zone', path: 'Main House.Garage', displayOrder: 3 },
+    { id: 'loc-nc-basement', projectId: 'proj-nc-001', parentId: 'loc-nc-main', name: 'Basement', locationType: 'floor', path: 'Main House.Basement', displayOrder: 4 },
+  ],
+};
+
+// Task Templates (Quantum State - before instantiation)
+const defaultTaskTemplates = {
+  'proj-reno-001': [
+    // Electrical Templates
+    {
+      id: 'tpl-reno-el-001',
+      projectId: 'proj-reno-001',
+      categoryCode: 'EL',
+      subcategoryId: 'sub-el-rgh',
+      stageCode: 'ST-RO',
+      locationBinding: 'per_room',
+      name: 'Rough-In Electrical',
+      description: 'Install boxes, run wire, set up circuits',
+      estimatedHours: 4,
+      totalQuantity: 6,
+      instancesDeployed: 6,
+      stageOrder: 1,
+      source: 'estimate',
+      fieldGuideLinks: ['electrical-rough-in'],
+    },
+    {
+      id: 'tpl-reno-el-002',
+      projectId: 'proj-reno-001',
+      categoryCode: 'EL',
+      subcategoryId: 'sub-el-fin',
+      stageCode: 'ST-FX',
+      locationBinding: 'per_room',
+      name: 'Trim Electrical',
+      description: 'Install devices, switches, outlets, covers',
+      estimatedHours: 2,
+      totalQuantity: 6,
+      instancesDeployed: 6,
+      stageOrder: 1,
+      source: 'estimate',
+    },
+    // Plumbing Templates
+    {
+      id: 'tpl-reno-pl-001',
+      projectId: 'proj-reno-001',
+      categoryCode: 'PL',
+      subcategoryId: 'sub-pl-drn',
+      stageCode: 'ST-RO',
+      locationBinding: 'per_room',
+      name: 'Rough Plumbing',
+      description: 'Install supply and drain lines',
+      estimatedHours: 6,
+      totalQuantity: 4,
+      instancesDeployed: 4,
+      stageOrder: 2,
+      source: 'estimate',
+    },
+    // Drywall Templates
+    {
+      id: 'tpl-reno-dw-001',
+      projectId: 'proj-reno-001',
+      categoryCode: 'DW',
+      subcategoryId: 'sub-dw-hng',
+      stageCode: 'ST-DW',
+      locationBinding: 'per_room',
+      name: 'Hang Drywall',
+      description: 'Install and screw drywall sheets',
+      estimatedHours: 3,
+      totalQuantity: 8,
+      instancesDeployed: 8,
+      stageOrder: 1,
+      source: 'estimate',
+    },
+    {
+      id: 'tpl-reno-dw-002',
+      projectId: 'proj-reno-001',
+      categoryCode: 'DW',
+      subcategoryId: 'sub-dw-tap',
+      stageCode: 'ST-DW',
+      locationBinding: 'per_room',
+      name: 'Tape & Mud',
+      description: 'Tape joints and apply joint compound',
+      estimatedHours: 4,
+      totalQuantity: 8,
+      instancesDeployed: 8,
+      stageOrder: 2,
+      source: 'estimate',
+    },
+    // Tile Templates
+    {
+      id: 'tpl-reno-tl-001',
+      projectId: 'proj-reno-001',
+      categoryCode: 'TL',
+      subcategoryId: 'sub-tl-shw',
+      stageCode: 'ST-FN',
+      locationBinding: 'per_room',
+      name: 'Shower Tile',
+      description: 'Waterproof and tile shower surround',
+      estimatedHours: 16,
+      totalQuantity: 2,
+      instancesDeployed: 2,
+      stageOrder: 1,
+      source: 'estimate',
+    },
+    {
+      id: 'tpl-reno-tl-002',
+      projectId: 'proj-reno-001',
+      categoryCode: 'TL',
+      subcategoryId: 'sub-tl-flr',
+      stageCode: 'ST-FN',
+      locationBinding: 'per_room',
+      name: 'Floor Tile',
+      description: 'Install floor tile with thin-set',
+      estimatedHours: 8,
+      totalQuantity: 3,
+      instancesDeployed: 3,
+      stageOrder: 2,
+      source: 'estimate',
+    },
+    // Painting Templates
+    {
+      id: 'tpl-reno-pt-001',
+      projectId: 'proj-reno-001',
+      categoryCode: 'PT',
+      stageCode: 'ST-PR',
+      locationBinding: 'per_room',
+      name: 'Prime Walls & Ceiling',
+      description: 'Apply primer coat to new drywall',
+      estimatedHours: 2,
+      totalQuantity: 8,
+      instancesDeployed: 8,
+      stageOrder: 1,
+      source: 'estimate',
+    },
+    {
+      id: 'tpl-reno-pt-002',
+      projectId: 'proj-reno-001',
+      categoryCode: 'PT',
+      stageCode: 'ST-FN',
+      locationBinding: 'per_room',
+      name: 'Finish Paint',
+      description: 'Apply two coats finish paint',
+      estimatedHours: 3,
+      totalQuantity: 8,
+      instancesDeployed: 8,
+      stageOrder: 3,
+      source: 'estimate',
+    },
+  ],
+};
+
+// Task Instances (Collapsed from Quantum State)
+const defaultTaskInstances = {
+  // Henderson New Construction - proj-nc-001
+  'proj-nc-001': [
+    // Foundation tasks (completed)
+    {
+      id: 'inst-nc-001',
+      templateId: 'tpl-nc-fn-001',
+      locationId: 'loc-nc-main',
+      categoryCode: 'FN',
+      stageCode: 'ST-FD',
+      locationPath: 'Main House',
+      name: 'Pour Footings',
+      status: 'completed',
+      priority: 1,
+      dueDate: '2025-01-15',
+      assignedTo: 'c3',
+      estimatedHours: 16,
+      actualHours: 18,
+      completedAt: '2025-01-15T16:00:00Z',
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-002',
+      templateId: 'tpl-nc-fn-002',
+      locationId: 'loc-nc-main',
+      categoryCode: 'FN',
+      stageCode: 'ST-FD',
+      locationPath: 'Main House',
+      name: 'Foundation Walls',
+      status: 'completed',
+      priority: 1,
+      dueDate: '2025-01-22',
+      assignedTo: 'c3',
+      estimatedHours: 24,
+      actualHours: 26,
+      completedAt: '2025-01-22T17:00:00Z',
+      reworkCount: 0,
+    },
+    // Framing tasks (in progress)
+    {
+      id: 'inst-nc-003',
+      templateId: 'tpl-nc-fr-001',
+      locationId: 'loc-nc-1f',
+      categoryCode: 'FR',
+      stageCode: 'ST-FR',
+      locationPath: 'Main House.1st Floor',
+      name: 'Frame First Floor Walls',
+      status: 'completed',
+      priority: 1,
+      dueDate: '2025-01-30',
+      assignedTo: 'c6',
+      estimatedHours: 32,
+      actualHours: 30,
+      completedAt: '2025-01-30T15:00:00Z',
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-004',
+      templateId: 'tpl-nc-fr-002',
+      locationId: 'loc-nc-2f',
+      categoryCode: 'FR',
+      stageCode: 'ST-FR',
+      locationPath: 'Main House.2nd Floor',
+      name: 'Frame Second Floor Walls',
+      status: 'in_progress',
+      priority: 1,
+      dueDate: '2025-02-08',
+      assignedTo: 'c6',
+      estimatedHours: 40,
+      actualHours: 24,
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-005',
+      templateId: 'tpl-nc-fr-003',
+      locationId: 'loc-nc-main',
+      categoryCode: 'RF',
+      stageCode: 'ST-FR',
+      locationPath: 'Main House',
+      name: 'Set Roof Trusses',
+      status: 'pending',
+      priority: 1,
+      dueDate: '2025-02-15',
+      assignedTo: 'c6',
+      estimatedHours: 16,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-006',
+      templateId: 'tpl-nc-fr-004',
+      locationId: 'loc-nc-main',
+      categoryCode: 'RF',
+      stageCode: 'ST-FR',
+      locationPath: 'Main House',
+      name: 'Install Roof Sheathing',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-18',
+      assignedTo: 'c6',
+      estimatedHours: 20,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Exterior Envelope (starting)
+    {
+      id: 'inst-nc-007',
+      templateId: 'tpl-nc-ee-001',
+      locationId: 'loc-nc-main',
+      categoryCode: 'EE',
+      stageCode: 'ST-EE',
+      locationPath: 'Main House',
+      name: 'Install House Wrap',
+      status: 'in_progress',
+      priority: 1,
+      dueDate: '2025-02-12',
+      assignedTo: 'c7',
+      estimatedHours: 12,
+      actualHours: 4,
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-008',
+      templateId: 'tpl-nc-ee-002',
+      locationId: 'loc-nc-main',
+      categoryCode: 'EE',
+      stageCode: 'ST-EE',
+      locationPath: 'Main House',
+      name: 'Install Windows',
+      status: 'pending',
+      priority: 1,
+      dueDate: '2025-02-20',
+      assignedTo: 'c7',
+      estimatedHours: 24,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Electrical Rough (pending)
+    {
+      id: 'inst-nc-009',
+      templateId: 'tpl-nc-el-001',
+      locationId: 'loc-nc-kit',
+      categoryCode: 'EL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.1st Floor.Kitchen',
+      name: 'Rough-In Electrical - Kitchen',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-25',
+      assignedTo: 'c1',
+      estimatedHours: 8,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-010',
+      templateId: 'tpl-nc-el-002',
+      locationId: 'loc-nc-living',
+      categoryCode: 'EL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.1st Floor.Living Room',
+      name: 'Rough-In Electrical - Living Room',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-26',
+      assignedTo: 'c1',
+      estimatedHours: 6,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Plumbing Rough (pending)
+    {
+      id: 'inst-nc-011',
+      templateId: 'tpl-nc-pl-001',
+      locationId: 'loc-nc-pbath',
+      categoryCode: 'PL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.2nd Floor.Primary Bath',
+      name: 'Rough-In Plumbing - Primary Bath',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-28',
+      assignedTo: 'c2',
+      estimatedHours: 10,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-012',
+      templateId: 'tpl-nc-pl-002',
+      locationId: 'loc-nc-bath2',
+      categoryCode: 'PL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.2nd Floor.Hall Bath',
+      name: 'Rough-In Plumbing - Hall Bath',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-03-01',
+      assignedTo: 'c2',
+      estimatedHours: 8,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // HVAC (pending)
+    {
+      id: 'inst-nc-013',
+      templateId: 'tpl-nc-hv-001',
+      locationId: 'loc-nc-basement',
+      categoryCode: 'HV',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.Basement',
+      name: 'Install HVAC Equipment',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-03-05',
+      assignedTo: 'c8',
+      estimatedHours: 16,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    {
+      id: 'inst-nc-014',
+      templateId: 'tpl-nc-hv-002',
+      locationId: 'loc-nc-1f',
+      categoryCode: 'HV',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.1st Floor',
+      name: 'Run Ductwork - 1st Floor',
+      status: 'pending',
+      priority: 3,
+      dueDate: '2025-03-08',
+      assignedTo: 'c8',
+      estimatedHours: 20,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+  ],
+
+  // MacDonald Renovation - proj-reno-001
+  'proj-reno-001': [
+    // Electrical Rough-In - Kitchen (in_progress)
+    {
+      id: 'inst-reno-001',
+      templateId: 'tpl-reno-el-001',
+      locationId: 'loc-reno-kit',
+      categoryCode: 'EL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.1st Floor.Kitchen',
+      name: 'Rough-In Electrical - Kitchen',
+      status: 'in_progress',
+      priority: 1,
+      dueDate: '2025-02-10',
+      assignedTo: 'c1', // Joe Martinez - Elite Electrical
+      estimatedHours: 6,
+      actualHours: 3.5,
+      reworkCount: 0,
+    },
+    // Electrical Rough-In - Primary Bath (pending)
+    {
+      id: 'inst-reno-002',
+      templateId: 'tpl-reno-el-001',
+      locationId: 'loc-reno-pbath',
+      categoryCode: 'EL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.2nd Floor.Primary Bath',
+      name: 'Rough-In Electrical - Primary Bath',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-12',
+      assignedTo: 'c1',
+      estimatedHours: 4,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Electrical Rough-In - Secondary Bath (pending)
+    {
+      id: 'inst-reno-003',
+      templateId: 'tpl-reno-el-001',
+      locationId: 'loc-reno-sbath',
+      categoryCode: 'EL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.2nd Floor.Secondary Bath',
+      name: 'Rough-In Electrical - Secondary Bath',
+      status: 'pending',
+      priority: 3,
+      dueDate: '2025-02-14',
+      assignedTo: 'c1',
+      estimatedHours: 3,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Electrical Rough-In - Basement Rec Room (pending)
+    {
+      id: 'inst-reno-004',
+      templateId: 'tpl-reno-el-001',
+      locationId: 'loc-reno-rec',
+      categoryCode: 'EL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.Basement.Rec Room',
+      name: 'Rough-In Electrical - Rec Room',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-15',
+      assignedTo: 'c1',
+      estimatedHours: 5,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Plumbing Rough - Kitchen (completed)
+    {
+      id: 'inst-reno-005',
+      templateId: 'tpl-reno-pl-001',
+      locationId: 'loc-reno-kit',
+      categoryCode: 'PL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.1st Floor.Kitchen',
+      name: 'Rough Plumbing - Kitchen',
+      status: 'completed',
+      priority: 1,
+      dueDate: '2025-02-05',
+      assignedTo: 'c2', // Tom LeBlanc - LeBlanc Plumbing
+      estimatedHours: 6,
+      actualHours: 5.5,
+      completedAt: '2025-02-05T14:30:00Z',
+      reworkCount: 0,
+    },
+    // Plumbing Rough - Primary Bath (in_progress)
+    {
+      id: 'inst-reno-006',
+      templateId: 'tpl-reno-pl-001',
+      locationId: 'loc-reno-pbath',
+      categoryCode: 'PL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.2nd Floor.Primary Bath',
+      name: 'Rough Plumbing - Primary Bath',
+      status: 'in_progress',
+      priority: 1,
+      dueDate: '2025-02-08',
+      assignedTo: 'c2',
+      estimatedHours: 8,
+      actualHours: 4,
+      reworkCount: 0,
+    },
+    // Plumbing Rough - Secondary Bath (pending, blocked by stage)
+    {
+      id: 'inst-reno-007',
+      templateId: 'tpl-reno-pl-001',
+      locationId: 'loc-reno-sbath',
+      categoryCode: 'PL',
+      stageCode: 'ST-RO',
+      locationPath: 'Main House.2nd Floor.Secondary Bath',
+      name: 'Rough Plumbing - Secondary Bath',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-12',
+      assignedTo: 'c2',
+      estimatedHours: 4,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Drywall Hang - Kitchen (pending, blocked by rough-in stage)
+    {
+      id: 'inst-reno-008',
+      templateId: 'tpl-reno-dw-001',
+      locationId: 'loc-reno-kit',
+      categoryCode: 'DW',
+      stageCode: 'ST-DW',
+      locationPath: 'Main House.1st Floor.Kitchen',
+      name: 'Hang Drywall - Kitchen',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-18',
+      assignedTo: 'c4', // Mike Brown - Brown Drywall
+      estimatedHours: 4,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Drywall Hang - Primary Bath (pending)
+    {
+      id: 'inst-reno-009',
+      templateId: 'tpl-reno-dw-001',
+      locationId: 'loc-reno-pbath',
+      categoryCode: 'DW',
+      stageCode: 'ST-DW',
+      locationPath: 'Main House.2nd Floor.Primary Bath',
+      name: 'Hang Drywall - Primary Bath',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-02-20',
+      assignedTo: 'c4',
+      estimatedHours: 3,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Tile - Primary Bath Shower (pending, blocked by drywall)
+    {
+      id: 'inst-reno-010',
+      templateId: 'tpl-reno-tl-001',
+      locationId: 'loc-reno-pbath',
+      categoryCode: 'TL',
+      stageCode: 'ST-FN',
+      locationPath: 'Main House.2nd Floor.Primary Bath',
+      name: 'Shower Tile - Primary Bath',
+      status: 'pending',
+      priority: 1,
+      dueDate: '2025-03-01',
+      assignedTo: 'c5', // Carlos Ramirez - Ramirez Tile
+      estimatedHours: 16,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Tile - Floor Primary Bath (pending)
+    {
+      id: 'inst-reno-011',
+      templateId: 'tpl-reno-tl-002',
+      locationId: 'loc-reno-pbath',
+      categoryCode: 'TL',
+      stageCode: 'ST-FN',
+      locationPath: 'Main House.2nd Floor.Primary Bath',
+      name: 'Floor Tile - Primary Bath',
+      status: 'pending',
+      priority: 2,
+      dueDate: '2025-03-05',
+      assignedTo: 'c5',
+      estimatedHours: 8,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Paint Prime - Kitchen (pending)
+    {
+      id: 'inst-reno-012',
+      templateId: 'tpl-reno-pt-001',
+      locationId: 'loc-reno-kit',
+      categoryCode: 'PT',
+      stageCode: 'ST-PR',
+      locationPath: 'Main House.1st Floor.Kitchen',
+      name: 'Prime Walls & Ceiling - Kitchen',
+      status: 'pending',
+      priority: 3,
+      dueDate: '2025-02-25',
+      estimatedHours: 2,
+      actualHours: 0,
+      reworkCount: 0,
+    },
+    // Blocked task example
+    {
+      id: 'inst-reno-013',
+      templateId: 'tpl-reno-el-002',
+      locationId: 'loc-reno-kit',
+      categoryCode: 'EL',
+      stageCode: 'ST-FX',
+      locationPath: 'Main House.1st Floor.Kitchen',
+      name: 'Trim Electrical - Kitchen',
+      status: 'blocked',
+      priority: 2,
+      dueDate: '2025-03-10',
+      assignedTo: 'c1',
+      estimatedHours: 3,
+      actualHours: 0,
+      reworkCount: 0,
+      dependencyOverrides: {
+        blockedByReason: 'Waiting for cabinet installation',
+      },
+    },
+  ],
+};
+
+// Phase Checklists (per template)
+export const defaultPhaseChecklists = {
+  'tpl-reno-el-001': [
+    { id: 'chk-el-001', templateId: 'tpl-reno-el-001', phaseCode: 'rough_in', stepOrder: 1, stepDescription: 'Mark box locations per plan', isCritical: false },
+    { id: 'chk-el-002', templateId: 'tpl-reno-el-001', phaseCode: 'rough_in', stepOrder: 2, stepDescription: 'Install boxes at correct heights', isCritical: true },
+    { id: 'chk-el-003', templateId: 'tpl-reno-el-001', phaseCode: 'rough_in', stepOrder: 3, stepDescription: 'Run wire per circuit plan', isCritical: true },
+    { id: 'chk-el-004', templateId: 'tpl-reno-el-001', phaseCode: 'rough_in', stepOrder: 4, stepDescription: 'Label all circuits at panel', isCritical: true },
+    { id: 'chk-el-005', templateId: 'tpl-reno-el-001', phaseCode: 'inspection', stepOrder: 1, stepDescription: 'Schedule rough-in inspection', isCritical: true },
+    { id: 'chk-el-006', templateId: 'tpl-reno-el-001', phaseCode: 'inspection', stepOrder: 2, stepDescription: 'Pass inspection', isCritical: true },
+  ],
+  'tpl-reno-dw-001': [
+    { id: 'chk-dw-001', templateId: 'tpl-reno-dw-001', phaseCode: 'rough_in', stepOrder: 1, stepDescription: 'Verify framing is complete', isCritical: true },
+    { id: 'chk-dw-002', templateId: 'tpl-reno-dw-001', phaseCode: 'rough_in', stepOrder: 2, stepDescription: 'Install vapor barrier if required', isCritical: false },
+    { id: 'chk-dw-003', templateId: 'tpl-reno-dw-001', phaseCode: 'rough_in', stepOrder: 3, stepDescription: 'Hang ceiling sheets first', isCritical: false },
+    { id: 'chk-dw-004', templateId: 'tpl-reno-dw-001', phaseCode: 'rough_in', stepOrder: 4, stepDescription: 'Hang wall sheets, stagger seams', isCritical: true },
+    { id: 'chk-dw-005', templateId: 'tpl-reno-dw-001', phaseCode: 'rough_in', stepOrder: 5, stepDescription: 'Screw at 12" OC on ceilings, 16" on walls', isCritical: true },
+  ],
+  'tpl-reno-tl-001': [
+    { id: 'chk-tl-001', templateId: 'tpl-reno-tl-001', phaseCode: 'rough_in', stepOrder: 1, stepDescription: 'Verify shower pan is properly sloped', isCritical: true },
+    { id: 'chk-tl-002', templateId: 'tpl-reno-tl-001', phaseCode: 'rough_in', stepOrder: 2, stepDescription: 'Install backer board', isCritical: true },
+    { id: 'chk-tl-003', templateId: 'tpl-reno-tl-001', phaseCode: 'rough_in', stepOrder: 3, stepDescription: 'Apply waterproof membrane', isCritical: true },
+    { id: 'chk-tl-004', templateId: 'tpl-reno-tl-001', phaseCode: 'finish', stepOrder: 1, stepDescription: 'Lay out tile pattern', isCritical: false },
+    { id: 'chk-tl-005', templateId: 'tpl-reno-tl-001', phaseCode: 'finish', stepOrder: 2, stepDescription: 'Set wall tiles bottom to top', isCritical: true },
+    { id: 'chk-tl-006', templateId: 'tpl-reno-tl-001', phaseCode: 'finish', stepOrder: 3, stepDescription: 'Grout and seal', isCritical: true },
+    { id: 'chk-tl-007', templateId: 'tpl-reno-tl-001', phaseCode: 'final', stepOrder: 1, stepDescription: 'Clean and polish', isCritical: false },
+    { id: 'chk-tl-008', templateId: 'tpl-reno-tl-001', phaseCode: 'final', stepOrder: 2, stepDescription: 'Install fixtures and trim', isCritical: true },
+  ],
+};
+
+// Load from storage or use defaults
+export const mockTaskTrackerLocations = loadFromStorage(STORAGE_KEYS.taskTrackerLocations, defaultLocations);
+export const mockTaskTemplates = loadFromStorage(STORAGE_KEYS.taskTrackerTemplates, defaultTaskTemplates);
+// Use special loader for task instances that merges defaults for new projects
+export const mockTaskInstances = loadTaskInstancesFromStorage(STORAGE_KEYS.taskTrackerInstances, defaultTaskInstances);
+
+// Save function for Task Tracker data
+export function saveTaskTrackerToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEYS.taskTrackerTemplates, JSON.stringify(mockTaskTemplates));
+    localStorage.setItem(STORAGE_KEYS.taskTrackerInstances, JSON.stringify(mockTaskInstances));
+    localStorage.setItem(STORAGE_KEYS.taskTrackerLocations, JSON.stringify(mockTaskTrackerLocations));
+  } catch (e) {
+    console.error('Error saving Task Tracker data to localStorage:', e);
+  }
+}

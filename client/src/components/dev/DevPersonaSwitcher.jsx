@@ -57,8 +57,8 @@ export function DevPersonaSwitcher() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showRestrictions, setShowRestrictions] = useState(false);
 
-  // Don't render in production
-  if (!isDevMode || !currentPersona) {
+  // Don't render in production or inside mobile preview iframe
+  if (!isDevMode || !currentPersona || window.location.search.includes('mobilePreview=true')) {
     return null;
   }
 

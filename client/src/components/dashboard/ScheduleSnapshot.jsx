@@ -1,14 +1,13 @@
 import { Calendar, Clock, AlertTriangle, Target, TrendingDown, TrendingUp } from 'lucide-react';
 import { Card } from '../ui';
 import { MilestoneCalendar, MilestoneTimeline } from './MilestoneCalendar';
-import { formatDate, daysBetween, daysUntil } from '../../lib/dashboardHelpers';
+import { formatDate, daysUntil } from '../../lib/dashboardHelpers';
 
 /**
  * ScheduleSnapshot - Timeline view + upcoming milestones
  */
 export function ScheduleSnapshot({ schedule }) {
   const {
-    projectStart,
     targetCompletion,
     currentCompletion,
     slippageDays,
@@ -18,16 +17,6 @@ export function ScheduleSnapshot({ schedule }) {
   } = schedule;
 
   const daysToTarget = daysUntil(targetCompletion);
-  const daysToProjected = daysUntil(currentCompletion);
-
-  // Calculate overall progress
-  const totalDays = daysBetween(projectStart, targetCompletion);
-  const elapsedDays = daysBetween(projectStart, new Date());
-  const timeProgress = totalDays > 0 ? Math.min((elapsedDays / totalDays) * 100, 100) : 0;
-
-  // Completed phases
-  const completedPhases = phases.filter(p => p.status === 'complete').length;
-  const workProgress = phases.length > 0 ? (completedPhases / phases.length) * 100 : 0;
 
   return (
     <Card className="p-4 h-full">
@@ -152,18 +141,17 @@ export function ScheduleSummaryCard({ schedule }) {
   const isDelayed = schedule.slippageDays > 0;
 
   return (
-    <div className="p-3 bg-white border border-gray-200 rounded-lg">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-gray-600">Target Completion</span>
+    <div className="p-2 bg-white border border-gray-200 rounded-lg min-w-0">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs text-gray-500">Schedule</span>
         {isDelayed && (
           <span className="text-xs text-red-600 font-medium">
-            {schedule.slippageDays}d behind
+            {schedule.slippageDays}d late
           </span>
         )}
       </div>
-      <p className="font-medium text-charcoal">{formatDate(schedule.targetCompletion)}</p>
-      <p className="text-xs text-gray-500 mt-1">
-        {daysRemaining > 0 ? `${daysRemaining} days remaining` : 'Target passed'}
+      <p className="text-sm font-medium text-charcoal truncate">
+        {daysRemaining > 0 ? `${daysRemaining}d left` : 'Passed'}
       </p>
     </div>
   );

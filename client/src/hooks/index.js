@@ -9,3 +9,4 @@ export {
 } from './useScopeData';
 export { useDashboard, useDashboardFromData } from './useDashboard';
 export { usePhaseTransition } from './usePhaseTransition';
+export { useTaskTracker } from './useTaskTracker';

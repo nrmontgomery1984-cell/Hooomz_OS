@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign } from 'lucide-react';
+import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator } from 'lucide-react';
 import { PageContainer } from '../components/layout';
-import { Card, Button } from '../components/ui';
+import { Button } from '../components/ui';
 import { ProjectDashboard, PhaseTransitionModal } from '../components/dashboard';
-import { LoopCard, AddLoopModal } from '../components/loops';
+import { AddLoopModal, LoopsView } from '../components/loops';
 import { ActivityFeed, AddActivityModal } from '../components/activity';
 import { AddExpenseModal, ExpenseList, ExpenseSummary } from '../components/expenses';
+import { EstimatePanel } from '../components/estimates';
 import { useDashboardFromData, usePhaseTransition } from '../hooks';
 import {
   getProject,
@@ -37,9 +38,13 @@ export function ProjectView() {
   // Phase transition management
   const handleProjectUpdate = (updatedProject) => {
     setProject(updatedProject);
-    // Also refresh activities to show the phase change
-    getProjectActivity(projectId).then(res => {
-      if (res.data) setActivities(res.data);
+    // Also refresh activities and loops to show the phase change and any generated loops
+    Promise.all([
+      getProjectActivity(projectId),
+      getLoops(projectId),
+    ]).then(([activityRes, loopsRes]) => {
+      if (activityRes.data) setActivities(activityRes.data);
+      if (loopsRes.data) setLoops(loopsRes.data);
     });
   };
 
@@ -174,50 +179,62 @@ export function ProjectView() {
         </button>
       }
     >
-      {/* View Mode Tabs */}
+      {/* View Mode Tabs - Mobile: icon-only, Desktop: icon + label */}
       <div className="flex border-b border-gray-200 mb-4">
         <button
           onClick={() => setActiveTab('dashboard')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'dashboard'
               ? 'border-charcoal text-charcoal'
-              : 'border-transparent text-gray-500 hover:text-charcoal'
+              : 'border-transparent text-gray-500 active:text-charcoal'
           }`}
         >
-          <LayoutDashboard className="w-4 h-4" />
-          Dashboard
+          <LayoutDashboard className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Dashboard</span>
         </button>
         <button
           onClick={() => setActiveTab('loops')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'loops'
               ? 'border-charcoal text-charcoal'
-              : 'border-transparent text-gray-500 hover:text-charcoal'
+              : 'border-transparent text-gray-500 active:text-charcoal'
           }`}
         >
-          <List className="w-4 h-4" />
-          Loops ({loops.length})
+          <List className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Loops</span>
+          <span className="text-xs">({loops.length})</span>
         </button>
         <button
           onClick={() => setActiveTab('activity')}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'activity'
               ? 'border-charcoal text-charcoal'
-              : 'border-transparent text-gray-500 hover:text-charcoal'
+              : 'border-transparent text-gray-500 active:text-charcoal'
           }`}
         >
-          Activity
+          <span>Activity</span>
         </button>
         <button
           onClick={() => setActiveTab('expenses')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'expenses'
               ? 'border-charcoal text-charcoal'
-              : 'border-transparent text-gray-500 hover:text-charcoal'
+              : 'border-transparent text-gray-500 active:text-charcoal'
           }`}
         >
-          <DollarSign className="w-4 h-4" />
-          Expenses
+          <DollarSign className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Expenses</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('estimate')}
+          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'estimate'
+              ? 'border-charcoal text-charcoal'
+              : 'border-transparent text-gray-500 active:text-charcoal'
+          }`}
+        >
+          <Calculator className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Estimate</span>
         </button>
       </div>
 
@@ -240,33 +257,9 @@ export function ProjectView() {
         onConfirm={phaseTransition.confirmTransition}
       />
 
-      {/* Loops View */}
+      {/* Loops View - Integrated Task Tracker */}
       {activeTab === 'loops' && (
-        <>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-charcoal">Loops</h2>
-            <Button variant="secondary" size="sm" onClick={() => setShowAddLoop(true)}>
-              <Plus className="w-4 h-4 mr-1" />
-              Add Loop
-            </Button>
-          </div>
-
-          {loops.length === 0 ? (
-            <Card className="p-8 text-center">
-              <p className="text-gray-400 text-sm mb-3">No loops yet</p>
-              <Button variant="secondary" size="sm" onClick={() => setShowAddLoop(true)}>
-                <Plus className="w-4 h-4 mr-1" />
-                Create First Loop
-              </Button>
-            </Card>
-          ) : (
-            <div className="space-y-2">
-              {loops.map((loop) => (
-                <LoopCard key={loop.id} loop={loop} projectId={projectId} />
-              ))}
-            </div>
-          )}
-        </>
+        <LoopsView projectId={projectId} />
       )}
 
       {/* Activity View */}
@@ -324,6 +317,22 @@ export function ProjectView() {
               />
             </div>
           </div>
+        </>
+      )}
+
+      {/* Estimate View */}
+      {activeTab === 'estimate' && (
+        <>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-charcoal">Cost Estimate</h2>
+            <p className="text-sm text-gray-500">
+              Calculated from scope and Cost Catalogue rates
+            </p>
+          </div>
+          <EstimatePanel
+            project={project}
+            onProjectUpdate={setProject}
+          />
         </>
       )}
 

@@ -5,9 +5,25 @@ import {
   mockTasks,
   mockTodayTasks,
   mockTimeEntry,
+  mockTimeEntries,
+  mockActiveTimeEntry,
+  setActiveTimeEntry,
+  saveTimeEntriesToStorage,
   mockActivityLog,
   saveProjectsToStorage,
+  // Task Tracker imports
+  workCategories,
+  workSubcategories,
+  stages,
+  phases,
+  mockTaskTrackerLocations,
+  mockTaskTemplates,
+  mockTaskInstances,
+  defaultPhaseChecklists,
+  mockContacts,
+  saveTaskTrackerToStorage,
 } from './mockData';
+import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
 // Projects API
 export async function getProjects() {
@@ -199,10 +215,17 @@ export async function getTodayTasks() {
   return { data, error };
 }
 
-// Time Tracking API
+// =============================================================================
+// TIME TRACKING API - Full time tracking with clock in/out
+// =============================================================================
+
+/**
+ * Get the currently active time entry (if any)
+ */
 export async function getActiveTimeEntry() {
-  if (!isSupabaseConfigured()) {
-    return { data: mockTimeEntry, error: null };
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    // Return the active time entry from mock data
+    return { data: mockActiveTimeEntry, error: null };
   }
 
   const { data, error } = await supabase
@@ -217,17 +240,212 @@ export async function getActiveTimeEntry() {
   return { data, error };
 }
 
-export async function startTimer(taskId, allocatedMinutes = 60) {
-  if (!isSupabaseConfigured()) {
-    return {
-      data: {
-        id: 'new-entry',
-        task_id: taskId,
-        start_time: new Date().toISOString(),
-        allocated_minutes: allocatedMinutes,
-      },
-      error: null,
+/**
+ * Get all time entries, optionally filtered
+ * @param {Object} filters - Filter options
+ * @param {string} filters.projectId - Filter by project
+ * @param {string} filters.taskId - Filter by task
+ * @param {string} filters.userId - Filter by user
+ * @param {string} filters.startDate - Filter entries after this date
+ * @param {string} filters.endDate - Filter entries before this date
+ */
+export async function getTimeEntries(filters = {}) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    let entries = [...mockTimeEntries];
+
+    // Apply filters
+    if (filters.projectId) {
+      entries = entries.filter(e => e.projectId === filters.projectId);
+    }
+    if (filters.taskId) {
+      entries = entries.filter(e => e.taskId === filters.taskId);
+    }
+    if (filters.userId) {
+      entries = entries.filter(e => e.userId === filters.userId);
+    }
+    if (filters.categoryCode) {
+      entries = entries.filter(e => e.categoryCode === filters.categoryCode);
+    }
+    if (filters.startDate) {
+      const start = new Date(filters.startDate);
+      entries = entries.filter(e => new Date(e.startTime) >= start);
+    }
+    if (filters.endDate) {
+      const end = new Date(filters.endDate);
+      entries = entries.filter(e => new Date(e.startTime) <= end);
+    }
+
+    // Sort by start time descending (most recent first)
+    entries.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+
+    return { data: entries, error: null };
+  }
+
+  let query = supabase
+    .from('time_entries')
+    .select('*')
+    .order('start_time', { ascending: false });
+
+  if (filters.projectId) {
+    query = query.eq('project_id', filters.projectId);
+  }
+  if (filters.taskId) {
+    query = query.eq('task_id', filters.taskId);
+  }
+  if (filters.userId) {
+    query = query.eq('user_id', filters.userId);
+  }
+  if (filters.startDate) {
+    query = query.gte('start_time', filters.startDate);
+  }
+  if (filters.endDate) {
+    query = query.lte('start_time', filters.endDate);
+  }
+
+  const { data, error } = await query;
+  return { data, error };
+}
+
+/**
+ * Clock in - Start a timer for a specific task
+ * @param {Object} clockInData - Clock in data
+ * @param {string} clockInData.taskId - Task ID to clock in on
+ * @param {string} clockInData.taskName - Task name for display
+ * @param {string} clockInData.projectId - Project ID
+ * @param {string} clockInData.projectName - Project name for display
+ * @param {string} clockInData.categoryCode - Work category code
+ * @param {string} clockInData.subcategoryCode - Subcategory code (optional)
+ * @param {string} clockInData.userId - User/worker ID
+ * @param {string} clockInData.userName - User name for display
+ * @param {number} clockInData.estimatedMinutes - Estimated time for the task
+ */
+export async function clockIn(clockInData) {
+  const newEntry = {
+    id: `te-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    taskId: clockInData.taskId,
+    taskName: clockInData.taskName,
+    projectId: clockInData.projectId,
+    projectName: clockInData.projectName,
+    categoryCode: clockInData.categoryCode,
+    subcategoryCode: clockInData.subcategoryCode || null,
+    userId: clockInData.userId,
+    userName: clockInData.userName,
+    startTime: new Date().toISOString(),
+    endTime: null,
+    durationMinutes: null,
+    estimatedMinutes: clockInData.estimatedMinutes || 60,
+    notes: '',
+    billable: true,
+  };
+
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    // Set as active entry
+    setActiveTimeEntry(newEntry);
+
+    // Also update task status to in_progress
+    await updateTaskInstance(clockInData.taskId, { status: 'in_progress' });
+
+    return { data: newEntry, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('time_entries')
+    .insert({
+      task_id: clockInData.taskId,
+      project_id: clockInData.projectId,
+      user_id: clockInData.userId,
+      category_code: clockInData.categoryCode,
+      subcategory_code: clockInData.subcategoryCode,
+      start_time: newEntry.startTime,
+      estimated_minutes: clockInData.estimatedMinutes || 60,
+      billable: true,
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Clock out - Stop the active timer and save the time entry
+ * @param {string} entryId - The time entry ID to close
+ * @param {Object} options - Clock out options
+ * @param {string} options.notes - Notes about the work done
+ * @param {boolean} options.markTaskComplete - Whether to mark the task as completed
+ */
+export async function clockOut(entryId, options = {}) {
+  const now = new Date();
+
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    if (!mockActiveTimeEntry || mockActiveTimeEntry.id !== entryId) {
+      return { data: null, error: 'No active time entry found' };
+    }
+
+    const startTime = new Date(mockActiveTimeEntry.startTime);
+    const durationMinutes = Math.round((now - startTime) / 60000);
+
+    // Complete the entry
+    const completedEntry = {
+      ...mockActiveTimeEntry,
+      endTime: now.toISOString(),
+      durationMinutes,
+      notes: options.notes || '',
     };
+
+    // Add to history
+    mockTimeEntries.unshift(completedEntry);
+
+    // Clear active entry
+    setActiveTimeEntry(null);
+
+    // Save to storage
+    saveTimeEntriesToStorage();
+
+    // Optionally mark task as complete
+    if (options.markTaskComplete) {
+      await updateTaskInstance(completedEntry.taskId, { status: 'completed' });
+    }
+
+    return { data: completedEntry, error: null };
+  }
+
+  // Get the entry to calculate duration
+  const { data: entry } = await supabase
+    .from('time_entries')
+    .select('start_time')
+    .eq('id', entryId)
+    .single();
+
+  const startTime = new Date(entry.start_time);
+  const durationMinutes = Math.round((now - startTime) / 60000);
+
+  const { data, error } = await supabase
+    .from('time_entries')
+    .update({
+      end_time: now.toISOString(),
+      duration_minutes: durationMinutes,
+      notes: options.notes || '',
+    })
+    .eq('id', entryId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Legacy startTimer function for backwards compatibility
+ */
+export async function startTimer(taskId, allocatedMinutes = 60) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    const newEntry = {
+      id: `te-${Date.now()}`,
+      task_id: taskId,
+      start_time: new Date().toISOString(),
+      allocated_minutes: allocatedMinutes,
+    };
+    setActiveTimeEntry(newEntry);
+    return { data: newEntry, error: null };
   }
 
   const { data, error } = await supabase
@@ -243,32 +461,93 @@ export async function startTimer(taskId, allocatedMinutes = 60) {
   return { data, error };
 }
 
+/**
+ * Legacy stopTimer function for backwards compatibility
+ */
 export async function stopTimer(entryId) {
-  if (!isSupabaseConfigured()) {
-    return { data: { id: entryId, end_time: new Date().toISOString() }, error: null };
+  return clockOut(entryId);
+}
+
+/**
+ * Add a manual time entry (for logging time after the fact)
+ */
+export async function addManualTimeEntry(entryData) {
+  const newEntry = {
+    id: `te-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    taskId: entryData.taskId,
+    taskName: entryData.taskName,
+    projectId: entryData.projectId,
+    projectName: entryData.projectName,
+    categoryCode: entryData.categoryCode,
+    subcategoryCode: entryData.subcategoryCode || null,
+    userId: entryData.userId,
+    userName: entryData.userName,
+    startTime: entryData.startTime,
+    endTime: entryData.endTime,
+    durationMinutes: entryData.durationMinutes,
+    notes: entryData.notes || '',
+    billable: entryData.billable !== false,
+  };
+
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    mockTimeEntries.unshift(newEntry);
+    saveTimeEntriesToStorage();
+    return { data: newEntry, error: null };
   }
-
-  const now = new Date();
-  const { data: entry } = await supabase
-    .from('time_entries')
-    .select('start_time')
-    .eq('id', entryId)
-    .single();
-
-  const startTime = new Date(entry.start_time);
-  const durationMinutes = Math.round((now - startTime) / 60000);
 
   const { data, error } = await supabase
     .from('time_entries')
-    .update({
-      end_time: now.toISOString(),
-      duration_minutes: durationMinutes,
+    .insert({
+      task_id: entryData.taskId,
+      project_id: entryData.projectId,
+      user_id: entryData.userId,
+      category_code: entryData.categoryCode,
+      subcategory_code: entryData.subcategoryCode,
+      start_time: entryData.startTime,
+      end_time: entryData.endTime,
+      duration_minutes: entryData.durationMinutes,
+      notes: entryData.notes || '',
+      billable: entryData.billable !== false,
     })
-    .eq('id', entryId)
     .select()
     .single();
 
   return { data, error };
+}
+
+/**
+ * Get time summary for a project
+ */
+export async function getProjectTimeSummary(projectId) {
+  const { data: entries } = await getTimeEntries({ projectId });
+
+  if (!entries) {
+    return { data: null, error: 'Failed to load entries' };
+  }
+
+  // Group by category
+  const byCategory = {};
+  let totalMinutes = 0;
+
+  entries.forEach(entry => {
+    const code = entry.categoryCode || 'other';
+    if (!byCategory[code]) {
+      byCategory[code] = { code, minutes: 0, entries: 0 };
+    }
+    byCategory[code].minutes += entry.durationMinutes || 0;
+    byCategory[code].entries += 1;
+    totalMinutes += entry.durationMinutes || 0;
+  });
+
+  return {
+    data: {
+      totalMinutes,
+      totalHours: Math.round(totalMinutes / 60 * 10) / 10,
+      byCategory: Object.values(byCategory),
+      entryCount: entries.length,
+    },
+    error: null,
+  };
 }
 
 // Activity Log API - The Heartbeat
@@ -552,8 +831,66 @@ export async function updateProject(projectId, updates) {
 }
 
 /**
- * Generate loops and tasks from estimate line items when contract is signed
+ * Trade category display order for construction workflow
+ * This determines the sequence loops appear in (typical construction order)
+ */
+const TRADE_ORDER = [
+  'SW', // Site Work
+  'FN', // Foundation
+  'FS', // Framing - Structural
+  'FI', // Framing - Interior
+  'RF', // Roofing
+  'EE', // Exterior Envelope
+  'IA', // Insulation & Air Sealing
+  'EL', // Electrical
+  'PL', // Plumbing
+  'HV', // HVAC
+  'DW', // Drywall
+  'PT', // Painting
+  'FL', // Flooring
+  'TL', // Tile
+  'FC', // Finish Carpentry
+  'CM', // Cabinetry & Millwork
+  'SR', // Stairs & Railings
+  'EF', // Exterior Finishes
+  'FZ', // Final Completion
+  'DM', // Demo (often first, but can vary)
+  'GN', // General
+];
+
+/**
+ * Trade code to display name mapping
+ */
+const TRADE_NAMES = {
+  SW: 'Site Work',
+  FN: 'Foundation',
+  FS: 'Framing - Structural',
+  FI: 'Framing - Interior',
+  RF: 'Roofing',
+  EE: 'Exterior Envelope',
+  IA: 'Insulation & Air Sealing',
+  EL: 'Electrical',
+  PL: 'Plumbing',
+  HV: 'HVAC',
+  DW: 'Drywall',
+  PT: 'Painting',
+  FL: 'Flooring',
+  TL: 'Tile',
+  FC: 'Finish Carpentry',
+  CM: 'Cabinetry & Millwork',
+  SR: 'Stairs & Railings',
+  EF: 'Exterior Finishes',
+  FZ: 'Final Completion',
+  DM: 'Demo & Prep',
+  GN: 'General',
+};
+
+/**
+ * Generate loops and tasks from estimate line items when project moves to in_progress
  * This transforms the pricing estimate into actionable production scope
+ *
+ * Groups by TRADE CATEGORY (Electrical, Plumbing, etc.) not by room
+ * Each loop = one trade, each task = a line item within that trade
  *
  * @param {string} projectId - Project ID
  * @param {Array} lineItems - Estimate line items
@@ -565,41 +902,58 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
     return { loops: [], tasks: [], error: 'No line items to convert' };
   }
 
-  // Group line items by room/area to create loops
-  const roomGroups = lineItems.reduce((acc, item) => {
-    const roomKey = item.room || item.category || 'General';
-    if (!acc[roomKey]) {
-      acc[roomKey] = {
-        roomLabel: item.roomLabel || item.category || 'General',
+  // Group line items by trade code to create loops
+  const tradeGroups = lineItems.reduce((acc, item) => {
+    const tradeCode = item.tradeCode || 'GN';
+    if (!acc[tradeCode]) {
+      acc[tradeCode] = {
+        tradeName: TRADE_NAMES[tradeCode] || tradeCode,
         items: [],
       };
     }
-    acc[roomKey].items.push(item);
+    acc[tradeCode].items.push(item);
     return acc;
   }, {});
+
+  // Sort trades by construction order
+  const sortedTrades = Object.keys(tradeGroups).sort((a, b) => {
+    const aIndex = TRADE_ORDER.indexOf(a);
+    const bIndex = TRADE_ORDER.indexOf(b);
+    if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
 
   const createdLoops = [];
   const createdTasks = [];
   let loopOrder = 1;
 
-  // Create a loop for each room/area
-  for (const [roomKey, group] of Object.entries(roomGroups)) {
-    const loopId = `loop-${projectId.slice(-8)}-${roomKey}-${Date.now()}`;
+  // Create a loop for each trade
+  for (const tradeCode of sortedTrades) {
+    const group = tradeGroups[tradeCode];
+    const loopId = `loop-${projectId.slice(-8)}-${tradeCode}-${Date.now()}`;
+
+    // Calculate budgeted amount for this trade
+    const budgetedAmount = group.items.reduce((sum, item) => {
+      const tierKey = `unitPrice${selectedTier.charAt(0).toUpperCase() + selectedTier.slice(1)}`;
+      return sum + ((item[tierKey] || item.unitPriceBetter || 0) * (item.quantity || 1));
+    }, 0);
 
     const loop = {
       id: loopId,
       project_id: projectId,
-      name: group.roomLabel,
-      category: group.items[0]?.tradeCode || 'GN',
+      name: group.tradeName,
+      loop_type: 'task_group',
+      category_code: tradeCode,
       status: 'pending',
       display_order: loopOrder++,
       source: 'estimate',
-      progress: 0,
-      // Store budget info for tracking
-      budgeted_amount: group.items.reduce((sum, item) => {
-        const tierKey = `unitPrice${selectedTier.charAt(0).toUpperCase() + selectedTier.slice(1)}`;
-        return sum + ((item[tierKey] || item.unitPriceBetter || 0) * (item.quantity || 1));
-      }, 0),
+      health_score: 0,
+      health_color: 'gray',
+      // Budget tracking
+      budgeted_amount: budgetedAmount,
+      task_count: group.items.length,
     };
 
     // Create the loop
@@ -610,24 +964,32 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
     }
     createdLoops.push(createdLoop || loop);
 
-    // Create tasks for each line item in this room
+    // Create tasks for each line item in this trade
     let taskOrder = 1;
     for (const item of group.items) {
       const tierKey = `unitPrice${selectedTier.charAt(0).toUpperCase() + selectedTier.slice(1)}`;
       const amount = (item[tierKey] || item.unitPriceBetter || 0) * (item.quantity || 1);
 
+      // Build task title with room context if available
+      const taskTitle = item.roomLabel && item.roomLabel !== item.name
+        ? `${item.name} - ${item.roomLabel}`
+        : item.name;
+
       const task = {
-        id: `task-${projectId.slice(-8)}-${item.id || taskOrder}-${Date.now()}`,
+        id: `task-${projectId.slice(-8)}-${tradeCode}-${taskOrder}-${Date.now()}`,
         loop_id: loopId,
-        title: item.name,
-        description: item.description || '',
+        title: taskTitle,
+        description: item.description || null,
         status: 'pending',
-        category: item.tradeCode || 'GN',
-        subcategory: item.subCode || null,
+        priority: 2, // Medium priority by default
+        category_code: tradeCode,
+        subcategory_code: item.subCode || null,
+        location: item.roomLabel || null, // Store room as location
         display_order: taskOrder++,
         source: 'estimate',
         // Budget tracking
         budgeted_amount: amount,
+        quantity: item.quantity || 1,
         // Original estimate reference
         estimate_line_item_id: item.id,
       };
@@ -644,6 +1006,69 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
   return {
     loops: createdLoops,
     tasks: createdTasks,
+    error: null,
+  };
+}
+
+/**
+ * Start production - transitions project from contracted to in_progress
+ * and generates production scope from estimate if not already done
+ *
+ * @param {string} projectId - Project ID
+ * @param {Object} project - Project data (must include estimate_line_items and build_tier)
+ */
+export async function startProduction(projectId, project) {
+  // Update project to in_progress phase
+  const { data: updatedProject, error: projectError } = await updateProjectPhase(projectId, {
+    phase: 'in_progress',
+    status: 'in_progress',
+    phase_changed_at: new Date().toISOString(),
+    actual_start: new Date().toISOString(),
+  });
+
+  if (projectError) {
+    return { data: null, error: projectError };
+  }
+
+  // Check if loops already exist for this project
+  const { data: existingLoops } = await getLoops(projectId);
+
+  let loops = existingLoops || [];
+  let tasks = [];
+
+  // Only generate scope if no loops exist yet
+  if (loops.length === 0 && project.estimate_line_items) {
+    const { loops: newLoops, tasks: newTasks, error: scopeError } = await generateScopeFromEstimate(
+      projectId,
+      project.estimate_line_items,
+      project.build_tier || 'better'
+    );
+
+    if (scopeError) {
+      console.error('Failed to generate scope:', scopeError);
+    } else {
+      loops = newLoops;
+      tasks = newTasks;
+    }
+  }
+
+  // Log activity
+  await createActivityEntry({
+    project_id: projectId,
+    event_type: 'project.started',
+    event_data: {
+      loops_created: loops.length,
+      tasks_created: tasks.length,
+    },
+    actor_name: 'System',
+  });
+
+  return {
+    data: {
+      project: updatedProject,
+      loops,
+      tasks,
+    },
     error: null,
   };
 }
@@ -707,4 +1132,557 @@ export async function signContract(projectId, contractData) {
     },
     error: null,
   };
+}
+
+// =============================================================================
+// TASK TRACKER API - THREE AXIS MODEL
+// =============================================================================
+
+/**
+ * Get all work categories (Axis 1)
+ * Categories are fixed and never change after task creation
+ */
+// Task Tracker tables don't exist in DB yet - always use mock data
+const USE_MOCK_TASK_TRACKER = true;
+
+export async function getWorkCategories() {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    return { data: workCategories, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('work_categories')
+    .select('*')
+    .order('display_order', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Get subcategories for a work category
+ */
+export async function getWorkSubcategories(categoryCode = null) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    const filtered = categoryCode
+      ? workSubcategories.filter(s => s.categoryCode === categoryCode)
+      : workSubcategories;
+    return { data: filtered, error: null };
+  }
+
+  let query = supabase
+    .from('work_subcategories')
+    .select('*')
+    .order('display_order', { ascending: true });
+
+  if (categoryCode) {
+    query = query.eq('category_code', categoryCode);
+  }
+
+  const { data, error } = await query;
+  return { data, error };
+}
+
+/**
+ * Get all construction stages (Axis 2)
+ * Stages are fixed and never change
+ */
+export async function getStages() {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    return { data: stages, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('stages')
+    .select('*')
+    .order('stage_order', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Get all phases (for checklist filtering - orthogonal to stages)
+ */
+export async function getPhases() {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    return { data: phases, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('phases')
+    .select('*')
+    .order('display_order', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Generate default locations for a project
+ * Used when no specific location data exists
+ */
+function generateDefaultLocations(projectId) {
+  return [
+    { id: `loc-${projectId}-main`, projectId, parentId: null, name: 'Main House', locationType: 'building', path: 'Main House', displayOrder: 1 },
+    { id: `loc-${projectId}-1f`, projectId, parentId: `loc-${projectId}-main`, name: '1st Floor', locationType: 'floor', path: 'Main House.1st Floor', displayOrder: 1 },
+    { id: `loc-${projectId}-kit`, projectId, parentId: `loc-${projectId}-1f`, name: 'Kitchen', locationType: 'room', path: 'Main House.1st Floor.Kitchen', displayOrder: 1 },
+    { id: `loc-${projectId}-living`, projectId, parentId: `loc-${projectId}-1f`, name: 'Living Room', locationType: 'room', path: 'Main House.1st Floor.Living Room', displayOrder: 2 },
+    { id: `loc-${projectId}-bath1`, projectId, parentId: `loc-${projectId}-1f`, name: 'Bathroom', locationType: 'room', path: 'Main House.1st Floor.Bathroom', displayOrder: 3 },
+    { id: `loc-${projectId}-2f`, projectId, parentId: `loc-${projectId}-main`, name: '2nd Floor', locationType: 'floor', path: 'Main House.2nd Floor', displayOrder: 2 },
+    { id: `loc-${projectId}-primary`, projectId, parentId: `loc-${projectId}-2f`, name: 'Primary Bedroom', locationType: 'room', path: 'Main House.2nd Floor.Primary Bedroom', displayOrder: 1 },
+    { id: `loc-${projectId}-pbath`, projectId, parentId: `loc-${projectId}-2f`, name: 'Primary Bath', locationType: 'room', path: 'Main House.2nd Floor.Primary Bath', displayOrder: 2 },
+  ];
+}
+
+/**
+ * Get locations for a project (Axis 3)
+ */
+export async function getProjectLocations(projectId) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    const existingLocations = mockTaskTrackerLocations[projectId];
+    if (existingLocations && existingLocations.length > 0) {
+      return { data: existingLocations, error: null };
+    }
+    // Generate default locations for projects without specific data
+    return { data: generateDefaultLocations(projectId), error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('locations')
+    .select('*')
+    .eq('project_id', projectId)
+    .order('display_order', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Get task templates for a project (quantum state)
+ */
+export async function getTaskTemplates(projectId) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    return { data: mockTaskTemplates[projectId] || [], error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('task_templates')
+    .select('*')
+    .eq('project_id', projectId)
+    .order('stage_order', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Generate default task instances for a project
+ * Creates sample tasks across different categories, stages, and locations
+ */
+function generateDefaultTaskInstances(projectId) {
+  const locations = generateDefaultLocations(projectId);
+  const kitchenLoc = locations.find(l => l.name === 'Kitchen');
+  const livingLoc = locations.find(l => l.name === 'Living Room');
+  const bathLoc = locations.find(l => l.name === 'Bathroom');
+  const primaryLoc = locations.find(l => l.name === 'Primary Bedroom');
+  const pbathLoc = locations.find(l => l.name === 'Primary Bath');
+
+  const today = new Date();
+  const formatDate = (daysFromNow) => {
+    const d = new Date(today);
+    d.setDate(d.getDate() + daysFromNow);
+    return d.toISOString().split('T')[0];
+  };
+
+  return [
+    // Electrical tasks
+    { id: `inst-${projectId}-el-001`, templateId: 'tpl-el-rough', locationId: kitchenLoc?.id, categoryCode: 'EL', subcategoryCode: 'EL-SVC', stageCode: 'ST-RI', locationPath: kitchenLoc?.path, name: 'Rough-In Electrical - Kitchen', status: 'in_progress', priority: 1, dueDate: formatDate(3), assignedTo: 'c1', estimatedHours: 8 },
+    { id: `inst-${projectId}-el-002`, templateId: 'tpl-el-rough', locationId: livingLoc?.id, categoryCode: 'EL', subcategoryCode: 'EL-SVC', stageCode: 'ST-RI', locationPath: livingLoc?.path, name: 'Rough-In Electrical - Living Room', status: 'pending', priority: 2, dueDate: formatDate(5), estimatedHours: 6 },
+    { id: `inst-${projectId}-el-003`, templateId: 'tpl-el-trim', locationId: kitchenLoc?.id, categoryCode: 'EL', subcategoryCode: 'EL-FX', stageCode: 'ST-FX', locationPath: kitchenLoc?.path, name: 'Trim Electrical - Kitchen', status: 'pending', priority: 3, dueDate: formatDate(14), estimatedHours: 4 },
+
+    // Plumbing tasks
+    { id: `inst-${projectId}-pl-001`, templateId: 'tpl-pl-rough', locationId: bathLoc?.id, categoryCode: 'PL', subcategoryCode: 'PL-DWV', stageCode: 'ST-RI', locationPath: bathLoc?.path, name: 'Rough-In Plumbing - Bathroom', status: 'complete', priority: 1, dueDate: formatDate(-2), assignedTo: 'c2', estimatedHours: 6, actualHours: 7 },
+    { id: `inst-${projectId}-pl-002`, templateId: 'tpl-pl-rough', locationId: pbathLoc?.id, categoryCode: 'PL', subcategoryCode: 'PL-DWV', stageCode: 'ST-RI', locationPath: pbathLoc?.path, name: 'Rough-In Plumbing - Primary Bath', status: 'in_progress', priority: 1, dueDate: formatDate(2), assignedTo: 'c2', estimatedHours: 8 },
+    { id: `inst-${projectId}-pl-003`, templateId: 'tpl-pl-fixtures', locationId: bathLoc?.id, categoryCode: 'PL', subcategoryCode: 'PL-FX', stageCode: 'ST-FX', locationPath: bathLoc?.path, name: 'Install Fixtures - Bathroom', status: 'pending', priority: 2, dueDate: formatDate(12), estimatedHours: 4 },
+
+    // Drywall tasks
+    { id: `inst-${projectId}-dw-001`, templateId: 'tpl-dw-hang', locationId: kitchenLoc?.id, categoryCode: 'DW', stageCode: 'ST-RI', locationPath: kitchenLoc?.path, name: 'Hang Drywall - Kitchen', status: 'pending', priority: 2, dueDate: formatDate(7), estimatedHours: 8 },
+    { id: `inst-${projectId}-dw-002`, templateId: 'tpl-dw-hang', locationId: livingLoc?.id, categoryCode: 'DW', stageCode: 'ST-RI', locationPath: livingLoc?.path, name: 'Hang Drywall - Living Room', status: 'pending', priority: 2, dueDate: formatDate(8), estimatedHours: 10 },
+    { id: `inst-${projectId}-dw-003`, templateId: 'tpl-dw-finish', locationId: kitchenLoc?.id, categoryCode: 'DW', stageCode: 'ST-FN', locationPath: kitchenLoc?.path, name: 'Tape & Finish - Kitchen', status: 'pending', priority: 3, dueDate: formatDate(10), estimatedHours: 6 },
+
+    // Tile tasks
+    { id: `inst-${projectId}-tl-001`, templateId: 'tpl-tl-floor', locationId: bathLoc?.id, categoryCode: 'TL', stageCode: 'ST-FN', locationPath: bathLoc?.path, name: 'Floor Tile - Bathroom', status: 'pending', priority: 2, dueDate: formatDate(15), estimatedHours: 8 },
+    { id: `inst-${projectId}-tl-002`, templateId: 'tpl-tl-shower', locationId: pbathLoc?.id, categoryCode: 'TL', stageCode: 'ST-FN', locationPath: pbathLoc?.path, name: 'Shower Tile - Primary Bath', status: 'pending', priority: 2, dueDate: formatDate(16), estimatedHours: 12 },
+
+    // Framing tasks
+    { id: `inst-${projectId}-fr-001`, templateId: 'tpl-fr-walls', locationId: primaryLoc?.id, categoryCode: 'FR', stageCode: 'ST-FR', locationPath: primaryLoc?.path, name: 'Interior Framing - Primary Bedroom', status: 'complete', priority: 1, dueDate: formatDate(-5), assignedTo: 'c3', estimatedHours: 6, actualHours: 5 },
+    { id: `inst-${projectId}-fr-002`, templateId: 'tpl-fr-walls', locationId: bathLoc?.id, categoryCode: 'FR', stageCode: 'ST-FR', locationPath: bathLoc?.path, name: 'Interior Framing - Bathroom', status: 'complete', priority: 1, dueDate: formatDate(-4), assignedTo: 'c3', estimatedHours: 4, actualHours: 4 },
+  ];
+}
+
+/**
+ * Get task instances for a project with optional filtering
+ */
+export async function getTaskInstances(projectId, filters = {}) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    let instances = mockTaskInstances[projectId];
+
+    // Generate default instances if none exist for this project
+    if (!instances || instances.length === 0) {
+      instances = generateDefaultTaskInstances(projectId);
+    }
+
+    // Apply filters
+    if (filters.categoryCode) {
+      instances = instances.filter(t => t.categoryCode === filters.categoryCode);
+    }
+    if (filters.stageCode) {
+      instances = instances.filter(t => t.stageCode === filters.stageCode);
+    }
+    if (filters.locationId) {
+      instances = instances.filter(t => t.locationId === filters.locationId);
+    }
+    if (filters.status) {
+      if (Array.isArray(filters.status)) {
+        instances = instances.filter(t => filters.status.includes(t.status));
+      } else {
+        instances = instances.filter(t => t.status === filters.status);
+      }
+    }
+    if (filters.assignedTo) {
+      instances = instances.filter(t => t.assignedTo === filters.assignedTo);
+    }
+    if (filters.locationPath) {
+      instances = instances.filter(t => t.locationPath?.startsWith(filters.locationPath));
+    }
+
+    // Attach checklists to each instance
+    const instancesWithChecklists = instances.map(inst => {
+      const checklist = getChecklistForTask(inst.categoryCode, inst.name, inst.stageCode);
+      const fieldGuideModules = getFieldGuideModules(inst.categoryCode);
+      return {
+        ...inst,
+        checklist: checklist || null,
+        fieldGuideModules,
+      };
+    });
+
+    return { data: instancesWithChecklists, error: null };
+  }
+
+  let query = supabase
+    .from('task_instances')
+    .select('*')
+    .eq('project_id', projectId);
+
+  if (filters.categoryCode) {
+    query = query.eq('category_code', filters.categoryCode);
+  }
+  if (filters.stageCode) {
+    query = query.eq('stage_code', filters.stageCode);
+  }
+  if (filters.locationId) {
+    query = query.eq('location_id', filters.locationId);
+  }
+  if (filters.status) {
+    if (Array.isArray(filters.status)) {
+      query = query.in('status', filters.status);
+    } else {
+      query = query.eq('status', filters.status);
+    }
+  }
+  if (filters.assignedTo) {
+    query = query.eq('assigned_to', filters.assignedTo);
+  }
+
+  const { data, error } = await query.order('priority', { ascending: true });
+  return { data, error };
+}
+
+/**
+ * Get a single task instance by ID
+ */
+export async function getTaskInstance(instanceId) {
+  if (!isSupabaseConfigured()) {
+    for (const instances of Object.values(mockTaskInstances)) {
+      const instance = instances.find(t => t.id === instanceId);
+      if (instance) return { data: instance, error: null };
+    }
+    return { data: null, error: 'Not found' };
+  }
+
+  const { data, error } = await supabase
+    .from('task_instances')
+    .select('*')
+    .eq('id', instanceId)
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Update a task instance
+ */
+export async function updateTaskInstance(instanceId, updates) {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    // Find and update in mock data
+    for (const projectId of Object.keys(mockTaskInstances)) {
+      const index = mockTaskInstances[projectId].findIndex(t => t.id === instanceId);
+      if (index !== -1) {
+        mockTaskInstances[projectId][index] = {
+          ...mockTaskInstances[projectId][index],
+          ...updates,
+          updatedAt: new Date().toISOString(),
+        };
+        if (updates.status === 'completed') {
+          mockTaskInstances[projectId][index].completedAt = new Date().toISOString();
+        }
+        saveTaskTrackerToStorage();
+        return { data: mockTaskInstances[projectId][index], error: null };
+      }
+    }
+    return { data: null, error: 'Not found' };
+  }
+
+  const updateData = {
+    ...updates,
+    updated_at: new Date().toISOString(),
+  };
+  if (updates.status === 'completed') {
+    updateData.completed_at = new Date().toISOString();
+  }
+
+  const { data, error } = await supabase
+    .from('task_instances')
+    .update(updateData)
+    .eq('id', instanceId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Create a new task instance
+ */
+export async function createTaskInstance(projectId, taskData) {
+  const newInstance = {
+    id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    projectId,
+    templateId: null, // Manually created tasks don't have templates
+    categoryCode: taskData.categoryCode,
+    subcategoryId: taskData.subcategoryId || null,
+    stageCode: taskData.stageCode,
+    locationId: taskData.locationId || null,
+    locationPath: taskData.locationPath || null,
+    name: taskData.name,
+    description: taskData.description || '',
+    status: 'pending',
+    priority: taskData.priority || 3,
+    assignedTo: taskData.assignedTo || null,
+    dueDate: taskData.dueDate || null,
+    estimatedHours: taskData.estimatedHours || 0,
+    actualHours: 0,
+    reworkCount: 0,
+    reworkHours: 0,
+    dependencyOverrides: {},
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    completedAt: null,
+    source: 'manual',
+  };
+
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    // Add to mock data
+    if (!mockTaskInstances[projectId]) {
+      mockTaskInstances[projectId] = [];
+    }
+    mockTaskInstances[projectId].push(newInstance);
+    saveTaskTrackerToStorage();
+
+    // Attach checklist (same logic as getTaskInstances)
+    const checklist = getChecklistForTask(newInstance.categoryCode, newInstance.name, newInstance.stageCode);
+    const fieldGuideModules = getFieldGuideModules(newInstance.categoryCode);
+
+    return {
+      data: {
+        ...newInstance,
+        checklist: checklist || null,
+        fieldGuideModules,
+      },
+      error: null,
+    };
+  }
+
+  // Supabase insert
+  const { data, error } = await supabase
+    .from('task_instances')
+    .insert({
+      project_id: projectId,
+      template_id: null,
+      category_code: taskData.categoryCode,
+      subcategory_id: taskData.subcategoryId || null,
+      stage_code: taskData.stageCode,
+      location_id: taskData.locationId || null,
+      location_path: taskData.locationPath || null,
+      name: taskData.name,
+      description: taskData.description || '',
+      status: 'pending',
+      priority: taskData.priority || 3,
+      assigned_to: taskData.assignedTo || null,
+      due_date: taskData.dueDate || null,
+      estimated_hours: taskData.estimatedHours || 0,
+      source: 'manual',
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Get phase checklists for a template
+ */
+export async function getPhaseChecklists(templateId, phaseFilter = null) {
+  if (!isSupabaseConfigured()) {
+    let checklists = defaultPhaseChecklists[templateId] || [];
+    if (phaseFilter) {
+      checklists = checklists.filter(c => c.phaseCode === phaseFilter);
+    }
+    return { data: checklists, error: null };
+  }
+
+  let query = supabase
+    .from('task_phase_checklists')
+    .select('*')
+    .eq('template_id', templateId)
+    .order('step_order', { ascending: true });
+
+  if (phaseFilter) {
+    query = query.eq('phase_code', phaseFilter);
+  }
+
+  const { data, error } = await query;
+  return { data, error };
+}
+
+/**
+ * Get contacts (for assignments)
+ */
+export async function getContacts() {
+  if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
+    return { data: mockContacts, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('contacts')
+    .select('*')
+    .order('name', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Calculate loop status from task instances (status bubbles UP)
+ */
+export function calculateLoopStatus(instances) {
+  if (!instances || instances.length === 0) return 'gray';
+
+  const hasBlocked = instances.some(t => t.status === 'blocked');
+  const hasOverdue = instances.some(t => {
+    if (t.status === 'completed' || t.status === 'cancelled') return false;
+    if (!t.dueDate) return false;
+    return new Date(t.dueDate) < new Date();
+  });
+  const hasNearDue = instances.some(t => {
+    if (t.status === 'completed' || t.status === 'cancelled') return false;
+    if (!t.dueDate) return false;
+    const due = new Date(t.dueDate);
+    const twoDaysFromNow = new Date();
+    twoDaysFromNow.setDate(twoDaysFromNow.getDate() + 2);
+    return due <= twoDaysFromNow && due >= new Date();
+  });
+  const allComplete = instances.every(t =>
+    t.status === 'completed' || t.status === 'cancelled'
+  );
+  const hasInProgress = instances.some(t => t.status === 'in_progress');
+
+  if (hasBlocked || hasOverdue) return 'red';
+  if (hasNearDue) return 'yellow';
+  if (allComplete) return 'complete';
+  if (hasInProgress) return 'green';
+  return 'gray';
+}
+
+/**
+ * Group task instances by work category for loop view
+ */
+export function groupTasksByCategory(instances, categories) {
+  const grouped = {};
+
+  // Initialize all categories
+  categories.forEach(cat => {
+    grouped[cat.code] = {
+      category: cat,
+      instances: [],
+      status: 'gray',
+      completedCount: 0,
+      totalCount: 0,
+    };
+  });
+
+  // Group instances
+  instances.forEach(inst => {
+    if (grouped[inst.categoryCode]) {
+      grouped[inst.categoryCode].instances.push(inst);
+      grouped[inst.categoryCode].totalCount++;
+      if (inst.status === 'completed') {
+        grouped[inst.categoryCode].completedCount++;
+      }
+    }
+  });
+
+  // Calculate status for each category
+  Object.values(grouped).forEach(group => {
+    group.status = calculateLoopStatus(group.instances);
+  });
+
+  // Filter out empty categories and sort by display order
+  return Object.values(grouped)
+    .filter(g => g.totalCount > 0)
+    .sort((a, b) => a.category.displayOrder - b.category.displayOrder);
+}
+
+/**
+ * Group task instances by subcategory within a category
+ */
+export function groupTasksBySubcategory(instances, subcategories) {
+  const grouped = {};
+
+  // Group instances
+  instances.forEach(inst => {
+    const subcat = subcategories.find(s => s.id === inst.subcategoryId);
+    const key = subcat?.id || 'uncategorized';
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        subcategory: subcat || { id: 'uncategorized', name: 'Other', displayOrder: 999 },
+        instances: [],
+        status: 'gray',
+        completedCount: 0,
+        totalCount: 0,
+      };
+    }
+
+    grouped[key].instances.push(inst);
+    grouped[key].totalCount++;
+    if (inst.status === 'completed') {
+      grouped[key].completedCount++;
+    }
+  });
+
+  // Calculate status for each subcategory
+  Object.values(grouped).forEach(group => {
+    group.status = calculateLoopStatus(group.instances);
+  });
+
+  // Sort by display order
+  return Object.values(grouped)
+    .sort((a, b) => a.subcategory.displayOrder - b.subcategory.displayOrder);
 }

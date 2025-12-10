@@ -1,16 +1,13 @@
 import { User, AlertCircle, Clock, Send, ChevronRight } from 'lucide-react';
 import { Card, Button } from '../ui';
 import { ContactButtons, PreferredContactBadge } from './QuickContactButton';
-import { formatDate, daysUntil } from '../../lib/dashboardHelpers';
+import { formatDate } from '../../lib/dashboardHelpers';
 
 /**
  * ClientCard - Contact information + decision tracking
  */
 export function ClientCard({ clientData, onRequestDecision }) {
-  const { client, pendingDecisions, lastContact, daysSinceContact } = clientData;
-
-  const overdueDecisions = pendingDecisions.filter(d => d.daysOverdue > 0);
-  const urgentDecisions = pendingDecisions.filter(d => d.daysOverdue >= 3);
+  const { client, pendingDecisions, daysSinceContact } = clientData;
 
   return (
     <Card className="p-4 h-full">

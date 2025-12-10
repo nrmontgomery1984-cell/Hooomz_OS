@@ -98,34 +98,34 @@ export function Today() {
   return (
     <PageContainer title="Today" subtitle={today}>
       {/* System Check */}
-      <Card className="p-4 mb-6">
+      <Card className="p-3 lg:p-4 mb-6">
         <h2 className="text-sm font-medium text-gray-500 mb-3">System Check</h2>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-4 gap-2 lg:gap-3">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              <span className="text-lg font-semibold text-charcoal">{completedTasks}</span>
+              <CheckCircle className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-emerald-500" />
+              <span className="text-base lg:text-lg font-semibold text-charcoal">{completedTasks}</span>
             </div>
             <p className="text-xs text-gray-500">Done</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Clock className="w-4 h-4 text-blue-500" />
-              <span className="text-lg font-semibold text-charcoal">{inProgressTasks}</span>
+              <Clock className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-blue-500" />
+              <span className="text-base lg:text-lg font-semibold text-charcoal">{inProgressTasks}</span>
             </div>
             <p className="text-xs text-gray-500">Active</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
               <StatusDot status="gray" />
-              <span className="text-lg font-semibold text-charcoal">{pendingTasks}</span>
+              <span className="text-base lg:text-lg font-semibold text-charcoal">{pendingTasks}</span>
             </div>
             <p className="text-xs text-gray-500">Pending</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <AlertTriangle className="w-4 h-4 text-red-500" />
-              <span className="text-lg font-semibold text-charcoal">{overdueTasks}</span>
+              <AlertTriangle className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-red-500" />
+              <span className="text-base lg:text-lg font-semibold text-charcoal">{overdueTasks}</span>
             </div>
             <p className="text-xs text-gray-500">Overdue</p>
           </div>

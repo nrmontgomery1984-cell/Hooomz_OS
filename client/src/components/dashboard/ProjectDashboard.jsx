@@ -1,12 +1,51 @@
 import { useState } from 'react';
+import { ChevronDown, ChevronUp, User, DollarSign, Calendar, ClipboardList, AlertTriangle, Users, Activity } from 'lucide-react';
 import { ProjectHeader } from './ProjectHeader';
 import { ClientCard } from './ClientCard';
-import { BudgetTracker } from './BudgetTracker';
-import { ScheduleSnapshot } from './ScheduleSnapshot';
+import { BudgetTracker, BudgetSummaryCard } from './BudgetTracker';
+import { ScheduleSnapshot, ScheduleSummaryCard } from './ScheduleSnapshot';
 import { ScopeSummary } from './ScopeSummary';
 import { ActionItems } from './ActionItems';
 import { TeamSection } from './TeamSection';
 import { DashboardActivityFeed } from './DashboardActivityFeed';
+
+/**
+ * CollapsibleSection - Mobile-friendly collapsible card wrapper
+ */
+function CollapsibleSection({ title, icon: Icon, badge, defaultExpanded = false, children }) {
+  const [expanded, setExpanded] = useState(defaultExpanded);
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className={`w-full flex items-center justify-between p-3 transition-colors ${
+          expanded ? 'bg-gray-100' : 'hover:bg-gray-50'
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          {Icon && <Icon className={`w-4 h-4 ${expanded ? 'text-charcoal' : 'text-gray-400'}`} />}
+          <span className="font-medium text-charcoal">{title}</span>
+          {badge && (
+            <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-medium rounded-full">
+              {badge}
+            </span>
+          )}
+        </div>
+        {expanded ? (
+          <ChevronUp className="w-4 h-4 text-charcoal" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-gray-400" />
+        )}
+      </button>
+      {expanded && (
+        <div className="border-t border-gray-200">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /**
  * ProjectDashboard - Main dashboard container
@@ -14,7 +53,11 @@ import { DashboardActivityFeed } from './DashboardActivityFeed';
  * Central command center for contractors managing renovation
  * and new construction projects.
  *
- * Layout:
+ * Layout (Mobile):
+ * - Header (full width, compact)
+ * - Collapsible sections for each area
+ *
+ * Layout (Desktop):
  * - Header (full width)
  * - Grid: Client | Budget
  * - Grid: Schedule | Scope
@@ -27,8 +70,6 @@ import { DashboardActivityFeed } from './DashboardActivityFeed';
  * @param {Function} onPhaseTransition - Handler for initiating phase transitions
  */
 export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTransition }) {
-  const [showScopeModal, setShowScopeModal] = useState(false);
-
   const {
     header,
     client,
@@ -78,7 +119,6 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
   };
 
   const handleViewFullScope = () => {
-    setShowScopeModal(true);
     onAction?.('view_scope');
   };
 
@@ -86,8 +126,12 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
     onAction?.('add_note');
   };
 
+  // Count pending items for badges
+  const pendingDecisionsCount = client.pendingDecisions?.length || 0;
+  const hasUrgentActions = actionItems.blockers.length > 0 || actionItems.overdueTasks.length > 0;
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Project Header - Full Width */}
       <ProjectHeader
         header={header}
@@ -96,42 +140,154 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
         onPhaseTransition={onPhaseTransition}
       />
 
-      {/* Row 1: Client + Budget */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <ClientCard
-          clientData={client}
-          onRequestDecision={handleRequestDecision}
-        />
-        <BudgetTracker
-          budget={budget}
-          onAddChangeOrder={handleAddChangeOrder}
-        />
+      {/* Mobile Layout: Collapsible Sections */}
+      <div className="lg:hidden space-y-2">
+        {/* Action Items - Always visible if urgent */}
+        {hasUrgentActions && (
+          <CollapsibleSection
+            title="Action Items"
+            icon={AlertTriangle}
+            badge={`${actionItems.blockers.length + actionItems.overdueTasks.length} urgent`}
+            defaultExpanded={true}
+          >
+            <ActionItems
+              actionItems={actionItems}
+              onResolveBlocker={handleResolveBlocker}
+              onCompleteTask={handleCompleteTask}
+              onApprove={handleApprove}
+            />
+          </CollapsibleSection>
+        )}
+
+        {/* Quick Stats Row */}
+        <div className="grid grid-cols-2 gap-2">
+          <BudgetSummaryCard budget={budget} />
+          <ScheduleSummaryCard schedule={schedule} />
+        </div>
+
+        {/* Client Section */}
+        <CollapsibleSection
+          title="Client"
+          icon={User}
+          badge={pendingDecisionsCount > 0 ? `${pendingDecisionsCount} pending` : null}
+          defaultExpanded={pendingDecisionsCount > 0}
+        >
+          <ClientCard
+            clientData={client}
+            onRequestDecision={handleRequestDecision}
+          />
+        </CollapsibleSection>
+
+        {/* Budget Section */}
+        <CollapsibleSection
+          title="Budget Details"
+          icon={DollarSign}
+          defaultExpanded={false}
+        >
+          <BudgetTracker
+            budget={budget}
+            onAddChangeOrder={handleAddChangeOrder}
+          />
+        </CollapsibleSection>
+
+        {/* Schedule Section */}
+        <CollapsibleSection
+          title="Schedule"
+          icon={Calendar}
+          defaultExpanded={false}
+        >
+          <ScheduleSnapshot schedule={schedule} />
+        </CollapsibleSection>
+
+        {/* Scope Section */}
+        <CollapsibleSection
+          title="Scope"
+          icon={ClipboardList}
+          defaultExpanded={false}
+        >
+          <ScopeSummary
+            scope={scope}
+            onViewFullScope={handleViewFullScope}
+          />
+        </CollapsibleSection>
+
+        {/* Action Items - Show if not urgent (collapsed) */}
+        {!hasUrgentActions && (
+          <CollapsibleSection
+            title="Action Items"
+            icon={AlertTriangle}
+            defaultExpanded={false}
+          >
+            <ActionItems
+              actionItems={actionItems}
+              onResolveBlocker={handleResolveBlocker}
+              onCompleteTask={handleCompleteTask}
+              onApprove={handleApprove}
+            />
+          </CollapsibleSection>
+        )}
+
+        {/* Team Section */}
+        <CollapsibleSection
+          title="Team"
+          icon={Users}
+          defaultExpanded={false}
+        >
+          <TeamSection team={team} />
+        </CollapsibleSection>
+
+        {/* Activity Section */}
+        <CollapsibleSection
+          title="Activity"
+          icon={Activity}
+          defaultExpanded={false}
+        >
+          <DashboardActivityFeed
+            activities={activities}
+            onAddNote={handleAddNote}
+          />
+        </CollapsibleSection>
       </div>
 
-      {/* Row 2: Schedule + Scope */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <ScheduleSnapshot schedule={schedule} />
-        <ScopeSummary
-          scope={scope}
-          onViewFullScope={handleViewFullScope}
-        />
-      </div>
+      {/* Desktop Layout: Grid */}
+      <div className="hidden lg:block space-y-4">
+        {/* Row 1: Client + Budget */}
+        <div className="grid grid-cols-2 gap-4">
+          <ClientCard
+            clientData={client}
+            onRequestDecision={handleRequestDecision}
+          />
+          <BudgetTracker
+            budget={budget}
+            onAddChangeOrder={handleAddChangeOrder}
+          />
+        </div>
 
-      {/* Action Items - Full Width (Most important after header) */}
-      <ActionItems
-        actionItems={actionItems}
-        onResolveBlocker={handleResolveBlocker}
-        onCompleteTask={handleCompleteTask}
-        onApprove={handleApprove}
-      />
+        {/* Row 2: Schedule + Scope */}
+        <div className="grid grid-cols-2 gap-4">
+          <ScheduleSnapshot schedule={schedule} />
+          <ScopeSummary
+            scope={scope}
+            onViewFullScope={handleViewFullScope}
+          />
+        </div>
 
-      {/* Row 3: Team + Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <TeamSection team={team} />
-        <DashboardActivityFeed
-          activities={activities}
-          onAddNote={handleAddNote}
+        {/* Action Items - Full Width */}
+        <ActionItems
+          actionItems={actionItems}
+          onResolveBlocker={handleResolveBlocker}
+          onCompleteTask={handleCompleteTask}
+          onApprove={handleApprove}
         />
+
+        {/* Row 3: Team + Activity */}
+        <div className="grid grid-cols-2 gap-4">
+          <TeamSection team={team} />
+          <DashboardActivityFeed
+            activities={activities}
+            onAddNote={handleAddNote}
+          />
+        </div>
       </div>
     </div>
   );
@@ -141,7 +297,7 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
  * ProjectDashboardCompact - Smaller version for sidebar/overview
  */
 export function ProjectDashboardCompact({ dashboardData }) {
-  const { header, client, budget, schedule, actionItems } = dashboardData;
+  const { header, budget, schedule, actionItems } = dashboardData;
 
   return (
     <div className="space-y-3">
