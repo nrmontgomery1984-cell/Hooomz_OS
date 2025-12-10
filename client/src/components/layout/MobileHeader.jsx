@@ -135,12 +135,12 @@ export function MobileHeader() {
       {/* Slide-out Menu */}
       <aside
         className={`
-          lg:hidden fixed top-0 left-0 h-full w-72 bg-white z-50 transform transition-transform duration-300 ease-in-out
+          lg:hidden fixed top-0 left-0 h-full w-72 bg-white z-50 transform transition-transform duration-300 ease-in-out flex flex-col overflow-hidden
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         {/* Menu Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-100">
           <Logo />
           <button
             onClick={() => setIsOpen(false)}
@@ -152,9 +152,9 @@ export function MobileHeader() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-3 overflow-y-auto max-h-[calc(100vh-70px)]">
+        <nav className="flex-1 p-3 pb-8 overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {navSections.map((section) => (
-            <div key={section.label} className="mb-6">
+            <div key={section.label} className="mb-5">
               <h3 className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                 {section.label}
               </h3>
