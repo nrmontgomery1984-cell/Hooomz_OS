@@ -12,8 +12,12 @@ import {
   DollarSign,
   Check,
   Upload,
+  Database,
+  Trash2,
+  AlertTriangle,
 } from 'lucide-react';
 import { Card, Button, Input, TextArea } from '../components/ui';
+import { clearAllMockData } from '../services/mockData';
 
 // Storage key for settings
 const STORAGE_KEY = 'hooomz_company_settings';
@@ -132,6 +136,7 @@ export function Settings() {
     { id: 'documents', label: 'Documents', icon: FileText },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'branding', label: 'Branding', icon: Palette },
+    { id: 'data', label: 'Data Management', icon: Database },
   ];
 
   return (
@@ -687,6 +692,59 @@ export function Settings() {
                       Accent Button
                     </div>
                   </div>
+                </div>
+              </div>
+            </Card>
+          )}
+
+          {/* Data Management */}
+          {activeSection === 'data' && (
+            <Card className="p-6">
+              <h2 className="text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
+                <Database className="w-5 h-5" />
+                Data Management
+              </h2>
+              <p className="text-sm text-gray-500 mb-6">
+                Manage your application data and storage.
+              </p>
+
+              <div className="space-y-6">
+                {/* Clear All Data */}
+                <div className="p-4 border border-red-200 bg-red-50 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5" />
+                    <div className="flex-1">
+                      <h3 className="text-sm font-semibold text-red-800">Clear All Project Data</h3>
+                      <p className="text-sm text-red-600 mt-1">
+                        This will permanently delete all projects, tasks, time entries, selections, and other data.
+                        This action cannot be undone.
+                      </p>
+                      <Button
+                        variant="danger"
+                        className="mt-4 bg-red-600 hover:bg-red-700 text-white"
+                        onClick={() => {
+                          if (window.confirm('Are you sure you want to delete ALL data? This cannot be undone.')) {
+                            if (window.confirm('This is your last chance. Delete everything?')) {
+                              clearAllMockData();
+                              window.location.reload();
+                            }
+                          }
+                        }}
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Clear All Data
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Storage Info */}
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h3 className="text-sm font-medium text-charcoal mb-2">Storage Information</h3>
+                  <p className="text-xs text-gray-500">
+                    Data is stored locally in your browser. Clearing browser data or using a different device
+                    will not have access to this data.
+                  </p>
                 </div>
               </div>
             </Card>

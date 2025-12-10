@@ -61,6 +61,40 @@ export function saveProjectsToStorage() {
   }
 }
 
+// Clear all mock data and reset to empty state
+export function clearAllMockData() {
+  try {
+    // Clear all localStorage keys
+    Object.values(STORAGE_KEYS).forEach(key => {
+      localStorage.removeItem(key);
+    });
+
+    // Reset in-memory arrays to empty
+    mockProjects.length = 0;
+    mockLoops.length = 0;
+    mockTasks.length = 0;
+    mockTimeEntries.length = 0;
+    mockMaterialSelections.length = 0;
+    mockActiveTimeEntry = null;
+
+    // Clear task tracker data
+    if (typeof mockTaskInstances !== 'undefined') {
+      Object.keys(mockTaskInstances).forEach(key => delete mockTaskInstances[key]);
+    }
+
+    console.log('All mock data cleared successfully');
+    return true;
+  } catch (e) {
+    console.error('Error clearing mock data:', e);
+    return false;
+  }
+}
+
+// Expose to window for easy console access
+if (typeof window !== 'undefined') {
+  window.clearAllMockData = clearAllMockData;
+}
+
 // =============================================================================
 // PROJECTS - Generated from Intake
 // =============================================================================
