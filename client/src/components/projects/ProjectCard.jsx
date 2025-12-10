@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, StatusDot, ProgressBar, getHealthColor } from '../ui';
-import { DollarSign, Calendar, Home, Hammer } from 'lucide-react';
+import { DollarSign, Calendar, Home, Hammer, Trash2 } from 'lucide-react';
+import { deleteProject } from '../../services/api';
 
 // Phase display configuration - matches sidebar terminology
 const phaseConfig = {
@@ -28,10 +29,22 @@ function formatBudget(amount) {
   return `$${amount}`;
 }
 
-export function ProjectCard({ project }) {
+export function ProjectCard({ project, onDelete }) {
   const navigate = useNavigate();
   const healthScore = project.health_score ?? 100; // Default to 100 if missing
   const healthColor = getHealthColor(healthScore);
+
+  const handleDelete = async (e) => {
+    e.stopPropagation(); // Prevent card click navigation
+    if (window.confirm(`Delete "${project.name}"? This cannot be undone.`)) {
+      const { error } = await deleteProject(project.id);
+      if (error) {
+        alert('Failed to delete project');
+      } else if (onDelete) {
+        onDelete(project.id);
+      }
+    }
+  };
 
   // Get phase display info
   const phase = phaseConfig[project.phase] || phaseConfig.intake;
@@ -52,7 +65,7 @@ export function ProjectCard({ project }) {
       className="p-4"
       onClick={() => navigate(`/projects/${project.id}`)}
     >
-      {/* Top row: Name + Health Score */}
+      {/* Top row: Name + Health Score + Delete */}
       <div className="flex items-start justify-between mb-3">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
@@ -70,11 +83,20 @@ export function ProjectCard({ project }) {
             {project.client_name}
           </p>
         </div>
-        <div className="flex items-center gap-1.5 ml-3">
-          <span className="text-lg font-semibold text-charcoal">
-            {healthScore}
-          </span>
-          <StatusDot status={healthColor} />
+        <div className="flex items-center gap-2 ml-3">
+          <button
+            onClick={handleDelete}
+            className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+            title="Delete project"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+          <div className="flex items-center gap-1.5">
+            <span className="text-lg font-semibold text-charcoal">
+              {healthScore}
+            </span>
+            <StatusDot status={healthColor} />
+          </div>
         </div>
       </div>
 

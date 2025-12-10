@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, UserPlus, ArrowRight, Phone, Mail, Calendar, HardHat, Home, X } from 'lucide-react';
+import { Plus, UserPlus, ArrowRight, Phone, Mail, Calendar, HardHat, Home, X, Trash2 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card, Button } from '../components/ui';
-import { getProjects } from '../services/api';
+import { getProjects, deleteProject } from '../services/api';
 
 /**
  * Sales / Leads Page
@@ -99,7 +99,11 @@ export function Sales() {
       ) : (
         <div className="space-y-3">
           {leads.map((lead) => (
-            <LeadCard key={lead.id} lead={lead} />
+            <LeadCard
+              key={lead.id}
+              lead={lead}
+              onDelete={(id) => setLeads(leads.filter(l => l.id !== id))}
+            />
           ))}
         </div>
       )}
@@ -166,9 +170,22 @@ export function Sales() {
   );
 }
 
-function LeadCard({ lead }) {
+function LeadCard({ lead, onDelete }) {
   const intakeData = lead.intake_data || {};
   const contact = intakeData.contact || {};
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`Delete "${lead.client_name || 'this lead'}"? This cannot be undone.`)) {
+      const { error } = await deleteProject(lead.id);
+      if (error) {
+        alert('Failed to delete');
+      } else if (onDelete) {
+        onDelete(lead.id);
+      }
+    }
+  };
 
   return (
     <Link to={`/projects/${lead.id}`}>
@@ -178,15 +195,24 @@ function LeadCard({ lead }) {
             <h4 className="font-medium text-charcoal">{lead.client_name || 'New Lead'}</h4>
             <p className="text-sm text-gray-500">{lead.address || 'Address pending'}</p>
           </div>
-          <span className={`
-            text-xs px-2 py-1 rounded-full
-            ${lead.intake_type === 'new_construction'
-              ? 'bg-blue-100 text-blue-700'
-              : 'bg-amber-100 text-amber-700'
-            }
-          `}>
-            {lead.intake_type === 'new_construction' ? 'New Build' : 'Renovation'}
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDelete}
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+              title="Delete"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <span className={`
+              text-xs px-2 py-1 rounded-full
+              ${lead.intake_type === 'new_construction'
+                ? 'bg-blue-100 text-blue-700'
+                : 'bg-amber-100 text-amber-700'
+              }
+            `}>
+              {lead.intake_type === 'new_construction' ? 'New Build' : 'Renovation'}
+            </span>
+          </div>
         </div>
 
         {/* Contact Info */}

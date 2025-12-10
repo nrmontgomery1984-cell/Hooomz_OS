@@ -62,6 +62,31 @@ export async function getProject(id) {
   return { data, error };
 }
 
+export async function deleteProject(projectId) {
+  if (!isSupabaseConfigured()) {
+    const index = mockProjects.findIndex(p => p.id === projectId);
+    if (index === -1) {
+      return { data: null, error: 'Project not found' };
+    }
+    // Remove from array
+    mockProjects.splice(index, 1);
+    // Persist to localStorage
+    saveProjectsToStorage();
+    console.log('Project deleted (mock):', projectId);
+    return { data: { id: projectId }, error: null };
+  }
+
+  // Soft delete in Supabase
+  const { data, error } = await supabase
+    .from('projects')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', projectId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
 export async function createProject(projectData) {
   const newProject = {
     id: crypto.randomUUID(),
