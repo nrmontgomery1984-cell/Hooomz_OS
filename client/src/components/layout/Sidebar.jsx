@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -12,8 +13,12 @@ import {
   GraduationCap,
   ListTodo,
   Timer,
+  Search,
+  Receipt,
+  ClipboardList,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
+import { ProjectSearch } from './ProjectSearch';
 
 // Check if nav item should be active based on current path
 // Handles project subpages like /projects/xxx/estimate -> Estimates
@@ -56,6 +61,15 @@ const navSections = [
     ],
   },
   {
+    label: 'Daily',
+    items: [
+      { to: '/loop-tracker', icon: ListTodo, label: 'Loop Tracker' },
+      { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
+      { to: '/expenses', icon: Receipt, label: 'Expense Tracker' },
+      { to: '/daily-log', icon: ClipboardList, label: 'Daily Log' },
+    ],
+  },
+  {
     label: 'Pipeline',
     items: [
       { to: '/sales', icon: UserPlus, label: 'Sales / Leads', badge: 'intake' },
@@ -67,8 +81,6 @@ const navSections = [
     label: 'Production',
     items: [
       { to: '/production', icon: HardHat, label: 'In Progress', badge: 'active' },
-      { to: '/loop-tracker', icon: ListTodo, label: 'Loop Tracker' },
-      { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
       { to: '/completed', icon: CheckCircle2, label: 'Completed' },
     ],
   },
@@ -84,6 +96,7 @@ const navSections = [
 export function Sidebar() {
   const location = useLocation();
   const pathname = location.pathname;
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <aside className="hidden lg:flex w-60 bg-white border-r border-gray-200 h-screen flex-col">
@@ -91,6 +104,30 @@ export function Sidebar() {
       <div className="p-4 border-b border-gray-100">
         <Logo />
       </div>
+
+      {/* Search Button */}
+      <div className="px-3 pt-3">
+        <button
+          onClick={() => setShowSearch(true)}
+          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-500 hover:text-charcoal bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200"
+        >
+          <Search className="w-4 h-4" />
+          <span>Search projects...</span>
+        </button>
+      </div>
+
+      {/* Search Modal */}
+      {showSearch && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 z-50"
+            onClick={() => setShowSearch(false)}
+          />
+          <div className="fixed left-60 top-20 z-50 w-96">
+            <ProjectSearch onClose={() => setShowSearch(false)} />
+          </div>
+        </>
+      )}
 
       {/* Navigation by sections */}
       <nav className="flex-1 p-3 overflow-y-auto">

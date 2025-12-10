@@ -22,6 +22,13 @@ import {
   defaultPhaseChecklists,
   mockContacts,
   saveTaskTrackerToStorage,
+  // Material Selections imports
+  mockMaterialSelections,
+  saveMaterialSelectionsToStorage,
+  selectionCategories,
+  selectionStatuses,
+  selectionPhases,
+  trades,
 } from './mockData';
 import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
@@ -211,6 +218,30 @@ export async function getTodayTasks() {
     `)
     .or(`due_date.eq.${today},status.eq.in_progress`)
     .order('priority', { ascending: true });
+
+  return { data, error };
+}
+
+export async function createTodayTask({ title }) {
+  const newTask = {
+    id: crypto.randomUUID(),
+    title,
+    status: 'pending',
+    due_date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString(),
+  };
+
+  if (!isSupabaseConfigured()) {
+    // Add to mock data
+    mockTodayTasks.unshift(newTask);
+    return { data: newTask, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('tasks')
+    .insert(newTask)
+    .select()
+    .single();
 
   return { data, error };
 }
@@ -1685,4 +1716,395 @@ export function groupTasksBySubcategory(instances, subcategories) {
   // Sort by display order
   return Object.values(grouped)
     .sort((a, b) => a.subcategory.displayOrder - b.subcategory.displayOrder);
+}
+
+// =============================================================================
+// MATERIAL SELECTIONS API
+// =============================================================================
+
+/**
+ * Get all material selections for a project
+ */
+export async function getMaterialSelections(projectId, filters = {}) {
+  if (!isSupabaseConfigured()) {
+    const projectSelections = mockMaterialSelections[projectId] || [];
+
+    // Apply filters
+    let filtered = [...projectSelections];
+
+    if (filters.categoryCode) {
+      filtered = filtered.filter(s => s.categoryCode === filters.categoryCode);
+    }
+    if (filters.subcategoryCode) {
+      filtered = filtered.filter(s => s.subcategoryCode === filters.subcategoryCode);
+    }
+    if (filters.status) {
+      filtered = filtered.filter(s => s.status === filters.status);
+    }
+    if (filters.roomId) {
+      filtered = filtered.filter(s => s.roomId === filters.roomId);
+    }
+    if (filters.tradeCode) {
+      filtered = filtered.filter(s => s.tradeCode === filters.tradeCode);
+    }
+    if (filters.phaseCode) {
+      filtered = filtered.filter(s => s.phaseCode === filters.phaseCode);
+    }
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      filtered = filtered.filter(s =>
+        s.itemName?.toLowerCase().includes(searchLower) ||
+        s.manufacturer?.toLowerCase().includes(searchLower) ||
+        s.modelNumber?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    return { data: filtered, error: null };
+  }
+
+  // Supabase implementation
+  try {
+    let query = supabase
+      .from('material_selections')
+      .select('*')
+      .eq('project_id', projectId);
+
+    if (filters.categoryCode) query = query.eq('category_code', filters.categoryCode);
+    if (filters.status) query = query.eq('status', filters.status);
+    if (filters.roomId) query = query.eq('room_id', filters.roomId);
+
+    const { data, error } = await query.order('created_at', { ascending: false });
+
+    // If Supabase returns an error (e.g., table doesn't exist), fall back to mock data
+    if (error) {
+      console.warn('Supabase material_selections query failed, using mock data:', error.message);
+      const projectSelections = mockMaterialSelections[projectId] || [];
+      return { data: projectSelections, error: null };
+    }
+
+    return { data, error };
+  } catch (err) {
+    console.warn('Supabase error, falling back to mock data:', err);
+    const projectSelections = mockMaterialSelections[projectId] || [];
+    return { data: projectSelections, error: null };
+  }
+}
+
+/**
+ * Get a single material selection by ID
+ */
+export async function getMaterialSelection(projectId, selectionId) {
+  if (!isSupabaseConfigured()) {
+    const projectSelections = mockMaterialSelections[projectId] || [];
+    const selection = projectSelections.find(s => s.id === selectionId);
+    return { data: selection || null, error: selection ? null : 'Not found' };
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('material_selections')
+      .select('*')
+      .eq('id', selectionId)
+      .single();
+
+    if (error) {
+      console.warn('Supabase getMaterialSelection failed, using mock data:', error.message);
+      const projectSelections = mockMaterialSelections[projectId] || [];
+      const selection = projectSelections.find(s => s.id === selectionId);
+      return { data: selection || null, error: selection ? null : 'Not found' };
+    }
+
+    return { data, error };
+  } catch (err) {
+    console.warn('Supabase error, falling back to mock data:', err);
+    const projectSelections = mockMaterialSelections[projectId] || [];
+    const selection = projectSelections.find(s => s.id === selectionId);
+    return { data: selection || null, error: selection ? null : 'Not found' };
+  }
+}
+
+/**
+ * Create a new material selection
+ */
+export async function createMaterialSelection(projectId, selectionData) {
+  const newSelection = {
+    id: crypto.randomUUID(),
+    projectId,
+    ...selectionData,
+    status: selectionData.status || 'pending',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  if (!isSupabaseConfigured()) {
+    if (!mockMaterialSelections[projectId]) {
+      mockMaterialSelections[projectId] = [];
+    }
+    mockMaterialSelections[projectId].unshift(newSelection);
+    saveMaterialSelectionsToStorage();
+    return { data: newSelection, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('material_selections')
+    .insert({
+      ...newSelection,
+      project_id: projectId,
+      category_code: selectionData.categoryCode,
+      subcategory_code: selectionData.subcategoryCode,
+      trade_code: selectionData.tradeCode,
+      room_id: selectionData.roomId,
+      phase_code: selectionData.phaseCode,
+      item_name: selectionData.itemName,
+      model_number: selectionData.modelNumber,
+      cost_per_unit: selectionData.costPerUnit,
+      unit_of_measurement: selectionData.unitOfMeasurement,
+      allowance_amount: selectionData.allowanceAmount,
+      supplier_url: selectionData.supplierUrl,
+      lead_time_days: selectionData.leadTimeDays,
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Update a material selection
+ */
+export async function updateMaterialSelection(projectId, selectionId, updates) {
+  if (!isSupabaseConfigured()) {
+    const projectSelections = mockMaterialSelections[projectId] || [];
+    const index = projectSelections.findIndex(s => s.id === selectionId);
+
+    if (index === -1) {
+      return { data: null, error: 'Selection not found' };
+    }
+
+    const updated = {
+      ...projectSelections[index],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+
+    mockMaterialSelections[projectId][index] = updated;
+    saveMaterialSelectionsToStorage();
+    return { data: updated, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('material_selections')
+    .update({
+      ...updates,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', selectionId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Delete a material selection
+ */
+export async function deleteMaterialSelection(projectId, selectionId) {
+  if (!isSupabaseConfigured()) {
+    const projectSelections = mockMaterialSelections[projectId] || [];
+    const index = projectSelections.findIndex(s => s.id === selectionId);
+
+    if (index === -1) {
+      return { data: null, error: 'Selection not found' };
+    }
+
+    mockMaterialSelections[projectId].splice(index, 1);
+    saveMaterialSelectionsToStorage();
+    return { data: { id: selectionId }, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('material_selections')
+    .delete()
+    .eq('id', selectionId);
+
+  return { data, error };
+}
+
+/**
+ * Update selection status (workflow advancement)
+ */
+export async function updateSelectionStatus(projectId, selectionId, newStatus) {
+  return updateMaterialSelection(projectId, selectionId, { status: newStatus });
+}
+
+/**
+ * Get selection reference data (categories, statuses, phases, trades)
+ */
+export function getSelectionReferenceData() {
+  return {
+    categories: selectionCategories,
+    statuses: selectionStatuses,
+    phases: selectionPhases,
+    trades,
+  };
+}
+
+/**
+ * Get rooms for a project (for selection assignment)
+ */
+export function getProjectRooms(projectId) {
+  const locations = mockTaskTrackerLocations[projectId] || [];
+  // Filter to only room-type locations
+  return locations.filter(loc => loc.locationType === 'room');
+}
+
+/**
+ * Selection prediction keywords - maps task keywords to selection categories/subcategories
+ */
+const selectionKeywords = {
+  // Plumbing
+  'PL-KSK': ['kitchen sink', 'sink', 'undermount sink', 'farmhouse sink'],
+  'PL-KFA': ['kitchen faucet', 'faucet'],
+  'PL-BSK': ['bathroom sink', 'vanity sink', 'vessel sink', 'pedestal sink'],
+  'PL-BFA': ['bathroom faucet', 'lavatory faucet'],
+  'PL-TOI': ['toilet', 'water closet', 'commode'],
+  'PL-SHB': ['shower pan', 'shower base', 'shower receptor'],
+  'PL-SHF': ['shower fixtures', 'shower valve', 'showerhead', 'shower trim', 'shower door'],
+  'PL-TUB': ['bathtub', 'tub', 'soaking tub', 'freestanding tub'],
+  'PL-TBF': ['tub faucet', 'tub fixtures', 'tub spout'],
+  'PL-GRB': ['garbage disposal', 'disposer'],
+  'PL-WHT': ['water heater', 'tankless', 'hot water'],
+
+  // Electrical
+  'EL-LTC': ['light fixture', 'ceiling light', 'chandelier', 'pendant light', 'flush mount'],
+  'EL-LTW': ['wall sconce', 'vanity light', 'wall light'],
+  'EL-LTE': ['exterior light', 'outdoor light', 'porch light'],
+  'EL-REC': ['recessed light', 'can light', 'pot light', 'downlight'],
+  'EL-UCL': ['under-cabinet', 'under cabinet', 'task lighting'],
+  'EL-FAN': ['ceiling fan', 'fan'],
+  'EL-COV': ['outlet cover', 'switch cover', 'plate'],
+  'EL-SMT': ['smart', 'thermostat', 'doorbell'],
+
+  // Flooring
+  'FL-HWD': ['hardwood', 'wood floor', 'oak floor', 'maple floor', 'install flooring', 'flooring'],
+  'FL-LAM': ['laminate'],
+  'FL-LVP': ['lvp', 'vinyl plank', 'luxury vinyl'],
+  'FL-TIL': ['tile floor', 'floor tile', 'porcelain floor'],
+  'FL-CPT': ['carpet'],
+
+  // Tile
+  'TL-BSP': ['backsplash', 'kitchen tile'],
+  'TL-BFL': ['bathroom floor tile', 'bath floor'],
+  'TL-SHW': ['shower tile', 'wall tile', 'surround'],
+  'TL-ACC': ['accent tile', 'niche tile', 'border tile'],
+
+  // Cabinetry
+  'CB-KUP': ['upper cabinet', 'wall cabinet'],
+  'CB-KLO': ['lower cabinet', 'base cabinet', 'install cabinet', 'cabinets'],
+  'CB-KIS': ['island', 'kitchen island'],
+  'CB-VAN': ['vanity', 'bathroom vanity', 'install vanity'],
+  'CB-LAU': ['laundry cabinet'],
+
+  // Countertops
+  'CT-KIT': ['countertop', 'counter', 'quartz', 'granite', 'butcher block'],
+  'CT-BTH': ['vanity top', 'bathroom counter'],
+
+  // Finish Carpentry
+  'FC-IDR': ['interior door', 'bedroom door', 'closet door'],
+  'FC-BAS': ['baseboard', 'base trim'],
+  'FC-DCS': ['door casing', 'door trim'],
+  'FC-WCS': ['window casing', 'window trim'],
+  'FC-CRN': ['crown', 'crown molding'],
+  'FC-CLS': ['closet shelving', 'wire shelf', 'closet system'],
+
+  // Hardware
+  'HW-PUL': ['cabinet pull', 'drawer pull', 'handle'],
+  'HW-KNB': ['cabinet knob', 'knob'],
+  'HW-DHN': ['door handle', 'door hardware', 'lever', 'lockset'],
+
+  // Appliances
+  'AP-REF': ['refrigerator', 'fridge', 'install appliances', 'appliances'],
+  'AP-RNG': ['range', 'oven', 'stove', 'cooktop'],
+  'AP-DSH': ['dishwasher'],
+  'AP-MIC': ['microwave'],
+  'AP-HRF': ['hood', 'range hood', 'vent hood', 'exhaust'],
+  'AP-WAS': ['washer', 'washing machine'],
+  'AP-DRY': ['dryer'],
+
+  // Paint
+  'PT-WAL': ['paint wall', 'wall paint', 'paint', 'prime and paint'],
+  'PT-TRM': ['paint trim'],
+  'PT-CLG': ['ceiling paint', 'paint ceiling'],
+  'PT-STN': ['stain'],
+};
+
+/**
+ * Get suggested selections based on project tasks
+ * Analyzes task titles to predict what material selections will be needed
+ */
+export function getSuggestedSelections(projectId) {
+  // Get all loops for this project (mockLoops is keyed by projectId)
+  const projectLoops = mockLoops[projectId] || [];
+
+  // Collect all tasks from all loops
+  const allTasks = [];
+  for (const loop of projectLoops) {
+    const loopTasks = mockTasks[loop.id] || [];
+    allTasks.push(...loopTasks);
+  }
+
+  // Get existing selections for this project
+  const existingSelections = mockMaterialSelections[projectId] || [];
+  const existingSubcodes = existingSelections.map(s => s.subcategoryCode);
+
+  // Find matching selections needed
+  const suggestions = [];
+  const foundSubcodes = new Set();
+
+  for (const task of allTasks) {
+    const titleLower = task.title.toLowerCase();
+
+    for (const [subcode, keywords] of Object.entries(selectionKeywords)) {
+      // Skip if we already have this selection or already suggested it
+      if (existingSubcodes.includes(subcode) || foundSubcodes.has(subcode)) continue;
+
+      for (const keyword of keywords) {
+        if (titleLower.includes(keyword)) {
+          // Find category and subcategory info
+          let categoryInfo = null;
+          let subcategoryInfo = null;
+
+          for (const cat of selectionCategories) {
+            const sub = cat.subcategories?.find(s => s.code === subcode);
+            if (sub) {
+              categoryInfo = cat;
+              subcategoryInfo = sub;
+              break;
+            }
+          }
+
+          if (categoryInfo && subcategoryInfo) {
+            suggestions.push({
+              subcategoryCode: subcode,
+              categoryCode: categoryInfo.code,
+              categoryName: categoryInfo.name,
+              subcategoryName: subcategoryInfo.name,
+              matchedTask: task.title,
+              taskId: task.id,
+              taskStatus: task.status,
+              priority: task.status === 'in_progress' ? 'high' : task.status === 'pending' ? 'medium' : 'low',
+            });
+            foundSubcodes.add(subcode);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  // Sort by priority (in_progress tasks first)
+  const priorityOrder = { high: 0, medium: 1, low: 2 };
+  suggestions.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+  return suggestions;
 }

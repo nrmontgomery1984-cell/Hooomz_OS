@@ -1,6 +1,7 @@
 export { Button } from './Button';
-export { Card } from './Card';
+export { Card, CardHeader, CardContent, CardFooter } from './Card';
 export { StatusDot, getHealthColor } from './StatusDot';
+export { StatusBadge } from './StatusBadge';
 export { ProgressBar } from './ProgressBar';
 export { Checkbox } from './Checkbox';
 export { Input, DateInput, TextArea } from './Input';

@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
-import { CheckCircle, AlertTriangle, Clock } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Clock, Plus } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card, StatusDot } from '../components/ui';
-import { TaskList } from '../components/tasks';
+import { TaskList, AddTaskModal } from '../components/tasks';
 import { TimeTracker } from '../components/time';
-import { getTodayTasks, getActiveTimeEntry, updateTaskStatus, stopTimer, startTimer } from '../services/api';
+import { QuickNotes } from '../components/notes';
+import { getTodayTasks, getActiveTimeEntry, updateTaskStatus, stopTimer, startTimer, createTask } from '../services/api';
 
 export function Today() {
   const [tasks, setTasks] = useState([]);
   const [timeEntry, setTimeEntry] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showAddTask, setShowAddTask] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -67,6 +69,20 @@ export function Today() {
         task_title: taskTitle || task?.title || 'Task',
         project_name: task?.project_name || task?.loop?.project?.name || 'Project',
       });
+    }
+  };
+
+  const handleAddTask = async (taskData) => {
+    // Set due date to today if not specified
+    const todayDate = new Date().toISOString().split('T')[0];
+    const dataWithToday = {
+      ...taskData,
+      due_date: taskData.due_date || todayDate,
+    };
+
+    const { data, error } = await createTask(dataWithToday);
+    if (!error && data) {
+      setTasks(prev => [data, ...prev]);
     }
   };
 
@@ -141,9 +157,23 @@ export function Today() {
       )}
 
       {/* Today's Tasks */}
-      <div className="mb-3">
+      <div className="flex items-center justify-between mb-3">
         <h2 className="text-lg font-semibold text-charcoal">Today's Tasks</h2>
+        <button
+          onClick={() => setShowAddTask(true)}
+          className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700"
+        >
+          <Plus className="w-4 h-4" />
+          Add
+        </button>
       </div>
+
+      {/* Add Task Modal */}
+      <AddTaskModal
+        isOpen={showAddTask}
+        onClose={() => setShowAddTask(false)}
+        onSubmit={handleAddTask}
+      />
 
       <TaskList
         tasks={tasks}
@@ -152,6 +182,11 @@ export function Today() {
         activeTimerTaskId={timeEntry?.task_id}
         emptyMessage="No tasks scheduled for today"
       />
+
+      {/* Quick Notes */}
+      <div className="mt-6">
+        <QuickNotes compact />
+      </div>
     </PageContainer>
   );
 }

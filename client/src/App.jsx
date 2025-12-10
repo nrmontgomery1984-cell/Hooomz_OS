@@ -10,11 +10,14 @@ import {
   Completed,
   LoopTracker,
   TimeTrackerPage,
+  ExpenseTracker,
+  DailyLog,
   ProjectView,
   LoopDetail,
   TaskDetail,
   EstimateBuilder,
   HomeownerQuote,
+  Selections,
   Profile,
   Intake,
   ContractorIntake,
@@ -49,13 +52,18 @@ function App() {
           {/* Production - Post-Contract */}
           <Route path="/production" element={<Production />} />
           <Route path="/completed" element={<Completed />} />
+
+          {/* Daily */}
           <Route path="/loop-tracker" element={<LoopTracker />} />
           <Route path="/time-tracker" element={<TimeTrackerPage />} />
+          <Route path="/expenses" element={<ExpenseTracker />} />
+          <Route path="/daily-log" element={<DailyLog />} />
 
           {/* Project Detail Views */}
           <Route path="/projects/:projectId" element={<ProjectView />} />
           <Route path="/projects/:projectId/estimate" element={<EstimateBuilder />} />
           <Route path="/projects/:projectId/quote" element={<HomeownerQuote />} />
+          <Route path="/projects/:projectId/selections" element={<Selections />} />
           <Route path="/projects/:projectId/loops/:loopId" element={<LoopDetail />} />
           <Route path="/projects/:projectId/loops/:loopId/tasks/:taskId" element={<TaskDetail />} />
 

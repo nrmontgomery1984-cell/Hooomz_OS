@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator } from 'lucide-react';
+import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button } from '../components/ui';
 import { ProjectDashboard, PhaseTransitionModal } from '../components/dashboard';
@@ -235,6 +235,13 @@ export function ProjectView() {
         >
           <Calculator className="w-4 h-4 flex-shrink-0" />
           <span className="hidden sm:inline">Estimate</span>
+        </button>
+        <button
+          onClick={() => navigate(`/projects/${projectId}/selections`)}
+          className="flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 active:text-charcoal transition-colors"
+        >
+          <Package className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Selections</span>
         </button>
       </div>
 

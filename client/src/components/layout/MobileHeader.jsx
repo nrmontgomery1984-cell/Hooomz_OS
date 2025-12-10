@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   Menu,
   X,
+  Search,
   LayoutDashboard,
   UserPlus,
   Calculator,
@@ -12,8 +13,14 @@ import {
   Calendar,
   Settings,
   BookOpen,
+  GraduationCap,
+  ListTodo,
+  Timer,
+  Receipt,
+  ClipboardList,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
+import { ProjectSearch } from './ProjectSearch';
 
 // Navigation organized by business phase
 const navSections = [
@@ -22,6 +29,15 @@ const navSections = [
     items: [
       { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
       { to: '/today', icon: Calendar, label: 'Today' },
+    ],
+  },
+  {
+    label: 'Daily',
+    items: [
+      { to: '/loop-tracker', icon: ListTodo, label: 'Loop Tracker' },
+      { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
+      { to: '/expenses', icon: Receipt, label: 'Expense Tracker' },
+      { to: '/daily-log', icon: ClipboardList, label: 'Daily Log' },
     ],
   },
   {
@@ -43,6 +59,7 @@ const navSections = [
     label: 'Tools',
     items: [
       { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue' },
+      { to: '/field-guide', icon: GraduationCap, label: 'Field Guide' },
       { to: '/settings', icon: Settings, label: 'Settings' },
     ],
   },
@@ -50,6 +67,7 @@ const navSections = [
 
 export function MobileHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
 
   // Get current page title
@@ -84,8 +102,27 @@ export function MobileHeader() {
           {getCurrentPageTitle()}
         </h1>
 
-        <div className="w-10" /> {/* Spacer for centering */}
+        <button
+          onClick={() => setShowSearch(true)}
+          className="p-2 -mr-2 hover:bg-gray-100 rounded-lg transition-colors"
+          aria-label="Search projects"
+        >
+          <Search className="w-5 h-5 text-gray-600" />
+        </button>
       </header>
+
+      {/* Search Modal */}
+      {showSearch && (
+        <>
+          <div
+            className="lg:hidden fixed inset-0 bg-black/50 z-50"
+            onClick={() => setShowSearch(false)}
+          />
+          <div className="lg:hidden fixed inset-x-4 top-16 z-50 max-w-lg mx-auto">
+            <ProjectSearch onClose={() => setShowSearch(false)} isMobile />
+          </div>
+        </>
+      )}
 
       {/* Overlay */}
       {isOpen && (
