@@ -12,7 +12,7 @@ import { SCOPE_ITEMS, UNIT_LABELS } from '../data/contractorIntakeSchema';
  * Mapping from scope item IDs to labour catalogue rate IDs
  * and their associated unit conversion factors
  */
-const SCOPE_TO_LABOUR_MAP = {
+export const SCOPE_TO_LABOUR_MAP = {
   // ============================================
   // FRAMING (FR) -> framing category
   // ============================================
