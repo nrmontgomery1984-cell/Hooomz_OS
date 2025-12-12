@@ -586,9 +586,8 @@ export function EstimateBuilder() {
               </div>
             </Card>
 
-            {/* Entry Mode Toggle - Only for contractors */}
-            {canEdit && (
-              <Card className="p-4">
+            {/* Entry Mode Toggle */}
+            <Card className="p-4 border-2 border-red-500">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-medium text-charcoal flex items-center gap-2">
                     <Ruler className="w-5 h-5" />
@@ -644,8 +643,7 @@ export function EstimateBuilder() {
                     <p className="text-xs text-gray-500">Bulk add by measurement</p>
                   </button>
                 </div>
-              </Card>
-            )}
+            </Card>
 
             {/* Tier Selector */}
             <Card className="p-4">
