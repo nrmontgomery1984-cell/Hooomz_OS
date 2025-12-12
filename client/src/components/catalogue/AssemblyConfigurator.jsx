@@ -523,13 +523,22 @@ export function AssemblyConfigurator({
 }
 
 /**
- * ComponentRow - Individual material component with formula editor
+ * ComponentRow - Individual material component with clear quantity configuration
  */
 function ComponentRow({ component, onUpdate, onRemove }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true); // Default expanded for clarity
+
+  // Calculate example for 1 LF at 9' ceiling
+  const exampleQty = useMemo(() => {
+    const formula = FORMULA_TYPES[component.formulaType?.toUpperCase()] || FORMULA_TYPES.PER_LF;
+    return formula.calculate(1, 9, component.formulaValue);
+  }, [component.formulaType, component.formulaValue]);
+
+  const exampleCost = exampleQty * component.materialUnitCost;
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
+      {/* Header */}
       <div className="px-3 py-2 bg-white flex items-center justify-between">
         <button
           onClick={() => setExpanded(!expanded)}
@@ -540,54 +549,86 @@ function ComponentRow({ component, onUpdate, onRemove }) {
           ) : (
             <ChevronRight className="w-4 h-4 text-gray-400" />
           )}
-          <span className="font-medium text-sm">{component.materialName}</span>
-          <span className="text-xs text-gray-500">
-            ({formatCurrency(component.materialUnitCost)}/{component.materialUnit})
+          <div>
+            <span className="font-medium text-sm">{component.materialName}</span>
+            <span className="text-xs text-gray-500 ml-2">
+              {formatCurrency(component.materialUnitCost)}/{component.materialUnit}
+            </span>
+          </div>
+        </button>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-green-600 font-medium">
+            {formatCurrency(exampleCost)}/LF
           </span>
-        </button>
-        <button
-          onClick={onRemove}
-          className="text-gray-400 hover:text-red-500 p-1"
-        >
-          <Trash2 className="w-4 h-4" />
-        </button>
+          <button
+            onClick={onRemove}
+            className="text-gray-400 hover:text-red-500 p-1"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
+      {/* Configuration - Always show for clarity */}
       {expanded && (
         <div className="px-3 py-3 bg-gray-50 border-t border-gray-200 space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">
-                Formula Type
-              </label>
-              <select
-                value={component.formulaType}
-                onChange={(e) => onUpdate({ formulaType: e.target.value })}
-                className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-charcoal"
-              >
-                {Object.values(FORMULA_TYPES).map((formula) => (
-                  <option key={formula.id} value={formula.id}>
-                    {formula.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">
-                {getFormulaValueLabel(component.formulaType)}
-              </label>
-              <Input
-                type="number"
-                step="0.01"
-                value={component.formulaValue}
-                onChange={(e) => onUpdate({ formulaValue: parseFloat(e.target.value) || 0 })}
-                className="text-sm"
-              />
+          {/* Quantity per LF input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              How much of this material per 1 linear foot of wall?
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">
+                  Calculation Method
+                </label>
+                <select
+                  value={component.formulaType}
+                  onChange={(e) => onUpdate({ formulaType: e.target.value })}
+                  className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-charcoal"
+                >
+                  <option value="per_lf">Quantity per LF</option>
+                  <option value="per_sf">Divide wall area by coverage</option>
+                  <option value="plates">Plates (3× LF ÷ lumber length)</option>
+                  <option value="studs">Studs (1 per LF)</option>
+                  <option value="sheets">Sheets (wall area ÷ sheet size)</option>
+                  <option value="fixed">Fixed quantity</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">
+                  {getFormulaValueLabel(component.formulaType)}
+                </label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={component.formulaValue}
+                  onChange={(e) => onUpdate({ formulaValue: parseFloat(e.target.value) || 0 })}
+                  className="text-sm"
+                />
+              </div>
             </div>
           </div>
-          <div className="text-xs text-gray-500 flex items-start gap-1">
+
+          {/* Live example calculation */}
+          <div className="bg-white rounded p-2 border border-gray-100">
+            <div className="text-xs text-gray-500 mb-1">Example: 1 LF wall × 9' ceiling</div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-700">
+                {exampleQty.toFixed(3)} {component.materialUnit} × {formatCurrency(component.materialUnitCost)}
+              </span>
+              <span className="font-semibold text-green-600">
+                = {formatCurrency(exampleCost)}
+              </span>
+            </div>
+          </div>
+
+          {/* Formula explanation */}
+          <div className="text-xs text-gray-400 flex items-start gap-1">
             <Info className="w-3 h-3 mt-0.5 flex-shrink-0" />
-            <span>{FORMULA_TYPES[component.formulaType.toUpperCase()]?.description || ''}</span>
+            <span>{getFormulaExplanation(component.formulaType, component.formulaValue)}</span>
           </div>
         </div>
       )}
@@ -601,17 +642,41 @@ function ComponentRow({ component, onUpdate, onRemove }) {
 function getFormulaValueLabel(formulaType) {
   switch (formulaType) {
     case 'per_lf':
+      return 'Quantity per LF';
     case 'studs':
-      return 'Multiplier';
+      return 'Studs per LF';
     case 'per_sf':
+      return 'Material covers (SF)';
     case 'sheets':
-      return 'Coverage (SF)';
+      return 'Sheet size (SF)';
     case 'plates':
-      return 'Lumber Length (ft)';
+      return 'Lumber length (ft)';
     case 'fixed':
-      return 'Fixed Quantity';
+      return 'Fixed quantity';
     default:
       return 'Value';
+  }
+}
+
+/**
+ * Get human-readable explanation of the formula
+ */
+function getFormulaExplanation(formulaType, value) {
+  switch (formulaType) {
+    case 'per_lf':
+      return `Uses ${value} unit(s) of this material for every 1 linear foot of wall`;
+    case 'studs':
+      return `Uses ${value} stud(s) for every 1 linear foot (standard 16" OC = 1 per LF)`;
+    case 'per_sf':
+      return `Wall area (LF × height) divided by ${value} SF coverage per unit`;
+    case 'sheets':
+      return `Wall area divided by ${value} SF per sheet (4×8 sheet = 32 SF)`;
+    case 'plates':
+      return `3× linear feet (bottom + double top) divided by ${value}' lumber length`;
+    case 'fixed':
+      return `Always uses exactly ${value} unit(s) regardless of wall size`;
+    default:
+      return '';
   }
 }
 
