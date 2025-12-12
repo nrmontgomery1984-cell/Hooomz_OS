@@ -16,8 +16,9 @@
  * Items without catalogue data are flagged for manual pricing entry.
  */
 
-import { loadCatalogueData } from './costCatalogue';
+import { loadCatalogueData, getMaterials } from './costCatalogue';
 import { SCOPE_TO_LABOUR_MAP } from './scopeCostEstimator';
+import { calculateWallMaterials, getWallCostPerLinearFoot } from './wallMaterialCalculator';
 
 /**
  * Build tiers with pricing multipliers
@@ -2039,6 +2040,13 @@ export const CEILING_HEIGHTS = [
 
 /**
  * Default wall assemblies
+ *
+ * Wall assemblies now support dynamic pricing from the Cost Catalogue.
+ * The `calculatorConfig` field defines how to calculate material costs
+ * using the wallMaterialCalculator.
+ *
+ * If calculatorConfig is present, materialCostPerUnit is calculated dynamically.
+ * The fallback materialCostPerUnit is used when catalogue data is unavailable.
  */
 export const DEFAULT_WALL_ASSEMBLIES = [
   {
@@ -2046,42 +2054,147 @@ export const DEFAULT_WALL_ASSEMBLIES = [
     name: '2x6 Exterior Wall',
     description: '2x6 framing, R-20 insulation, OSB sheathing',
     category: 'framing',
-    unit: 'SF',
-    laborCostPerUnit: 3.25,
-    materialCostPerUnit: 4.50,
+    unit: 'LF', // Changed to LF for linear foot pricing
+    laborCostPerUnit: 29.25, // Labor per LF (approx 9' wall)
+    materialCostPerUnit: 40.50, // Fallback if catalogue unavailable
     isDefault: true,
+    // Calculator config for dynamic pricing from catalogue
+    calculatorConfig: {
+      lumberDimension: '2x6',
+      sheathingType: 'osb',
+      insulationType: 'r20_batt',
+      includeSheathing: true,
+      includeInsulation: true,
+    },
   },
   {
     id: 'ext-2x4',
     name: '2x4 Exterior Wall',
-    description: '2x4 framing, R-14 insulation, OSB sheathing',
+    description: '2x4 framing, R-12 insulation, OSB sheathing',
     category: 'framing',
-    unit: 'SF',
-    laborCostPerUnit: 2.75,
-    materialCostPerUnit: 3.50,
+    unit: 'LF',
+    laborCostPerUnit: 24.75, // Labor per LF
+    materialCostPerUnit: 31.50, // Fallback
     isDefault: true,
+    calculatorConfig: {
+      lumberDimension: '2x4',
+      sheathingType: 'osb',
+      insulationType: 'r12_batt',
+      includeSheathing: true,
+      includeInsulation: true,
+    },
   },
   {
     id: 'int-2x4',
     name: '2x4 Interior Wall',
-    description: '2x4 framing, no insulation',
+    description: '2x4 framing, no insulation, drywall both sides',
     category: 'framing',
-    unit: 'SF',
-    laborCostPerUnit: 2.00,
-    materialCostPerUnit: 2.25,
+    unit: 'LF',
+    laborCostPerUnit: 18.00, // Labor per LF
+    materialCostPerUnit: 20.25, // Fallback
     isDefault: true,
+    calculatorConfig: {
+      lumberDimension: '2x4',
+      sheathingType: null, // No sheathing for interior
+      insulationType: null,
+      includeSheathing: false,
+      includeInsulation: false,
+    },
   },
   {
     id: 'int-2x4-ins',
     name: '2x4 Interior Wall (Insulated)',
     description: '2x4 framing with sound insulation',
     category: 'framing',
-    unit: 'SF',
-    laborCostPerUnit: 2.25,
-    materialCostPerUnit: 3.00,
+    unit: 'LF',
+    laborCostPerUnit: 20.25, // Labor per LF
+    materialCostPerUnit: 27.00, // Fallback
     isDefault: true,
+    calculatorConfig: {
+      lumberDimension: '2x4',
+      sheathingType: null,
+      insulationType: 'r12_batt',
+      includeSheathing: false,
+      includeInsulation: true,
+    },
   },
 ];
+
+/**
+ * Calculate dynamic material cost per LF for a wall assembly
+ * Uses real catalogue prices when available
+ *
+ * @param {Object} assembly - Wall assembly with calculatorConfig
+ * @param {number} ceilingHeight - Ceiling height in feet
+ * @param {Array} materials - Materials from catalogue (optional)
+ * @returns {number} - Material cost per linear foot
+ */
+export function calculateAssemblyMaterialCost(assembly, ceilingHeight = 9, materials = null) {
+  if (!assembly.calculatorConfig) {
+    // No calculator config, use fallback
+    return assembly.materialCostPerUnit || 0;
+  }
+
+  try {
+    const result = calculateWallMaterials({
+      linearFeet: 1, // Calculate for 1 LF
+      ceilingHeight,
+      ...assembly.calculatorConfig,
+      materials: materials || getMaterials(),
+    });
+
+    // Return calculated cost per LF, or fallback if calculation failed
+    return result.costPerLinearFoot > 0
+      ? result.costPerLinearFoot
+      : assembly.materialCostPerUnit || 0;
+  } catch (error) {
+    console.warn('Failed to calculate assembly material cost:', error);
+    return assembly.materialCostPerUnit || 0;
+  }
+}
+
+/**
+ * Get detailed material breakdown for a wall assembly
+ * Useful for material lists and quotes
+ *
+ * @param {Object} assembly - Wall assembly with calculatorConfig
+ * @param {number} linearFeet - Total linear feet of wall
+ * @param {number} ceilingHeight - Ceiling height in feet
+ * @param {Array} materials - Materials from catalogue (optional)
+ * @returns {Object} - Full calculation result with materials list
+ */
+export function getAssemblyMaterialBreakdown(assembly, linearFeet, ceilingHeight = 9, materials = null) {
+  if (!assembly.calculatorConfig) {
+    return {
+      materials: [],
+      totalCost: linearFeet * (assembly.materialCostPerUnit || 0),
+      costPerLinearFoot: assembly.materialCostPerUnit || 0,
+      source: 'fallback',
+    };
+  }
+
+  try {
+    const result = calculateWallMaterials({
+      linearFeet,
+      ceilingHeight,
+      ...assembly.calculatorConfig,
+      materials: materials || getMaterials(),
+    });
+
+    return {
+      ...result,
+      source: 'catalogue',
+    };
+  } catch (error) {
+    console.warn('Failed to get assembly material breakdown:', error);
+    return {
+      materials: [],
+      totalCost: linearFeet * (assembly.materialCostPerUnit || 0),
+      costPerLinearFoot: assembly.materialCostPerUnit || 0,
+      source: 'fallback',
+    };
+  }
+}
 
 /**
  * Scope items for instance-based estimating
@@ -2213,20 +2326,22 @@ export function calculateInstanceCost(instance, assemblies, ceilingHeight, catal
 
   if (!scopeItem) return { labor: 0, materials: 0, total: 0, quantity: 0 };
 
-  let quantity = instance.measurement || 0;
+  // Get the linear feet measurement
+  const linearFeet = instance.measurement || 0;
 
-  // Convert LF to SF for walls if needed
-  if (scopeItem.convertToSF && ceilingHeight) {
-    // Support both single value and per-level object
-    let effectiveHeight = 9; // default
-    if (typeof ceilingHeight === 'object' && ceilingHeight !== null) {
-      // It's a per-level object like { basement: 8, main: 9, second: 8 }
-      effectiveHeight = ceilingHeight[instance.level] || 9;
-    } else if (typeof ceilingHeight === 'number') {
-      effectiveHeight = ceilingHeight;
-    }
-    quantity = calculateWallSF(instance.measurement || 0, effectiveHeight);
+  // Determine effective ceiling height for this instance
+  let effectiveHeight = 9; // default
+  if (typeof ceilingHeight === 'object' && ceilingHeight !== null) {
+    // It's a per-level object like { basement: 8, main: 9, second: 8 }
+    effectiveHeight = ceilingHeight[instance.level] || 9;
+  } else if (typeof ceilingHeight === 'number') {
+    effectiveHeight = ceilingHeight;
   }
+
+  // Calculate quantity - for walls this is now LF (not SF)
+  // We keep LF for wall calculations since material pricing is per LF
+  let quantity = linearFeet;
+  let displayUnit = scopeItem.unit;
 
   // Find assembly if specified
   const assembly = assemblies?.find(a => a.id === instance.assemblyId);
@@ -2235,8 +2350,31 @@ export function calculateInstanceCost(instance, assemblies, ceilingHeight, catal
   let materialsCost = 0;
 
   if (assembly) {
-    laborCost = (assembly.laborCostPerUnit || assembly.laborCost || 0) * quantity;
-    materialsCost = (assembly.materialCostPerUnit || assembly.materialsCost || 0) * quantity;
+    // Check if assembly has dynamic pricing from catalogue
+    if (assembly.calculatorConfig) {
+      // Use dynamic material pricing from Cost Catalogue
+      const dynamicMaterialCost = calculateAssemblyMaterialCost(
+        assembly,
+        effectiveHeight,
+        catalogueData?.materials
+      );
+      materialsCost = dynamicMaterialCost * linearFeet;
+
+      // Labor is still from assembly (per LF)
+      laborCost = (assembly.laborCostPerUnit || 0) * linearFeet;
+      displayUnit = 'lf';
+    } else if (scopeItem.convertToSF) {
+      // Legacy SF-based pricing
+      const sfQuantity = calculateWallSF(linearFeet, effectiveHeight);
+      laborCost = (assembly.laborCostPerUnit || assembly.laborCost || 0) * sfQuantity;
+      materialsCost = (assembly.materialCostPerUnit || assembly.materialsCost || 0) * sfQuantity;
+      quantity = sfQuantity;
+      displayUnit = 'sf';
+    } else {
+      // Standard per-unit pricing
+      laborCost = (assembly.laborCostPerUnit || assembly.laborCost || 0) * quantity;
+      materialsCost = (assembly.materialCostPerUnit || assembly.materialsCost || 0) * quantity;
+    }
   } else if (scopeItem.defaultCost) {
     // For tally items, use default cost
     laborCost = scopeItem.defaultCost * 0.4 * quantity;
@@ -2254,7 +2392,9 @@ export function calculateInstanceCost(instance, assemblies, ceilingHeight, catal
     materials: Math.round(materialsCost * 100) / 100,
     total: Math.round((laborCost + materialsCost) * 100) / 100,
     quantity,
-    unit: scopeItem.convertToSF ? 'sf' : scopeItem.unit,
+    linearFeet, // Include original LF for reference
+    ceilingHeight: effectiveHeight,
+    unit: displayUnit,
   };
 }
 
