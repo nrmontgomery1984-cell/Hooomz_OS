@@ -6,6 +6,7 @@ import {
   getCategoryScopeItems,
 } from '../data/contractorIntakeSchema';
 import { calculateScopeCosts } from '../lib/scopeCostEstimator';
+import { calculateInstanceTotals, generateLineItemsFromInstances } from '../lib/estimateHelpers';
 
 /**
  * Contractor Intake Service
@@ -22,7 +23,11 @@ import { calculateScopeCosts } from '../lib/scopeCostEstimator';
  */
 export async function generateProjectFromContractorIntake(formData) {
   try {
-    const { project, client, scope, schedule } = formData;
+    const { project, client, scope, schedule, instances, assemblies, building } = formData;
+
+    // Check if we're using the new instance-based format
+    const hasInstances = instances && instances.length > 0;
+    const ceilingHeights = building?.ceilingHeights || { basement: 8, main: 9, second: 8, third: 8 };
 
     // Build project data
     const projectData = {
@@ -60,18 +65,46 @@ export async function generateProjectFromContractorIntake(formData) {
     // Get enabled categories and their items
     const enabledCategories = getEnabledCategories(scope);
 
-    // Calculate cost estimates from the Cost Catalogue
-    const costEstimate = calculateScopeCosts(scope, project.specLevel);
+    // Calculate cost estimates - use instances if available, otherwise fallback to scope
+    let costEstimate;
 
-    console.log('=== CONTRACTOR INTAKE COST ESTIMATE DEBUG ===');
-    console.log('Scope data:', JSON.stringify(scope, null, 2));
-    console.log('Spec level:', project.specLevel);
-    console.log('Cost estimate result:', costEstimate);
-    console.log('Total Labour:', costEstimate.totalLabour);
-    console.log('Total Materials:', costEstimate.totalMaterials);
-    console.log('Grand Total:', costEstimate.grandTotal);
-    console.log('Item count:', costEstimate.itemCount);
-    console.log('==============================================');
+    if (hasInstances) {
+      // Use new instance-based calculation
+      const instanceTotals = calculateInstanceTotals(instances, assemblies, ceilingHeights, null);
+      costEstimate = {
+        totalLabour: instanceTotals.labor,
+        totalMaterials: instanceTotals.materials,
+        grandTotal: instanceTotals.better, // Use "better" tier as default
+        itemCount: instances.length,
+        lowConfidenceItems: [],
+        categories: {},
+        // Store tier breakdown
+        tiers: {
+          good: instanceTotals.good,
+          better: instanceTotals.better,
+          best: instanceTotals.best,
+        },
+      };
+
+      console.log('=== CONTRACTOR INTAKE COST ESTIMATE (INSTANCES) ===');
+      console.log('Instance count:', instances.length);
+      console.log('Assemblies:', assemblies?.length || 0);
+      console.log('Instance totals:', instanceTotals);
+      console.log('==================================================');
+    } else {
+      // Fallback to old scope-based calculation
+      costEstimate = calculateScopeCosts(scope, project.specLevel);
+
+      console.log('=== CONTRACTOR INTAKE COST ESTIMATE (SCOPE) ===');
+      console.log('Scope data:', JSON.stringify(scope, null, 2));
+      console.log('Spec level:', project.specLevel);
+      console.log('Cost estimate result:', costEstimate);
+      console.log('Total Labour:', costEstimate.totalLabour);
+      console.log('Total Materials:', costEstimate.totalMaterials);
+      console.log('Grand Total:', costEstimate.grandTotal);
+      console.log('Item count:', costEstimate.itemCount);
+      console.log('===============================================');
+    }
 
     // Create initial estimate snapshot for history
     const estimateSnapshot = {
@@ -100,13 +133,19 @@ export async function generateProjectFromContractorIntake(formData) {
         estimate_labour: costEstimate.totalLabour,
         estimate_materials: costEstimate.totalMaterials,
         estimate_total: costEstimate.grandTotal,
-        estimate_high: costEstimate.grandTotal,
-        estimate_low: Math.round(costEstimate.grandTotal * 0.9), // 10% lower bound
+        estimate_high: costEstimate.tiers?.best || costEstimate.grandTotal,
+        estimate_low: costEstimate.tiers?.good || Math.round(costEstimate.grandTotal * 0.9),
+        // Tier breakdown for new instance-based estimates
+        estimate_tiers: costEstimate.tiers || null,
         // Estimate history (array of snapshots)
         estimate_history: [estimateSnapshot],
         // Contract status - estimates can be recalculated until contract is signed
         contract_signed: false,
         contract_signed_at: null,
+        // Store instance data for recalculation and display
+        instances: hasInstances ? instances : null,
+        assemblies: hasInstances ? assemblies : null,
+        ceilingHeights: hasInstances ? ceilingHeights : null,
       };
 
       // Add to mock projects
@@ -116,39 +155,73 @@ export async function generateProjectFromContractorIntake(formData) {
       const taskInstances = [];
       let taskOrder = 1;
 
-      for (const categoryCode of enabledCategories) {
-        const items = getCategoryScopeItems(scope, categoryCode);
-        const categoryEstimate = costEstimate.categories[categoryCode];
+      if (hasInstances) {
+        // Generate line items from instances (new format)
+        const lineItems = generateLineItemsFromInstances(instances, assemblies, ceilingHeights, null);
 
-        for (const item of items) {
-          // Map scope items to task instances
-          const stageCode = getStageForCategory(categoryCode);
-
-          // Find the cost data for this specific item
-          const itemCost = categoryEstimate?.items?.find(i => i.id === item.id) || null;
-
+        for (const lineItem of lineItems) {
           taskInstances.push({
             id: `ti-${Date.now()}-${taskOrder}`,
             project_id: projectId,
-            name: item.name,
-            categoryCode: categoryCode,
-            stageCode: stageCode,
+            name: lineItem.name,
+            categoryCode: lineItem.tradeCode,
+            stageCode: getStageForCategory(lineItem.tradeCode),
             status: 'pending',
-            quantity: item.qty,
-            unit: item.unit,
-            notes: item.notes || null,
+            quantity: lineItem.quantity,
+            unit: lineItem.unit,
+            notes: lineItem.description || null,
             displayOrder: taskOrder,
-            source: 'contractor_intake',
+            source: 'contractor_intake_instances',
             created_at: new Date().toISOString(),
-            // Cost estimate data from Cost Catalogue
-            estimate_labour: itemCost?.labourCost || 0,
-            estimate_materials: itemCost?.materialsCost || 0,
-            estimate_total: itemCost?.totalCost || 0,
-            estimate_unit_cost: itemCost?.unitCost || 0,
-            estimate_source: itemCost?.source || 'none',
-            estimate_confidence: itemCost?.confidence ?? 0,
+            // Cost estimate data
+            estimate_labour: lineItem.laborCost || 0,
+            estimate_materials: lineItem.materialsCost || 0,
+            estimate_total: (lineItem.laborCost || 0) + (lineItem.materialsCost || 0),
+            estimate_unit_cost: lineItem.unitPriceBetter || 0,
+            estimate_source: 'instance_calculation',
+            estimate_confidence: 1,
+            // Store instance reference
+            instanceIds: lineItem.instanceIds,
+            byLevel: lineItem.byLevel,
           });
           taskOrder++;
+        }
+      } else {
+        // Use old scope-based format
+        for (const categoryCode of enabledCategories) {
+          const items = getCategoryScopeItems(scope, categoryCode);
+          const categoryEstimate = costEstimate.categories[categoryCode];
+
+          for (const item of items) {
+            // Map scope items to task instances
+            const stageCode = getStageForCategory(categoryCode);
+
+            // Find the cost data for this specific item
+            const itemCost = categoryEstimate?.items?.find(i => i.id === item.id) || null;
+
+            taskInstances.push({
+              id: `ti-${Date.now()}-${taskOrder}`,
+              project_id: projectId,
+              name: item.name,
+              categoryCode: categoryCode,
+              stageCode: stageCode,
+              status: 'pending',
+              quantity: item.qty,
+              unit: item.unit,
+              notes: item.notes || null,
+              displayOrder: taskOrder,
+              source: 'contractor_intake',
+              created_at: new Date().toISOString(),
+              // Cost estimate data from Cost Catalogue
+              estimate_labour: itemCost?.labourCost || 0,
+              estimate_materials: itemCost?.materialsCost || 0,
+              estimate_total: itemCost?.totalCost || 0,
+              estimate_unit_cost: itemCost?.unitCost || 0,
+              estimate_source: itemCost?.source || 'none',
+              estimate_confidence: itemCost?.confidence ?? 0,
+            });
+            taskOrder++;
+          }
         }
       }
 
@@ -161,12 +234,16 @@ export async function generateProjectFromContractorIntake(formData) {
 
       console.log('Contractor project created (mock):', newProject);
       console.log('Task instances created:', taskInstances.length);
+      if (hasInstances) {
+        console.log('Instance-based estimate - instances:', instances.length);
+      }
 
       return {
         data: {
           ...newProject,
           taskCount: taskInstances.length,
           categoryCount: enabledCategories.length,
+          instanceCount: hasInstances ? instances.length : 0,
         },
         error: null,
       };

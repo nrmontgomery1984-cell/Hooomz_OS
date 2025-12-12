@@ -1,106 +1,147 @@
-import { useState } from 'react';
-import { ChevronDown, ChevronRight, Plus, Minus, AlertCircle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Layers, Ruler, Package, Zap, AlertCircle, Check, ChevronDown, ChevronUp, Settings, Plus, Trash2, Edit2 } from 'lucide-react';
 import { Card } from '../../ui';
-import { SCOPE_ITEMS, UNIT_LABELS, UNIT_NAMES } from '../../../data/contractorIntakeSchema';
+import { BulkAddMode, TallyMode, InstanceList, InlineAssemblyBuilder } from '../../estimate';
+import {
+  SCOPE_ITEMS,
+  DEFAULT_WALL_ASSEMBLIES,
+  calculateInstanceTotals,
+  loadAssemblyTemplates,
+  saveAssemblyTemplate,
+} from '../../../lib/estimateHelpers';
+import { formatCurrency } from '../../../lib/costCatalogue';
 
 /**
- * Scope Step - Trade-specific scope of work entry
+ * Scope Step - Instance-based scope entry with BulkAddMode and TallyMode
  *
- * Contractors can quickly select trades and enter quantities.
- * Designed for efficiency - expand categories, enter numbers, done.
+ * Uses building configuration from ProjectInfoStep to derive levels.
+ * Tabs for: Walls, Openings, Surfaces, MEP
  */
 export function ScopeStep({ data, errors, onChange }) {
-  const [expandedCategories, setExpandedCategories] = useState({});
+  const [activeTab, setActiveTab] = useState('walls');
+  const [showAssemblyPanel, setShowAssemblyPanel] = useState(false);
+  const [showAssemblyBuilder, setShowAssemblyBuilder] = useState(false);
+  const [editingAssembly, setEditingAssembly] = useState(null); // Assembly being edited
 
-  const toggleCategory = (code) => {
-    setExpandedCategories(prev => ({
-      ...prev,
-      [code]: !prev[code],
-    }));
-  };
+  // Derive levels from building configuration
+  const levels = useMemo(() => {
+    const result = [];
+    const storeys = data.building?.storeys || '1';
+    const hasBasement = data.building?.hasBasement || false;
 
-  // Enable/disable a category
-  const toggleCategoryEnabled = (code) => {
-    onChange(prev => ({
-      ...prev,
-      scope: {
-        ...prev.scope,
-        [code]: {
-          ...prev.scope[code],
-          enabled: !prev.scope[code]?.enabled,
-          items: prev.scope[code]?.items || {},
-        },
-      },
-    }));
-
-    // Auto-expand when enabling
-    if (!data.scope[code]?.enabled) {
-      setExpandedCategories(prev => ({ ...prev, [code]: true }));
+    if (hasBasement) {
+      result.push({ value: 'basement', label: 'Basement' });
     }
-  };
+    result.push({ value: 'main', label: 'Main Floor' });
 
-  // Update item quantity
-  const updateItemQty = (categoryCode, itemId, qty) => {
-    const numQty = qty === '' ? null : parseFloat(qty) || 0;
+    const numStoreys = parseFloat(storeys);
+    if (numStoreys >= 1.5) {
+      result.push({ value: 'second', label: '2nd Floor' });
+    }
+    if (numStoreys >= 3) {
+      result.push({ value: 'third', label: '3rd Floor' });
+    }
 
+    return result;
+  }, [data.building?.storeys, data.building?.hasBasement]);
+
+  const ceilingHeights = data.building?.ceilingHeights || { basement: 8, main: 9, second: 8, third: 8 };
+  const instances = data.instances || [];
+
+  // Load all available assemblies and merge with project-selected ones
+  const allAssemblies = loadAssemblyTemplates();
+  const projectAssemblyIds = data.assemblies?.map(a => a.id) || [];
+  const assemblies = allAssemblies.map(a => ({
+    ...a,
+    selected: projectAssemblyIds.length > 0
+      ? projectAssemblyIds.includes(a.id)
+      : ['ext-2x6', 'int-2x4'].includes(a.id), // Default selections
+  }));
+  const selectedAssemblies = assemblies.filter(a => a.selected);
+
+  // Handle assembly selection toggle
+  const handleAssemblyToggle = (assemblyId) => {
+    const newAssemblies = assemblies.map(a => ({
+      ...a,
+      selected: a.id === assemblyId ? !a.selected : a.selected,
+    }));
     onChange(prev => ({
       ...prev,
-      scope: {
-        ...prev.scope,
-        [categoryCode]: {
-          ...prev.scope[categoryCode],
-          enabled: true, // Auto-enable when entering quantity
-          items: {
-            ...prev.scope[categoryCode]?.items,
-            [itemId]: {
-              ...prev.scope[categoryCode]?.items?.[itemId],
-              qty: numQty,
-            },
-          },
-        },
-      },
+      assemblies: newAssemblies.filter(a => a.selected),
     }));
   };
 
-  // Update item notes
-  const updateItemNotes = (categoryCode, itemId, notes) => {
+  // Handle saving new or edited assembly from builder
+  const handleSaveAssembly = (assembly) => {
+    // Save to templates for future use
+    saveAssemblyTemplate(assembly);
+
+    if (editingAssembly) {
+      // Editing existing assembly - update in place
+      onChange(prev => ({
+        ...prev,
+        assemblies: (prev.assemblies || []).map(a =>
+          a.id === assembly.id ? assembly : a
+        ),
+      }));
+      setEditingAssembly(null);
+    } else {
+      // Adding new assembly
+      onChange(prev => ({
+        ...prev,
+        assemblies: [...(prev.assemblies || []), assembly],
+      }));
+    }
+
+    setShowAssemblyBuilder(false);
+  };
+
+  // Handle editing assembly
+  const handleEditAssembly = (assembly) => {
+    setEditingAssembly(assembly);
+    setShowAssemblyBuilder(true);
+  };
+
+  // Handle canceling assembly builder
+  const handleCancelBuilder = () => {
+    setShowAssemblyBuilder(false);
+    setEditingAssembly(null);
+  };
+
+  // Handle deleting custom assembly
+  const handleDeleteAssembly = (assemblyId) => {
     onChange(prev => ({
       ...prev,
-      scope: {
-        ...prev.scope,
-        [categoryCode]: {
-          ...prev.scope[categoryCode],
-          items: {
-            ...prev.scope[categoryCode]?.items,
-            [itemId]: {
-              ...prev.scope[categoryCode]?.items?.[itemId],
-              notes,
-            },
-          },
-        },
-      },
+      assemblies: (prev.assemblies || []).filter(a => a.id !== assemblyId),
     }));
   };
 
-  // Get item data from form state
-  const getItemData = (categoryCode, itemId) => {
-    return data.scope[categoryCode]?.items?.[itemId] || { qty: null, notes: '' };
+  // Calculate running totals
+  const totals = useMemo(() => {
+    return calculateInstanceTotals(instances, assemblies, ceilingHeights, null);
+  }, [instances, assemblies, ceilingHeights]);
+
+  // Handle instances change
+  const handleInstancesChange = (newInstances) => {
+    onChange(prev => ({
+      ...prev,
+      instances: newInstances,
+    }));
   };
 
-  // Check if category has any items with quantities
-  const categoryHasItems = (categoryCode) => {
-    const items = data.scope[categoryCode]?.items || {};
-    return Object.values(items).some(item => item.qty > 0);
-  };
+  // Tab configuration
+  const tabs = [
+    { id: 'walls', label: 'Walls', icon: Layers, mode: 'bulk' },
+    { id: 'openings', label: 'Openings', icon: Package, mode: 'tally' },
+    { id: 'surfaces', label: 'Surfaces', icon: Ruler, mode: 'bulk' },
+    { id: 'mep', label: 'MEP', icon: Zap, mode: 'tally' },
+  ];
 
-  // Count items in category
-  const getCategoryItemCount = (categoryCode) => {
-    const items = data.scope[categoryCode]?.items || {};
-    return Object.values(items).filter(item => item.qty > 0).length;
-  };
+  const activeTabConfig = tabs.find(t => t.id === activeTab);
+  const scopeCategory = SCOPE_ITEMS[activeTab];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {errors.scope && (
         <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
           <AlertCircle className="w-4 h-4 flex-shrink-0" />
@@ -108,126 +149,214 @@ export function ScopeStep({ data, errors, onChange }) {
         </div>
       )}
 
-      <p className="text-sm text-gray-600 mb-4">
-        Select the trades involved and enter quantities. Click a category to expand and add items.
-      </p>
+      {/* Building Config Summary */}
+      <Card className="p-3 bg-blue-50 border-blue-200">
+        <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center gap-4 flex-wrap">
+            <span className="text-blue-700">
+              <strong>Levels:</strong> {levels.map(l => `${l.label} (${ceilingHeights[l.value] || 9}')`).join(', ')}
+            </span>
+          </div>
+          {instances.length > 0 && (
+            <span className="font-semibold text-blue-800">
+              Running Total: {formatCurrency(totals.better || 0)}
+            </span>
+          )}
+        </div>
+      </Card>
 
-      {Object.entries(SCOPE_ITEMS).map(([code, category]) => {
-        const isEnabled = data.scope[code]?.enabled;
-        const isExpanded = expandedCategories[code];
-        const itemCount = getCategoryItemCount(code);
+      {/* Assembly Selection Panel */}
+      <Card className="overflow-hidden">
+        <button
+          onClick={() => setShowAssemblyPanel(!showAssemblyPanel)}
+          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <Settings className="w-4 h-4 text-gray-500" />
+            <span className="font-medium text-charcoal text-sm">Wall Assemblies</span>
+            <span className="text-xs text-gray-500">
+              ({selectedAssemblies.length} selected)
+            </span>
+          </div>
+          {showAssemblyPanel ? (
+            <ChevronUp className="w-4 h-4 text-gray-400" />
+          ) : (
+            <ChevronDown className="w-4 h-4 text-gray-400" />
+          )}
+        </button>
 
-        return (
-          <Card key={code} className="overflow-hidden">
-            {/* Category Header */}
-            <button
-              type="button"
-              onClick={() => toggleCategory(code)}
-              className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors ${
-                isEnabled ? 'bg-blue-50' : ''
-              }`}
-            >
-              {/* Expand Icon */}
-              <div className="text-gray-400">
-                {isExpanded ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
-                )}
-              </div>
-
-              {/* Category Name */}
-              <div className="flex-1 text-left">
-                <div className="flex items-center gap-2">
-                  <span className={`text-sm font-medium ${isEnabled ? 'text-blue-700' : 'text-charcoal'}`}>
-                    {category.name}
-                  </span>
-                  <span className="text-xs text-gray-400 font-mono">{code}</span>
-                </div>
-              </div>
-
-              {/* Item Count Badge */}
-              {itemCount > 0 && (
-                <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                  {itemCount} item{itemCount !== 1 ? 's' : ''}
-                </span>
+        {showAssemblyPanel && (
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs text-gray-500">
+                Select wall assemblies to use for measurements. These determine labor + material costs.
+              </p>
+              {!showAssemblyBuilder && (
+                <button
+                  onClick={() => setShowAssemblyBuilder(true)}
+                  className="flex items-center gap-1 text-sm text-charcoal hover:text-charcoal/80 font-medium"
+                >
+                  <Plus className="w-4 h-4" />
+                  Build New
+                </button>
               )}
+            </div>
 
-              {/* Enable/Disable Toggle */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleCategoryEnabled(code);
-                }}
-                className={`p-1 rounded-md transition-colors ${
-                  isEnabled
-                    ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
-                    : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                }`}
-              >
-                {isEnabled ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              </button>
-            </button>
-
-            {/* Expanded Items */}
-            {isExpanded && (
-              <div className="border-t border-gray-100 divide-y divide-gray-100">
-                {category.items.map((item) => {
-                  const itemData = getItemData(code, item.id);
-                  const hasQty = itemData.qty !== null && itemData.qty > 0;
-
-                  return (
-                    <div
-                      key={item.id}
-                      className={`px-4 py-3 ${hasQty ? 'bg-blue-50/50' : ''}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        {/* Item Name */}
-                        <div className="flex-1 min-w-0">
-                          <span className="text-sm text-gray-700">{item.name}</span>
-                        </div>
-
-                        {/* Quantity Input */}
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="number"
-                            value={itemData.qty ?? ''}
-                            onChange={(e) => updateItemQty(code, item.id, e.target.value)}
-                            placeholder="0"
-                            min="0"
-                            step={item.unit === 'sf' || item.unit === 'lf' ? '1' : '1'}
-                            className="w-20 px-2 py-1.5 border border-gray-300 rounded text-sm text-right focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                          <span
-                            className="text-xs text-gray-500 w-12"
-                            title={UNIT_NAMES[item.unit]}
-                          >
-                            {UNIT_LABELS[item.unit]}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Item Notes (shown when qty > 0) */}
-                      {hasQty && (
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            value={itemData.notes || ''}
-                            onChange={(e) => updateItemNotes(code, item.id, e.target.value)}
-                            placeholder="Notes (optional)"
-                            className="w-full px-2 py-1 border border-gray-200 rounded text-xs text-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+            {/* Inline Assembly Builder */}
+            {showAssemblyBuilder && (
+              <div className="mb-4">
+                <InlineAssemblyBuilder
+                  assembly={editingAssembly}
+                  onSave={handleSaveAssembly}
+                  onCancel={handleCancelBuilder}
+                />
               </div>
             )}
-          </Card>
-        );
-      })}
+
+            {/* Assembly Grid */}
+            <div className="grid grid-cols-2 gap-2">
+              {assemblies.map((assembly) => (
+                <div
+                  key={assembly.id}
+                  className={`relative flex items-start gap-2 p-3 rounded-lg border text-left transition-colors ${
+                    assembly.selected
+                      ? 'bg-green-50 border-green-300'
+                      : 'bg-white border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <button
+                    onClick={() => handleAssemblyToggle(assembly.id)}
+                    className="flex items-start gap-2 flex-1"
+                  >
+                    <div
+                      className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        assembly.selected
+                          ? 'bg-green-500 text-white'
+                          : 'border-2 border-gray-300'
+                      }`}
+                    >
+                      {assembly.selected && <Check className="w-3 h-3" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-sm text-charcoal truncate">
+                        {assembly.name}
+                        {assembly.isCustom && (
+                          <span className="ml-1 text-xs text-blue-600">(custom)</span>
+                        )}
+                      </div>
+                      <div className="text-xs text-gray-500 truncate">
+                        {assembly.description}
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        ${(assembly.laborCostPerUnit + assembly.materialCostPerUnit).toFixed(2)}/SF
+                      </div>
+                    </div>
+                  </button>
+                  {assembly.isCustom && (
+                    <div className="absolute top-2 right-2 flex items-center gap-1">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditAssembly(assembly);
+                        }}
+                        className="p-1 text-gray-400 hover:text-blue-500"
+                        title="Edit assembly"
+                      >
+                        <Edit2 className="w-3 h-3" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteAssembly(assembly.id);
+                        }}
+                        className="p-1 text-gray-400 hover:text-red-500"
+                        title="Delete custom assembly"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Card>
+
+      {/* Tab Navigation */}
+      <div className="flex border-b border-gray-200">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const categoryItems = SCOPE_ITEMS[tab.id]?.items || [];
+          const itemCount = instances.filter(inst =>
+            categoryItems.some(item => item.id === inst.scopeItemId)
+          ).length;
+
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                activeTab === tab.id
+                  ? 'border-charcoal text-charcoal'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {tab.label}
+              {itemCount > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Tab Content */}
+      <div className="min-h-[400px]">
+        {activeTabConfig?.mode === 'bulk' ? (
+          <BulkAddMode
+            scopeCategory={activeTab}
+            levels={levels}
+            ceilingHeights={ceilingHeights}
+            assemblies={selectedAssemblies.length > 0 ? selectedAssemblies : DEFAULT_WALL_ASSEMBLIES}
+            instances={instances}
+            onInstancesChange={handleInstancesChange}
+          />
+        ) : (
+          <TallyMode
+            scopeCategory={activeTab}
+            levels={levels}
+            instances={instances}
+            onInstancesChange={handleInstancesChange}
+          />
+        )}
+      </div>
+
+      {/* Instance Summary (collapsible) */}
+      {instances.length > 0 && (
+        <div className="mt-6">
+          <InstanceList
+            instances={instances}
+            assemblies={selectedAssemblies.length > 0 ? selectedAssemblies : DEFAULT_WALL_ASSEMBLIES}
+            ceilingHeights={ceilingHeights}
+            catalogueData={null}
+            onDeleteInstance={(id) => {
+              handleInstancesChange(instances.filter(inst => inst.id !== id));
+            }}
+            selectedTier="better"
+          />
+        </div>
+      )}
+
+      {/* Help Text */}
+      <p className="text-xs text-gray-500 mt-4">
+        {activeTabConfig?.mode === 'bulk'
+          ? 'Enter measurements in linear feet for walls or square feet for surfaces. Press Enter to add more rows.'
+          : 'Use +/- buttons to count items per level. Costs are estimates based on default rates.'}
+      </p>
     </div>
   );
 }

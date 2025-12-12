@@ -25,6 +25,9 @@ import {
   Lock,
   Eye,
   ExternalLink,
+  Package,
+  Hammer,
+  Layers,
 } from 'lucide-react';
 import { Card, Button, Input, TextArea } from '../components/ui';
 import { usePermissions } from '../hooks/usePermissions';
@@ -39,9 +42,17 @@ import {
   TRADE_NAMES,
   applyLaborRatesToEstimate,
   getEstimateTradesSummary,
+  // Instance-based estimating
+  getLevelsFromProject,
+  loadAssemblyTemplates,
+  SCOPE_ITEMS,
+  calculateInstanceTotals,
+  generateLineItemsFromInstances,
 } from '../lib/estimateHelpers';
 import { loadCatalogueData } from '../lib/costCatalogue';
 import { getProject, updateProject, updateProjectPhase } from '../services/api';
+import { SetupPanel, BulkAddMode, TallyMode, InstanceList } from '../components/estimate';
+import { AssemblyBuilder } from '../components/catalogue/AssemblyBuilder';
 
 /**
  * EstimateBuilder - Create and edit project estimates
@@ -73,6 +84,7 @@ export function EstimateBuilder() {
   const [filterRoom, setFilterRoom] = useState('all');
   const [filterTrade, setFilterTrade] = useState('all');
   const [groupBy, setGroupBy] = useState('room'); // 'room' | 'trade'
+  const [estimateType, setEstimateType] = useState('both'); // 'both' | 'materials' | 'labor'
 
   // View mode for different personas
   const [viewMode, setViewMode] = useState('full'); // 'full' | 'homeowner' | 'subcontractor'
@@ -81,6 +93,31 @@ export function EstimateBuilder() {
   const [catalogueData, setCatalogueData] = useState(null);
   const [showTradesSummary, setShowTradesSummary] = useState(false);
   const [catalogueApplied, setCatalogueApplied] = useState(false);
+
+  // Instance-based estimating (new system)
+  const [entryMode, setEntryMode] = useState('classic'); // 'classic' | 'instance'
+  const [instances, setInstances] = useState([]);
+  const [ceilingHeight, setCeilingHeight] = useState(9);
+  const [assemblies, setAssemblies] = useState(() => loadAssemblyTemplates());
+  const [setupCollapsed, setSetupCollapsed] = useState(false);
+  const [activeTab, setActiveTab] = useState('walls'); // 'walls' | 'openings' | 'surfaces' | 'mep'
+  const [showAssemblyBuilder, setShowAssemblyBuilder] = useState(false);
+
+  // Levels state - initialized from project, but can be modified
+  const [levels, setLevels] = useState([{ value: 'main', label: 'Main Floor' }]);
+
+  // Initialize levels from project when loaded
+  useEffect(() => {
+    if (project) {
+      const projectLevels = getLevelsFromProject(project);
+      setLevels(projectLevels.length > 0 ? projectLevels : [{ value: 'main', label: 'Main Floor' }]);
+    }
+  }, [project]);
+
+  // Calculate instance-based totals
+  const instanceTotals = useMemo(() => {
+    return calculateInstanceTotals(instances, assemblies, ceilingHeight, catalogueData);
+  }, [instances, assemblies, ceilingHeight, catalogueData]);
 
   // Determine effective view mode based on persona
   const effectiveViewMode = useMemo(() => {
@@ -129,6 +166,11 @@ export function EstimateBuilder() {
         setSelectedTier(validTier);
         setNotes(data.estimate_notes || '');
 
+        // Load saved estimate type if available
+        if (data.estimate_type && ['both', 'materials', 'labor'].includes(data.estimate_type)) {
+          setEstimateType(data.estimate_type);
+        }
+
         // Generate initial estimate from intake or load saved
         const estimate = generateEstimateFromIntake(data);
         setLineItems(estimate.lineItems);
@@ -167,10 +209,10 @@ export function EstimateBuilder() {
   }, [lineItems, catalogueData]);
 
   // Calculate totals (always on full list for accurate totals)
-  const totals = useMemo(() => calculateEstimateTotals(lineItems), [lineItems]);
+  const totals = useMemo(() => calculateEstimateTotals(lineItems, estimateType), [lineItems, estimateType]);
   const range = useMemo(
-    () => calculateEstimateRange(lineItems, selectedTier),
-    [lineItems, selectedTier]
+    () => calculateEstimateRange(lineItems, selectedTier, estimateType),
+    [lineItems, selectedTier, estimateType]
   );
 
   // Get unique rooms and trades for filter dropdowns
@@ -199,7 +241,7 @@ export function EstimateBuilder() {
     }
 
     // Calculate filtered totals
-    const fTotals = calculateEstimateTotals(filtered);
+    const fTotals = calculateEstimateTotals(filtered, estimateType);
 
     // Group by selected grouping
     const groups = {};
@@ -217,7 +259,7 @@ export function EstimateBuilder() {
     });
 
     return { filteredItems: filtered, groupedItems: groups, filteredTotals: fTotals };
-  }, [lineItems, filterRoom, filterTrade, groupBy]);
+  }, [lineItems, filterRoom, filterTrade, groupBy, estimateType]);
 
   // Toggle category expansion
   const toggleCategory = (category) => {
@@ -272,6 +314,7 @@ export function EstimateBuilder() {
         estimate_low: range.low,
         estimate_high: range.high,
         build_tier: selectedTier,
+        estimate_type: estimateType,
         estimate_notes: notes,
         estimate_line_items: lineItems,
       });
@@ -456,6 +499,154 @@ export function EstimateBuilder() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content - Line Items */}
           <div className="lg:col-span-2 space-y-4">
+            {/* Estimate Type Selector */}
+            <Card className="p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-medium text-charcoal flex items-center gap-2">
+                  <Layers className="w-5 h-5" />
+                  Estimate Type
+                </h2>
+                <p className="text-sm text-gray-500">
+                  What to include in pricing
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <button
+                  onClick={() => canEdit && setEstimateType('both')}
+                  disabled={!canEdit}
+                  className={`
+                    p-3 rounded-lg border-2 text-left transition-all
+                    ${estimateType === 'both'
+                      ? 'border-charcoal bg-gray-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                    }
+                    ${!canEdit ? 'cursor-default' : ''}
+                  `}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-medium text-charcoal flex items-center gap-2">
+                      <Layers className="w-4 h-4" />
+                      Both
+                    </span>
+                    {estimateType === 'both' && (
+                      <Check className="w-4 h-4 text-charcoal" />
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500">Materials + Labor</p>
+                </button>
+
+                <button
+                  onClick={() => canEdit && setEstimateType('materials')}
+                  disabled={!canEdit}
+                  className={`
+                    p-3 rounded-lg border-2 text-left transition-all
+                    ${estimateType === 'materials'
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                    }
+                    ${!canEdit ? 'cursor-default' : ''}
+                  `}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-medium text-charcoal flex items-center gap-2">
+                      <Package className="w-4 h-4" />
+                      Materials
+                    </span>
+                    {estimateType === 'materials' && (
+                      <Check className="w-4 h-4 text-blue-500" />
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500">Materials only</p>
+                </button>
+
+                <button
+                  onClick={() => canEdit && setEstimateType('labor')}
+                  disabled={!canEdit}
+                  className={`
+                    p-3 rounded-lg border-2 text-left transition-all
+                    ${estimateType === 'labor'
+                      ? 'border-amber-500 bg-amber-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                    }
+                    ${!canEdit ? 'cursor-default' : ''}
+                  `}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-medium text-charcoal flex items-center gap-2">
+                      <Hammer className="w-4 h-4" />
+                      Labor
+                    </span>
+                    {estimateType === 'labor' && (
+                      <Check className="w-4 h-4 text-amber-500" />
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500">Labor only</p>
+                </button>
+              </div>
+            </Card>
+
+            {/* Entry Mode Toggle - Only for contractors */}
+            {canEdit && (
+              <Card className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-medium text-charcoal flex items-center gap-2">
+                    <Ruler className="w-5 h-5" />
+                    Entry Mode
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    How to enter measurements
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setEntryMode('classic')}
+                    className={`
+                      p-3 rounded-lg border-2 text-left transition-all
+                      ${entryMode === 'classic'
+                        ? 'border-charcoal bg-gray-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                      }
+                    `}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-medium text-charcoal flex items-center gap-2">
+                        <FileText className="w-4 h-4" />
+                        Classic
+                      </span>
+                      {entryMode === 'classic' && (
+                        <Check className="w-4 h-4 text-charcoal" />
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500">Line items with totals</p>
+                  </button>
+
+                  <button
+                    onClick={() => setEntryMode('instance')}
+                    className={`
+                      p-3 rounded-lg border-2 text-left transition-all
+                      ${entryMode === 'instance'
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                      }
+                    `}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-medium text-charcoal flex items-center gap-2">
+                        <Ruler className="w-4 h-4" />
+                        Instance
+                      </span>
+                      {entryMode === 'instance' && (
+                        <Check className="w-4 h-4 text-blue-500" />
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500">Bulk add by measurement</p>
+                  </button>
+                </div>
+              </Card>
+            )}
+
             {/* Tier Selector */}
             <Card className="p-4">
               <div className="flex items-center justify-between mb-4">
@@ -504,7 +695,118 @@ export function EstimateBuilder() {
               </div>
             </Card>
 
-            {/* Line Items by Category */}
+            {/* Instance Mode UI */}
+            {entryMode === 'instance' && canEdit && (
+              <>
+                {/* Setup Panel */}
+                <SetupPanel
+                  ceilingHeight={ceilingHeight}
+                  onCeilingHeightChange={setCeilingHeight}
+                  levels={levels}
+                  onLevelsChange={setLevels}
+                  assemblies={assemblies}
+                  onAssembliesChange={setAssemblies}
+                  onOpenAssemblyBuilder={() => setShowAssemblyBuilder(true)}
+                  collapsed={setupCollapsed}
+                  onToggleCollapse={() => setSetupCollapsed(!setupCollapsed)}
+                />
+
+                {/* Tabbed Input Interface */}
+                <Card className="overflow-hidden">
+                  {/* Tab Bar */}
+                  <div className="flex border-b border-gray-200 bg-gray-50">
+                    {[
+                      { id: 'walls', label: 'Walls', icon: Layers },
+                      { id: 'openings', label: 'Openings', icon: Home },
+                      { id: 'surfaces', label: 'Surfaces', icon: Package },
+                      { id: 'mep', label: 'MEP', icon: Wrench },
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`flex-1 px-4 py-3 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
+                          activeTab === tab.id
+                            ? 'text-charcoal border-b-2 border-charcoal bg-white'
+                            : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        <tab.icon className="w-4 h-4" />
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tab Content */}
+                  <div className="p-4">
+                    {activeTab === 'walls' && (
+                      <BulkAddMode
+                        scopeCategory="walls"
+                        levels={levels}
+                        assemblies={assemblies.filter(a => a.category === 'framing')}
+                        ceilingHeight={ceilingHeight}
+                        instances={instances}
+                        onInstancesChange={setInstances}
+                      />
+                    )}
+                    {activeTab === 'openings' && (
+                      <TallyMode
+                        scopeCategory="openings"
+                        levels={levels}
+                        instances={instances}
+                        onInstancesChange={setInstances}
+                      />
+                    )}
+                    {activeTab === 'surfaces' && (
+                      <BulkAddMode
+                        scopeCategory="surfaces"
+                        levels={levels}
+                        assemblies={assemblies}
+                        ceilingHeight={ceilingHeight}
+                        instances={instances}
+                        onInstancesChange={setInstances}
+                      />
+                    )}
+                    {activeTab === 'mep' && (
+                      <TallyMode
+                        scopeCategory="mep"
+                        levels={levels}
+                        instances={instances}
+                        onInstancesChange={setInstances}
+                      />
+                    )}
+                  </div>
+                </Card>
+
+                {/* Instance Summary */}
+                <InstanceList
+                  instances={instances}
+                  assemblies={assemblies}
+                  ceilingHeight={ceilingHeight}
+                  catalogueData={catalogueData}
+                  selectedTier={selectedTier}
+                  onDeleteInstance={(id) => {
+                    setInstances(prev => prev.filter(inst => inst.id !== id));
+                  }}
+                />
+              </>
+            )}
+
+            {/* Assembly Builder Modal */}
+            {showAssemblyBuilder && (
+              <AssemblyBuilder
+                isOpen={showAssemblyBuilder}
+                onClose={() => setShowAssemblyBuilder(false)}
+                onSave={(assembly) => {
+                  setAssemblies(prev => [...prev, { ...assembly, selected: true }]);
+                  setShowAssemblyBuilder(false);
+                }}
+                laborRates={catalogueData?.laborRates || {}}
+                materials={catalogueData?.materials || []}
+              />
+            )}
+
+            {/* Line Items by Category - Classic Mode */}
+            {entryMode === 'classic' && (
             <Card className="overflow-hidden">
               {/* Header with filters */}
               <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
@@ -743,6 +1045,7 @@ export function EstimateBuilder() {
                 </div>
               )}
             </Card>
+            )}
           </div>
 
           {/* Sidebar - Summary */}
@@ -752,6 +1055,49 @@ export function EstimateBuilder() {
               <h3 className="font-medium text-charcoal mb-4">
                 Estimate Summary
               </h3>
+
+              {/* Estimate Type Indicator */}
+              {estimateType !== 'both' && (
+                <div className={`p-3 rounded-lg mb-4 flex items-center gap-2 ${
+                  estimateType === 'materials' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-700'
+                }`}>
+                  {estimateType === 'materials' ? (
+                    <Package className="w-4 h-4" />
+                  ) : (
+                    <Hammer className="w-4 h-4" />
+                  )}
+                  <span className="text-sm font-medium">
+                    {estimateType === 'materials' ? 'Materials Only' : 'Labor Only'}
+                  </span>
+                </div>
+              )}
+
+              {/* Missing Pricing Data Warning */}
+              {totals.missingPricingCount > 0 && (
+                <div className="p-3 rounded-lg mb-4 bg-red-50 border border-red-200">
+                  <div className="flex items-center gap-2 text-red-700 mb-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    <span className="text-sm font-medium">
+                      {totals.missingPricingCount} item{totals.missingPricingCount > 1 ? 's' : ''} missing catalogue pricing
+                    </span>
+                  </div>
+                  <p className="text-xs text-red-600 mb-2">
+                    These items need manual pricing or catalogue data:
+                  </p>
+                  <ul className="text-xs text-red-600 space-y-1 max-h-24 overflow-y-auto">
+                    {totals.missingPricingItems.slice(0, 5).map((item, idx) => (
+                      <li key={idx} className="truncate">
+                        • {item.name} ({item.missing === 'both' ? 'no catalogue data' : `missing ${item.missing}`})
+                      </li>
+                    ))}
+                    {totals.missingPricingItems.length > 5 && (
+                      <li className="text-red-500 italic">
+                        +{totals.missingPricingItems.length - 5} more...
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
 
               {/* Selected Tier Total */}
               <div className="p-4 bg-gray-50 rounded-lg mb-4">
@@ -800,15 +1146,15 @@ export function EstimateBuilder() {
               <div className="border-t border-gray-200 pt-4">
                 <p className="text-xs text-gray-500 mb-2">All Tiers</p>
                 <div className="space-y-1">
-                  {Object.entries(totals).map(([tier, total]) => (
+                  {['good', 'better', 'best'].map((tier) => (
                     <div
                       key={tier}
                       className={`flex justify-between text-sm ${
                         tier === selectedTier ? 'font-medium' : 'text-gray-500'
                       }`}
                     >
-                      <span>{BUILD_TIERS[tier].label}</span>
-                      <span>{formatCurrency(total)}</span>
+                      <span>{BUILD_TIERS[tier]?.label || tier}</span>
+                      <span>{formatCurrency(totals[tier] || 0)}</span>
                     </div>
                   ))}
                 </div>

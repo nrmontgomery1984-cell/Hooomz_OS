@@ -27,6 +27,24 @@ export const SPEC_LEVELS = [
 ];
 
 // ============================================================================
+// BUILDING CONFIGURATION OPTIONS
+// ============================================================================
+
+export const STOREY_OPTIONS = [
+  { value: '1', label: '1 Storey (Bungalow)' },
+  { value: '1.5', label: '1.5 Storey' },
+  { value: '2', label: '2 Storey' },
+  { value: '3', label: '3 Storey' },
+];
+
+export const CEILING_HEIGHT_OPTIONS = [
+  { value: 8, label: "8'" },
+  { value: 9, label: "9'" },
+  { value: 10, label: "10'" },
+  { value: 12, label: "12'" },
+];
+
+// ============================================================================
 // SCOPE ITEMS - Trade-specific line items with unit types
 // ============================================================================
 
@@ -309,6 +327,19 @@ export const getDefaultContractorIntakeState = () => ({
     notes: '',
   },
 
+  // Building configuration - for level/measurement calculations
+  building: {
+    storeys: '1',           // '1', '1.5', '2', '3'
+    hasBasement: false,
+    // Per-level ceiling heights (in feet)
+    ceilingHeights: {
+      basement: 8,
+      main: 9,
+      second: 8,
+      third: 8,
+    },
+  },
+
   // Client info (optional - for projects on behalf of clients)
   client: {
     hasClient: false,
@@ -320,6 +351,13 @@ export const getDefaultContractorIntakeState = () => ({
   // Scope of work - keyed by category code
   // Each category has: { enabled: bool, items: { [itemId]: { qty, notes } } }
   scope: {},
+
+  // Instance-based measurements (new system)
+  // Array of: { id, scopeItemId, level, measurement, assemblyId, notes }
+  instances: [],
+
+  // Wall assemblies selected for this project
+  assemblies: [],
 
   // Schedule
   schedule: {
@@ -349,11 +387,14 @@ export function validateContractorIntakeStep(stepId, data) {
       break;
 
     case 'scope':
-      // At least one scope item must be selected
-      const hasScope = Object.values(data.scope || {}).some(cat =>
+      // Accept either old scope format OR new instances format
+      const hasOldScope = Object.values(data.scope || {}).some(cat =>
         cat.enabled && Object.values(cat.items || {}).some(item => item.qty > 0)
       );
-      if (!hasScope) errors.scope = 'At least one scope item is required';
+      const hasInstances = (data.instances || []).length > 0;
+      if (!hasOldScope && !hasInstances) {
+        errors.scope = 'At least one scope item is required';
+      }
       break;
 
     case 'schedule':

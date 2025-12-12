@@ -1,12 +1,12 @@
-import { Building2, User } from 'lucide-react';
+import { Building2, User, Layers, Ruler } from 'lucide-react';
 import { Card, Input, Select, Checkbox, AddressInput } from '../../ui';
-import { PROJECT_TYPES, SPEC_LEVELS } from '../../../data/contractorIntakeSchema';
+import { PROJECT_TYPES, SPEC_LEVELS, STOREY_OPTIONS, CEILING_HEIGHT_OPTIONS } from '../../../data/contractorIntakeSchema';
 
 /**
  * Project Info Step - Basic project details and optional client info
  */
 export function ProjectInfoStep({ data, errors, onChange }) {
-  const { project, client } = data;
+  const { project, client, building } = data;
 
   const projectTypeOptions = PROJECT_TYPES.map(t => ({
     value: t.value,
@@ -75,6 +75,141 @@ export function ProjectInfoStep({ data, errors, onChange }) {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               rows={3}
             />
+          </div>
+        </div>
+      </Card>
+
+      {/* Building Configuration */}
+      <Card className="p-4">
+        <h3 className="font-medium text-charcoal mb-4 flex items-center gap-2">
+          <Layers className="w-4 h-4 text-gray-400" />
+          Building Configuration
+        </h3>
+        <p className="text-sm text-gray-500 mb-4">
+          Used to calculate project levels and wall square footage
+        </p>
+
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <Select
+              label="Storeys"
+              value={building?.storeys || '1'}
+              onChange={(value) => onChange('building', { storeys: value })}
+              options={STOREY_OPTIONS.map(s => ({ value: s.value, label: s.label }))}
+            />
+
+            <Checkbox
+              label="Has Basement"
+              checked={building?.hasBasement || false}
+              onChange={(checked) => onChange('building', { hasBasement: checked })}
+            />
+          </div>
+
+          {/* Per-level ceiling heights */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-1">
+              <Ruler className="w-3 h-3" />
+              Ceiling Heights by Level
+            </label>
+            <div className="space-y-2">
+              {/* Basement - only show if hasBasement */}
+              {building?.hasBasement && (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600 w-24">Basement</span>
+                  <div className="flex gap-1">
+                    {CEILING_HEIGHT_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => onChange('building', {
+                          ceilingHeights: { ...building?.ceilingHeights, basement: opt.value }
+                        })}
+                        className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
+                          (building?.ceilingHeights?.basement || 8) === opt.value
+                            ? 'bg-charcoal text-white border-charcoal'
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-charcoal'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Main Floor - always shown */}
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-600 w-24">Main Floor</span>
+                <div className="flex gap-1">
+                  {CEILING_HEIGHT_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => onChange('building', {
+                        ceilingHeights: { ...building?.ceilingHeights, main: opt.value }
+                      })}
+                      className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
+                        (building?.ceilingHeights?.main || 9) === opt.value
+                          ? 'bg-charcoal text-white border-charcoal'
+                          : 'bg-white text-gray-700 border-gray-200 hover:border-charcoal'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2nd Floor - show if 1.5+ storeys */}
+              {parseFloat(building?.storeys || '1') >= 1.5 && (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600 w-24">2nd Floor</span>
+                  <div className="flex gap-1">
+                    {CEILING_HEIGHT_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => onChange('building', {
+                          ceilingHeights: { ...building?.ceilingHeights, second: opt.value }
+                        })}
+                        className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
+                          (building?.ceilingHeights?.second || 8) === opt.value
+                            ? 'bg-charcoal text-white border-charcoal'
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-charcoal'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 3rd Floor - show if 3 storeys */}
+              {parseFloat(building?.storeys || '1') >= 3 && (
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600 w-24">3rd Floor</span>
+                  <div className="flex gap-1">
+                    {CEILING_HEIGHT_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => onChange('building', {
+                          ceilingHeights: { ...building?.ceilingHeights, third: opt.value }
+                        })}
+                        className={`px-3 py-1.5 rounded border text-sm font-medium transition-colors ${
+                          (building?.ceilingHeights?.third || 8) === opt.value
+                            ? 'bg-charcoal text-white border-charcoal'
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-charcoal'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Card>

@@ -1,4 +1,4 @@
-import { Edit2, Building2, Layers, Calendar, User, DollarSign, AlertTriangle } from 'lucide-react';
+import { Edit2, Building2, Layers, Calendar, User, DollarSign, AlertTriangle, MapPin } from 'lucide-react';
 import { useMemo } from 'react';
 import { Card } from '../../ui';
 import {
@@ -6,25 +6,46 @@ import {
   UNIT_LABELS,
   PROJECT_TYPES,
   SPEC_LEVELS,
+  STOREY_OPTIONS,
+  CEILING_HEIGHT_OPTIONS,
   getEnabledCategories,
   getCategoryScopeItems,
   getTotalScopeItemCount,
 } from '../../../data/contractorIntakeSchema';
 import { getCostSummary, getCostBreakdown } from '../../../lib/scopeCostEstimator';
+import {
+  SCOPE_ITEMS as ESTIMATE_SCOPE_ITEMS,
+  calculateInstanceTotals,
+  DEFAULT_WALL_ASSEMBLIES,
+} from '../../../lib/estimateHelpers';
+import { formatCurrency } from '../../../lib/costCatalogue';
 
 /**
  * Review Step - Summary of all entered data before submission
  */
 export function ReviewStep({ data, onEditStep }) {
-  const { project, client, scope, schedule } = data;
+  const { project, client, scope, schedule, building, instances = [], assemblies = [] } = data;
 
   const enabledCategories = getEnabledCategories(scope);
-  const totalItems = getTotalScopeItemCount(scope);
+  const totalOldScopeItems = getTotalScopeItemCount(scope);
+  const hasInstances = instances.length > 0;
+
+  // Total items count (old format + new instances)
+  const totalItems = totalOldScopeItems + instances.length;
 
   const projectType = PROJECT_TYPES.find(t => t.value === project.projectType);
   const specLevel = SPEC_LEVELS.find(s => s.value === project.specLevel);
+  const storeyOption = STOREY_OPTIONS.find(s => s.value === building?.storeys);
 
-  // Calculate costs from the Cost Catalogue
+  // Calculate instance-based costs
+  const instanceTotals = useMemo(() => {
+    if (!hasInstances) return null;
+    const ceilingHeights = building?.ceilingHeights || { basement: 8, main: 9, second: 8, third: 8 };
+    const projectAssemblies = assemblies.length > 0 ? assemblies : DEFAULT_WALL_ASSEMBLIES;
+    return calculateInstanceTotals(instances, projectAssemblies, ceilingHeights, null);
+  }, [instances, assemblies, building?.ceilingHeights, hasInstances]);
+
+  // Calculate costs from the Cost Catalogue (old format)
   const costEstimate = useMemo(() => {
     return getCostSummary(scope, project.specLevel);
   }, [scope, project.specLevel]);
@@ -32,6 +53,24 @@ export function ReviewStep({ data, onEditStep }) {
   const costBreakdown = useMemo(() => {
     return getCostBreakdown(scope, project.specLevel);
   }, [scope, project.specLevel]);
+
+  // Group instances by category for display
+  const instancesByCategory = useMemo(() => {
+    const grouped = {};
+    Object.entries(ESTIMATE_SCOPE_ITEMS).forEach(([categoryKey, categoryData]) => {
+      const categoryInstances = instances.filter(inst =>
+        categoryData.items.some(item => item.id === inst.scopeItemId)
+      );
+      if (categoryInstances.length > 0) {
+        grouped[categoryKey] = {
+          name: categoryData.name,
+          instances: categoryInstances,
+          items: categoryData.items,
+        };
+      }
+    });
+    return grouped;
+  }, [instances]);
 
   // Calculate end date
   const getEndDate = () => {
@@ -84,6 +123,46 @@ export function ReviewStep({ data, onEditStep }) {
             <span className="text-gray-500">Spec Level</span>
             <span className="font-medium text-charcoal">{specLevel?.label || '—'}</span>
           </div>
+          {/* Building Configuration */}
+          {building && (
+            <>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Storeys</span>
+                <span className="font-medium text-charcoal">{storeyOption?.label || building.storeys}</span>
+              </div>
+              {building.ceilingHeights && (
+                <div className="text-sm">
+                  <span className="text-gray-500">Ceiling Heights:</span>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    {building.hasBasement && (
+                      <span className="px-2 py-0.5 bg-gray-100 rounded text-xs">
+                        Basement: {building.ceilingHeights.basement || 8}'
+                      </span>
+                    )}
+                    <span className="px-2 py-0.5 bg-gray-100 rounded text-xs">
+                      Main: {building.ceilingHeights.main || 9}'
+                    </span>
+                    {parseFloat(building.storeys || '1') >= 1.5 && (
+                      <span className="px-2 py-0.5 bg-gray-100 rounded text-xs">
+                        2nd: {building.ceilingHeights.second || 8}'
+                      </span>
+                    )}
+                    {parseFloat(building.storeys || '1') >= 3 && (
+                      <span className="px-2 py-0.5 bg-gray-100 rounded text-xs">
+                        3rd: {building.ceilingHeights.third || 8}'
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+              {building.hasBasement && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Basement</span>
+                  <span className="font-medium text-charcoal">Yes</span>
+                </div>
+              )}
+            </>
+          )}
           {project.notes && (
             <div className="pt-2 border-t border-gray-100">
               <span className="text-sm text-gray-500 block mb-1">Notes</span>
@@ -149,7 +228,57 @@ export function ReviewStep({ data, onEditStep }) {
           </button>
         </div>
         <div className="p-4">
-          {enabledCategories.length > 0 ? (
+          {/* Instance-based scope (new format) */}
+          {hasInstances && (
+            <div className="space-y-4">
+              {Object.entries(instancesByCategory).map(([categoryKey, categoryData]) => (
+                <div key={categoryKey}>
+                  <h4 className="text-sm font-medium text-charcoal mb-2">
+                    {categoryData.name}
+                  </h4>
+                  <div className="space-y-2">
+                    {categoryData.instances.map(inst => {
+                      const itemDef = categoryData.items.find(i => i.id === inst.scopeItemId);
+                      return (
+                        <div key={inst.id} className="flex items-center justify-between text-sm pl-3 py-1 bg-gray-50 rounded">
+                          <div className="flex items-center gap-2">
+                            <span className="text-gray-600">{itemDef?.name || inst.scopeItemId}</span>
+                            <span className="flex items-center gap-1 text-xs text-blue-600">
+                              <MapPin className="w-3 h-3" />
+                              {inst.level}
+                            </span>
+                          </div>
+                          <span className="font-mono text-gray-900">
+                            {inst.measurement} {itemDef?.unit?.toUpperCase() || 'units'}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+              {/* Instance totals */}
+              {instanceTotals && (
+                <div className="pt-3 mt-3 border-t border-gray-200">
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-gray-500">Labor</span>
+                    <span className="font-medium">{formatCurrency(instanceTotals.labor)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-gray-500">Materials</span>
+                    <span className="font-medium">{formatCurrency(instanceTotals.materials)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm font-semibold">
+                    <span className="text-charcoal">Estimate (Better tier)</span>
+                    <span className="text-blue-600">{formatCurrency(instanceTotals.better)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Old scope format - show if no instances but has old scope items */}
+          {!hasInstances && enabledCategories.length > 0 && (
             <div className="space-y-4">
               {enabledCategories.map(code => {
                 const category = SCOPE_ITEMS[code];
@@ -176,7 +305,10 @@ export function ReviewStep({ data, onEditStep }) {
                 );
               })}
             </div>
-          ) : (
+          )}
+
+          {/* No scope items at all */}
+          {!hasInstances && enabledCategories.length === 0 && (
             <p className="text-sm text-gray-500">No scope items added</p>
           )}
         </div>
@@ -322,8 +454,18 @@ export function ReviewStep({ data, onEditStep }) {
       <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
         <p className="text-sm text-blue-800">
           <span className="font-medium">Ready to create!</span> This will generate a new project with{' '}
-          <span className="font-medium">{enabledCategories.length} work categories</span> and{' '}
-          <span className="font-medium">{totalItems} scope items</span>. Tasks will be auto-generated based on your scope.
+          {hasInstances ? (
+            <>
+              <span className="font-medium">{Object.keys(instancesByCategory).length} work categories</span> and{' '}
+              <span className="font-medium">{instances.length} scope items</span>
+            </>
+          ) : (
+            <>
+              <span className="font-medium">{enabledCategories.length} work categories</span> and{' '}
+              <span className="font-medium">{totalOldScopeItems} scope items</span>
+            </>
+          )}
+          . Tasks will be auto-generated based on your scope.
         </p>
       </div>
     </div>

@@ -8,7 +8,16 @@
  * - room: which room/area (kitchen, primary_bath, etc.)
  * - tradeCode: which trade (EL, PL, CM, etc.) - maps to SCOPE_CATEGORIES
  * - category: display grouping (derived from trade or room)
+ *
+ * PRICING DATA:
+ * Line items should have materialsCost and laborCost from catalogue when available:
+ * - materialsCost: from materials catalogue (64 Home Hardware receipts)
+ * - laborCost: from labour catalogue (local sub-trade quotes)
+ * Items without catalogue data are flagged for manual pricing entry.
  */
+
+import { loadCatalogueData } from './costCatalogue';
+import { SCOPE_TO_LABOUR_MAP } from './scopeCostEstimator';
 
 /**
  * Build tiers with pricing multipliers
@@ -793,6 +802,88 @@ export const NEW_CONSTRUCTION_BREAKDOWN = {
 };
 
 /**
+ * Look up pricing from catalogue data for a scope item
+ *
+ * Returns:
+ * - laborCost: unit labor cost from labour catalogue (or null)
+ * - materialsCost: unit materials cost (or null - many labor rates are labor-only)
+ * - hasData: true if we found catalogue pricing
+ * - confidence: 0-2 confidence level from catalogue
+ * - source: 'catalogue' | 'flat' | 'none'
+ */
+function lookupCataloguePricing(scopeItemId, _quantity, laborRates) {
+  // Note: _quantity param reserved for future materials quantity calculations
+  // Check if we have a mapping for this scope item
+  const mapping = SCOPE_TO_LABOUR_MAP?.[scopeItemId];
+
+  if (!mapping) {
+    return {
+      laborCost: null,
+      materialsCost: null,
+      hasData: false,
+      confidence: 0,
+      source: 'none',
+      catalogueSource: null,
+    };
+  }
+
+  let laborCost = null;
+  let materialsCost = null;
+  let confidence = 0;
+  let source = 'none';
+  let catalogueSource = null;
+
+  // Try to get rate from labour catalogue
+  if (mapping.labourId && laborRates) {
+    // Search through all trade categories for the rate
+    for (const tradeData of Object.values(laborRates)) {
+      const rate = tradeData.pieceRates?.find(r => r.id === mapping.labourId);
+      if (rate) {
+        laborCost = rate.rate || rate.unitCost || 0;
+        confidence = rate.confidence ?? 1;
+        source = 'catalogue';
+        catalogueSource = `${tradeData.name}: ${rate.task}`;
+
+        // Check if notes indicate materials are included or separate
+        const notes = (rate.notes || '').toLowerCase();
+        if (notes.includes('supplied by owner') || notes.includes('fixtures extra') || notes.includes('materials extra')) {
+          // Labor-only rate, materials not included
+          materialsCost = null;
+        } else if (notes.includes('includes materials') || notes.includes('materials included')) {
+          // Rate includes materials - we can't split it accurately
+          // For now, treat as 60/40 labor/materials
+          materialsCost = laborCost * 0.67; // materials roughly 40% of total
+          laborCost = laborCost * 0.6; // labor roughly 60% of total
+        }
+        break;
+      }
+    }
+  }
+
+  // Fall back to flat rate if no catalogue rate found
+  if (laborCost === null && mapping.flatRate !== undefined) {
+    laborCost = mapping.flatRate;
+    source = 'flat';
+    confidence = 0;
+    catalogueSource = 'Flat rate estimate';
+  }
+
+  // Apply multiplier if specified in mapping
+  if (laborCost !== null && mapping.multiplier) {
+    laborCost *= mapping.multiplier;
+  }
+
+  return {
+    laborCost,
+    materialsCost,
+    hasData: laborCost !== null,
+    confidence,
+    source,
+    catalogueSource,
+  };
+}
+
+/**
  * Generate estimate line items from intake data or blank template
  */
 export function generateEstimateFromIntake(project) {
@@ -832,6 +923,11 @@ export function generateEstimateFromIntake(project) {
 /**
  * Generate estimate from contractor intake scope data
  * Converts contractor scope items to line items for the estimate builder
+ *
+ * Uses actual catalogue data when available:
+ * - laborCost: from labour catalogue (scopeCostEstimator lookup)
+ * - materialsCost: calculated based on labour catalogue notes
+ *   (many items note "fixtures/materials supplied by owner" meaning labor-only rate)
  */
 function generateContractorEstimate(project, intake) {
   try {
@@ -839,7 +935,11 @@ function generateContractorEstimate(project, intake) {
     const scope = intake?.scope || {};
     const specLevel = intake?.project?.specLevel || project?.build_tier || 'standard';
 
-    // Tier multipliers for Good/Better/Best pricing
+    // Load catalogue data for pricing lookups
+    const catalogueData = loadCatalogueData();
+    const laborRates = catalogueData?.laborRates || {};
+
+    // Tier multipliers for Good/Better/Best pricing (legacy, used when no catalogue data)
     const tierMultipliers = {
       good: specLevel === 'standard' ? 0.85 : specLevel === 'premium' ? 0.9 : 0.8,
       better: 1.0,
@@ -849,20 +949,43 @@ function generateContractorEstimate(project, intake) {
     // If project has taskInstances (from mock mode), convert those
     if (project?.taskInstances?.length > 0) {
       project.taskInstances.forEach((task, index) => {
-        const basePrice = task.estimate_total || 0;
-        lineItems.push({
+        // Try to get pricing from catalogue
+        const scopeItemId = task.scopeItemId || task.id;
+        const cataloguePricing = lookupCataloguePricing(scopeItemId, task.quantity || 1, laborRates);
+
+        const lineItem = {
           id: task.id || `contractor-${index}`,
           category: task.categoryCode || 'General',
           name: task.name || 'Unnamed Item',
           description: task.notes || '',
           unit: task.unit || 'ea',
           quantity: task.quantity || 1,
-          unitPriceGood: Math.round(basePrice * tierMultipliers.good),
-          unitPriceBetter: Math.round(basePrice * tierMultipliers.better),
-          unitPriceBest: Math.round(basePrice * tierMultipliers.best),
           tradeCode: task.categoryCode,
-          source: 'contractor_intake',
-        });
+          source: cataloguePricing.source,
+          // Catalogue pricing (null if not found)
+          laborCost: cataloguePricing.laborCost,
+          materialsCost: cataloguePricing.materialsCost,
+          catalogueConfidence: cataloguePricing.confidence,
+          catalogueSource: cataloguePricing.catalogueSource,
+        };
+
+        // Calculate tier prices (for display and backwards compatibility)
+        if (cataloguePricing.hasData) {
+          const labor = cataloguePricing.laborCost || 0;
+          const materials = cataloguePricing.materialsCost || 0;
+          // Materials are fixed, labor varies by tier
+          lineItem.unitPriceGood = Math.round(materials + labor);
+          lineItem.unitPriceBetter = Math.round(materials + (labor * 1.15));
+          lineItem.unitPriceBest = Math.round(materials + (labor * 1.35));
+        } else {
+          // Fallback to legacy calculation
+          const basePrice = task.estimate_total || 0;
+          lineItem.unitPriceGood = Math.round(basePrice * tierMultipliers.good);
+          lineItem.unitPriceBetter = Math.round(basePrice * tierMultipliers.better);
+          lineItem.unitPriceBest = Math.round(basePrice * tierMultipliers.best);
+        }
+
+        lineItems.push(lineItem);
       });
     } else if (scope && typeof scope === 'object') {
       // No taskInstances, create from scope data directly
@@ -879,23 +1002,42 @@ function generateContractorEstimate(project, intake) {
           if (!itemData || typeof itemData !== 'object') return;
           if (!itemData.qty || itemData.qty <= 0) return;
 
-          // Estimate cost based on quantity and a base rate
-          const baseRate = itemData.unitCost || 50;
-          const basePrice = itemData.qty * baseRate;
+          // Try to get pricing from catalogue using scope item mapping
+          const cataloguePricing = lookupCataloguePricing(itemId, itemData.qty, laborRates);
 
-          lineItems.push({
+          const lineItem = {
             id: `${categoryCode}-${itemId}`,
             category: categoryCode,
             name: itemData.name || itemId,
             description: itemData.notes || '',
             unit: itemData.unit || 'ea',
             quantity: itemData.qty,
-            unitPriceGood: Math.round(basePrice * tierMultipliers.good),
-            unitPriceBetter: Math.round(basePrice * tierMultipliers.better),
-            unitPriceBest: Math.round(basePrice * tierMultipliers.best),
             tradeCode: categoryCode,
-            source: 'contractor_intake',
-          });
+            source: cataloguePricing.source,
+            // Catalogue pricing (null if not found)
+            laborCost: cataloguePricing.laborCost,
+            materialsCost: cataloguePricing.materialsCost,
+            catalogueConfidence: cataloguePricing.confidence,
+            catalogueSource: cataloguePricing.catalogueSource,
+          };
+
+          // Calculate tier prices
+          if (cataloguePricing.hasData) {
+            const labor = cataloguePricing.laborCost || 0;
+            const materials = cataloguePricing.materialsCost || 0;
+            lineItem.unitPriceGood = Math.round(materials + labor);
+            lineItem.unitPriceBetter = Math.round(materials + (labor * 1.15));
+            lineItem.unitPriceBest = Math.round(materials + (labor * 1.35));
+          } else {
+            // Fallback to legacy calculation
+            const baseRate = itemData.unitCost || 50;
+            const basePrice = itemData.qty * baseRate;
+            lineItem.unitPriceGood = Math.round(basePrice * tierMultipliers.good);
+            lineItem.unitPriceBetter = Math.round(basePrice * tierMultipliers.better);
+            lineItem.unitPriceBest = Math.round(basePrice * tierMultipliers.best);
+          }
+
+          lineItems.push(lineItem);
         });
       });
     }
@@ -1511,19 +1653,102 @@ function addMechanicalLineItems(lineItems, mechanical) {
 }
 
 /**
- * Calculate estimate totals for each tier
+ * Calculate estimate totals with optional type filter
+ *
+ * Line items should have:
+ * - materialsCost: actual materials cost from materials catalogue (or null if not linked)
+ * - laborCost: actual labor cost from labour catalogue (or null if not linked)
+ * - unitPriceGood/Better/Best: total price per unit (for backwards compatibility)
+ *
+ * When materialsCost/laborCost are available, use those directly.
+ * When not available, the item is flagged as missing pricing data.
+ *
+ * @param {Array} lineItems - Line items to calculate
+ * @param {string} estimateType - 'both' | 'materials' | 'labor'
  */
-export function calculateEstimateTotals(lineItems) {
+export function calculateEstimateTotals(lineItems, estimateType = 'both') {
   const totals = {
     good: 0,
     better: 0,
     best: 0,
+    // Track items without catalogue pricing
+    missingPricingCount: 0,
+    missingPricingItems: [],
   };
 
   lineItems.forEach((item) => {
-    totals.good += (item.unitPriceGood || 0) * (item.quantity || 1);
-    totals.better += (item.unitPriceBetter || 0) * (item.quantity || 1);
-    totals.best += (item.unitPriceBest || 0) * (item.quantity || 1);
+    const qty = item.quantity || 1;
+
+    // Check if item has actual materials/labor breakdown from catalogue
+    const hasMaterialsCost = item.materialsCost !== undefined && item.materialsCost !== null;
+    const hasLaborCost = item.laborCost !== undefined && item.laborCost !== null;
+    const hasActualBreakdown = hasMaterialsCost || hasLaborCost;
+
+    if (hasActualBreakdown) {
+      // Use actual catalogue data
+      const materialsCost = (item.materialsCost || 0) * qty;
+      const laborCost = (item.laborCost || 0) * qty;
+
+      // Apply tier multipliers to labor (materials cost is fixed)
+      // Good: standard labor rate
+      // Better: 1.15x labor (more experienced crew, better finish)
+      // Best: 1.35x labor (premium craftsmanship)
+      const laborMultipliers = { good: 1.0, better: 1.15, best: 1.35 };
+
+      if (estimateType === 'both') {
+        totals.good += materialsCost + (laborCost * laborMultipliers.good);
+        totals.better += materialsCost + (laborCost * laborMultipliers.better);
+        totals.best += materialsCost + (laborCost * laborMultipliers.best);
+      } else if (estimateType === 'materials') {
+        totals.good += materialsCost;
+        totals.better += materialsCost;
+        totals.best += materialsCost;
+      } else if (estimateType === 'labor') {
+        totals.good += laborCost * laborMultipliers.good;
+        totals.better += laborCost * laborMultipliers.better;
+        totals.best += laborCost * laborMultipliers.best;
+      }
+
+      // Track if we're missing part of the breakdown
+      if (!hasMaterialsCost && estimateType !== 'labor') {
+        totals.missingPricingItems.push({
+          id: item.id,
+          name: item.name,
+          missing: 'materials',
+          tradeCode: item.tradeCode,
+        });
+      }
+      if (!hasLaborCost && estimateType !== 'materials') {
+        totals.missingPricingItems.push({
+          id: item.id,
+          name: item.name,
+          missing: 'labor',
+          tradeCode: item.tradeCode,
+        });
+      }
+    } else {
+      // No catalogue breakdown - use legacy unitPrice fields
+      // Flag as missing pricing data
+      totals.missingPricingCount++;
+      totals.missingPricingItems.push({
+        id: item.id,
+        name: item.name,
+        missing: 'both',
+        tradeCode: item.tradeCode,
+        category: item.category,
+      });
+
+      // Use the combined price (can't split accurately without data)
+      const goodPrice = (item.unitPriceGood || 0) * qty;
+      const betterPrice = (item.unitPriceBetter || 0) * qty;
+      const bestPrice = (item.unitPriceBest || 0) * qty;
+
+      // For items without breakdown, include full price regardless of type
+      // (we can't accurately split without catalogue data)
+      totals.good += goodPrice;
+      totals.better += betterPrice;
+      totals.best += bestPrice;
+    }
   });
 
   return totals;
@@ -1531,9 +1756,12 @@ export function calculateEstimateTotals(lineItems) {
 
 /**
  * Calculate estimate range (low/high) for a given tier
+ * @param {Array} lineItems - Line items to calculate
+ * @param {string} tier - 'good' | 'better' | 'best'
+ * @param {string} estimateType - 'both' | 'materials' | 'labor'
  */
-export function calculateEstimateRange(lineItems, tier = 'better') {
-  const totals = calculateEstimateTotals(lineItems);
+export function calculateEstimateRange(lineItems, tier = 'better', estimateType = 'both') {
+  const totals = calculateEstimateTotals(lineItems, estimateType);
   const baseTotal = totals[tier] || totals.better;
 
   // Apply variance: -5% to +10%
@@ -1793,4 +2021,434 @@ export function getEstimateTradesSummary(lineItems, laborRates) {
   });
 
   return Object.values(trades).sort((a, b) => b.totalBetter - a.totalBetter);
+}
+
+// ============================================================================
+// INSTANCE-BASED ESTIMATING (New System)
+// ============================================================================
+
+/**
+ * Standard ceiling heights
+ */
+export const CEILING_HEIGHTS = [
+  { value: 8, label: "8'" },
+  { value: 9, label: "9'" },
+  { value: 10, label: "10'" },
+  { value: 12, label: "12'" },
+];
+
+/**
+ * Default wall assemblies
+ */
+export const DEFAULT_WALL_ASSEMBLIES = [
+  {
+    id: 'ext-2x6',
+    name: '2x6 Exterior Wall',
+    description: '2x6 framing, R-20 insulation, OSB sheathing',
+    category: 'framing',
+    unit: 'SF',
+    laborCostPerUnit: 3.25,
+    materialCostPerUnit: 4.50,
+    isDefault: true,
+  },
+  {
+    id: 'ext-2x4',
+    name: '2x4 Exterior Wall',
+    description: '2x4 framing, R-14 insulation, OSB sheathing',
+    category: 'framing',
+    unit: 'SF',
+    laborCostPerUnit: 2.75,
+    materialCostPerUnit: 3.50,
+    isDefault: true,
+  },
+  {
+    id: 'int-2x4',
+    name: '2x4 Interior Wall',
+    description: '2x4 framing, no insulation',
+    category: 'framing',
+    unit: 'SF',
+    laborCostPerUnit: 2.00,
+    materialCostPerUnit: 2.25,
+    isDefault: true,
+  },
+  {
+    id: 'int-2x4-ins',
+    name: '2x4 Interior Wall (Insulated)',
+    description: '2x4 framing with sound insulation',
+    category: 'framing',
+    unit: 'SF',
+    laborCostPerUnit: 2.25,
+    materialCostPerUnit: 3.00,
+    isDefault: true,
+  },
+];
+
+/**
+ * Scope items for instance-based estimating
+ * Maps to contractor intake schema items
+ */
+export const SCOPE_ITEMS = {
+  // Framing - Walls (BulkAddMode)
+  walls: {
+    name: 'Walls',
+    mode: 'bulk',
+    items: [
+      { id: 'fr-ext', name: 'Exterior Walls', unit: 'lf', convertToSF: true },
+      { id: 'fr-int', name: 'Interior Walls', unit: 'lf', convertToSF: true },
+      { id: 'fr-bearing', name: 'Bearing Walls', unit: 'lf', convertToSF: true },
+    ],
+  },
+  // Windows & Doors (TallyMode)
+  openings: {
+    name: 'Openings',
+    mode: 'tally',
+    items: [
+      { id: 'wd-win-std', name: 'Windows (Standard)', unit: 'ea', defaultCost: 650 },
+      { id: 'wd-win-lrg', name: 'Windows (Large)', unit: 'ea', defaultCost: 1100 },
+      { id: 'wd-win-bsmt', name: 'Windows (Basement)', unit: 'ea', defaultCost: 450 },
+      { id: 'wd-ext-door', name: 'Exterior Doors', unit: 'ea', defaultCost: 1200 },
+      { id: 'wd-int-door', name: 'Interior Doors', unit: 'ea', defaultCost: 400 },
+      { id: 'wd-patio', name: 'Patio/Sliding Doors', unit: 'ea', defaultCost: 2500 },
+      { id: 'wd-garage', name: 'Garage Doors', unit: 'ea', defaultCost: 1800 },
+    ],
+  },
+  // Ceilings & Floors (BulkAddMode by area)
+  surfaces: {
+    name: 'Ceilings & Floors',
+    mode: 'bulk',
+    items: [
+      { id: 'fr-ceil', name: 'Ceiling Framing', unit: 'sf' },
+      { id: 'fr-floor', name: 'Floor Framing', unit: 'sf' },
+      { id: 'dw-ceil', name: 'Drywall Ceilings', unit: 'sf' },
+      { id: 'fl-lvp', name: 'LVP/Laminate Flooring', unit: 'sf' },
+      { id: 'fl-hardwood', name: 'Hardwood Flooring', unit: 'sf' },
+      { id: 'fl-tile', name: 'Tile Flooring', unit: 'sf' },
+      { id: 'fl-carpet', name: 'Carpet', unit: 'sf' },
+    ],
+  },
+  // MEP (TallyMode for fixtures, allowances for systems)
+  mep: {
+    name: 'MEP',
+    mode: 'tally',
+    items: [
+      { id: 'el-outlet', name: 'Outlets/Switches', unit: 'ea', defaultCost: 150 },
+      { id: 'el-light', name: 'Light Fixtures', unit: 'ea', defaultCost: 200 },
+      { id: 'pl-toilet', name: 'Toilets', unit: 'ea', defaultCost: 600 },
+      { id: 'pl-sink', name: 'Sinks', unit: 'ea', defaultCost: 500 },
+      { id: 'pl-tub', name: 'Tub/Shower', unit: 'ea', defaultCost: 1500 },
+      { id: 'hv-register', name: 'HVAC Registers', unit: 'ea', defaultCost: 100 },
+    ],
+  },
+};
+
+/**
+ * Get available levels from project intake data
+ */
+export function getLevelsFromProject(project) {
+  const levels = [];
+
+  // Determine storeys from intake data
+  const storeys = project?.layout?.storeys || project?.storeys || '1';
+  const hasBasement = project?.layout?.basement_finish !== 'none' &&
+                      project?.layout?.basement_finish !== undefined;
+
+  // Add basement if applicable
+  if (hasBasement || project?.site?.foundation_type === 'full_basement' ||
+      project?.site?.foundation_type === 'walkout_basement') {
+    levels.push({ value: 'basement', label: 'Basement' });
+  }
+
+  // Add main floor (always present)
+  levels.push({ value: 'main', label: 'Main Floor' });
+
+  // Add upper floors based on storeys
+  const numStoreys = parseFloat(storeys);
+  if (numStoreys >= 1.5) {
+    levels.push({ value: 'second', label: '2nd Floor' });
+  }
+  if (numStoreys >= 2.5 || numStoreys >= 3) {
+    levels.push({ value: 'third', label: '3rd Floor' });
+  }
+
+  return levels;
+}
+
+/**
+ * Calculate wall SF from linear feet and height
+ */
+export function calculateWallSF(lengthLF, heightFt) {
+  return Math.round(lengthLF * heightFt);
+}
+
+/**
+ * Create a new instance
+ */
+export function createInstance({
+  scopeItemId,
+  level,
+  location = '',
+  measurement,
+  assemblyId = null,
+  notes = '',
+}) {
+  return {
+    id: `inst-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    scopeItemId,
+    level,
+    location,
+    measurement,
+    assemblyId,
+    notes,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Calculate cost for a single instance
+ */
+export function calculateInstanceCost(instance, assemblies, ceilingHeight, catalogueData) {
+  const scopeItem = Object.values(SCOPE_ITEMS)
+    .flatMap(cat => cat.items)
+    .find(item => item.id === instance.scopeItemId);
+
+  if (!scopeItem) return { labor: 0, materials: 0, total: 0, quantity: 0 };
+
+  let quantity = instance.measurement || 0;
+
+  // Convert LF to SF for walls if needed
+  if (scopeItem.convertToSF && ceilingHeight) {
+    // Support both single value and per-level object
+    let effectiveHeight = 9; // default
+    if (typeof ceilingHeight === 'object' && ceilingHeight !== null) {
+      // It's a per-level object like { basement: 8, main: 9, second: 8 }
+      effectiveHeight = ceilingHeight[instance.level] || 9;
+    } else if (typeof ceilingHeight === 'number') {
+      effectiveHeight = ceilingHeight;
+    }
+    quantity = calculateWallSF(instance.measurement || 0, effectiveHeight);
+  }
+
+  // Find assembly if specified
+  const assembly = assemblies?.find(a => a.id === instance.assemblyId);
+
+  let laborCost = 0;
+  let materialsCost = 0;
+
+  if (assembly) {
+    laborCost = (assembly.laborCostPerUnit || assembly.laborCost || 0) * quantity;
+    materialsCost = (assembly.materialCostPerUnit || assembly.materialsCost || 0) * quantity;
+  } else if (scopeItem.defaultCost) {
+    // For tally items, use default cost
+    laborCost = scopeItem.defaultCost * 0.4 * quantity;
+    materialsCost = scopeItem.defaultCost * 0.6 * quantity;
+  } else {
+    // Try to get from catalogue
+    const catalogueRate = catalogueData?.laborRates?.[scopeItem.id];
+    if (catalogueRate) {
+      laborCost = (catalogueRate.rate || 0) * quantity;
+    }
+  }
+
+  return {
+    labor: Math.round(laborCost * 100) / 100,
+    materials: Math.round(materialsCost * 100) / 100,
+    total: Math.round((laborCost + materialsCost) * 100) / 100,
+    quantity,
+    unit: scopeItem.convertToSF ? 'sf' : scopeItem.unit,
+  };
+}
+
+/**
+ * Group instances by scope item and calculate totals
+ */
+export function summarizeInstances(instances, assemblies, ceilingHeight, catalogueData) {
+  const summary = {};
+
+  instances.forEach(instance => {
+    if (!summary[instance.scopeItemId]) {
+      const scopeItem = Object.values(SCOPE_ITEMS)
+        .flatMap(cat => cat.items)
+        .find(item => item.id === instance.scopeItemId);
+
+      summary[instance.scopeItemId] = {
+        scopeItemId: instance.scopeItemId,
+        name: scopeItem?.name || instance.scopeItemId,
+        instances: [],
+        totalQuantity: 0,
+        totalLabor: 0,
+        totalMaterials: 0,
+        totalCost: 0,
+        byLevel: {},
+      };
+    }
+
+    const cost = calculateInstanceCost(instance, assemblies, ceilingHeight, catalogueData);
+
+    summary[instance.scopeItemId].instances.push({
+      ...instance,
+      ...cost,
+    });
+    summary[instance.scopeItemId].totalQuantity += cost.quantity;
+    summary[instance.scopeItemId].totalLabor += cost.labor;
+    summary[instance.scopeItemId].totalMaterials += cost.materials;
+    summary[instance.scopeItemId].totalCost += cost.total;
+
+    // Track by level
+    if (!summary[instance.scopeItemId].byLevel[instance.level]) {
+      summary[instance.scopeItemId].byLevel[instance.level] = {
+        quantity: 0,
+        cost: 0,
+      };
+    }
+    summary[instance.scopeItemId].byLevel[instance.level].quantity += cost.quantity;
+    summary[instance.scopeItemId].byLevel[instance.level].cost += cost.total;
+  });
+
+  return summary;
+}
+
+/**
+ * Convert instances to line items (for compatibility with existing system)
+ */
+export function generateLineItemsFromInstances(instances, assemblies, ceilingHeight, catalogueData) {
+  const summary = summarizeInstances(instances, assemblies, ceilingHeight, catalogueData);
+
+  return Object.values(summary).map(item => {
+    const basePrice = item.totalCost / (item.totalQuantity || 1);
+
+    return {
+      id: `li-${item.scopeItemId}`,
+      name: item.name,
+      description: `${item.instances.length} instance(s) across levels`,
+      quantity: item.totalQuantity,
+      unit: item.instances[0]?.unit || 'ea',
+      unitPriceGood: basePrice,
+      unitPriceBetter: basePrice * BUILD_TIERS.better.multiplier,
+      unitPriceBest: basePrice * BUILD_TIERS.best.multiplier,
+      materialsCost: item.totalMaterials,
+      laborCost: item.totalLabor,
+      tradeCode: getTradeCodeFromScopeItem(item.scopeItemId),
+      room: 'project',
+      category: getCategoryFromScopeItem(item.scopeItemId),
+      // Store instance reference for drill-down
+      instanceIds: item.instances.map(i => i.id),
+      byLevel: item.byLevel,
+    };
+  });
+}
+
+/**
+ * Get trade code from scope item ID
+ */
+function getTradeCodeFromScopeItem(scopeItemId) {
+  const prefix = scopeItemId.split('-')[0];
+  const tradeMap = {
+    fr: 'FR', // Framing
+    wd: 'WD', // Windows & Doors
+    dw: 'DW', // Drywall
+    fl: 'FL', // Flooring
+    el: 'EL', // Electrical
+    pl: 'PL', // Plumbing
+    hv: 'HV', // HVAC
+  };
+  return tradeMap[prefix] || 'GN';
+}
+
+/**
+ * Get category from scope item ID
+ */
+function getCategoryFromScopeItem(scopeItemId) {
+  for (const [category, data] of Object.entries(SCOPE_ITEMS)) {
+    if (data.items.some(item => item.id === scopeItemId)) {
+      return data.name;
+    }
+  }
+  return 'Other';
+}
+
+/**
+ * Calculate grand totals from instances
+ */
+export function calculateInstanceTotals(instances, assemblies, ceilingHeight, catalogueData) {
+  const summary = summarizeInstances(instances, assemblies, ceilingHeight, catalogueData);
+
+  let totalLabor = 0;
+  let totalMaterials = 0;
+
+  Object.values(summary).forEach(item => {
+    totalLabor += item.totalLabor;
+    totalMaterials += item.totalMaterials;
+  });
+
+  const baseCost = totalLabor + totalMaterials;
+
+  return {
+    labor: Math.round(totalLabor * 100) / 100,
+    materials: Math.round(totalMaterials * 100) / 100,
+    good: Math.round(baseCost * 100) / 100,
+    better: Math.round(baseCost * BUILD_TIERS.better.multiplier * 100) / 100,
+    best: Math.round(baseCost * BUILD_TIERS.best.multiplier * 100) / 100,
+  };
+}
+
+/**
+ * Initialize tally counts from levels
+ */
+export function initializeTallyCounts(levels, scopeItems) {
+  const counts = {};
+
+  scopeItems.forEach(item => {
+    counts[item.id] = {};
+    levels.forEach(level => {
+      counts[item.id][level.value] = 0;
+    });
+  });
+
+  return counts;
+}
+
+/**
+ * Convert tally counts to instances
+ */
+export function tallyCountsToInstances(tallyCounts) {
+  const instances = [];
+
+  Object.entries(tallyCounts).forEach(([scopeItemId, levelCounts]) => {
+    Object.entries(levelCounts).forEach(([level, count]) => {
+      if (count > 0) {
+        instances.push(createInstance({
+          scopeItemId,
+          level,
+          measurement: count,
+        }));
+      }
+    });
+  });
+
+  return instances;
+}
+
+/**
+ * Save assembly as template to localStorage
+ */
+export function saveAssemblyTemplate(assembly) {
+  const templates = JSON.parse(localStorage.getItem('hooomz_assembly_templates') || '[]');
+
+  const existing = templates.findIndex(t => t.id === assembly.id);
+  if (existing >= 0) {
+    templates[existing] = { ...assembly, updatedAt: new Date().toISOString() };
+  } else {
+    templates.push({ ...assembly, createdAt: new Date().toISOString() });
+  }
+
+  localStorage.setItem('hooomz_assembly_templates', JSON.stringify(templates));
+  return templates;
+}
+
+/**
+ * Load assembly templates from localStorage
+ */
+export function loadAssemblyTemplates() {
+  const templates = JSON.parse(localStorage.getItem('hooomz_assembly_templates') || '[]');
+  return [...DEFAULT_WALL_ASSEMBLIES, ...templates];
 }
