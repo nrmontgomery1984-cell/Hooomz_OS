@@ -23,6 +23,7 @@ import {
   Download,
   Upload,
   ScanLine,
+  Settings,
 } from 'lucide-react';
 import {
   MATERIAL_CATEGORIES,
@@ -38,6 +39,7 @@ import {
 } from '../lib/costCatalogue';
 import { TRADE_NAMES } from '../lib/estimateHelpers';
 import { AssemblyBuilder } from '../components/catalogue/AssemblyBuilder';
+import { AssemblyConfigurator } from '../components/catalogue/AssemblyConfigurator';
 import { Modal } from '../components/ui';
 import { ReceiptScanner } from '../components/receipt';
 
@@ -46,6 +48,7 @@ const TABS = [
   { id: 'labor', label: 'Labor Rates', icon: DollarSign },
   { id: 'materials', label: 'Materials', icon: Package },
   { id: 'assemblies', label: 'Assemblies', icon: Layers },
+  { id: 'configurator', label: 'Configurator', icon: Settings },
 ];
 
 // Edit modes
@@ -433,6 +436,22 @@ export function CostCatalogue() {
           searchQuery={searchQuery}
           isEditable={editMode !== EDIT_MODES.VIEW}
           isTemplateMode={editMode === EDIT_MODES.TEMPLATE}
+        />
+      )}
+
+      {/* Configurator Tab */}
+      {activeTab === 'configurator' && (
+        <AssemblyConfigurator
+          materials={catalogueData?.materials || []}
+          onSave={(assembly) => {
+            // Save the custom assembly
+            saveCustomAssembly(assembly);
+            // Reload catalogue data to get updated assemblies
+            setCatalogueData(loadCatalogueData());
+            // Switch to assemblies tab to see the new assembly
+            setActiveTab('assemblies');
+          }}
+          onCancel={() => setActiveTab('assemblies')}
         />
       )}
 
