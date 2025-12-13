@@ -8,9 +8,10 @@ import {
   Hammer,
   ChevronRight,
   Check,
+  Trash2,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
-import { getProjects, createProject } from '../services/api';
+import { getProjects, createProject, deleteProject } from '../services/api';
 import {
   ROOM_TYPES,
   SQFT_RANGES,
@@ -98,7 +99,11 @@ export function Estimates() {
       ) : (
         <div className="space-y-3">
           {estimates.map((project) => (
-            <EstimateCard key={project.id} project={project} />
+            <EstimateCard
+              key={project.id}
+              project={project}
+              onDelete={(id) => setEstimates(estimates.filter(e => e.id !== id))}
+            />
           ))}
         </div>
       )}
@@ -114,13 +119,26 @@ export function Estimates() {
   );
 }
 
-function EstimateCard({ project }) {
+function EstimateCard({ project, onDelete }) {
   // Calculate days since creation - use useMemo to avoid impure function during render
   const days = useMemo(() => {
     return Math.floor(
       (Date.now() - new Date(project.created_at).getTime()) / (1000 * 60 * 60 * 24)
     );
   }, [project.created_at]);
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`Delete "${project.name || 'this estimate'}"? This cannot be undone.`)) {
+      const { error } = await deleteProject(project.id);
+      if (error) {
+        alert('Failed to delete');
+      } else if (onDelete) {
+        onDelete(project.id);
+      }
+    }
+  };
 
   return (
     <Link to={`/projects/${project.id}`}>
@@ -130,7 +148,16 @@ function EstimateCard({ project }) {
             <p className="font-semibold text-charcoal truncate">{project.name}</p>
             <p className="text-sm text-gray-500">{project.client_name}</p>
           </div>
-          <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" />
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+            <button
+              onClick={handleDelete}
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+              title="Delete"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <ChevronRight className="w-5 h-5 text-gray-400" />
+          </div>
         </div>
 
         {project.estimate_high && (
