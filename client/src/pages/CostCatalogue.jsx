@@ -580,6 +580,8 @@ function LaborRatesTab({ rates, onSave, searchQuery, onChanges, isEditable, isTe
   const [editingHourly, setEditingHourly] = useState(null);
   const [editingPieceRate, setEditingPieceRate] = useState(null);
   const [showAddPieceRate, setShowAddPieceRate] = useState(null);
+  const [showAddTrade, setShowAddTrade] = useState(false);
+  const [newTrade, setNewTrade] = useState({ code: '', name: '', description: '', hourlyRate: 0 });
 
   const filteredRates = useMemo(() => {
     if (!searchQuery) return Object.entries(editingRates);
@@ -644,6 +646,37 @@ function LaborRatesTab({ rates, onSave, searchQuery, onChanges, isEditable, isTe
     onChanges();
   };
 
+  const handleAddTrade = () => {
+    if (!newTrade.code || !newTrade.name) return;
+    const code = newTrade.code.toUpperCase();
+    if (editingRates[code]) {
+      alert('A trade with this code already exists');
+      return;
+    }
+    setEditingRates((prev) => ({
+      ...prev,
+      [code]: {
+        name: newTrade.name,
+        description: newTrade.description || '',
+        hourlyRate: parseFloat(newTrade.hourlyRate) || 0,
+        pieceRates: [],
+      },
+    }));
+    setNewTrade({ code: '', name: '', description: '', hourlyRate: 0 });
+    setShowAddTrade(false);
+    onChanges();
+  };
+
+  const handleDeleteTrade = (tradeCode) => {
+    if (!window.confirm(`Delete "${tradeCode}" labor rate? This cannot be undone.`)) return;
+    setEditingRates((prev) => {
+      const updated = { ...prev };
+      delete updated[tradeCode];
+      return updated;
+    });
+    onChanges();
+  };
+
   const handleSave = () => {
     onSave(editingRates);
     setEditingHourly(null);
@@ -674,16 +707,88 @@ function LaborRatesTab({ rates, onSave, searchQuery, onChanges, isEditable, isTe
               : 'Quick edit mode — changes are temporary.'
             : 'Set hourly rates for T&M work and piece-work rates for specific tasks. Switch to edit mode to make changes.'}
         </p>
-        {isEditable && isTemplateMode && (
-          <button
-            onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 text-sm"
-          >
-            <Save className="w-4 h-4" />
-            Save to Template
-          </button>
-        )}
+        <div className="flex gap-2">
+          {isEditable && (
+            <button
+              onClick={() => setShowAddTrade(true)}
+              className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-sm"
+            >
+              <Plus className="w-4 h-4" />
+              Add Labor Rate
+            </button>
+          )}
+          {isEditable && isTemplateMode && (
+            <button
+              onClick={handleSave}
+              className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 text-sm"
+            >
+              <Save className="w-4 h-4" />
+              Save to Template
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Add Trade Form */}
+      {showAddTrade && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
+          <h4 className="font-medium text-charcoal mb-3">Add New Labor Rate</h4>
+          <div className="grid grid-cols-5 gap-3">
+            <input
+              type="text"
+              placeholder="Code (e.g., TILE)"
+              value={newTrade.code}
+              onChange={(e) => setNewTrade((prev) => ({ ...prev, code: e.target.value.toUpperCase() }))}
+              className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-charcoal/20 uppercase"
+              maxLength={6}
+            />
+            <input
+              type="text"
+              placeholder="Trade name"
+              value={newTrade.name}
+              onChange={(e) => setNewTrade((prev) => ({ ...prev, name: e.target.value }))}
+              className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-charcoal/20"
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              value={newTrade.description}
+              onChange={(e) => setNewTrade((prev) => ({ ...prev, description: e.target.value }))}
+              className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-charcoal/20"
+            />
+            <div className="flex items-center gap-1">
+              <span className="text-gray-400">$</span>
+              <input
+                type="number"
+                step="0.50"
+                placeholder="Hourly rate"
+                value={newTrade.hourlyRate || ''}
+                onChange={(e) => setNewTrade((prev) => ({ ...prev, hourlyRate: e.target.value }))}
+                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-charcoal/20"
+              />
+              <span className="text-gray-400 text-sm">/hr</span>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={handleAddTrade}
+                disabled={!newTrade.code || !newTrade.name}
+                className="flex-1 px-3 py-2 bg-charcoal text-white rounded-lg hover:bg-charcoal/90 disabled:opacity-50"
+              >
+                Add
+              </button>
+              <button
+                onClick={() => {
+                  setShowAddTrade(false);
+                  setNewTrade({ code: '', name: '', description: '', hourlyRate: 0 });
+                }}
+                className="px-3 py-2 text-gray-500 hover:bg-gray-100 rounded-lg"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="space-y-2">
         {filteredRates.map(([code, data]) => {
@@ -749,12 +854,21 @@ function LaborRatesTab({ rates, onSave, searchQuery, onChanges, isEditable, isTe
                         {formatCurrency(data.hourlyRate)}/hr
                       </span>
                       {isEditable && (
-                        <button
-                          onClick={() => setEditingHourly(code)}
-                          className="p-1 text-gray-400 hover:text-charcoal rounded"
-                        >
-                          <Edit2 className="w-3 h-3" />
-                        </button>
+                        <>
+                          <button
+                            onClick={() => setEditingHourly(code)}
+                            className="p-1 text-gray-400 hover:text-charcoal rounded"
+                          >
+                            <Edit2 className="w-3 h-3" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteTrade(code)}
+                            className="p-1 text-gray-400 hover:text-red-600 rounded"
+                            title="Delete trade"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                        </>
                       )}
                     </div>
                   )}
