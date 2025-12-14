@@ -801,7 +801,7 @@ export function EstimateBuilder() {
                 />
 
                 {/* Tabbed Input Interface */}
-                <Card className="overflow-hidden" data-instance-tabs>
+                <Card className="overflow-hidden">
                   {/* Tab Bar */}
                   <div className="flex border-b border-gray-200 bg-gray-50">
                     {[
@@ -875,12 +875,6 @@ export function EstimateBuilder() {
                   selectedTier={selectedTier}
                   onDeleteInstance={(id) => {
                     setInstances(prev => prev.filter(inst => inst.id !== id));
-                  }}
-                  onAddInstance={() => {
-                    // Scroll to the tab interface and focus on Structure tab
-                    setActiveTab('structure');
-                    // Scroll into view
-                    document.querySelector('[data-instance-tabs]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }}
                 />
               </>

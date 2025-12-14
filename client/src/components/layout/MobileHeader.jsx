@@ -1,4 +1,3 @@
-// Mobile header with persona toggle v2
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -19,12 +18,9 @@ import {
   Timer,
   Receipt,
   ClipboardList,
-  Home,
-  Zap,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
-import { useDevAuth } from '../../hooks/useDevAuth';
 
 // Navigation organized by business phase
 const navSections = [
@@ -69,98 +65,10 @@ const navSections = [
   },
 ];
 
-// Persona configuration for the quick switcher
-const PERSONA_CONFIG = {
-  contractor: {
-    icon: HardHat,
-    label: 'Contractor',
-    shortLabel: 'CONT',
-    bgColor: 'bg-blue-500',
-    textColor: 'text-blue-600',
-    borderColor: 'border-blue-500',
-  },
-  homeowner: {
-    icon: Home,
-    label: 'Homeowner',
-    shortLabel: 'HOME',
-    bgColor: 'bg-emerald-500',
-    textColor: 'text-emerald-600',
-    borderColor: 'border-emerald-500',
-  },
-  subcontractor: {
-    icon: Zap,
-    label: 'Sub',
-    shortLabel: 'SUB',
-    bgColor: 'bg-orange-500',
-    textColor: 'text-orange-600',
-    borderColor: 'border-orange-500',
-  },
-};
-
-/**
- * QuickPersonaToggle - Compact toggle for switching between personas in header
- */
-function QuickPersonaToggle({ currentPersona, switchPersona }) {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const currentConfig = PERSONA_CONFIG[currentPersona?.role] || PERSONA_CONFIG.contractor;
-  const CurrentIcon = currentConfig.icon;
-
-  const handleSwitch = (role) => {
-    switchPersona(role);
-    setShowDropdown(false);
-  };
-
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setShowDropdown(!showDropdown)}
-        className={`flex items-center gap-1 px-2 py-1 rounded-full border-2 ${currentConfig.borderColor} bg-white hover:bg-gray-50 transition-colors`}
-        title={`Viewing as ${currentConfig.label}`}
-      >
-        <CurrentIcon className={`w-4 h-4 ${currentConfig.textColor}`} />
-        <span className={`text-xs font-medium ${currentConfig.textColor}`}>
-          {currentConfig.shortLabel}
-        </span>
-      </button>
-
-      {showDropdown && (
-        <>
-          <div
-            className="fixed inset-0 z-50"
-            onClick={() => setShowDropdown(false)}
-          />
-          <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 min-w-[140px]">
-            {Object.entries(PERSONA_CONFIG).map(([role, config]) => {
-              const Icon = config.icon;
-              const isActive = currentPersona?.role === role;
-              return (
-                <button
-                  key={role}
-                  onClick={() => handleSwitch(role)}
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
-                    isActive
-                      ? `${config.textColor} bg-gray-50 font-medium`
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? config.textColor : 'text-gray-400'}`} />
-                  {config.label}
-                  {isActive && <span className="ml-auto text-xs">✓</span>}
-                </button>
-              );
-            })}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
 export function MobileHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
-  const { currentPersona, switchPersona, isDevMode } = useDevAuth();
 
   // Get current page title
   const getCurrentPageTitle = () => {
@@ -194,21 +102,13 @@ export function MobileHeader() {
           {getCurrentPageTitle()}
         </h1>
 
-        <div className="flex items-center gap-1">
-          {/* Quick Persona Toggle */}
-          <QuickPersonaToggle
-            currentPersona={currentPersona}
-            switchPersona={switchPersona}
-          />
-
-          <button
-            onClick={() => setShowSearch(true)}
-            className="p-2 -mr-2 hover:bg-gray-100 rounded-lg transition-colors"
-            aria-label="Search projects"
-          >
-            <Search className="w-5 h-5 text-gray-600" />
-          </button>
-        </div>
+        <button
+          onClick={() => setShowSearch(true)}
+          className="p-2 -mr-2 hover:bg-gray-100 rounded-lg transition-colors"
+          aria-label="Search projects"
+        >
+          <Search className="w-5 h-5 text-gray-600" />
+        </button>
       </header>
 
       {/* Search Modal */}
