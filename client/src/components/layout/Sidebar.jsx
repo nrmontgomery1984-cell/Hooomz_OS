@@ -16,9 +16,13 @@ import {
   Search,
   Receipt,
   ClipboardList,
+  Home,
+  Zap,
+  ChevronDown,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
+import { useDevAuth } from '../../hooks/useDevAuth';
 
 // Check if nav item should be active based on current path
 // Handles project subpages like /projects/xxx/estimate -> Estimates
@@ -93,10 +97,43 @@ const navSections = [
   },
 ];
 
+// Persona configuration for the quick switcher
+const PERSONA_CONFIG = {
+  contractor: {
+    icon: HardHat,
+    label: 'Contractor',
+    shortLabel: 'CONT',
+    bgColor: 'bg-blue-500',
+    textColor: 'text-blue-600',
+    borderColor: 'border-blue-500',
+  },
+  homeowner: {
+    icon: Home,
+    label: 'Homeowner',
+    shortLabel: 'HOME',
+    bgColor: 'bg-emerald-500',
+    textColor: 'text-emerald-600',
+    borderColor: 'border-emerald-500',
+  },
+  subcontractor: {
+    icon: Zap,
+    label: 'Sub',
+    shortLabel: 'SUB',
+    bgColor: 'bg-orange-500',
+    textColor: 'text-orange-600',
+    borderColor: 'border-orange-500',
+  },
+};
+
 export function Sidebar() {
   const location = useLocation();
   const pathname = location.pathname;
   const [showSearch, setShowSearch] = useState(false);
+  const [showPersonaDropdown, setShowPersonaDropdown] = useState(false);
+  const { currentPersona, switchPersona, isDevMode } = useDevAuth();
+
+  const currentConfig = PERSONA_CONFIG[currentPersona?.role] || PERSONA_CONFIG.contractor;
+  const CurrentIcon = currentConfig?.icon || HardHat;
 
   return (
     <aside className="hidden lg:flex w-60 bg-white border-r border-gray-200 h-screen flex-col">
@@ -114,6 +151,55 @@ export function Sidebar() {
           <Search className="w-4 h-4" />
           <span>Search projects...</span>
         </button>
+      </div>
+
+      {/* Persona Switcher - Always visible */}
+      <div className="px-3 pt-3 relative">
+        <button
+          onClick={() => setShowPersonaDropdown(!showPersonaDropdown)}
+          className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-lg transition-colors border-2 ${currentConfig.borderColor} bg-white hover:bg-gray-50`}
+        >
+          <div className="flex items-center gap-2">
+            <CurrentIcon className={`w-4 h-4 ${currentConfig.textColor}`} />
+            <span className={`font-medium ${currentConfig.textColor}`}>
+              {currentConfig.label}
+            </span>
+          </div>
+          <ChevronDown className={`w-4 h-4 ${currentConfig.textColor} transition-transform ${showPersonaDropdown ? 'rotate-180' : ''}`} />
+        </button>
+
+        {showPersonaDropdown && (
+          <>
+            <div
+              className="fixed inset-0 z-40"
+              onClick={() => setShowPersonaDropdown(false)}
+            />
+            <div className="absolute left-3 right-3 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+              {Object.entries(PERSONA_CONFIG).map(([role, config]) => {
+                const Icon = config.icon;
+                const isActive = currentPersona?.role === role;
+                return (
+                  <button
+                    key={role}
+                    onClick={() => {
+                      switchPersona(role);
+                      setShowPersonaDropdown(false);
+                    }}
+                    className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
+                      isActive
+                        ? `${config.textColor} bg-gray-50 font-medium`
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 ${isActive ? config.textColor : 'text-gray-400'}`} />
+                    {config.label}
+                    {isActive && <span className="ml-auto text-xs">✓</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Search Modal */}

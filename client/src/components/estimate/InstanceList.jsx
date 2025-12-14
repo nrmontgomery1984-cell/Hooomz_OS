@@ -6,6 +6,7 @@ import {
   Edit2,
   MapPin,
   Layers,
+  Plus,
 } from 'lucide-react';
 import {
   SCOPE_ITEMS,
@@ -32,6 +33,7 @@ export function InstanceList({
   catalogueData,
   onDeleteInstance,
   onEditInstance,
+  onAddInstance, // Callback to trigger add mode
   selectedTier = 'better',
   defaultCollapsed = true, // Default to collapsed view
 }) {
@@ -163,12 +165,23 @@ export function InstanceList({
             <h3 className="font-semibold text-charcoal">Estimate Summary</h3>
             <p className="text-xs text-gray-500">{instances.length} items added</p>
           </div>
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="text-xs text-blue-600 hover:text-blue-800 font-medium"
-          >
-            {isCollapsed ? 'Show Details' : 'Collapse'}
-          </button>
+          <div className="flex items-center gap-2">
+            {onAddInstance && (
+              <button
+                onClick={onAddInstance}
+                className="flex items-center gap-1 px-2 py-1 text-xs bg-charcoal text-white rounded hover:bg-charcoal/90 font-medium"
+              >
+                <Plus className="w-3 h-3" />
+                Add
+              </button>
+            )}
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+            >
+              {isCollapsed ? 'Show Details' : 'Collapse'}
+            </button>
+          </div>
         </div>
       </div>
 
