@@ -1,17 +1,8 @@
 import { createContext, useState, useCallback, useMemo, useEffect } from 'react';
 import { TEST_PERSONAS, TEST_PROJECT, TEST_PROJECT_2, getInitialTestData } from '../lib/devData';
 
-// Check if persona switcher should be enabled
-// Enabled in dev mode OR when VITE_ENABLE_PERSONA_SWITCHER is set
-const isPersonaSwitcherEnabled = () => {
-  if (typeof import.meta !== 'undefined' && import.meta.env) {
-    // Enable in dev mode OR if explicitly enabled via env var
-    return import.meta.env.DEV ||
-           import.meta.env.VITE_DEV_MODE === 'true' ||
-           import.meta.env.VITE_ENABLE_PERSONA_SWITCHER === 'true';
-  }
-  return process.env.NODE_ENV === 'development';
-};
+// Always enable persona switcher - used for demo/testing across all environments
+const isPersonaSwitcherEnabled = () => true;
 
 export const DevAuthContext = createContext(null);
 
