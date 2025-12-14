@@ -1,13 +1,15 @@
 import { createContext, useState, useCallback, useMemo, useEffect } from 'react';
 import { TEST_PERSONAS, TEST_PROJECT, TEST_PROJECT_2, getInitialTestData } from '../lib/devData';
 
-// Check if we're in dev mode
-const isDevEnvironment = () => {
-  // Vite uses import.meta.env
+// Check if persona switcher should be enabled
+// Enabled in dev mode OR when VITE_ENABLE_PERSONA_SWITCHER is set
+const isPersonaSwitcherEnabled = () => {
   if (typeof import.meta !== 'undefined' && import.meta.env) {
-    return import.meta.env.DEV || import.meta.env.VITE_DEV_MODE === 'true';
+    // Enable in dev mode OR if explicitly enabled via env var
+    return import.meta.env.DEV ||
+           import.meta.env.VITE_DEV_MODE === 'true' ||
+           import.meta.env.VITE_ENABLE_PERSONA_SWITCHER === 'true';
   }
-  // Fallback check
   return process.env.NODE_ENV === 'development';
 };
 
@@ -23,7 +25,7 @@ const TEST_DATA_KEY = 'hooomz_dev_test_data';
  * will pass through without any dev functionality.
  */
 export function DevAuthProvider({ children }) {
-  const isDevMode = isDevEnvironment();
+  const isDevMode = isPersonaSwitcherEnabled();
 
   // Get initial persona from localStorage or default to contractor
   const getInitialPersona = () => {
