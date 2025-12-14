@@ -69,7 +69,8 @@ function CollapsibleSection({ title, icon: Icon, badge, defaultExpanded = false,
  * @param {Function} onAction - Action handler
  * @param {Function} onPhaseTransition - Handler for initiating phase transitions
  */
-export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTransition }) {
+export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTransition, viewMode = 'contractor' }) {
+  const isHomeownerView = viewMode === 'homeowner';
   const {
     header,
     client,
@@ -106,6 +107,10 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
     onAction?.('add_change_order');
   };
 
+  const handleViewChangeOrder = (changeOrder) => {
+    onAction?.('view_change_order', changeOrder);
+  };
+
   const handleResolveBlocker = (blockerId) => {
     onAction?.('resolve_blocker', blockerId);
   };
@@ -137,7 +142,8 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
         header={header}
         project={project}
         onAction={handleHeaderAction}
-        onPhaseTransition={onPhaseTransition}
+        onPhaseTransition={isHomeownerView ? null : onPhaseTransition}
+        viewMode={viewMode}
       />
 
       {/* Mobile Layout: Collapsible Sections */}
@@ -187,6 +193,7 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
           <BudgetTracker
             budget={budget}
             onAddChangeOrder={handleAddChangeOrder}
+            onViewChangeOrder={handleViewChangeOrder}
           />
         </CollapsibleSection>
 
@@ -260,6 +267,7 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
           <BudgetTracker
             budget={budget}
             onAddChangeOrder={handleAddChangeOrder}
+            onViewChangeOrder={handleViewChangeOrder}
           />
         </div>
 

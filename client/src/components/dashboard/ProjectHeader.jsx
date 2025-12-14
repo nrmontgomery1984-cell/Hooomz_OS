@@ -1,4 +1,4 @@
-import { MapPin, Calendar, FileText, MessageSquare, Plus, Home, Hammer } from 'lucide-react';
+import { MapPin, Calendar, FileText, MessageSquare, Plus, Home, Hammer, Eye } from 'lucide-react';
 import { Card, Button } from '../ui';
 import { HealthIndicator } from './HealthIndicator';
 import { PhaseIndicator, PhaseChip } from './PhaseIndicator';
@@ -14,9 +14,10 @@ import { usePermissions } from '../../hooks/usePermissions';
  * @param {Function} onAction - Action handler
  * @param {Function} onPhaseTransition - Handler for initiating phase transitions
  */
-export function ProjectHeader({ header, project, onAction, onPhaseTransition }) {
+export function ProjectHeader({ header, project, onAction, onPhaseTransition, viewMode = 'contractor' }) {
   const { isContractor } = usePermissions();
   const isNewConstruction = header.projectType === 'new_construction';
+  const isHomeownerView = viewMode === 'homeowner';
 
   // Check if estimate exists (has saved line items or calculated totals)
   const hasEstimate =
@@ -66,33 +67,59 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition }) 
 
         {/* Quick Actions - wrap instead of scroll */}
         <div className="flex flex-wrap gap-2">
-          <Button
-            variant={hasEstimate ? 'secondary' : 'primary'}
-            size="sm"
-            onClick={() => onAction?.('view_estimate')}
-            className="text-xs"
-          >
-            <FileText className="w-3.5 h-3.5 mr-1" />
-            {hasEstimate ? 'Estimate' : 'Create'}
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => onAction?.('message_client')}
-            className="text-xs"
-          >
-            <MessageSquare className="w-3.5 h-3.5 mr-1" />
-            Message
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => onAction?.('add_note')}
-            className="text-xs"
-          >
-            <Plus className="w-3.5 h-3.5 mr-1" />
-            Log
-          </Button>
+          {/* Homeowner: View only - label based on phase */}
+          {isHomeownerView ? (
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => onAction?.('view_estimate')}
+              className="text-xs"
+            >
+              <FileText className="w-3.5 h-3.5 mr-1" />
+              {header.phase === 'quoted' || header.phase === 'quote' || header.phase === 'contract' ? 'View Quote' : 'View Estimate'}
+            </Button>
+          ) : (
+            <>
+              <Button
+                variant={hasEstimate ? 'secondary' : 'primary'}
+                size="sm"
+                onClick={() => onAction?.('view_estimate')}
+                className="text-xs"
+              >
+                <FileText className="w-3.5 h-3.5 mr-1" />
+                {hasEstimate ? 'Estimate' : 'Create'}
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onAction?.('message_client')}
+                className="text-xs"
+              >
+                <MessageSquare className="w-3.5 h-3.5 mr-1" />
+                Message
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onAction?.('add_note')}
+                className="text-xs"
+              >
+                <Plus className="w-3.5 h-3.5 mr-1" />
+                Log
+              </Button>
+              {hasEstimate && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => onAction?.('preview_quote')}
+                  className="text-xs"
+                >
+                  <Eye className="w-3.5 h-3.5 mr-1" />
+                  Preview
+                </Button>
+              )}
+            </>
+          )}
         </div>
       </div>
 
@@ -154,37 +181,61 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition }) 
 
         {/* Quick Actions */}
         <div className="flex items-center gap-2">
-          <Button
-            variant={hasEstimate ? 'secondary' : 'primary'}
-            size="sm"
-            onClick={() => onAction?.('view_estimate')}
-          >
-            <FileText className="w-4 h-4 mr-1" />
-            {getEstimateButtonLabel()}
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => onAction?.('message_client')}
-          >
-            <MessageSquare className="w-4 h-4 mr-1" />
-            Message
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => onAction?.('add_note')}
-          >
-            <Plus className="w-4 h-4 mr-1" />
-            Log
-          </Button>
-          {/* Primary phase transition action */}
-          {project && onPhaseTransition && (
-            <PhaseTransitionButton
-              project={project}
-              onTransition={onPhaseTransition}
+          {/* Homeowner: View only - label based on phase */}
+          {isHomeownerView ? (
+            <Button
+              variant="primary"
               size="sm"
-            />
+              onClick={() => onAction?.('view_estimate')}
+            >
+              <FileText className="w-4 h-4 mr-1" />
+              {header.phase === 'quoted' || header.phase === 'quote' || header.phase === 'contract' ? 'View Quote' : 'View Estimate'}
+            </Button>
+          ) : (
+            <>
+              <Button
+                variant={hasEstimate ? 'secondary' : 'primary'}
+                size="sm"
+                onClick={() => onAction?.('view_estimate')}
+              >
+                <FileText className="w-4 h-4 mr-1" />
+                {getEstimateButtonLabel()}
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onAction?.('message_client')}
+              >
+                <MessageSquare className="w-4 h-4 mr-1" />
+                Message
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onAction?.('add_note')}
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Log
+              </Button>
+              {hasEstimate && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => onAction?.('preview_quote')}
+                >
+                  <Eye className="w-4 h-4 mr-1" />
+                  Preview Quote
+                </Button>
+              )}
+              {/* Primary phase transition action */}
+              {project && onPhaseTransition && (
+                <PhaseTransitionButton
+                  project={project}
+                  onTransition={onPhaseTransition}
+                  size="sm"
+                />
+              )}
+            </>
           )}
         </div>
       </div>

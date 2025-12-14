@@ -140,6 +140,109 @@ export async function getLoops(projectId) {
   return { data, error };
 }
 
+/**
+ * Get loops for a project, generating them from estimate if needed
+ * This ensures that projects with estimate line items always have loops
+ * that match their actual scope of work
+ */
+export async function getOrGenerateLoops(projectId, project) {
+  // Get existing loops
+  const { data: existingLoops, error } = await getLoops(projectId);
+  if (error) return { data: null, error };
+
+  // Check if we should generate loops from estimate
+  const intakeData = project?.intake_data || {};
+  const lineItems = intakeData.estimate_line_items || project?.estimate_line_items;
+  const buildTier = intakeData.build_tier || project?.build_tier || 'better';
+
+  // Check if existing loops are from estimate (have source: 'estimate')
+  const hasEstimateLoops = existingLoops?.some(loop => loop.source === 'estimate');
+
+  // Check if existing loops are stale mock data (have source: 'intake' but project has estimate)
+  const hasStaleMockLoops = existingLoops?.length > 0 &&
+    existingLoops.every(loop => loop.source === 'intake' || !loop.source) &&
+    lineItems?.length > 0;
+
+  // Regenerate if:
+  // 1. Project has estimate line items AND
+  // 2. Either no loops exist, OR loops are stale mock data (not from estimate)
+  const needsGeneration = lineItems?.length > 0 && (
+    !existingLoops?.length || !hasEstimateLoops || hasStaleMockLoops
+  );
+
+  if (needsGeneration) {
+    // Clear existing loops for this project in mock mode
+    if (!isSupabaseConfigured()) {
+      // First, delete tasks for existing loops by their actual IDs
+      const existingLoopsToDelete = existingLoops || [];
+      for (const loop of existingLoopsToDelete) {
+        delete mockTasks[loop.id];
+      }
+      // Then clear the loops array for this project
+      mockLoops[projectId] = [];
+      // Also clear task tracker instances so they get regenerated from new loops
+      delete mockTaskInstances[projectId];
+      saveProjectsToStorage();
+      saveTaskTrackerToStorage();
+      console.log('Cleared existing loops for project:', projectId, 'Count:', existingLoopsToDelete.length);
+    }
+
+    // Generate new loops from estimate
+    const { loops, tasks, error: genError } = await generateScopeFromEstimate(
+      projectId,
+      lineItems,
+      buildTier
+    );
+
+    if (genError) {
+      console.error('Failed to generate loops from estimate:', genError);
+      return { data: [], error: null };
+    }
+
+    console.log('Generated loops from estimate:', loops.length, 'Tasks:', tasks.length);
+    return { data: loops, error: null };
+  }
+
+  return { data: existingLoops || [], error: null };
+}
+
+/**
+ * Regenerate loops for a project from its estimate
+ * Clears existing loops and creates new ones from estimate line items
+ */
+export async function regenerateProjectLoops(projectId, project) {
+  const intakeData = project?.intake_data || {};
+  const lineItems = intakeData.estimate_line_items || project?.estimate_line_items;
+  const buildTier = intakeData.build_tier || project?.build_tier || 'better';
+
+  if (!lineItems || lineItems.length === 0) {
+    return { loops: [], tasks: [], error: 'No estimate line items to generate from' };
+  }
+
+  // Clear existing loops for this project
+  if (!isSupabaseConfigured()) {
+    // Get existing loop IDs to clear their tasks
+    const existingLoops = mockLoops[projectId] || [];
+    for (const loop of existingLoops) {
+      delete mockTasks[loop.id];
+    }
+    mockLoops[projectId] = [];
+    // Also clear task tracker instances so they get regenerated from new loops
+    delete mockTaskInstances[projectId];
+    saveProjectsToStorage();
+    saveTaskTrackerToStorage();
+  }
+
+  // Generate new loops from estimate
+  const { loops, tasks, error } = await generateScopeFromEstimate(
+    projectId,
+    lineItems,
+    buildTier
+  );
+
+  return { loops, tasks, error };
+}
+
 export async function getLoop(id) {
   if (!isSupabaseConfigured()) {
     for (const loops of Object.values(mockLoops)) {
@@ -626,10 +729,22 @@ export async function getProjectActivity(projectId, limit = 20) {
 export async function createTask(task) {
   if (!isSupabaseConfigured()) {
     const newTask = {
-      id: `t${Date.now()}`,
+      id: task.id || `t${Date.now()}`,
       ...task,
       created_at: new Date().toISOString(),
     };
+
+    // Add to mock tasks store (keyed by loop_id)
+    const loopId = task.loop_id;
+    if (loopId) {
+      if (!mockTasks[loopId]) {
+        mockTasks[loopId] = [];
+      }
+      mockTasks[loopId].push(newTask);
+      // Persist to localStorage
+      saveProjectsToStorage();
+    }
+
     console.log('Task created (mock):', newTask);
     return { data: newTask, error: null };
   }
@@ -647,10 +762,22 @@ export async function createTask(task) {
 export async function createLoop(loop) {
   if (!isSupabaseConfigured()) {
     const newLoop = {
-      id: `l${Date.now()}`,
+      id: loop.id || `l${Date.now()}`,
       ...loop,
       created_at: new Date().toISOString(),
     };
+
+    // Add to mock loops store (keyed by project_id)
+    const projectId = loop.project_id;
+    if (projectId) {
+      if (!mockLoops[projectId]) {
+        mockLoops[projectId] = [];
+      }
+      mockLoops[projectId].push(newLoop);
+      // Persist to localStorage
+      saveProjectsToStorage();
+    }
+
     console.log('Loop created (mock):', newLoop);
     return { data: newLoop, error: null };
   }
@@ -780,6 +907,16 @@ export async function createActivityEntry(entry) {
       ...entry,
       created_at: new Date().toISOString(),
     };
+
+    // Add to mock activity log
+    const projectId = entry.project_id;
+    if (projectId) {
+      if (!mockActivityLog[projectId]) {
+        mockActivityLog[projectId] = [];
+      }
+      mockActivityLog[projectId].unshift(newEntry);
+    }
+
     console.log('Activity logged (mock):', newEntry);
     return { data: newEntry, error: null };
   }
@@ -916,12 +1053,13 @@ const TRADE_ORDER = [
 
 /**
  * Trade code to display name mapping
+ * Note: FS (Structural Framing) encompasses floors, walls, ceilings, and roof framing
  */
 const TRADE_NAMES = {
   SW: 'Site Work',
   FN: 'Foundation',
-  FS: 'Framing - Structural',
-  FI: 'Framing - Interior',
+  FS: 'Structural Framing',  // Floors, walls, ceilings, roof structure
+  FI: 'Interior Framing',    // Non-structural partitions, bulkheads
   RF: 'Roofing',
   EE: 'Exterior Envelope',
   IA: 'Insulation & Air Sealing',
@@ -1074,12 +1212,18 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
  * @param {Object} project - Project data (must include estimate_line_items and build_tier)
  */
 export async function startProduction(projectId, project) {
-  // Update project to in_progress phase
-  const { data: updatedProject, error: projectError } = await updateProjectPhase(projectId, {
-    phase: 'in_progress',
-    status: 'in_progress',
+  // Merge new dates into intake_data (since most columns don't exist at top level)
+  const updatedIntakeData = {
+    ...(project?.intake_data || {}),
     phase_changed_at: new Date().toISOString(),
-    actual_start: new Date().toISOString(),
+    actual_start: new Date().toISOString().split('T')[0],
+  };
+
+  // Update project to active phase
+  // Note: 'status' column doesn't exist, only 'phase'. Use 'active' per PHASES definition.
+  const { data: updatedProject, error: projectError } = await updateProjectPhase(projectId, {
+    phase: 'active',
+    intake_data: updatedIntakeData,
   });
 
   if (projectError) {
@@ -1092,12 +1236,17 @@ export async function startProduction(projectId, project) {
   let loops = existingLoops || [];
   let tasks = [];
 
+  // Get estimate data from intake_data where EstimateBuilder saves it
+  const intakeData = project?.intake_data || {};
+  const lineItems = intakeData.estimate_line_items || project.estimate_line_items;
+  const buildTier = intakeData.build_tier || project.build_tier || 'better';
+
   // Only generate scope if no loops exist yet
-  if (loops.length === 0 && project.estimate_line_items) {
+  if (loops.length === 0 && lineItems) {
     const { loops: newLoops, tasks: newTasks, error: scopeError } = await generateScopeFromEstimate(
       projectId,
-      project.estimate_line_items,
-      project.build_tier || 'better'
+      lineItems,
+      buildTier
     );
 
     if (scopeError) {
@@ -1142,14 +1291,27 @@ export async function startProduction(projectId, project) {
 export async function signContract(projectId, contractData) {
   const { contractValue, selectedTier, lineItems } = contractData;
 
-  // Update project to contracted phase
-  const { data: project, error: projectError } = await updateProjectPhase(projectId, {
-    phase: 'contracted',
+  // First fetch the current project to get existing intake_data
+  const { data: currentProject, error: fetchError } = await getProject(projectId);
+  if (fetchError) {
+    return { data: null, error: fetchError };
+  }
+
+  // Merge new contract data into intake_data (since most columns don't exist at top level)
+  const updatedIntakeData = {
+    ...(currentProject?.intake_data || {}),
     phase_changed_at: new Date().toISOString(),
-    contract_value: contractValue,
     contract_signed_at: new Date().toISOString(),
     build_tier: selectedTier,
     estimate_line_items: lineItems,
+  };
+
+  // Update project to contracted phase
+  // Only 'phase' and 'contract_value' exist as top-level columns
+  const { data: project, error: projectError } = await updateProjectPhase(projectId, {
+    phase: 'contracted',
+    contract_value: contractValue,
+    intake_data: updatedIntakeData,
   });
 
   if (projectError) {
@@ -1373,15 +1535,135 @@ function generateDefaultTaskInstances(projectId) {
 }
 
 /**
+ * Convert estimate-based loop tasks to Task Tracker instance format
+ * This allows the LoopsView to display tasks generated from estimates
+ *
+ * If no tasks exist for a loop, creates a single task representing the loop itself
+ */
+function convertLoopTasksToInstances(projectId, loops, tasksMap) {
+  const instances = [];
+  let priority = 1;
+
+  console.log('[convertLoopTasksToInstances] Converting', loops.length, 'loops for project:', projectId);
+  console.log('[convertLoopTasksToInstances] tasksMap keys:', Object.keys(tasksMap));
+
+  for (const loop of loops) {
+    const loopTasks = tasksMap[loop.id] || [];
+    console.log('[convertLoopTasksToInstances] Loop', loop.id, loop.name, 'has', loopTasks.length, 'tasks');
+
+    if (loopTasks.length > 0) {
+      // Convert actual tasks from the loop
+      for (const task of loopTasks) {
+        instances.push({
+          id: task.id,
+          projectId,
+          templateId: null,
+          categoryCode: task.category_code || loop.category_code,
+          subcategoryCode: task.subcategory_code || null,
+          stageCode: 'ST-RI', // Default to rough-in stage
+          locationId: null,
+          locationPath: task.location || null,
+          name: task.title || task.name,
+          description: task.description || '',
+          status: task.status || 'pending',
+          priority: priority++,
+          assignedTo: task.assigned_to || null,
+          dueDate: task.due_date || null,
+          estimatedHours: task.estimated_hours || 0,
+          actualHours: task.actual_hours || 0,
+          source: task.source || 'estimate',
+          // Preserve budget info
+          budgetedAmount: task.budgeted_amount || 0,
+          quantity: task.quantity || 1,
+          loopId: loop.id,
+          loopName: loop.name,
+        });
+      }
+    } else {
+      // No tasks in this loop - create a placeholder task from the loop itself
+      // This ensures loops without individual tasks still appear in the task tracker
+      instances.push({
+        id: `inst-${loop.id}`,
+        projectId,
+        templateId: null,
+        categoryCode: loop.category_code,
+        subcategoryCode: null,
+        stageCode: 'ST-RI',
+        locationId: null,
+        locationPath: null,
+        name: loop.name,
+        description: `${loop.name} scope from estimate`,
+        status: loop.status || 'pending',
+        priority: priority++,
+        assignedTo: null,
+        dueDate: null,
+        estimatedHours: 0,
+        actualHours: 0,
+        source: 'estimate',
+        budgetedAmount: loop.budgeted_amount || 0,
+        quantity: loop.task_count || 1,
+        loopId: loop.id,
+        loopName: loop.name,
+      });
+    }
+  }
+
+  console.log('[convertLoopTasksToInstances] Created', instances.length, 'task instances');
+  return instances;
+}
+
+/**
  * Get task instances for a project with optional filtering
  */
 export async function getTaskInstances(projectId, filters = {}) {
   if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
-    let instances = mockTaskInstances[projectId];
+    // First check for estimate-generated loops/tasks - these take priority
+    const projectLoops = mockLoops[projectId] || [];
+    const hasEstimateLoops = projectLoops.some(loop => loop.source === 'estimate');
 
-    // Generate default instances if none exist for this project
-    if (!instances || instances.length === 0) {
-      instances = generateDefaultTaskInstances(projectId);
+    let instances;
+
+    // If we have estimate-based loops, ALWAYS use those (ignore cached mockTaskInstances)
+    if (hasEstimateLoops && projectLoops.length > 0) {
+      // Check if existing instances are from estimate or stale mock data
+      const existingInstances = mockTaskInstances[projectId] || [];
+      const existingAreFromEstimate = existingInstances.some(inst => inst.source === 'estimate');
+
+      // Also check if the existing instances match the current loops
+      // (in case loops were regenerated but instances weren't)
+      const existingLoopIds = new Set(existingInstances.map(inst => inst.loopId).filter(Boolean));
+      const currentLoopIds = new Set(projectLoops.map(loop => loop.id));
+      const loopsMatch = currentLoopIds.size > 0 &&
+        [...currentLoopIds].every(id => existingLoopIds.has(id));
+
+      // Regenerate from loops if:
+      // 1. No existing instances, OR
+      // 2. Existing instances aren't from estimate, OR
+      // 3. Loop IDs don't match (loops were regenerated)
+      if (!existingAreFromEstimate || existingInstances.length === 0 || !loopsMatch) {
+        console.log('[getTaskInstances] Converting estimate loops to task instances for project:', projectId);
+        console.log('[getTaskInstances] Reason: existingAreFromEstimate=', existingAreFromEstimate,
+          'existingLength=', existingInstances.length, 'loopsMatch=', loopsMatch);
+        instances = convertLoopTasksToInstances(projectId, projectLoops, mockTasks);
+        // Store these instances so updates persist
+        if (instances.length > 0) {
+          mockTaskInstances[projectId] = instances;
+          saveTaskTrackerToStorage();
+          console.log('[getTaskInstances] Stored', instances.length, 'task instances from estimate');
+        }
+      } else {
+        instances = existingInstances;
+        console.log('[getTaskInstances] Using existing estimate instances:', existingInstances.length);
+      }
+    } else if (projectLoops.length > 0) {
+      // Non-estimate loops exist, convert them
+      instances = convertLoopTasksToInstances(projectId, projectLoops, mockTasks);
+    } else {
+      // No loops at all - check for existing instances or generate defaults
+      instances = mockTaskInstances[projectId];
+      if (!instances || instances.length === 0) {
+        instances = generateDefaultTaskInstances(projectId);
+      }
     }
 
     // Apply filters

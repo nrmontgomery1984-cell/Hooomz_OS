@@ -18,6 +18,7 @@ import {
   EstimateBuilder,
   HomeownerQuote,
   Selections,
+  PhaseBuilder,
   Profile,
   Intake,
   ContractorIntake,
@@ -64,6 +65,7 @@ function App() {
           <Route path="/projects/:projectId/estimate" element={<EstimateBuilder />} />
           <Route path="/projects/:projectId/quote" element={<HomeownerQuote />} />
           <Route path="/projects/:projectId/selections" element={<Selections />} />
+          <Route path="/projects/:projectId/phases" element={<PhaseBuilder />} />
           <Route path="/projects/:projectId/loops/:loopId" element={<LoopDetail />} />
           <Route path="/projects/:projectId/loops/:loopId/tasks/:taskId" element={<TaskDetail />} />
 

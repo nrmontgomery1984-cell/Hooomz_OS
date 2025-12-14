@@ -425,6 +425,252 @@ export const FRAMING_CHECKLISTS = {
 };
 
 // ============================================================================
+// EXTERIOR WALL FRAMING LOOPS
+// Workflow: Batch Prep → Cyclical Section Work → Linear Finishing
+// ============================================================================
+export const EXTERIOR_WALL_LOOPS = {
+  // ─────────────────────────────────────────────────────────────────────────
+  // BATCH PREP PHASE (done once for all walls)
+  // ─────────────────────────────────────────────────────────────────────────
+  'layout-cut-plates': {
+    name: 'Layout & Cut Plates',
+    fieldGuideRef: 'FF-03',
+    loopType: 'batch', // batch | section | finish
+    order: 1,
+    tools: [
+      { id: 'ew-lp-t1', item: 'Tape measure (25ft+)', required: true },
+      { id: 'ew-lp-t2', item: 'Chalk line', required: true },
+      { id: 'ew-lp-t3', item: 'Circular saw', required: true },
+      { id: 'ew-lp-t4', item: 'Speed square', required: true },
+      { id: 'ew-lp-t5', item: 'Carpenter pencil / marker', required: true },
+      { id: 'ew-lp-t6', item: 'Sawhorses', required: true },
+    ],
+    materials: [
+      { id: 'ew-lp-m1', item: '2x6 plates (PT for bottom plate on concrete)', required: true },
+      { id: 'ew-lp-m2', item: 'Framing plan / blueprints', required: true },
+    ],
+    process: [
+      { id: 'ew-lp-p1', step: 'Snap chalk lines on deck for all exterior wall locations', critical: true },
+      { id: 'ew-lp-p2', step: 'Verify square using 3-4-5 triangle at corners', critical: true },
+      { id: 'ew-lp-p3', step: 'Cut all top and bottom plates to length', critical: true },
+      { id: 'ew-lp-p4', step: 'Transfer layout marks to plates (16" or 24" OC)', critical: true },
+      { id: 'ew-lp-p5', step: 'Mark all window and door openings on plates', critical: true },
+      { id: 'ew-lp-p6', step: 'Mark king, jack, and cripple stud positions', critical: false },
+      { id: 'ew-lp-p7', step: 'Plan top plate overlaps at corners (4\' minimum)', critical: false },
+    ],
+    photos: [
+      { id: 'ew-lp-ph1', shot: 'Chalk lines on deck showing layout', required: true },
+      { id: 'ew-lp-ph2', shot: 'Cut plates with layout marks', required: true },
+    ],
+  },
+
+  'prep-components': {
+    name: 'Prep Components',
+    fieldGuideRef: 'FF-03',
+    loopType: 'batch',
+    order: 2,
+    tools: [
+      { id: 'ew-pc-t1', item: 'Circular saw / miter saw', required: true },
+      { id: 'ew-pc-t2', item: 'Framing nailer', required: true },
+      { id: 'ew-pc-t3', item: 'Tape measure', required: true },
+      { id: 'ew-pc-t4', item: 'Speed square', required: true },
+      { id: 'ew-pc-t5', item: 'Sawhorses / assembly table', required: true },
+    ],
+    materials: [
+      { id: 'ew-pc-m1', item: 'Header material (2x10, 2x12, or LVL as specified)', required: true },
+      { id: 'ew-pc-m2', item: '1/2" plywood spacers for headers (2x6 walls)', required: true },
+      { id: 'ew-pc-m3', item: '2x6 studs for corners and channels', required: true },
+      { id: 'ew-pc-m4', item: 'Framing nails (16d, 10d)', required: true },
+    ],
+    process: [
+      { id: 'ew-pc-p1', step: 'Build all headers per opening schedule', critical: true },
+      { id: 'ew-pc-p2', step: 'Build corner assemblies (3-stud or California)', critical: true },
+      { id: 'ew-pc-p3', step: 'Build partition channels/backing', critical: false },
+      { id: 'ew-pc-p4', step: 'Pre-assemble king/jack stud pairs for each opening', critical: false },
+      { id: 'ew-pc-p5', step: 'Cut all cripple studs to length', critical: false },
+      { id: 'ew-pc-p6', step: 'Stage components near work area by wall section', critical: false },
+    ],
+    photos: [
+      { id: 'ew-pc-ph1', shot: 'Pre-built headers staged', required: true },
+      { id: 'ew-pc-ph2', shot: 'Corner assemblies ready', required: false },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // CYCLICAL SECTION WORK (repeated per wall section)
+  // These are templates - actual instances are created per project
+  // ─────────────────────────────────────────────────────────────────────────
+  'wall-section': {
+    name: 'Wall Section',
+    fieldGuideRef: 'FF-03',
+    loopType: 'section', // Dynamically instantiated per project
+    order: 10, // Base order - instances get 11, 12, 13, etc.
+    isDynamic: true, // Flags this as a template for dynamic instantiation
+    namingPrompt: 'Name this wall section (e.g., "North 32\'", "Front Wall")',
+    defaultNaming: 'sequential', // 'sequential' = Wall Section 1, 2, 3...
+    tools: [
+      { id: 'ew-ws-t1', item: 'Framing nailer', required: true },
+      { id: 'ew-ws-t2', item: 'Circular saw', required: true },
+      { id: 'ew-ws-t3', item: 'Speed square', required: true },
+      { id: 'ew-ws-t4', item: 'Level (4ft)', required: true },
+      { id: 'ew-ws-t5', item: 'Tape measure', required: true },
+      { id: 'ew-ws-t6', item: 'Framing hammer (backup)', required: false },
+      { id: 'ew-ws-t7', item: 'Wall braces (2x4 min 8ft)', required: true },
+      { id: 'ew-ws-t8', item: 'Wall jacks (for long/heavy walls)', required: false },
+    ],
+    materials: [
+      { id: 'ew-ws-m1', item: '2x6 studs', required: true },
+      { id: 'ew-ws-m2', item: 'Pre-built headers for this section', required: true },
+      { id: 'ew-ws-m3', item: 'Corner/channel assemblies', required: true },
+      { id: 'ew-ws-m4', item: 'Framing nails (16d)', required: true },
+      { id: 'ew-ws-m5', item: 'Sheathing (7/16" OSB or 1/2" plywood)', required: true },
+      { id: 'ew-ws-m6', item: 'Sheathing nails (8d)', required: true },
+    ],
+    process: [
+      { id: 'ew-ws-p1', step: 'Assemble wall on deck - studs to plates per layout', critical: true },
+      { id: 'ew-ws-p2', step: 'Install headers with king/jack studs', critical: true },
+      { id: 'ew-ws-p3', step: 'Install cripples above/below openings', critical: true },
+      { id: 'ew-ws-p4', step: 'Square wall - measure diagonals (within 1/8")', critical: true },
+      { id: 'ew-ws-p5', step: 'Sheathe wall on deck (if sheathing before standing)', critical: false },
+      { id: 'ew-ws-p6', step: 'Mark stud locations on sheathing face for siding', critical: false },
+      { id: 'ew-ws-p7', step: 'Stand wall with adequate crew (2+ for walls over 8\')', critical: true },
+      { id: 'ew-ws-p8', step: 'Install temporary bracing immediately', critical: true },
+      { id: 'ew-ws-p9', step: 'Check plumb and adjust bracing', critical: true },
+      { id: 'ew-ws-p10', step: 'Nail bottom plate to floor system', critical: true },
+    ],
+    photos: [
+      { id: 'ew-ws-ph1', shot: 'Assembled wall on deck showing layout', required: true },
+      { id: 'ew-ws-ph2', shot: 'Headers and openings framed', required: true },
+      { id: 'ew-ws-ph3', shot: 'Wall squared (diagonal measurement)', required: false },
+      { id: 'ew-ws-ph4', shot: 'Wall standing with temp bracing', required: true },
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // LINEAR FINISH PHASE (done once after all sections up)
+  // ─────────────────────────────────────────────────────────────────────────
+  'complete-nailing': {
+    name: 'Complete Nailing',
+    fieldGuideRef: 'FF-03',
+    loopType: 'finish',
+    order: 100,
+    tools: [
+      { id: 'ew-cn-t1', item: 'Framing nailer', required: true },
+      { id: 'ew-cn-t2', item: 'Framing hammer', required: true },
+      { id: 'ew-cn-t3', item: 'Nail puller', required: false },
+    ],
+    materials: [
+      { id: 'ew-cn-m1', item: 'Framing nails (16d)', required: true },
+      { id: 'ew-cn-m2', item: 'Sheathing nails (8d)', required: true },
+      { id: 'ew-cn-m3', item: 'Hurricane ties / connectors (if required)', required: false },
+    ],
+    process: [
+      { id: 'ew-cn-p1', step: 'Nail off all corner connections', critical: true },
+      { id: 'ew-cn-p2', step: 'Complete double top plate nailing (10d @ 16" OC)', critical: true },
+      { id: 'ew-cn-p3', step: 'Nail wall intersections and channels', critical: true },
+      { id: 'ew-cn-p4', step: 'Complete sheathing nail schedule (6" edges, 12" field)', critical: true },
+      { id: 'ew-cn-p5', step: 'Install hurricane ties if required by code', critical: false },
+      { id: 'ew-cn-p6', step: 'Verify no overdriven nails (add adjacent nail if found)', critical: true },
+    ],
+    photos: [
+      { id: 'ew-cn-ph1', shot: 'Corner connections complete', required: true },
+      { id: 'ew-cn-ph2', shot: 'Sheathing nail pattern visible', required: true },
+    ],
+  },
+
+  'level-brace': {
+    name: 'Level & Brace',
+    fieldGuideRef: 'FF-03',
+    loopType: 'finish',
+    order: 101,
+    tools: [
+      { id: 'ew-lb-t1', item: 'Level (4ft and 6ft)', required: true },
+      { id: 'ew-lb-t2', item: 'String line', required: true },
+      { id: 'ew-lb-t3', item: 'Wall braces / push sticks', required: true },
+      { id: 'ew-lb-t4', item: 'Framing nailer', required: true },
+      { id: 'ew-lb-t5', item: 'Sledge hammer (for adjustments)', required: false },
+    ],
+    materials: [
+      { id: 'ew-lb-m1', item: '2x4 or 2x6 for permanent bracing', required: true },
+      { id: 'ew-lb-m2', item: 'Let-in bracing or metal T-bracing (if not sheathed)', required: false },
+      { id: 'ew-lb-m3', item: 'Framing nails', required: true },
+    ],
+    process: [
+      { id: 'ew-lb-p1', step: 'Plumb all corners using 6ft level', critical: true },
+      { id: 'ew-lb-p2', step: 'Set string line along top plate (use spacer blocks)', critical: true },
+      { id: 'ew-lb-p3', step: 'Straighten walls to string at each stud location', critical: true },
+      { id: 'ew-lb-p4', step: 'Install permanent diagonal bracing to deck', critical: true },
+      { id: 'ew-lb-p5', step: 'Verify tolerance: plumb within 1/8" per 8ft', critical: true },
+      { id: 'ew-lb-p6', step: 'Remove temporary bracing only after permanent bracing secure', critical: true },
+    ],
+    photos: [
+      { id: 'ew-lb-ph1', shot: 'String line setup for straightening', required: false },
+      { id: 'ew-lb-ph2', shot: 'Permanent bracing installed', required: true },
+      { id: 'ew-lb-ph3', shot: 'Level reading at corner', required: true },
+    ],
+  },
+
+  'housewrap': {
+    name: 'Housewrap (WRB)',
+    fieldGuideRef: 'EW-02',
+    loopType: 'finish',
+    order: 102,
+    tools: [
+      { id: 'ew-hw-t1', item: 'Staple gun / cap stapler', required: true },
+      { id: 'ew-hw-t2', item: 'Tape dispenser for seam tape', required: true },
+      { id: 'ew-hw-t3', item: 'Utility knife', required: true },
+      { id: 'ew-hw-t4', item: 'Chalk line', required: false },
+      { id: 'ew-hw-t5', item: 'Ladder / scaffolding', required: true },
+    ],
+    materials: [
+      { id: 'ew-hw-m1', item: 'Housewrap (Tyvek, Typar, or equivalent)', required: true },
+      { id: 'ew-hw-m2', item: 'Seam tape (manufacturer specified)', required: true },
+      { id: 'ew-hw-m3', item: 'Cap staples or cap nails', required: true },
+      { id: 'ew-hw-m4', item: 'Flashing tape for openings', required: true },
+      { id: 'ew-hw-m5', item: 'Corner details / stretch tape', required: false },
+    ],
+    process: [
+      { id: 'ew-hw-p1', step: 'Start at corner, roll horizontally with 6" overlap vertical', critical: true },
+      { id: 'ew-hw-p2', step: 'Maintain 12" horizontal overlap (upper over lower)', critical: true },
+      { id: 'ew-hw-p3', step: 'Staple/nail per manufacturer spec (typically 12-18" OC)', critical: true },
+      { id: 'ew-hw-p4', step: 'Tape all horizontal and vertical seams', critical: true },
+      { id: 'ew-hw-p5', step: 'Cut openings using I-cut or modified I-cut method', critical: true },
+      { id: 'ew-hw-p6', step: 'Fold WRB into openings and secure', critical: true },
+      { id: 'ew-hw-p7', step: 'Install sill pan flashing at window openings', critical: true },
+      { id: 'ew-hw-p8', step: 'Flash all penetrations (vents, pipes, electrical)', critical: true },
+      { id: 'ew-hw-p9', step: 'Verify no tears or unsealed penetrations', critical: true },
+    ],
+    photos: [
+      { id: 'ew-hw-ph1', shot: 'WRB installed with seams taped', required: true },
+      { id: 'ew-hw-ph2', shot: 'Window opening with flashing', required: true },
+      { id: 'ew-hw-ph3', shot: 'Corner detail', required: true },
+    ],
+  },
+};
+
+// Summary of Exterior Wall workflow for display
+export const EXTERIOR_WALL_WORKFLOW = {
+  phases: [
+    {
+      name: 'Batch Prep',
+      description: 'Done once for all walls',
+      loops: ['layout-cut-plates', 'prep-components'],
+    },
+    {
+      name: 'Section Work',
+      description: 'Repeated per wall section (assemble → square → sheathe → stand)',
+      loops: ['wall-section'], // Template - instances created dynamically
+      isDynamic: true,
+    },
+    {
+      name: 'Linear Finish',
+      description: 'Done once after all walls up',
+      loops: ['complete-nailing', 'level-brace', 'housewrap'],
+    },
+  ],
+};
+
+// ============================================================================
 // MASTER CATEGORY MAPPING
 // ============================================================================
 export const CATEGORY_CHECKLISTS = {
@@ -433,11 +679,76 @@ export const CATEGORY_CHECKLISTS = {
   DW: DRYWALL_CHECKLISTS,
   TL: TILE_CHECKLISTS,
   FR: FRAMING_CHECKLISTS,
+  'FR-EW': EXTERIOR_WALL_LOOPS, // Exterior Wall Framing subcategory
 };
 
 // ============================================================================
 // CHECKLIST LOOKUP FUNCTION
 // ============================================================================
+
+/**
+ * Get exterior wall loop checklist based on task name keywords
+ * @param {string} taskNameLower - Lowercase task name
+ * @returns {Object|null} Loop checklist
+ */
+function getExteriorWallLoop(taskNameLower) {
+  // Match based on keywords in task name
+  if (taskNameLower.includes('layout') || taskNameLower.includes('plate')) {
+    return EXTERIOR_WALL_LOOPS['layout-cut-plates'];
+  }
+  if (taskNameLower.includes('prep') || taskNameLower.includes('component') || taskNameLower.includes('header')) {
+    return EXTERIOR_WALL_LOOPS['prep-components'];
+  }
+  if (taskNameLower.includes('section') || taskNameLower.includes('wall ') || taskNameLower.includes('assemble') || taskNameLower.includes('stand')) {
+    return EXTERIOR_WALL_LOOPS['wall-section'];
+  }
+  if (taskNameLower.includes('nail') || taskNameLower.includes('complete nail')) {
+    return EXTERIOR_WALL_LOOPS['complete-nailing'];
+  }
+  if (taskNameLower.includes('level') || taskNameLower.includes('brace') || taskNameLower.includes('plumb') || taskNameLower.includes('straight')) {
+    return EXTERIOR_WALL_LOOPS['level-brace'];
+  }
+  if (taskNameLower.includes('wrap') || taskNameLower.includes('wrb') || taskNameLower.includes('tyvek') || taskNameLower.includes('weather')) {
+    return EXTERIOR_WALL_LOOPS['housewrap'];
+  }
+
+  // Default to wall-section as it's the most common work
+  return EXTERIOR_WALL_LOOPS['wall-section'];
+}
+
+/**
+ * Get all exterior wall loops in workflow order
+ * @returns {Object[]} Array of loop checklists sorted by order
+ */
+export function getExteriorWallLoopsInOrder() {
+  return Object.values(EXTERIOR_WALL_LOOPS).sort((a, b) => a.order - b.order);
+}
+
+/**
+ * Create wall section instances for a project
+ * @param {number} count - Number of wall sections
+ * @param {string[]} names - Optional custom names for sections
+ * @returns {Object[]} Array of wall section loop instances
+ */
+export function createWallSectionInstances(count, names = []) {
+  const template = EXTERIOR_WALL_LOOPS['wall-section'];
+  const instances = [];
+
+  for (let i = 0; i < count; i++) {
+    const sectionNum = i + 1;
+    const name = names[i] || `Wall Section ${sectionNum}`;
+
+    instances.push({
+      ...template,
+      id: `wall-section-${sectionNum}`,
+      name: name,
+      order: template.order + sectionNum,
+      instanceNumber: sectionNum,
+    });
+  }
+
+  return instances;
+}
 
 /**
  * Get the appropriate checklist for a task based on category and task name/type
@@ -497,7 +808,15 @@ export function getChecklistForTask(categoryCode, taskName, stageCode) {
       checklistKey = 'floor'; // Default to floor tile
     }
   } else if (categoryCode === 'FR') {
-    checklistKey = 'interior'; // Currently only have interior framing
+    // Check for exterior wall framing keywords
+    if (taskNameLower.includes('exterior') || taskNameLower.includes('ext wall')) {
+      // Return from EXTERIOR_WALL_LOOPS instead
+      return getExteriorWallLoop(taskNameLower);
+    }
+    checklistKey = 'interior'; // Default to interior framing
+  } else if (categoryCode === 'FR-EW') {
+    // Direct exterior wall lookup
+    return getExteriorWallLoop(taskNameLower);
   }
 
   // Return the checklist or the first available one

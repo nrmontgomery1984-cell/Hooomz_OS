@@ -29,13 +29,12 @@ import {
   Hammer,
   Layers,
 } from 'lucide-react';
-import { Card, Button, Input, TextArea } from '../components/ui';
+import { Card, Button, Input, TextArea, useToast } from '../components/ui';
 import { usePermissions } from '../hooks/usePermissions';
 import { ContractorOnly, NotRole } from '../components/dev/PermissionGate';
 import {
   generateEstimateFromIntake,
   calculateEstimateTotals,
-  calculateEstimateRange,
   formatCurrency,
   formatSelectionLabel,
   BUILD_TIERS,
@@ -45,14 +44,14 @@ import {
   // Instance-based estimating
   getLevelsFromProject,
   loadAssemblyTemplates,
-  SCOPE_ITEMS,
   calculateInstanceTotals,
-  generateLineItemsFromInstances,
 } from '../lib/estimateHelpers';
 import { loadCatalogueData } from '../lib/costCatalogue';
 import { getProject, updateProject, updateProjectPhase } from '../services/api';
 import { SetupPanel, BulkAddMode, TallyMode, InstanceList } from '../components/estimate';
 import { AssemblyBuilder } from '../components/catalogue/AssemblyBuilder';
+import { AcceptanceCriteriaToggle, AcceptanceCriteriaDisplay } from '../components/estimates';
+import { getBestMatchingCriteria } from '../data/acceptanceCriteria';
 
 /**
  * EstimateBuilder - Create and edit project estimates
@@ -66,7 +65,8 @@ import { AssemblyBuilder } from '../components/catalogue/AssemblyBuilder';
 export function EstimateBuilder() {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const { isContractor, isHomeowner, isSubcontractor, visibleFields, role } = usePermissions();
+  const { isContractor, isHomeowner, isSubcontractor } = usePermissions();
+  const { showToast } = useToast();
 
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -100,11 +100,14 @@ export function EstimateBuilder() {
   const [ceilingHeight, setCeilingHeight] = useState(9);
   const [assemblies, setAssemblies] = useState(() => loadAssemblyTemplates());
   const [setupCollapsed, setSetupCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState('walls'); // 'walls' | 'openings' | 'surfaces' | 'mep'
+  const [activeTab, setActiveTab] = useState('structure'); // 'structure' | 'openings' | 'surfaces' | 'mep'
   const [showAssemblyBuilder, setShowAssemblyBuilder] = useState(false);
 
   // Levels state - initialized from project, but can be modified
   const [levels, setLevels] = useState([{ value: 'main', label: 'Main Floor' }]);
+
+  // Acceptance Criteria state
+  const [showAcceptanceCriteria, setShowAcceptanceCriteria] = useState(false);
 
   // Initialize levels from project when loaded
   useEffect(() => {
@@ -159,31 +162,67 @@ export function EstimateBuilder() {
         // Map contractor spec levels to estimate tiers
         // standard/premium/luxury → good/better/best
         const tierMap = { standard: 'good', premium: 'better', luxury: 'best' };
-        const rawTier = data.build_tier || 'better';
+        // Check intake_data first (where we save it), then fall back to top-level (legacy)
+        const rawTier = data.intake_data?.build_tier || data.build_tier || 'better';
         const mappedTier = tierMap[rawTier] || rawTier;
         // Ensure tier is valid
         const validTier = ['good', 'better', 'best'].includes(mappedTier) ? mappedTier : 'better';
         setSelectedTier(validTier);
-        setNotes(data.estimate_notes || '');
+        setNotes(data.intake_data?.estimate_notes || data.notes || data.estimate_notes || '');
 
-        // Load saved estimate type if available
-        if (data.estimate_type && ['both', 'materials', 'labor'].includes(data.estimate_type)) {
-          setEstimateType(data.estimate_type);
+        // Load saved estimate type if available (check intake_data first)
+        const savedEstimateType = data.intake_data?.estimate_type || data.estimate_type;
+        if (savedEstimateType && ['both', 'materials', 'labor'].includes(savedEstimateType)) {
+          setEstimateType(savedEstimateType);
         }
 
         // Generate initial estimate from intake or load saved
-        const estimate = generateEstimateFromIntake(data);
-        setLineItems(estimate.lineItems);
-        setEstimateSource(estimate.source || 'intake');
+        // Check intake_data for saved line items first
+        const savedLineItems = data.intake_data?.estimate_line_items || data.estimate_line_items;
+        let loadedLineItems = [];
+        if (savedLineItems && savedLineItems.length > 0) {
+          loadedLineItems = savedLineItems;
+          setLineItems(savedLineItems);
+          setEstimateSource('saved');
+        } else {
+          const estimate = generateEstimateFromIntake(data);
+          loadedLineItems = estimate.lineItems;
+          setLineItems(estimate.lineItems);
+          setEstimateSource(estimate.source || 'intake');
+        }
 
         // Check if catalogue rates were already applied
         if (data.catalogue_rates_applied) {
           setCatalogueApplied(true);
         }
 
+        // Load instance-based data if project has it
+        // Check both top-level (saved from EstimateBuilder) and intake_data (from contractor intake)
+        const projectInstances = data.instances || data.intake_data?.instances || [];
+        if (projectInstances.length > 0) {
+          setInstances(projectInstances);
+          setEntryMode('instance'); // Switch to instance mode automatically
+        }
+
+        // Load assemblies from project or intake_data
+        const projectAssemblies = data.assemblies || data.intake_data?.assemblies || [];
+        if (projectAssemblies.length > 0) {
+          setAssemblies(projectAssemblies);
+        }
+
+        // Load ceiling heights from project or intake_data
+        const projectCeilingHeights = data.ceilingHeights || data.intake_data?.building?.ceilingHeights;
+        if (projectCeilingHeights) {
+          // Handle both object format and single value
+          const height = typeof projectCeilingHeights === 'object'
+            ? projectCeilingHeights.main || 9
+            : projectCeilingHeights;
+          setCeilingHeight(height);
+        }
+
         // Expand all categories initially
         const categories = {};
-        estimate.lineItems.forEach((item) => {
+        loadedLineItems.forEach((item) => {
           categories[item.category] = true;
         });
         setExpandedCategories(categories);
@@ -210,10 +249,32 @@ export function EstimateBuilder() {
 
   // Calculate totals (always on full list for accurate totals)
   const totals = useMemo(() => calculateEstimateTotals(lineItems, estimateType), [lineItems, estimateType]);
-  const range = useMemo(
-    () => calculateEstimateRange(lineItems, selectedTier, estimateType),
-    [lineItems, selectedTier, estimateType]
-  );
+
+  // Determine which totals to display - prefer instance-based when available
+  const hasInstanceData = instances.length > 0;
+  const displayTotals = useMemo(() => {
+    if (hasInstanceData && instanceTotals.good > 0) {
+      return {
+        good: instanceTotals.good,
+        better: instanceTotals.better,
+        best: instanceTotals.best,
+        labor: instanceTotals.labor,
+        materials: instanceTotals.materials,
+        missingPricingCount: 0,
+        missingPricingItems: [],
+      };
+    }
+    return totals;
+  }, [hasInstanceData, instanceTotals, totals]);
+
+  // Calculate display range based on display totals
+  const displayRange = useMemo(() => {
+    const selectedTotal = displayTotals[selectedTier] || 0;
+    return {
+      low: Math.round(selectedTotal * 0.95),
+      high: Math.round(selectedTotal * 1.10),
+    };
+  }, [displayTotals, selectedTier]);
 
   // Get unique rooms and trades for filter dropdowns
   const { uniqueRooms, uniqueTrades } = useMemo(() => {
@@ -309,19 +370,43 @@ export function EstimateBuilder() {
   // Save estimate
   const handleSave = async () => {
     setSaving(true);
-    try {
-      await updateProject(projectId, {
-        estimate_low: range.low,
-        estimate_high: range.high,
+    console.log('[EstimateBuilder] Saving instances:', instances);
+    console.log('[EstimateBuilder] Instances count:', instances.length);
+
+    // Build the update payload
+    // Note: 'notes' column doesn't exist in the live DB, so we store it in intake_data
+    const updatePayload = {
+      estimate_low: displayRange.low,
+      estimate_high: displayRange.high,
+      intake_data: {
+        ...project?.intake_data,
+        instances: instances,
+        assemblies: assemblies,
         build_tier: selectedTier,
         estimate_type: estimateType,
         estimate_notes: notes,
         estimate_line_items: lineItems,
-      });
-      // Show success (in real app, use toast)
-      console.log('Estimate saved');
+      },
+    };
+
+    console.log('[EstimateBuilder] Update payload:', JSON.stringify(updatePayload, null, 2));
+
+    try {
+      const result = await updateProject(projectId, updatePayload);
+      console.log('[EstimateBuilder] Save result:', result);
+      if (result.error) {
+        console.error('[EstimateBuilder] Save error:', result.error);
+        showToast(`Failed to save: ${result.error.message || result.error}`, 'error');
+      } else {
+        showToast('Estimate saved successfully', 'success');
+        // Update local project state with saved data
+        if (result.data) {
+          setProject(result.data);
+        }
+      }
     } catch (error) {
       console.error('Failed to save estimate:', error);
+      showToast('Failed to save estimate', 'error');
     }
     setSaving(false);
   };
@@ -413,8 +498,8 @@ export function EstimateBuilder() {
 
             {/* Desktop actions */}
             <div className="hidden lg:flex items-center gap-3">
-              {/* View Mode Toggle - Only for Contractors */}
-              {isContractor && (
+              {/* View Mode Toggle - Show for contractors or when no role restrictions (production mode) */}
+              {(isContractor || (!isHomeowner && !isSubcontractor)) && (
                 <div className="flex items-center gap-2 mr-2">
                   <span className="text-xs text-gray-500">View as:</span>
                   <div className="flex rounded-lg border border-gray-200 overflow-hidden">
@@ -446,8 +531,8 @@ export function EstimateBuilder() {
                 </div>
               )}
 
-              {/* Homeowner read-only indicator */}
-              {effectiveViewMode === 'homeowner' && !isContractor && (
+              {/* Homeowner read-only indicator - only show when explicitly logged in as homeowner */}
+              {isHomeowner && (
                 <span className="text-xs text-emerald-600 bg-emerald-50 px-2 py-1 rounded flex items-center gap-1">
                   <Eye className="w-3 h-3" />
                   View Only
@@ -587,7 +672,7 @@ export function EstimateBuilder() {
             </Card>
 
             {/* Entry Mode Toggle */}
-            <Card className="p-4 border-2 border-red-500">
+            <Card className="p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-medium text-charcoal flex items-center gap-2">
                     <Ruler className="w-5 h-5" />
@@ -645,6 +730,12 @@ export function EstimateBuilder() {
                 </div>
             </Card>
 
+            {/* Acceptance Criteria Toggle */}
+            <AcceptanceCriteriaToggle
+              enabled={showAcceptanceCriteria}
+              onChange={setShowAcceptanceCriteria}
+            />
+
             {/* Tier Selector */}
             <Card className="p-4">
               <div className="flex items-center justify-between mb-4">
@@ -686,7 +777,7 @@ export function EstimateBuilder() {
                     </div>
                     <p className="text-xs text-gray-500">{tier.description}</p>
                     <p className="text-sm font-medium text-charcoal mt-2">
-                      {formatCurrency(totals[tier.id])}
+                      {formatCurrency(displayTotals[tier.id])}
                     </p>
                   </button>
                 ))}
@@ -714,7 +805,7 @@ export function EstimateBuilder() {
                   {/* Tab Bar */}
                   <div className="flex border-b border-gray-200 bg-gray-50">
                     {[
-                      { id: 'walls', label: 'Walls', icon: Layers },
+                      { id: 'structure', label: 'Structure', icon: Layers },  // Floors, walls, ceilings, roof framing
                       { id: 'openings', label: 'Openings', icon: Home },
                       { id: 'surfaces', label: 'Surfaces', icon: Package },
                       { id: 'mep', label: 'MEP', icon: Wrench },
@@ -736,9 +827,9 @@ export function EstimateBuilder() {
 
                   {/* Tab Content */}
                   <div className="p-4">
-                    {activeTab === 'walls' && (
+                    {activeTab === 'structure' && (
                       <BulkAddMode
-                        scopeCategory="walls"
+                        scopeCategory="structure"
                         levels={levels}
                         assemblies={assemblies.filter(a => a.category === 'framing')}
                         ceilingHeight={ceilingHeight}
@@ -1000,6 +1091,8 @@ export function EstimateBuilder() {
                               isEditing={editingItem === item.id}
                               selectedTier={selectedTier}
                               catalogueData={catalogueData}
+                              showAcceptanceCriteria={showAcceptanceCriteria}
+                              acceptanceCriteria={getBestMatchingCriteria(item)}
                               onEdit={() => setEditingItem(item.id)}
                               onSave={() => setEditingItem(null)}
                               onCancel={() => setEditingItem(null)}
@@ -1071,26 +1164,26 @@ export function EstimateBuilder() {
               )}
 
               {/* Missing Pricing Data Warning */}
-              {totals.missingPricingCount > 0 && (
+              {displayTotals.missingPricingCount > 0 && (
                 <div className="p-3 rounded-lg mb-4 bg-red-50 border border-red-200">
                   <div className="flex items-center gap-2 text-red-700 mb-2">
                     <AlertTriangle className="w-4 h-4" />
                     <span className="text-sm font-medium">
-                      {totals.missingPricingCount} item{totals.missingPricingCount > 1 ? 's' : ''} missing catalogue pricing
+                      {displayTotals.missingPricingCount} item{displayTotals.missingPricingCount > 1 ? 's' : ''} missing catalogue pricing
                     </span>
                   </div>
                   <p className="text-xs text-red-600 mb-2">
                     These items need manual pricing or catalogue data:
                   </p>
                   <ul className="text-xs text-red-600 space-y-1 max-h-24 overflow-y-auto">
-                    {totals.missingPricingItems.slice(0, 5).map((item, idx) => (
+                    {displayTotals.missingPricingItems.slice(0, 5).map((item, idx) => (
                       <li key={idx} className="truncate">
                         • {item.name} ({item.missing === 'both' ? 'no catalogue data' : `missing ${item.missing}`})
                       </li>
                     ))}
-                    {totals.missingPricingItems.length > 5 && (
+                    {displayTotals.missingPricingItems.length > 5 && (
                       <li className="text-red-500 italic">
-                        +{totals.missingPricingItems.length - 5} more...
+                        +{displayTotals.missingPricingItems.length - 5} more...
                       </li>
                     )}
                   </ul>
@@ -1113,7 +1206,7 @@ export function EstimateBuilder() {
                   </span>
                 </div>
                 <p className="text-2xl font-semibold text-charcoal">
-                  {formatCurrency(totals[selectedTier])}
+                  {formatCurrency(displayTotals[selectedTier])}
                 </p>
               </div>
 
@@ -1121,11 +1214,11 @@ export function EstimateBuilder() {
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Low Estimate (-5%)</span>
-                  <span className="font-medium">{formatCurrency(range.low)}</span>
+                  <span className="font-medium">{formatCurrency(displayRange.low)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">High Estimate (+10%)</span>
-                  <span className="font-medium">{formatCurrency(range.high)}</span>
+                  <span className="font-medium">{formatCurrency(displayRange.high)}</span>
                 </div>
               </div>
 
@@ -1152,7 +1245,7 @@ export function EstimateBuilder() {
                       }`}
                     >
                       <span>{BUILD_TIERS[tier]?.label || tier}</span>
-                      <span>{formatCurrency(totals[tier] || 0)}</span>
+                      <span>{formatCurrency(displayTotals[tier] || 0)}</span>
                     </div>
                   ))}
                 </div>
@@ -1373,6 +1466,8 @@ function LineItemRow({
   isEditing,
   selectedTier,
   catalogueData,
+  showAcceptanceCriteria,
+  acceptanceCriteria,
   onEdit,
   onSave,
   onCancel,
@@ -1612,67 +1707,76 @@ function LineItemRow({
   const isPieceRate = item.pricingMode === 'piece' && item.pieceRate;
 
   return (
-    <div className="grid grid-cols-12 gap-2 px-4 py-2 items-center hover:bg-gray-50 group">
-      {/* Name & Description */}
-      <div className="col-span-5">
-        <div className="flex items-center gap-2">
-          <p className="text-sm text-charcoal">{item.name}</p>
-          {isPieceRate && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded">
-              <Ruler className="w-3 h-3" />
-              ${item.pieceRate}/{item.pieceRateUnit}
-            </span>
+    <div className="hover:bg-gray-50 group">
+      <div className="grid grid-cols-12 gap-2 px-4 py-2 items-center">
+        {/* Name & Description */}
+        <div className="col-span-5">
+          <div className="flex items-center gap-2">
+            <p className="text-sm text-charcoal">{item.name}</p>
+            {isPieceRate && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded">
+                <Ruler className="w-3 h-3" />
+                ${item.pieceRate}/{item.pieceRateUnit}
+              </span>
+            )}
+          </div>
+          {item.description && (
+            <p className="text-xs text-gray-500 truncate">{item.description}</p>
           )}
         </div>
-        {item.description && (
-          <p className="text-xs text-gray-500 truncate">{item.description}</p>
-        )}
-      </div>
 
-      {/* Quantity with unit */}
-      <div className="col-span-1 text-center text-sm text-gray-600">
-        {item.quantity}
-        {isPieceRate && (
-          <span className="text-xs text-gray-400 ml-0.5">{item.pieceRateUnit}</span>
-        )}
-      </div>
+        {/* Quantity with unit */}
+        <div className="col-span-1 text-center text-sm text-gray-600">
+          {item.quantity}
+          {isPieceRate && (
+            <span className="text-xs text-gray-400 ml-0.5">{item.pieceRateUnit}</span>
+          )}
+        </div>
 
-      {/* Good */}
-      <div className={`col-span-2 text-right text-sm ${
-        selectedTier === 'good' ? 'font-medium text-charcoal' : 'text-gray-400'
-      }`}>
-        {formatCurrency(item.unitPriceGood * item.quantity)}
-      </div>
+        {/* Good */}
+        <div className={`col-span-2 text-right text-sm ${
+          selectedTier === 'good' ? 'font-medium text-charcoal' : 'text-gray-400'
+        }`}>
+          {formatCurrency(item.unitPriceGood * item.quantity)}
+        </div>
 
-      {/* Better */}
-      <div className={`col-span-2 text-right text-sm ${
-        selectedTier === 'better' ? 'font-medium text-charcoal' : 'text-gray-400'
-      }`}>
-        {formatCurrency(item.unitPriceBetter * item.quantity)}
-      </div>
+        {/* Better */}
+        <div className={`col-span-2 text-right text-sm ${
+          selectedTier === 'better' ? 'font-medium text-charcoal' : 'text-gray-400'
+        }`}>
+          {formatCurrency(item.unitPriceBetter * item.quantity)}
+        </div>
 
-      {/* Best */}
-      <div className={`col-span-2 text-right text-sm flex items-center justify-end gap-2 ${
-        selectedTier === 'best' ? 'font-medium text-charcoal' : 'text-gray-400'
-      }`}>
-        {formatCurrency(item.unitPriceBest * item.quantity)}
+        {/* Best */}
+        <div className={`col-span-2 text-right text-sm flex items-center justify-end gap-2 ${
+          selectedTier === 'best' ? 'font-medium text-charcoal' : 'text-gray-400'
+        }`}>
+          {formatCurrency(item.unitPriceBest * item.quantity)}
 
-        {/* Actions */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-          <button
-            onClick={onEdit}
-            className="p-1 hover:bg-gray-200 rounded"
-          >
-            <Edit2 className="w-3 h-3 text-gray-400" />
-          </button>
-          <button
-            onClick={onDelete}
-            className="p-1 hover:bg-red-100 rounded"
-          >
-            <Trash2 className="w-3 h-3 text-red-400" />
-          </button>
+          {/* Actions */}
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+            <button
+              onClick={onEdit}
+              className="p-1 hover:bg-gray-200 rounded"
+            >
+              <Edit2 className="w-3 h-3 text-gray-400" />
+            </button>
+            <button
+              onClick={onDelete}
+              className="p-1 hover:bg-red-100 rounded"
+            >
+              <Trash2 className="w-3 h-3 text-red-400" />
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Acceptance Criteria - shown below line item when enabled */}
+      {showAcceptanceCriteria && acceptanceCriteria && (
+        <div className="px-4 pb-2">
+          <AcceptanceCriteriaDisplay criteria={acceptanceCriteria} compact />
+        </div>
+      )}
     </div>
   );
 }

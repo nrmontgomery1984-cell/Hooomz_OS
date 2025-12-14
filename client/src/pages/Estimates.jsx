@@ -11,6 +11,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
+import { useToast } from '../components/ui';
 import { getProjects, createProject, deleteProject } from '../services/api';
 import {
   ROOM_TYPES,
@@ -30,9 +31,10 @@ export function Estimates() {
     async function loadEstimates() {
       setLoading(true);
       const { data } = await getProjects();
+      // Filter for projects in estimating phase only
+      // Note: 'phase' is the source of truth, 'status' is legacy
       const estimateProjects = (data || []).filter(p =>
-        (p.status === 'estimate' || p.phase === 'estimate' || p.phase === 'estimating') &&
-        p.status !== 'cancelled' && p.phase !== 'cancelled'
+        p.phase === 'estimating' && p.phase !== 'cancelled'
       );
       setEstimates(estimateProjects);
       setLoading(false);
@@ -120,6 +122,8 @@ export function Estimates() {
 }
 
 function EstimateCard({ project, onDelete }) {
+  const { showToast } = useToast();
+
   // Calculate days since creation - use useMemo to avoid impure function during render
   const days = useMemo(() => {
     return Math.floor(
@@ -133,9 +137,10 @@ function EstimateCard({ project, onDelete }) {
     if (window.confirm(`Delete "${project.name || 'this estimate'}"? This cannot be undone.`)) {
       const { error } = await deleteProject(project.id);
       if (error) {
-        alert('Failed to delete');
+        showToast('Failed to delete estimate', 'error');
       } else if (onDelete) {
         onDelete(project.id);
+        showToast('Estimate deleted', 'success');
       }
     }
   };

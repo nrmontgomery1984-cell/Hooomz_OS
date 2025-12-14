@@ -101,13 +101,38 @@ export function useDashboard(projectId) {
  * useDashboardFromData - Hook for using pre-loaded project data
  *
  * @param {Object} project - Project data object
+ * @param {Object} options - Optional overrides for dashboard data
+ * @param {Array} options.changeOrders - Change orders to include in budget
  * @returns {Object} Dashboard data
  */
-export function useDashboardFromData(project) {
+export function useDashboardFromData(project, options = {}) {
+  const { changeOrders } = options;
+
   const dashboardData = useMemo(() => {
     if (!project) return null;
-    return createDashboardFromProject(project);
-  }, [project]);
+    const data = createDashboardFromProject(project);
+
+    // Merge in change orders from localStorage if provided
+    if (changeOrders && data.budget) {
+      data.budget.changeOrders = changeOrders;
+
+      // Calculate approved change order total and adjust contract value
+      const approvedTotal = changeOrders
+        .filter(co => co.status === 'approved')
+        .reduce((sum, co) => sum + (co.amount || 0), 0);
+
+      if (approvedTotal !== 0) {
+        // Add approved change orders to contract value
+        data.budget.contractValue = (data.budget.contractValue || 0) + approvedTotal;
+        // Recalculate remaining based on new contract value
+        data.budget.totalRemaining = data.budget.contractValue - (data.budget.totalSpent || 0) - (data.budget.totalCommitted || 0);
+        // Store the approved CO total for display
+        data.budget.approvedChangeOrdersTotal = approvedTotal;
+      }
+    }
+
+    return data;
+  }, [project, changeOrders]);
 
   return { dashboardData };
 }

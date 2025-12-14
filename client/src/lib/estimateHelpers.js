@@ -1014,7 +1014,7 @@ function generateContractorEstimate(project, intake) {
             unit: itemData.unit || 'ea',
             quantity: itemData.qty,
             tradeCode: categoryCode,
-            source: cataloguePricing.source,
+            source: 'intake',
             // Catalogue pricing (null if not found)
             laborCost: cataloguePricing.laborCost,
             materialsCost: cataloguePricing.materialsCost,
@@ -1079,30 +1079,220 @@ function generateContractorEstimate(project, intake) {
 }
 
 /**
+ * Generate trade-based estimate for HomeownerQuote display
+ * Creates items with tradeCode for acceptance criteria matching
+ * Uses actual intake data when available, falls back to trade template
+ * Exported for use in HomeownerQuote
+ */
+export function generateTradeBasedEstimate(project) {
+  const intake = project.intake_data || {};
+
+  // Helper to check if items are real intake-based items (not old placeholder format)
+  const hasIntakeItems = (items) => {
+    // Items from intake data have source: 'intake' and specific trade info
+    // Old placeholder format has 3 generic items without source
+    return items.length > 0 && items.some(item =>
+      item.source === 'intake' || item.room || item.roomLabel
+    );
+  };
+
+  // Check for renovation intake first (most common)
+  const hasRenovationData = intake.renovation?.selected_rooms?.length > 0;
+  if (hasRenovationData) {
+    const estimate = generateRenovationEstimate(project, intake);
+    // Ensure all items have tradeCode
+    estimate.lineItems = estimate.lineItems.map(item => ({
+      ...item,
+      tradeCode: item.tradeCode || mapCategoryToTradeCode(item.category) || 'GC',
+    }));
+    if (hasIntakeItems(estimate.lineItems)) {
+      return estimate;
+    }
+  }
+
+  // Try contractor intake
+  if (project.intake_type === 'contractor' && intake.scope) {
+    const estimate = generateContractorEstimate(project, intake);
+    // Ensure all items have tradeCode
+    estimate.lineItems = estimate.lineItems.map(item => ({
+      ...item,
+      tradeCode: item.tradeCode || item.category || 'GC',
+    }));
+    if (hasIntakeItems(estimate.lineItems)) {
+      return estimate;
+    }
+  }
+
+  // Check for new construction intake
+  if (project.intake_type === 'new_construction' && intake.layout) {
+    const estimate = generateNewConstructionEstimate(project, intake);
+    // Ensure all items have tradeCode
+    estimate.lineItems = estimate.lineItems.map(item => ({
+      ...item,
+      tradeCode: item.tradeCode || mapCategoryToTradeCode(item.category) || 'GC',
+    }));
+    if (hasIntakeItems(estimate.lineItems)) {
+      return estimate;
+    }
+  }
+
+  // Fallback to blank trade-based template with 24 items across 10 categories
+  return generateBlankEstimate(project);
+}
+
+/**
+ * Map category names to trade codes for acceptance criteria matching
+ */
+function mapCategoryToTradeCode(category) {
+  if (!category) return null;
+  const cat = category.toLowerCase();
+
+  if (cat.includes('foundation') || cat.includes('concrete')) return 'FD';
+  if (cat.includes('framing') || cat.includes('structural')) return 'FR';
+  if (cat.includes('electrical')) return 'EL';
+  if (cat.includes('plumbing')) return 'PL';
+  if (cat.includes('hvac') || cat.includes('mechanical') || cat.includes('heating')) return 'HV';
+  if (cat.includes('insulation')) return 'IN';
+  if (cat.includes('drywall')) return 'DW';
+  if (cat.includes('paint')) return 'PT';
+  if (cat.includes('floor')) return 'FL';
+  if (cat.includes('tile')) return 'TL';
+  if (cat.includes('cabinet') || cat.includes('millwork') || cat.includes('trim')) return 'CA';
+  if (cat.includes('window') || cat.includes('door')) return 'WD';
+  if (cat.includes('roof')) return 'RF';
+  if (cat.includes('siding') || cat.includes('exterior')) return 'EX';
+  if (cat.includes('kitchen')) return 'KI';
+  if (cat.includes('bath')) return 'BA';
+
+  return 'GC'; // General Contractor
+}
+
+/**
  * Generate a blank estimate template for manual entry
+ * Creates trade-based line items that match acceptance criteria
  */
 function generateBlankEstimate(project) {
   const lineItems = [];
 
-  // Add common starter categories with placeholder items
-  const starterCategories = [
-    { category: 'Labor', name: 'Labor', description: 'Project labor costs' },
-    { category: 'Materials', name: 'Materials', description: 'Building materials' },
-    { category: 'Subcontractors', name: 'Subcontractor Work', description: 'Subcontracted trades' },
+  // Trade-based starter items that will match acceptance criteria
+  // Each item has tradeCode for criteria matching and realistic placeholder pricing
+  const tradeCategories = [
+    // Foundation & Concrete
+    {
+      category: 'Foundation & Concrete',
+      tradeCode: 'FD',
+      items: [
+        { name: 'Concrete Foundation Walls', description: 'Poured concrete foundation walls', basePrice: 8500 },
+        { name: 'Concrete Basement Floor', description: 'Basement slab with vapor barrier', basePrice: 4500 },
+      ],
+    },
+    // Framing
+    {
+      category: 'Framing',
+      tradeCode: 'FR',
+      items: [
+        { name: 'Wall Framing', description: 'Exterior and interior wall framing', basePrice: 12000 },
+        { name: 'Floor Framing', description: 'Floor joist system and subfloor', basePrice: 8000 },
+        { name: 'Ceiling Framing', description: 'Ceiling joists and rafters', basePrice: 6000 },
+      ],
+    },
+    // Windows & Doors
+    {
+      category: 'Windows & Doors',
+      tradeCode: 'WD',
+      items: [
+        { name: 'Windows', description: 'Window supply and installation', basePrice: 6500 },
+        { name: 'Exterior Doors', description: 'Entry and exterior door installation', basePrice: 3500 },
+        { name: 'Interior Doors', description: 'Interior door supply and installation', basePrice: 2500 },
+      ],
+    },
+    // Electrical
+    {
+      category: 'Electrical',
+      tradeCode: 'EL',
+      items: [
+        { name: 'Electrical Outlets', description: 'Receptacles and wiring', basePrice: 3000 },
+        { name: 'Light Switches', description: 'Switches and dimmers', basePrice: 1500 },
+        { name: 'Light Fixtures', description: 'Fixture installation', basePrice: 2500 },
+      ],
+    },
+    // Plumbing
+    {
+      category: 'Plumbing',
+      tradeCode: 'PL',
+      items: [
+        { name: 'Plumbing Fixtures', description: 'Sinks, faucets, toilets', basePrice: 4500 },
+        { name: 'Water Supply', description: 'Supply lines and connections', basePrice: 2500 },
+        { name: 'Drainage', description: 'Drain lines and venting', basePrice: 3000 },
+      ],
+    },
+    // Interior Finishes
+    {
+      category: 'Interior Finishes',
+      tradeCode: 'DW',
+      items: [
+        { name: 'Drywall Surface', description: 'Drywall installation and finishing', basePrice: 5500 },
+        { name: 'Painted Surfaces', description: 'Interior painting', basePrice: 3500 },
+      ],
+    },
+    // Flooring
+    {
+      category: 'Flooring',
+      tradeCode: 'FL',
+      items: [
+        { name: 'Finished Flooring', description: 'Hardwood, laminate, or vinyl flooring', basePrice: 4500 },
+        { name: 'Tile Flooring', description: 'Ceramic or porcelain tile', basePrice: 3500 },
+      ],
+    },
+    // Cabinets & Millwork
+    {
+      category: 'Cabinets & Millwork',
+      tradeCode: 'CA',
+      items: [
+        { name: 'Cabinet Installation', description: 'Kitchen and bathroom cabinets', basePrice: 8000 },
+        { name: 'Countertops', description: 'Countertop fabrication and installation', basePrice: 4500 },
+        { name: 'Trim & Baseboard', description: 'Baseboard, casing, and trim', basePrice: 2500 },
+      ],
+    },
+    // HVAC
+    {
+      category: 'Mechanical',
+      tradeCode: 'HV',
+      items: [
+        { name: 'Heating System', description: 'Furnace or heat pump installation', basePrice: 6500 },
+        { name: 'Ductwork', description: 'HVAC duct system', basePrice: 3500 },
+        { name: 'HVAC Registers & Grilles', description: 'Supply and return registers', basePrice: 800 },
+      ],
+    },
+    // Insulation
+    {
+      category: 'Insulation',
+      tradeCode: 'IN',
+      items: [
+        { name: 'Wall/Ceiling Insulation', description: 'Batt or blown insulation', basePrice: 3500 },
+        { name: 'Vapour Barrier', description: 'Poly vapor barrier installation', basePrice: 1200 },
+      ],
+    },
   ];
 
-  starterCategories.forEach((starter, index) => {
-    lineItems.push({
-      id: `starter-${index}`,
-      category: starter.category,
-      name: starter.name,
-      description: starter.description,
-      unit: 'lump',
-      quantity: 1,
-      unitPriceGood: 0,
-      unitPriceBetter: 0,
-      unitPriceBest: 0,
-      source: 'template',
+  let itemIndex = 0;
+  tradeCategories.forEach((trade) => {
+    trade.items.forEach((item) => {
+      lineItems.push({
+        id: `trade-${itemIndex++}`,
+        category: trade.category,
+        tradeCode: trade.tradeCode,
+        tradeName: trade.category,
+        name: item.name,
+        description: item.description,
+        unit: 'lump',
+        quantity: 1,
+        // Apply tier multipliers to base price
+        unitPriceGood: Math.round(item.basePrice * 1.0),
+        unitPriceBetter: Math.round(item.basePrice * 1.25),
+        unitPriceBest: Math.round(item.basePrice * 1.55),
+        source: 'template',
+      });
     });
   });
 
@@ -2201,14 +2391,22 @@ export function getAssemblyMaterialBreakdown(assembly, linearFeet, ceilingHeight
  * Maps to contractor intake schema items
  */
 export const SCOPE_ITEMS = {
-  // Framing - Walls (BulkAddMode)
-  walls: {
-    name: 'Walls',
+  // Structural Framing - Floors, Walls, Ceilings, Roof (BulkAddMode)
+  structure: {
+    name: 'Structural Framing',
     mode: 'bulk',
     items: [
+      // Wall Framing
       { id: 'fr-ext', name: 'Exterior Walls', unit: 'lf', convertToSF: true },
       { id: 'fr-int', name: 'Interior Walls', unit: 'lf', convertToSF: true },
       { id: 'fr-bearing', name: 'Bearing Walls', unit: 'lf', convertToSF: true },
+      // Floor Framing
+      { id: 'fr-floor', name: 'Floor Framing', unit: 'sf' },
+      { id: 'fr-subfloor', name: 'Subfloor Sheathing', unit: 'sf' },
+      // Ceiling/Roof Framing
+      { id: 'fr-ceil', name: 'Ceiling Framing', unit: 'sf' },
+      { id: 'fr-roof', name: 'Roof Framing', unit: 'sf' },
+      { id: 'fr-truss', name: 'Roof Trusses', unit: 'ea' },
     ],
   },
   // Windows & Doors (TallyMode)
@@ -2225,14 +2423,13 @@ export const SCOPE_ITEMS = {
       { id: 'wd-garage', name: 'Garage Doors', unit: 'ea', defaultCost: 1800 },
     ],
   },
-  // Ceilings & Floors (BulkAddMode by area)
+  // Finishes - Drywall, Flooring (BulkAddMode by area)
   surfaces: {
-    name: 'Ceilings & Floors',
+    name: 'Finishes',
     mode: 'bulk',
     items: [
-      { id: 'fr-ceil', name: 'Ceiling Framing', unit: 'sf' },
-      { id: 'fr-floor', name: 'Floor Framing', unit: 'sf' },
       { id: 'dw-ceil', name: 'Drywall Ceilings', unit: 'sf' },
+      { id: 'dw-walls', name: 'Drywall Walls', unit: 'sf' },
       { id: 'fl-lvp', name: 'LVP/Laminate Flooring', unit: 'sf' },
       { id: 'fl-hardwood', name: 'Hardwood Flooring', unit: 'sf' },
       { id: 'fl-tile', name: 'Tile Flooring', unit: 'sf' },

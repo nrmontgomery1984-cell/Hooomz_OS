@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package } from 'lucide-react';
+import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package, Layers, Eye, EyeOff } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button } from '../components/ui';
-import { ProjectDashboard, PhaseTransitionModal } from '../components/dashboard';
+import { ProjectDashboard, PhaseTransitionModal, AddChangeOrderModal, ChangeOrderDetailModal } from '../components/dashboard';
 import { AddLoopModal, LoopsView } from '../components/loops';
 import { ActivityFeed, AddActivityModal } from '../components/activity';
 import { AddExpenseModal, ExpenseList, ExpenseSummary } from '../components/expenses';
@@ -11,12 +11,13 @@ import { EstimatePanel } from '../components/estimates';
 import { useDashboardFromData, usePhaseTransition } from '../hooks';
 import {
   getProject,
-  getLoops,
+  getOrGenerateLoops,
   getProjectActivity,
   createActivityEntry,
   createLoop,
 } from '../services/api';
 import { getProjectExpenses, calculateProjectExpenseTotals } from '../lib/expenses';
+import { getProjectChangeOrders } from '../lib/changeOrders';
 
 export function ProjectView() {
   const { projectId } = useParams();
@@ -30,22 +31,25 @@ export function ProjectView() {
   const [showAddActivity, setShowAddActivity] = useState(false);
   const [showAddLoop, setShowAddLoop] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
+  const [showAddChangeOrder, setShowAddChangeOrder] = useState(false);
+  const [selectedChangeOrder, setSelectedChangeOrder] = useState(null);
   const [expenses, setExpenses] = useState([]);
+  const [changeOrders, setChangeOrders] = useState([]);
+  const [viewMode, setViewMode] = useState('contractor'); // 'contractor' | 'homeowner'
 
-  // Generate dashboard data from project
-  const { dashboardData } = useDashboardFromData(project);
+  // Generate dashboard data from project, including change orders from localStorage
+  const { dashboardData } = useDashboardFromData(project, { changeOrders });
 
   // Phase transition management
-  const handleProjectUpdate = (updatedProject) => {
+  const handleProjectUpdate = async (updatedProject) => {
     setProject(updatedProject);
     // Also refresh activities and loops to show the phase change and any generated loops
-    Promise.all([
+    const [activityRes, loopsRes] = await Promise.all([
       getProjectActivity(projectId),
-      getLoops(projectId),
-    ]).then(([activityRes, loopsRes]) => {
-      if (activityRes.data) setActivities(activityRes.data);
-      if (loopsRes.data) setLoops(loopsRes.data);
-    });
+      getOrGenerateLoops(projectId, updatedProject),
+    ]);
+    if (activityRes.data) setActivities(activityRes.data);
+    if (loopsRes.data) setLoops(loopsRes.data);
   };
 
   const phaseTransition = usePhaseTransition(project, handleProjectUpdate);
@@ -55,16 +59,21 @@ export function ProjectView() {
       setLoading(true);
       setActivityLoading(true);
 
-      const [projectRes, loopsRes, activityRes] = await Promise.all([
+      // First get project and activity in parallel
+      const [projectRes, activityRes] = await Promise.all([
         getProject(projectId),
-        getLoops(projectId),
         getProjectActivity(projectId),
       ]);
 
       setProject(projectRes.data);
-      setLoops(loopsRes.data || []);
       setActivities(activityRes.data || []);
+
+      // Then get or generate loops (needs project data to check for estimate)
+      const loopsRes = await getOrGenerateLoops(projectId, projectRes.data);
+      setLoops(loopsRes.data || []);
+
       setExpenses(getProjectExpenses(projectId));
+      setChangeOrders(getProjectChangeOrders(projectId));
       setLoading(false);
       setActivityLoading(false);
     }
@@ -78,6 +87,55 @@ export function ProjectView() {
 
   const handleExpenseDeleted = (expenseId) => {
     setExpenses(prev => prev.filter(e => e.id !== expenseId));
+  };
+
+  // Change order handlers
+  const handleChangeOrderAdded = async (changeOrder) => {
+    setChangeOrders(prev => [changeOrder, ...prev]);
+
+    // Log activity for change order creation
+    const entry = await createActivityEntry({
+      event_type: 'change_order.created',
+      event_data: {
+        title: changeOrder.title,
+        amount: changeOrder.amount,
+        reason: changeOrder.reason,
+      },
+      project_id: projectId,
+      actor_name: 'You',
+    });
+
+    if (entry.data) {
+      setActivities((prev) => [entry.data, ...prev]);
+    }
+  };
+
+  const handleChangeOrderUpdated = async (updatedChangeOrder) => {
+    setChangeOrders(prev => prev.map(co =>
+      co.id === updatedChangeOrder.id ? updatedChangeOrder : co
+    ));
+    setSelectedChangeOrder(null);
+
+    // Log activity for change order approval/decline
+    const eventType = updatedChangeOrder.status === 'approved'
+      ? 'change_order.approved'
+      : 'change_order.declined';
+
+    const entry = await createActivityEntry({
+      event_type: eventType,
+      event_data: {
+        title: updatedChangeOrder.title,
+        amount: updatedChangeOrder.amount,
+        approvedBy: updatedChangeOrder.approvedBy,
+        declinedReason: updatedChangeOrder.declinedReason,
+      },
+      project_id: projectId,
+      actor_name: updatedChangeOrder.approvedBy || 'You',
+    });
+
+    if (entry.data) {
+      setActivities((prev) => [entry.data, ...prev]);
+    }
   };
 
   const handleAddActivity = async (entry) => {
@@ -115,13 +173,27 @@ export function ProjectView() {
         setShowAddActivity(true);
         break;
       case 'view_estimate':
-        navigate(`/projects/${projectId}/estimate`);
+        // Homeowner goes to quote view, contractor goes to estimate builder
+        if (viewMode === 'homeowner') {
+          navigate(`/projects/${projectId}/quote`);
+        } else {
+          navigate(`/projects/${projectId}/estimate`);
+        }
+        break;
+      case 'preview_quote':
+        navigate(`/projects/${projectId}/quote`);
         break;
       case 'message_client':
         // Open email client with client email
         if (payload?.email) {
           window.location.href = `mailto:${payload.email}`;
         }
+        break;
+      case 'add_change_order':
+        setShowAddChangeOrder(true);
+        break;
+      case 'view_change_order':
+        setSelectedChangeOrder(payload);
         break;
       default:
         break;
@@ -243,6 +315,37 @@ export function ProjectView() {
           <Package className="w-4 h-4 flex-shrink-0" />
           <span className="hidden sm:inline">Selections</span>
         </button>
+        <button
+          onClick={() => navigate(`/projects/${projectId}/phases`)}
+          className="flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 active:text-charcoal transition-colors"
+        >
+          <Layers className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Phases</span>
+        </button>
+
+        {/* View Mode Toggle - right side */}
+        <div className="ml-auto flex items-center">
+          <button
+            onClick={() => setViewMode(viewMode === 'contractor' ? 'homeowner' : 'contractor')}
+            className={`flex items-center gap-1 px-2 lg:px-3 py-2 text-xs font-medium rounded-md transition-colors ${
+              viewMode === 'homeowner'
+                ? 'bg-emerald-100 text-emerald-700'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            {viewMode === 'homeowner' ? (
+              <>
+                <Eye className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Homeowner View</span>
+              </>
+            ) : (
+              <>
+                <EyeOff className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Contractor View</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Dashboard View */}
@@ -252,6 +355,7 @@ export function ProjectView() {
           project={project}
           onAction={handleDashboardAction}
           onPhaseTransition={phaseTransition.initiateTransition}
+          viewMode={viewMode}
         />
       )}
 
@@ -262,6 +366,7 @@ export function ProjectView() {
         project={project}
         targetPhase={phaseTransition.targetPhase}
         onConfirm={phaseTransition.confirmTransition}
+        transitionError={phaseTransition.transitionError}
       />
 
       {/* Loops View - Integrated Task Tracker */}
@@ -366,6 +471,23 @@ export function ProjectView() {
         onClose={() => setShowAddExpense(false)}
         projectId={projectId}
         onExpenseAdded={handleExpenseAdded}
+      />
+
+      {/* Add Change Order Modal */}
+      <AddChangeOrderModal
+        isOpen={showAddChangeOrder}
+        onClose={() => setShowAddChangeOrder(false)}
+        projectId={projectId}
+        onChangeOrderAdded={handleChangeOrderAdded}
+      />
+
+      {/* Change Order Detail Modal */}
+      <ChangeOrderDetailModal
+        isOpen={!!selectedChangeOrder}
+        onClose={() => setSelectedChangeOrder(null)}
+        changeOrder={selectedChangeOrder}
+        onUpdate={handleChangeOrderUpdated}
+        viewMode={viewMode}
       />
     </PageContainer>
   );

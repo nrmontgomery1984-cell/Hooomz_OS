@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Plus, Minus } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Plus, Minus, Calculator } from 'lucide-react';
 import {
   SCOPE_ITEMS,
   initializeTallyCounts,
-  tallyCountsToInstances,
+  createInstance,
 } from '../../lib/estimateHelpers';
 
 /**
@@ -13,6 +13,8 @@ import {
  * - Rows = item types (doors, windows, etc.)
  * - Columns = levels (Basement, Main, 2nd Floor, etc.)
  * - Each cell has +/- buttons and count
+ *
+ * Like BulkAddMode, this uses local state and an explicit "Add to Estimate" button.
  */
 export function TallyMode({
   scopeCategory = 'openings',
@@ -22,34 +24,29 @@ export function TallyMode({
 }) {
   const scopeItems = SCOPE_ITEMS[scopeCategory]?.items || [];
 
-  // Initialize counts from existing instances
-  const [counts, setCounts] = useState(() => {
-    const initial = initializeTallyCounts(levels, scopeItems);
+  // Memoize scopeItemIds so it doesn't change on every render
+  const scopeItemIds = useMemo(
+    () => scopeItems.map(item => item.id),
+    [scopeCategory]
+  );
 
-    // Populate from existing instances
+  // Local counts state (not synced to parent until "Add to Estimate" is clicked)
+  const [counts, setCounts] = useState(() => initializeTallyCounts(levels, scopeItems));
+
+  // Get existing counts from instances (for display)
+  const existingCounts = useMemo(() => {
+    const existing = {};
     instances
-      .filter(inst => scopeItems.some(item => item.id === inst.scopeItemId))
+      .filter(inst => scopeItemIds.includes(inst.scopeItemId))
       .forEach(inst => {
-        if (initial[inst.scopeItemId]?.[inst.level] !== undefined) {
-          initial[inst.scopeItemId][inst.level] += inst.measurement;
+        if (!existing[inst.scopeItemId]) {
+          existing[inst.scopeItemId] = {};
         }
+        existing[inst.scopeItemId][inst.level] =
+          (existing[inst.scopeItemId][inst.level] || 0) + (inst.measurement || 0);
       });
-
-    return initial;
-  });
-
-  // Sync back to instances when counts change
-  useEffect(() => {
-    // Remove old instances for this category
-    const otherInstances = instances.filter(
-      inst => !scopeItems.some(item => item.id === inst.scopeItemId)
-    );
-
-    // Add new instances from counts
-    const newInstances = tallyCountsToInstances(counts);
-
-    onInstancesChange?.([...otherInstances, ...newInstances]);
-  }, [counts]);
+    return existing;
+  }, [instances, scopeItemIds]);
 
   const handleIncrement = (itemId, levelValue) => {
     setCounts(prev => ({
@@ -82,7 +79,7 @@ export function TallyMode({
     }));
   };
 
-  // Calculate totals
+  // Calculate totals from LOCAL counts (pending)
   const getItemTotal = (itemId) => {
     return Object.values(counts[itemId] || {}).reduce((sum, count) => sum + count, 0);
   };
@@ -97,6 +94,15 @@ export function TallyMode({
     return scopeItems.reduce((sum, item) => sum + getItemTotal(item.id), 0);
   };
 
+  // Calculate totals from EXISTING instances (already saved)
+  const getExistingItemTotal = (itemId) => {
+    return Object.values(existingCounts[itemId] || {}).reduce((sum, count) => sum + count, 0);
+  };
+
+  const getExistingGrandTotal = () => {
+    return scopeItems.reduce((sum, item) => sum + getExistingItemTotal(item.id), 0);
+  };
+
   // Calculate cost estimates
   const getItemCost = (item) => {
     const total = getItemTotal(item.id);
@@ -107,8 +113,67 @@ export function TallyMode({
     return scopeItems.reduce((sum, item) => sum + getItemCost(item), 0);
   };
 
+  // Add to Estimate - commits current counts to instances
+  const handleAddToEstimate = () => {
+    const newInstances = [];
+
+    // Convert counts to instances
+    Object.entries(counts).forEach(([scopeItemId, levelCounts]) => {
+      Object.entries(levelCounts).forEach(([level, count]) => {
+        if (count > 0) {
+          newInstances.push(
+            createInstance({
+              scopeItemId,
+              level,
+              measurement: count,
+            })
+          );
+        }
+      });
+    });
+
+    console.log('[TallyMode] Adding instances:', newInstances);
+    console.log('[TallyMode] Current counts:', counts);
+
+    if (newInstances.length === 0) {
+      console.log('[TallyMode] No instances to add');
+      return;
+    }
+
+    // Keep instances from other categories, add new ones
+    const otherInstances = instances.filter(
+      inst => !scopeItemIds.includes(inst.scopeItemId)
+    );
+    const allInstances = [...otherInstances, ...newInstances];
+    console.log('[TallyMode] Other instances:', otherInstances.length);
+    console.log('[TallyMode] Total instances after add:', allInstances.length);
+
+    onInstancesChange(allInstances);
+
+    // Reset local counts
+    setCounts(initializeTallyCounts(levels, scopeItems));
+  };
+
+  const pendingTotal = getGrandTotal();
+  const existingTotal = getExistingGrandTotal();
+
   return (
     <div className="space-y-4">
+      {/* Existing Items Summary */}
+      {existingTotal > 0 && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+          <div className="text-sm text-blue-800 font-medium">
+            Already in estimate: {existingTotal} items
+          </div>
+          <div className="text-xs text-blue-600 mt-1">
+            {scopeItems.map(item => {
+              const count = getExistingItemTotal(item.id);
+              return count > 0 ? `${item.name}: ${count}` : null;
+            }).filter(Boolean).join(' • ')}
+          </div>
+        </div>
+      )}
+
       {/* Tally Grid */}
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
@@ -225,7 +290,7 @@ export function TallyMode({
                 })}
                 <td className="px-3 py-2 text-center">
                   <span className="inline-flex items-center justify-center min-w-[40px] px-2 py-1 rounded-full text-sm font-bold bg-charcoal text-white">
-                    {getGrandTotal()}
+                    {pendingTotal}
                   </span>
                 </td>
                 <td className="px-3 py-2 text-right">
@@ -239,10 +304,31 @@ export function TallyMode({
         </div>
       </div>
 
+      {/* Subtotal & Add to Estimate Button */}
+      <div className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-3">
+        <div>
+          <div className="text-sm text-gray-600">
+            Pending: <span className="font-semibold text-charcoal">{pendingTotal} items</span>
+          </div>
+          {getTotalCost() > 0 && (
+            <div className="text-xs text-gray-500">
+              Est. cost: ${getTotalCost().toLocaleString()}
+            </div>
+          )}
+        </div>
+        <button
+          onClick={handleAddToEstimate}
+          disabled={pendingTotal === 0}
+          className="flex items-center gap-2 px-4 py-2 bg-charcoal text-white rounded-lg text-sm font-medium hover:bg-charcoal/90 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Calculator className="w-4 h-4" />
+          Add to Estimate
+        </button>
+      </div>
+
       {/* Help Text */}
       <p className="text-xs text-gray-500">
-        Use +/- buttons or type directly to count items per level.
-        Costs are estimates based on default rates.
+        Use +/- buttons or type directly to count items per level, then click "Add to Estimate".
       </p>
     </div>
   );

@@ -396,48 +396,95 @@ export function ReviewStep({ data, onEditStep }) {
             </h3>
           </div>
           <div className="p-4">
-            {/* Summary totals */}
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Labour</div>
-                <div className="text-lg font-semibold text-charcoal">{costEstimate.labour}</div>
-              </div>
-              <div className="text-center p-3 bg-gray-50 rounded-lg">
-                <div className="text-xs text-gray-500 mb-1">Materials (est)</div>
-                <div className="text-lg font-semibold text-charcoal">{costEstimate.materials}</div>
-              </div>
-              <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
-                <div className="text-xs text-green-600 mb-1">Total Estimate</div>
-                <div className="text-lg font-bold text-green-700">{costEstimate.total}</div>
-              </div>
-            </div>
-
-            {/* Low confidence warning */}
-            {costEstimate.lowConfidenceCount > 0 && (
-              <div className="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg mb-4">
-                <AlertTriangle className="w-4 h-4 text-yellow-600 flex-shrink-0 mt-0.5" />
-                <div className="text-xs text-yellow-800">
-                  <span className="font-medium">{costEstimate.lowConfidenceCount} items</span> use estimated rates (not from verified quotes).
-                  Review these in the Cost Catalogue for more accurate pricing.
-                </div>
-              </div>
-            )}
-
-            {/* Category breakdown */}
-            <div className="space-y-3">
-              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                Breakdown by Category
-              </div>
-              {costBreakdown.map(category => (
-                <div key={category.code} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-                  <div>
-                    <span className="text-sm font-medium text-charcoal">{category.name}</span>
-                    <span className="text-xs text-gray-400 ml-2">({category.itemCount} items)</span>
+            {/* Summary totals - use instanceTotals if available, fallback to costEstimate */}
+            {hasInstances && instanceTotals ? (
+              <>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs text-gray-500 mb-1">Labour</div>
+                    <div className="text-lg font-semibold text-charcoal">{formatCurrency(instanceTotals.labor)}</div>
                   </div>
-                  <span className="text-sm font-mono text-gray-700">{category.total}</span>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs text-gray-500 mb-1">Materials (est)</div>
+                    <div className="text-lg font-semibold text-charcoal">{formatCurrency(instanceTotals.materials)}</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+                    <div className="text-xs text-green-600 mb-1">Total Estimate</div>
+                    <div className="text-lg font-bold text-green-700">{formatCurrency(instanceTotals.better)}</div>
+                  </div>
                 </div>
-              ))}
-            </div>
+
+                {/* Category breakdown for instances */}
+                <div className="space-y-3">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                    Breakdown by Category
+                  </div>
+                  {Object.entries(instancesByCategory).map(([categoryKey, categoryData]) => {
+                    // Calculate category total from instances
+                    const categoryTotal = categoryData.instances.reduce((sum, inst) => {
+                      const itemDef = categoryData.items.find(i => i.id === inst.scopeItemId);
+                      // Use instance.total if available, otherwise estimate
+                      return sum + (inst.total || 0);
+                    }, 0);
+                    return (
+                      <div key={categoryKey} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+                        <div>
+                          <span className="text-sm font-medium text-charcoal">{categoryData.name}</span>
+                          <span className="text-xs text-gray-400 ml-2">({categoryData.instances.length} items)</span>
+                        </div>
+                        <span className="text-sm font-mono text-gray-700">
+                          {categoryTotal > 0 ? formatCurrency(categoryTotal) : '—'}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs text-gray-500 mb-1">Labour</div>
+                    <div className="text-lg font-semibold text-charcoal">{costEstimate.labour}</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-xs text-gray-500 mb-1">Materials (est)</div>
+                    <div className="text-lg font-semibold text-charcoal">{costEstimate.materials}</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+                    <div className="text-xs text-green-600 mb-1">Total Estimate</div>
+                    <div className="text-lg font-bold text-green-700">{costEstimate.total}</div>
+                  </div>
+                </div>
+
+                {/* Low confidence warning */}
+                {costEstimate.lowConfidenceCount > 0 && (
+                  <div className="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg mb-4">
+                    <AlertTriangle className="w-4 h-4 text-yellow-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-xs text-yellow-800">
+                      <span className="font-medium">{costEstimate.lowConfidenceCount} items</span> use estimated rates (not from verified quotes).
+                      Review these in the Cost Catalogue for more accurate pricing.
+                    </div>
+                  </div>
+                )}
+
+                {/* Category breakdown */}
+                <div className="space-y-3">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                    Breakdown by Category
+                  </div>
+                  {costBreakdown.map(category => (
+                    <div key={category.code} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+                      <div>
+                        <span className="text-sm font-medium text-charcoal">{category.name}</span>
+                        <span className="text-xs text-gray-400 ml-2">({category.itemCount} items)</span>
+                      </div>
+                      <span className="text-sm font-mono text-gray-700">{category.total}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
 
             {/* Spec level note */}
             <div className="mt-4 pt-3 border-t border-gray-100">

@@ -22,7 +22,7 @@ import {
  * 5. Click "Calculate" to finalize
  */
 export function BulkAddMode({
-  scopeCategory = 'walls',
+  scopeCategory = 'structure',
   levels,
   assemblies,
   ceilingHeight, // legacy single value

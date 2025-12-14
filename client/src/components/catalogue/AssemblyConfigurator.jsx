@@ -1,77 +1,22 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Plus,
   Trash2,
   Save,
   X,
   Play,
-  Calculator,
   Package,
   Hammer,
-  Layers,
   ChevronDown,
   ChevronRight,
-  Info,
-  Copy,
   Settings,
-  DollarSign,
 } from 'lucide-react';
 import { Card, Button, Input } from '../ui';
 import { getMaterials, formatCurrency } from '../../lib/costCatalogue';
-import {
-  calculateWallMaterials,
-  LUMBER_DIMENSIONS,
-  SHEATHING_TYPES,
-  INSULATION_TYPES,
-} from '../../lib/wallMaterialCalculator';
+import { ASSEMBLY_CATEGORIES } from '../../data/assemblyCategories';
 
-/**
- * Formula types supported by the configurator
- */
-const FORMULA_TYPES = {
-  // Quantity based on linear feet
-  PER_LF: {
-    id: 'per_lf',
-    name: 'Per Linear Foot',
-    description: 'Quantity = Linear Feet × Multiplier',
-    calculate: (lf, height, multiplier) => lf * multiplier,
-  },
-  // Quantity based on wall area (LF × height)
-  PER_SF: {
-    id: 'per_sf',
-    name: 'Per Square Foot',
-    description: 'Quantity = (Linear Feet × Height) ÷ Coverage',
-    calculate: (lf, height, coverage) => (lf * height) / coverage,
-  },
-  // Fixed quantity per project
-  FIXED: {
-    id: 'fixed',
-    name: 'Fixed Quantity',
-    description: 'Always use this quantity regardless of measurements',
-    calculate: (lf, height, qty) => qty,
-  },
-  // Plates: calculate based on lumber lengths
-  PLATES: {
-    id: 'plates',
-    name: 'Plate Calculation',
-    description: 'Bottom (1×) + Top (2×) plates from lumber lengths',
-    calculate: (lf, height, lumberLength) => Math.ceil((lf * 3) / lumberLength),
-  },
-  // Studs: one per linear foot
-  STUDS: {
-    id: 'studs',
-    name: 'Stud Calculation',
-    description: '1 stud per linear foot (16" OC simplified)',
-    calculate: (lf, height, multiplier = 1) => Math.ceil(lf * multiplier),
-  },
-  // Sheet goods: based on coverage per sheet
-  SHEETS: {
-    id: 'sheets',
-    name: 'Sheet Calculation',
-    description: 'Wall Area ÷ Sheet Coverage (e.g., 32 SF per 4×8 sheet)',
-    calculate: (lf, height, sqftPerSheet) => Math.ceil((lf * height) / sqftPerSheet),
-  },
-};
+// Re-export for backwards compatibility
+export { ASSEMBLY_CATEGORIES };
 
 /**
  * AssemblyConfigurator - Build custom assemblies with formulas
@@ -88,7 +33,30 @@ export function AssemblyConfigurator({
   const [name, setName] = useState(existingAssembly?.name || '');
   const [description, setDescription] = useState(existingAssembly?.description || '');
   const [category, setCategory] = useState(existingAssembly?.category || 'framing');
+  const [subcategory, setSubcategory] = useState(existingAssembly?.subcategory || existingAssembly?.scopeItemId || '');
   const [unit, setUnit] = useState(existingAssembly?.unit || 'LF');
+
+  // Auto-update unit when subcategory changes
+  const handleSubcategoryChange = (newSubcategory) => {
+    setSubcategory(newSubcategory);
+    // Find the subcategory and set its default unit
+    const catData = ASSEMBLY_CATEGORIES[category];
+    const subcat = catData?.subcategories?.find(s => s.id === newSubcategory);
+    if (subcat?.unit) {
+      setUnit(subcat.unit);
+    }
+  };
+
+  // Auto-update subcategory when category changes
+  const handleCategoryChange = (newCategory) => {
+    setCategory(newCategory);
+    const catData = ASSEMBLY_CATEGORIES[newCategory];
+    if (catData?.subcategories?.length > 0) {
+      const firstSubcat = catData.subcategories[0];
+      setSubcategory(firstSubcat.id);
+      setUnit(firstSubcat.unit);
+    }
+  };
 
   // Material components with formulas
   const [components, setComponents] = useState(
@@ -106,39 +74,25 @@ export function AssemblyConfigurator({
   const [testCeilingHeight, setTestCeilingHeight] = useState(9);
 
   // UI state
-  const [showAddComponent, setShowAddComponent] = useState(false);
   const [expandedSections, setExpandedSections] = useState({
     components: true,
     labor: true,
     preview: true,
   });
 
-  // Material search
-  const [materialSearch, setMaterialSearch] = useState('');
-
-  const filteredMaterials = useMemo(() => {
-    if (!materialSearch) return materials.slice(0, 20);
-    const query = materialSearch.toLowerCase();
-    return materials
-      .filter(m => m.name.toLowerCase().includes(query) || m.category.includes(query))
-      .slice(0, 20);
-  }, [materials, materialSearch]);
-
-  // Add a component
-  const addComponent = (material) => {
+  // Add a new empty component
+  const addComponent = () => {
     const newComponent = {
       id: `comp-${Date.now()}`,
-      materialId: material.id,
-      materialName: material.name,
-      materialUnit: material.unit,
-      materialUnitCost: material.unitCost,
-      formulaType: 'per_lf',
-      formulaValue: 1, // Default multiplier
-      description: '',
+      name: '',
+      materialId: null,
+      materialName: '',
+      materialUnit: '',
+      materialUnitCost: 0,
+      amount: 0, // Amount of material unit per 1 LF of assembly
     };
     setComponents([...components, newComponent]);
     setShowAddComponent(false);
-    setMaterialSearch('');
   };
 
   // Update a component
@@ -153,16 +107,7 @@ export function AssemblyConfigurator({
     setComponents(components.filter(c => c.id !== componentId));
   };
 
-  // Calculate component cost
-  const calculateComponentCost = useCallback((component, lf, height) => {
-    const formula = FORMULA_TYPES[component.formulaType.toUpperCase()] ||
-                    FORMULA_TYPES.PER_LF;
-    const quantity = formula.calculate(lf, height, component.formulaValue);
-    const cost = quantity * component.materialUnitCost;
-    return { quantity, cost };
-  }, []);
-
-  // Calculate total preview
+  // Calculate total preview using simple amount × cost
   const preview = useMemo(() => {
     const lf = testLinearFeet || 0;
     const height = testCeilingHeight || 9;
@@ -170,7 +115,9 @@ export function AssemblyConfigurator({
 
     let materialsCost = 0;
     const componentBreakdown = components.map(component => {
-      const { quantity, cost } = calculateComponentCost(component, lf, height);
+      // Simple calculation: amount per LF × linear feet × unit cost
+      const quantity = (component.amount || 0) * lf;
+      const cost = quantity * (component.materialUnitCost || 0);
       materialsCost += cost;
       return {
         ...component,
@@ -193,7 +140,7 @@ export function AssemblyConfigurator({
       totalCost,
       costPerLF,
     };
-  }, [components, testLinearFeet, testCeilingHeight, laborRate, calculateComponentCost]);
+  }, [components, testLinearFeet, testCeilingHeight, laborRate]);
 
   // Save assembly
   const handleSave = () => {
@@ -207,6 +154,8 @@ export function AssemblyConfigurator({
       name: name.trim(),
       description: description.trim(),
       category,
+      subcategory: subcategory || null, // Scope item ID (e.g., 'fr-ext', 'fl-lvp')
+      scopeItemId: subcategory || null, // Alias for compatibility with SCOPE_ITEMS
       unit,
       laborCostPerUnit: laborRate,
       laborFormula,
@@ -259,22 +208,52 @@ export function AssemblyConfigurator({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
+              Unit
+            </label>
+            <select
+              value={unit}
+              onChange={(e) => setUnit(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-charcoal focus:border-transparent"
+            >
+              <option value="LF">Linear Feet (LF)</option>
+              <option value="SF">Square Feet (SF)</option>
+              <option value="EA">Each (EA)</option>
+              <option value="SQ">Square (100 SF)</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Category
             </label>
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-charcoal focus:border-transparent"
             >
-              <option value="framing">Framing</option>
-              <option value="electrical">Electrical</option>
-              <option value="plumbing">Plumbing</option>
-              <option value="hvac">HVAC</option>
-              <option value="drywall">Drywall</option>
-              <option value="flooring">Flooring</option>
-              <option value="roofing">Roofing</option>
-              <option value="exterior">Exterior</option>
+              {Object.entries(ASSEMBLY_CATEGORIES).map(([key, cat]) => (
+                <option key={key} value={key}>{cat.name}</option>
+              ))}
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Subcategory (Scope Item)
+            </label>
+            <select
+              value={subcategory}
+              onChange={(e) => handleSubcategoryChange(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-charcoal focus:border-transparent"
+            >
+              <option value="">-- Select subcategory --</option>
+              {ASSEMBLY_CATEGORIES[category]?.subcategories?.map((sub) => (
+                <option key={sub.id} value={sub.id}>
+                  {sub.name} ({sub.unit})
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-1">
+              Links this assembly to a specific scope item for estimating
+            </p>
           </div>
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -317,6 +296,7 @@ export function AssemblyConfigurator({
                 <ComponentRow
                   key={component.id}
                   component={component}
+                  materials={materials}
                   onUpdate={(updates) => updateComponent(component.id, updates)}
                   onRemove={() => removeComponent(component.id)}
                 />
@@ -324,53 +304,15 @@ export function AssemblyConfigurator({
             )}
 
             {/* Add Component */}
-            {showAddComponent ? (
-              <div className="border border-gray-200 rounded-lg p-3 bg-gray-50">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">Add Material</span>
-                  <button
-                    onClick={() => {
-                      setShowAddComponent(false);
-                      setMaterialSearch('');
-                    }}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-                <Input
-                  value={materialSearch}
-                  onChange={(e) => setMaterialSearch(e.target.value)}
-                  placeholder="Search materials..."
-                  className="mb-2"
-                  autoFocus
-                />
-                <div className="max-h-48 overflow-y-auto space-y-1">
-                  {filteredMaterials.map((material) => (
-                    <button
-                      key={material.id}
-                      onClick={() => addComponent(material)}
-                      className="w-full text-left px-3 py-2 text-sm rounded hover:bg-white transition-colors flex justify-between"
-                    >
-                      <span>{material.name}</span>
-                      <span className="text-gray-500">
-                        {formatCurrency(material.unitCost)}/{material.unit}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => setShowAddComponent(true)}
-                className="w-full"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Add Material Component
-              </Button>
-            )}
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={addComponent}
+              className="w-full"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Add Component
+            </Button>
           </div>
         )}
       </Card>
@@ -523,161 +465,159 @@ export function AssemblyConfigurator({
 }
 
 /**
- * ComponentRow - Individual material component with clear quantity configuration
+ * ComponentRow - Material component with simple quantity configuration
+ *
+ * Each component has:
+ * - Name: What you call it (e.g., "Bottom Plate")
+ * - Material: From catalogue (e.g., "2x4x8 KD" @ $3.90/EA)
+ * - Amount: How many units of the material per 1 LF of assembly
  */
-function ComponentRow({ component, onUpdate, onRemove }) {
-  const [expanded, setExpanded] = useState(true); // Default expanded for clarity
+function ComponentRow({ component, onUpdate, onRemove, materials }) {
+  const [showMaterialPicker, setShowMaterialPicker] = useState(false);
+  const [materialSearch, setMaterialSearch] = useState('');
 
-  // Calculate example for 1 LF at 9' ceiling
-  const exampleQty = useMemo(() => {
-    const formula = FORMULA_TYPES[component.formulaType?.toUpperCase()] || FORMULA_TYPES.PER_LF;
-    return formula.calculate(1, 9, component.formulaValue);
-  }, [component.formulaType, component.formulaValue]);
+  // Calculate cost per assembly unit
+  const costPerUnit = (component.amount || 0) * (component.materialUnitCost || 0);
 
-  const exampleCost = exampleQty * component.materialUnitCost;
+  // Filter materials for picker
+  const filteredMaterials = useMemo(() => {
+    if (!materials) return [];
+    if (!materialSearch) return materials.slice(0, 15);
+    const query = materialSearch.toLowerCase();
+    return materials
+      .filter(m => m.name.toLowerCase().includes(query))
+      .slice(0, 15);
+  }, [materials, materialSearch]);
 
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
-      {/* Header */}
-      <div className="px-3 py-2 bg-white flex items-center justify-between">
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-2 text-left flex-1"
-        >
-          {expanded ? (
-            <ChevronDown className="w-4 h-4 text-gray-400" />
-          ) : (
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-          )}
-          <div>
-            <span className="font-medium text-sm">{component.materialName}</span>
-            <span className="text-xs text-gray-500 ml-2">
-              {formatCurrency(component.materialUnitCost)}/{component.materialUnit}
-            </span>
-          </div>
-        </button>
+    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+      <div className="p-3 space-y-3">
+        {/* Row 1: Component Name + Delete */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-green-600 font-medium">
-            {formatCurrency(exampleCost)}/LF
-          </span>
+          <div className="flex-1">
+            <label className="block text-xs text-gray-500 mb-1">Component Name</label>
+            <Input
+              value={component.name || ''}
+              onChange={(e) => onUpdate({ name: e.target.value })}
+              placeholder="e.g., Bottom Plate, Studs, Sheathing"
+              className="text-sm"
+            />
+          </div>
           <button
             onClick={onRemove}
-            className="text-gray-400 hover:text-red-500 p-1"
+            className="text-gray-400 hover:text-red-500 p-2 mt-5"
+            title="Remove component"
           >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
-      </div>
 
-      {/* Configuration - Always show for clarity */}
-      {expanded && (
-        <div className="px-3 py-3 bg-gray-50 border-t border-gray-200 space-y-3">
-          {/* Quantity per LF input */}
+        {/* Row 2: Material Selection */}
+        <div>
+          <label className="block text-xs text-gray-500 mb-1">Material (from catalogue)</label>
+          {showMaterialPicker ? (
+            <div className="border border-gray-200 rounded-lg p-2 bg-gray-50">
+              <Input
+                value={materialSearch}
+                onChange={(e) => setMaterialSearch(e.target.value)}
+                placeholder="Search materials..."
+                className="text-sm mb-2"
+                autoFocus
+              />
+              <div className="max-h-40 overflow-y-auto space-y-1">
+                {filteredMaterials.map((mat) => (
+                  <button
+                    key={mat.id}
+                    onClick={() => {
+                      onUpdate({
+                        materialId: mat.id,
+                        materialName: mat.name,
+                        materialUnit: mat.unit,
+                        materialUnitCost: mat.unitCost,
+                      });
+                      setShowMaterialPicker(false);
+                      setMaterialSearch('');
+                    }}
+                    className="w-full text-left px-2 py-1.5 text-sm rounded hover:bg-white flex justify-between items-center"
+                  >
+                    <span className="truncate">{mat.name}</span>
+                    <span className="text-gray-500 text-xs ml-2 whitespace-nowrap">
+                      {formatCurrency(mat.unitCost)}/{mat.unit}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => {
+                  setShowMaterialPicker(false);
+                  setMaterialSearch('');
+                }}
+                className="mt-2 text-xs text-gray-500 hover:text-gray-700"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowMaterialPicker(true)}
+              className="w-full text-left px-3 py-2 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+            >
+              {component.materialName ? (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium">{component.materialName}</span>
+                  <span className="text-xs text-gray-500">
+                    {formatCurrency(component.materialUnitCost)}/{component.materialUnit}
+                  </span>
+                </div>
+              ) : (
+                <span className="text-sm text-gray-400">Select a material...</span>
+              )}
+            </button>
+          )}
+        </div>
+
+        {/* Row 3: Amount per unit */}
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              How much of this material per 1 linear foot of wall?
+            <label className="block text-xs text-gray-500 mb-1">
+              Amount per 1 LF of assembly
             </label>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs text-gray-500 mb-1">
-                  Calculation Method
-                </label>
-                <select
-                  value={component.formulaType}
-                  onChange={(e) => onUpdate({ formulaType: e.target.value })}
-                  className="w-full px-2 py-1.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-charcoal"
-                >
-                  <option value="per_lf">Quantity per LF</option>
-                  <option value="per_sf">Divide wall area by coverage</option>
-                  <option value="plates">Plates (3× LF ÷ lumber length)</option>
-                  <option value="studs">Studs (1 per LF)</option>
-                  <option value="sheets">Sheets (wall area ÷ sheet size)</option>
-                  <option value="fixed">Fixed quantity</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs text-gray-500 mb-1">
-                  {getFormulaValueLabel(component.formulaType)}
-                </label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={component.formulaValue}
-                  onChange={(e) => onUpdate({ formulaValue: parseFloat(e.target.value) || 0 })}
-                  className="text-sm"
-                />
-              </div>
-            </div>
+            <Input
+              type="number"
+              step="0.001"
+              min="0"
+              value={component.amount || ''}
+              onChange={(e) => onUpdate({ amount: parseFloat(e.target.value) || 0 })}
+              placeholder="0.000"
+              className="text-sm"
+            />
           </div>
-
-          {/* Live example calculation */}
-          <div className="bg-white rounded p-2 border border-gray-100">
-            <div className="text-xs text-gray-500 mb-1">Example: 1 LF wall × 9' ceiling</div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-700">
-                {exampleQty.toFixed(3)} {component.materialUnit} × {formatCurrency(component.materialUnitCost)}
-              </span>
-              <span className="font-semibold text-green-600">
-                = {formatCurrency(exampleCost)}
-              </span>
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">
+              Unit from catalogue
+            </label>
+            <div className="px-3 py-2 bg-gray-100 rounded-lg text-sm text-gray-600">
+              {component.materialUnit || '—'}
             </div>
-          </div>
-
-          {/* Formula explanation */}
-          <div className="text-xs text-gray-400 flex items-start gap-1">
-            <Info className="w-3 h-3 mt-0.5 flex-shrink-0" />
-            <span>{getFormulaExplanation(component.formulaType, component.formulaValue)}</span>
           </div>
         </div>
-      )}
+
+        {/* Row 4: Cost calculation */}
+        {component.materialUnitCost > 0 && component.amount > 0 && (
+          <div className="bg-green-50 border border-green-100 rounded-lg p-2">
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-600">
+                {component.amount} × {formatCurrency(component.materialUnitCost)} =
+              </span>
+              <span className="font-semibold text-green-700">
+                {formatCurrency(costPerUnit)} / LF
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
-}
-
-/**
- * Get appropriate label for formula value input
- */
-function getFormulaValueLabel(formulaType) {
-  switch (formulaType) {
-    case 'per_lf':
-      return 'Quantity per LF';
-    case 'studs':
-      return 'Studs per LF';
-    case 'per_sf':
-      return 'Material covers (SF)';
-    case 'sheets':
-      return 'Sheet size (SF)';
-    case 'plates':
-      return 'Lumber length (ft)';
-    case 'fixed':
-      return 'Fixed quantity';
-    default:
-      return 'Value';
-  }
-}
-
-/**
- * Get human-readable explanation of the formula
- */
-function getFormulaExplanation(formulaType, value) {
-  switch (formulaType) {
-    case 'per_lf':
-      return `Uses ${value} unit(s) of this material for every 1 linear foot of wall`;
-    case 'studs':
-      return `Uses ${value} stud(s) for every 1 linear foot (standard 16" OC = 1 per LF)`;
-    case 'per_sf':
-      return `Wall area (LF × height) divided by ${value} SF coverage per unit`;
-    case 'sheets':
-      return `Wall area divided by ${value} SF per sheet (4×8 sheet = 32 SF)`;
-    case 'plates':
-      return `3× linear feet (bottom + double top) divided by ${value}' lumber length`;
-    case 'fixed':
-      return `Always uses exactly ${value} unit(s) regardless of wall size`;
-    default:
-      return '';
-  }
 }
 
 export default AssemblyConfigurator;

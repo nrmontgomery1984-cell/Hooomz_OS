@@ -44,14 +44,20 @@ export function usePhaseTransition(project, onUpdate) {
    * Confirm and execute the phase transition
    */
   const confirmTransition = useCallback(async ({ fromPhase, toPhase, notes, date }) => {
-    if (!project) return;
+    console.log('[usePhaseTransition] confirmTransition called:', { fromPhase, toPhase, notes, date });
+    if (!project) {
+      console.log('[usePhaseTransition] No project, returning early');
+      return;
+    }
 
     setIsTransitioning(true);
     setTransitionError(null);
 
     try {
       // Validate one more time
+      console.log('[usePhaseTransition] Validating transition...');
       const validation = validateTransition(project, fromPhase, toPhase);
+      console.log('[usePhaseTransition] Validation result:', validation);
       if (!validation.canProceed) {
         throw new Error(validation.blockers.join(', '));
       }
@@ -62,16 +68,24 @@ export function usePhaseTransition(project, onUpdate) {
       // Special handling for contract signing (quoted → contracted)
       // This generates the production scope from the estimate
       if (gate?.generatesScope) {
+        // Get estimate data from intake_data where EstimateBuilder saves it
+        const intakeData = project.intake_data || {};
         const contractData = {
           contractValue: project.estimate_high || project.estimate_low || 0,
-          selectedTier: project.build_tier || 'better',
-          lineItems: project.estimate_line_items || [],
+          selectedTier: intakeData.build_tier || project.build_tier || 'better',
+          lineItems: intakeData.estimate_line_items || project.estimate_line_items || [],
         };
 
+        console.log('[usePhaseTransition] signContract with:', contractData);
         const { data, error } = await signContract(project.id, contractData);
+        console.log('[usePhaseTransition] signContract response:', { data, error });
 
         if (error) {
-          throw new Error(error);
+          // Handle Supabase error object
+          const errorMessage = typeof error === 'object'
+            ? (error.message || error.details || JSON.stringify(error))
+            : String(error);
+          throw new Error(errorMessage);
         }
 
         resultData = data?.project;
@@ -85,9 +99,14 @@ export function usePhaseTransition(project, onUpdate) {
       // This generates loops/tasks from estimate if they don't exist
       else if (toPhase === 'active' && fromPhase === 'contracted') {
         const { data, error } = await startProduction(project.id, project);
+        console.log('[usePhaseTransition] startProduction response:', { data, error });
 
         if (error) {
-          throw new Error(error);
+          // Handle Supabase error object
+          const errorMessage = typeof error === 'object'
+            ? (error.message || error.details || JSON.stringify(error))
+            : String(error);
+          throw new Error(errorMessage);
         }
 
         resultData = data?.project;
@@ -98,29 +117,51 @@ export function usePhaseTransition(project, onUpdate) {
         }
       } else {
         // Standard phase transition
+        // Note: Many date fields don't exist as top-level columns in the database
+        // Only 'actual_completion' exists at top level. Other dates go in intake_data.
         const updateData = {
           phase: toPhase,
+        };
+
+        // Prepare intake_data updates for dates that aren't top-level columns
+        const intakeDataUpdates = {
+          ...project.intake_data,
           phase_changed_at: new Date().toISOString(),
         };
 
         // Set dates based on transition
         if (gate?.setsDate === 'actual_start') {
-          updateData.actual_start = new Date().toISOString().split('T')[0];
+          // actual_start isn't a top-level column, store in intake_data
+          intakeDataUpdates.actual_start = new Date().toISOString().split('T')[0];
         } else if (gate?.setsDate === 'actual_completion') {
+          // actual_completion IS a top-level column
           updateData.actual_completion = new Date().toISOString().split('T')[0];
         } else if (gate?.setsDate) {
-          updateData[gate.setsDate] = new Date().toISOString();
+          // Other dates like contract_signed_at, quote_sent_at go in intake_data
+          intakeDataUpdates[gate.setsDate] = new Date().toISOString();
         }
 
         if (date && gate?.requiresDate) {
-          updateData[gate.requiresDate] = date;
+          // Required dates (like quote_sent_at) also go in intake_data
+          intakeDataUpdates[gate.requiresDate] = date;
         }
+
+        // Include the intake_data updates
+        updateData.intake_data = intakeDataUpdates;
+
+        console.log('[usePhaseTransition] Update payload:', updateData);
 
         // Call API to update project
         const { data, error } = await updateProjectPhase(project.id, updateData);
 
+        console.log('[usePhaseTransition] API response:', { data, error });
+
         if (error) {
-          throw new Error(error);
+          // Handle Supabase error object
+          const errorMessage = typeof error === 'object'
+            ? (error.message || error.details || JSON.stringify(error))
+            : error;
+          throw new Error(errorMessage);
         }
 
         resultData = data;

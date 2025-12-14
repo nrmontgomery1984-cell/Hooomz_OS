@@ -14,6 +14,10 @@ export { DashboardActivityFeed, ActivityFeedCompact } from './DashboardActivityF
 // Phase Transitions
 export { PhaseTransitionModal, PhaseTransitionButton, PhaseSelector } from './PhaseTransitionModal';
 
+// Change Orders
+export { AddChangeOrderModal } from './AddChangeOrderModal';
+export { ChangeOrderDetailModal } from './ChangeOrderDetailModal';
+
 // Widgets
 export { HealthIndicator, HealthDot } from './HealthIndicator';
 export { BudgetBar, BudgetMini } from './BudgetBar';

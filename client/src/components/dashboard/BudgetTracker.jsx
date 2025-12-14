@@ -12,7 +12,7 @@ import { usePermissions } from '../../hooks/usePermissions';
  * - Homeowners: See contract value, remaining budget (no margin, no detailed costs)
  * - Subcontractors: Limited view
  */
-export function BudgetTracker({ budget, onAddChangeOrder }) {
+export function BudgetTracker({ budget, onAddChangeOrder, onViewChangeOrder }) {
   const [expanded, setExpanded] = useState(false);
   const { isContractor, isHomeowner } = usePermissions();
 
@@ -176,37 +176,49 @@ export function BudgetTracker({ budget, onAddChangeOrder }) {
         </div>
       )}
 
-      {/* Change Orders - Contractor Only (Homeowners see simplified view) */}
-      {isContractor && (changeOrders.length > 0 || pendingChangeOrders.length > 0) && (
+      {/* Change Orders - Show to both contractors and homeowners */}
+      {(isContractor || (isHomeowner && pendingChangeOrders.length > 0)) && (
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-medium text-gray-700">Change Orders</h4>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={onAddChangeOrder}
-              className="text-xs"
-            >
-              <Plus className="w-3 h-3 mr-1" />
-              Add
-            </Button>
+            <h4 className="text-sm font-medium text-gray-700">
+              {isHomeowner ? 'Pending Approvals' : 'Change Orders'}
+            </h4>
+            {isContractor && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={onAddChangeOrder}
+                className="text-xs"
+              >
+                <Plus className="w-3 h-3 mr-1" />
+                Add
+              </Button>
+            )}
           </div>
 
-          {pendingChangeOrders.length > 0 && (
+          {pendingChangeOrders.length > 0 ? (
             <div className="space-y-2">
-              {pendingChangeOrders.slice(0, 2).map((co) => (
-                <div
+              {pendingChangeOrders.slice(0, 3).map((co) => (
+                <button
                   key={co.id}
-                  className="flex items-center justify-between p-2 bg-amber-50 border border-amber-200 rounded-lg text-sm"
+                  onClick={() => onViewChangeOrder?.(co)}
+                  className="w-full flex items-center justify-between p-2 bg-amber-50 border border-amber-200 rounded-lg text-sm hover:bg-amber-100 transition-colors text-left"
                 >
-                  <div className="flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-amber-500" />
-                    <span className="text-charcoal truncate max-w-[150px]">{co.description}</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                    <span className="text-charcoal truncate">{co.title || co.description}</span>
                   </div>
-                  <span className="font-medium text-amber-700">{formatCurrency(co.amount)}</span>
-                </div>
+                  <span className="font-medium text-amber-700 flex-shrink-0 ml-2">{formatCurrency(co.amount)}</span>
+                </button>
               ))}
+              {pendingChangeOrders.length > 3 && (
+                <p className="text-xs text-gray-500 text-center">
+                  +{pendingChangeOrders.length - 3} more pending
+                </p>
+              )}
             </div>
+          ) : (
+            <p className="text-xs text-gray-400 italic">No pending change orders</p>
           )}
         </div>
       )}

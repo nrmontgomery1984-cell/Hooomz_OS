@@ -18,7 +18,10 @@ import {
   Calendar,
   Tag,
   Users,
-  Filter
+  Filter,
+  FilePlus,
+  FileCheck,
+  FileX,
 } from 'lucide-react';
 import { Card, Modal, Button } from '../ui';
 import { useScopeData } from '../../hooks';
@@ -41,6 +44,9 @@ const eventIcons = {
   'change.requested': FileEdit,
   'payment.received': DollarSign,
   'subcontractor.update': HardHat,
+  'change_order.created': FilePlus,
+  'change_order.approved': FileCheck,
+  'change_order.declined': FileX,
 };
 
 const eventColors = {
@@ -61,6 +67,9 @@ const eventColors = {
   'change.requested': 'text-orange-500',
   'payment.received': 'text-emerald-600',
   'subcontractor.update': 'text-orange-600',
+  'change_order.created': 'text-amber-500',
+  'change_order.approved': 'text-emerald-600',
+  'change_order.declined': 'text-red-500',
 };
 
 const eventLabels = {
@@ -81,7 +90,22 @@ const eventLabels = {
   'change.requested': 'Change Request',
   'payment.received': 'Payment Received',
   'subcontractor.update': 'Subcontractor Update',
+  'change_order.created': 'Change Order Created',
+  'change_order.approved': 'Change Order Approved',
+  'change_order.declined': 'Change Order Declined',
 };
+
+function formatAmount(amount) {
+  if (amount == null) return '$0';
+  const isNegative = amount < 0;
+  const formatted = new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(Math.abs(amount));
+  return isNegative ? `-${formatted}` : formatted;
+}
 
 function formatEventMessage(event) {
   const data = event.event_data || {};
@@ -121,6 +145,12 @@ function formatEventMessage(event) {
       return data.description || 'Payment received';
     case 'subcontractor.update':
       return data.description || 'Subcontractor update';
+    case 'change_order.created':
+      return `Change order "${data.title || 'Untitled'}" submitted for ${formatAmount(data.amount)}`;
+    case 'change_order.approved':
+      return `Change order "${data.title || 'Untitled'}" approved (${formatAmount(data.amount)})`;
+    case 'change_order.declined':
+      return `Change order "${data.title || 'Untitled'}" declined${data.declinedReason ? `: ${data.declinedReason}` : ''}`;
     default:
       return event.event_type.replace(/\./g, ' ');
   }
@@ -398,6 +428,10 @@ const ACTIVITY_TYPE_GROUPS = [
   {
     label: 'Communication',
     types: ['client.contact', 'change.requested', 'payment.received', 'subcontractor.update'],
+  },
+  {
+    label: 'Change Orders',
+    types: ['change_order.created', 'change_order.approved', 'change_order.declined'],
   },
 ];
 

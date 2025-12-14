@@ -158,6 +158,7 @@ export const TRANSITION_GATES = {
     action: 'Start Construction',
     description: 'Begin active construction. This will set the actual start date.',
     setsDate: 'actual_start',
+    promptsForWallSections: true, // Prompt PM to name wall sections for exterior framing
   },
 
   // active → punch_list

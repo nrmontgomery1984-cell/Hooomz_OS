@@ -39,7 +39,7 @@ export function InstanceList({
   const effectiveCeilingHeight = ceilingHeights || ceilingHeight || 9;
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
   const [expandedCategories, setExpandedCategories] = useState({
-    walls: false,
+    structure: false,
     openings: false,
     surfaces: false,
     mep: false,
@@ -147,7 +147,7 @@ export function InstanceList({
           <div className="text-4xl mb-2">📋</div>
           <p className="text-sm">No items added yet</p>
           <p className="text-xs mt-1 text-gray-400">
-            Use the tabs to add walls, openings, and other items
+            Use the tabs to add structure, openings, and other items
           </p>
         </div>
       </div>

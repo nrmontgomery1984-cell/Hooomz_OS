@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   X,
   Plus,
@@ -11,7 +11,8 @@ import {
   Save,
   AlertCircle,
 } from 'lucide-react';
-import { MATERIAL_CATEGORIES, formatCurrency, LABOUR_CATEGORIES } from '../../lib/costCatalogue';
+import { formatCurrency, MATERIAL_CATEGORIES } from '../../lib/costCatalogue';
+import { ASSEMBLY_CATEGORIES } from '../../data/assemblyCategories';
 
 /**
  * AssemblyBuilder - Create custom assemblies from labor rates and materials
@@ -28,6 +29,7 @@ export function AssemblyBuilder({
   const [name, setName] = useState(editingAssembly?.name || '');
   const [description, setDescription] = useState(editingAssembly?.description || '');
   const [category, setCategory] = useState(editingAssembly?.category || 'framing');
+  const [subcategory, setSubcategory] = useState(editingAssembly?.subcategory || editingAssembly?.scopeItemId || '');
   const [unit, setUnit] = useState(editingAssembly?.unit || 'EA');
   const [notes, setNotes] = useState(editingAssembly?.notes || '');
 
@@ -46,11 +48,46 @@ export function AssemblyBuilder({
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCategory, setExpandedCategory] = useState(null);
 
+  // Reset form state when modal opens or editingAssembly changes
+  useEffect(() => {
+    if (isOpen) {
+      setName(editingAssembly?.name || '');
+      setDescription(editingAssembly?.description || '');
+      setCategory(editingAssembly?.category || 'framing');
+      setSubcategory(editingAssembly?.subcategory || editingAssembly?.scopeItemId || '');
+      setUnit(editingAssembly?.unit || 'EA');
+      setNotes(editingAssembly?.notes || '');
+      setLaborComponents(editingAssembly?.laborComponents || []);
+      setMaterialComponents(editingAssembly?.materialComponents || []);
+      setActiveTab('labor');
+      setSearchQuery('');
+      setExpandedCategory(null);
+    }
+  }, [isOpen, editingAssembly]);
+
+  // Auto-update unit when subcategory changes
+  const handleSubcategoryChange = (newSubcategory) => {
+    setSubcategory(newSubcategory);
+    const catData = ASSEMBLY_CATEGORIES[category];
+    const subcat = catData?.subcategories?.find(s => s.id === newSubcategory);
+    if (subcat?.unit) {
+      setUnit(subcat.unit);
+    }
+  };
+
+  // Auto-update subcategory when category changes
+  const handleCategoryChange = (newCategory) => {
+    setCategory(newCategory);
+    // Reset subcategory when category changes
+    setSubcategory('');
+  };
+
   // Get all labor rates as flat list for searching
   const allLaborRates = useMemo(() => {
+    if (!laborRates || typeof laborRates !== 'object') return [];
     const rates = [];
     Object.entries(laborRates).forEach(([code, data]) => {
-      if (data.pieceRates) {
+      if (data?.pieceRates) {
         data.pieceRates.forEach(rate => {
           rates.push({
             ...rate,
@@ -77,13 +114,14 @@ export function AssemblyBuilder({
 
   // Filter materials by search
   const filteredMaterials = useMemo(() => {
+    if (!materials || !Array.isArray(materials)) return [];
     if (!searchQuery) return materials;
     const lower = searchQuery.toLowerCase();
     return materials.filter(
       mat =>
-        mat.name.toLowerCase().includes(lower) ||
-        mat.category.toLowerCase().includes(lower) ||
-        mat.sku?.toLowerCase().includes(lower)
+        mat?.name?.toLowerCase().includes(lower) ||
+        mat?.category?.toLowerCase().includes(lower) ||
+        mat?.sku?.toLowerCase().includes(lower)
     );
   }, [materials, searchQuery]);
 
@@ -226,6 +264,8 @@ export function AssemblyBuilder({
       name: name.trim(),
       description: description.trim(),
       category,
+      subcategory: subcategory || null, // Scope item ID (e.g., 'fr-ext', 'fl-lvp')
+      scopeItemId: subcategory || null, // Alias for compatibility with SCOPE_ITEMS
       unit,
       notes: notes.trim(),
       // Store both labor and material components
@@ -241,8 +281,11 @@ export function AssemblyBuilder({
         materialId: m.id,
         qty: m.qty,
       })),
-      // Calculated cost
+      // Calculated cost (per unit)
       unitCost: totals.total,
+      laborCostPerUnit: totals.labor,
+      materialCostPerUnit: totals.materials,
+      // Legacy aliases
       laborCost: totals.labor,
       materialsCost: totals.materials,
       // Metadata
@@ -290,7 +333,7 @@ export function AssemblyBuilder({
         <div className="flex-1 overflow-hidden flex">
           {/* Left Panel - Item Selection */}
           <div className="w-1/2 border-r border-gray-200 flex flex-col">
-            {/* Tabs */}
+            {/* Tabs with count badges */}
             <div className="flex border-b border-gray-200">
               <button
                 onClick={() => setActiveTab('labor')}
@@ -301,7 +344,12 @@ export function AssemblyBuilder({
                 }`}
               >
                 <Wrench className="w-4 h-4" />
-                Labor Rates
+                Labor
+                {laborComponents.length > 0 && (
+                  <span className="bg-blue-100 text-blue-700 text-xs px-1.5 py-0.5 rounded-full">
+                    {laborComponents.length}
+                  </span>
+                )}
               </button>
               <button
                 onClick={() => setActiveTab('materials')}
@@ -313,7 +361,16 @@ export function AssemblyBuilder({
               >
                 <Package className="w-4 h-4" />
                 Materials
+                {materialComponents.length > 0 && (
+                  <span className="bg-amber-100 text-amber-700 text-xs px-1.5 py-0.5 rounded-full">
+                    {materialComponents.length}
+                  </span>
+                )}
               </button>
+            </div>
+            {/* Hint to add from both tabs */}
+            <div className="px-3 py-2 bg-blue-50 text-xs text-blue-700 border-b border-blue-100">
+              💡 Add items from both tabs to build a complete assembly
             </div>
 
             {/* Search */}
@@ -468,39 +525,57 @@ export function AssemblyBuilder({
                   className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-charcoal/20 focus:border-charcoal"
                 />
               </div>
-              <div className="flex gap-3">
-                <div className="flex-1">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
                   <label className="block text-xs font-medium text-gray-500 mb-1">
                     Category
                   </label>
                   <select
                     value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
                     className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-charcoal/20 focus:border-charcoal"
                   >
-                    {MATERIAL_CATEGORIES.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
+                    {Object.entries(ASSEMBLY_CATEGORIES).map(([key, cat]) => (
+                      <option key={key} value={key}>
                         {cat.name}
                       </option>
                     ))}
                   </select>
                 </div>
-                <div className="w-24">
+                <div>
                   <label className="block text-xs font-medium text-gray-500 mb-1">
-                    Unit
+                    Subcategory
                   </label>
                   <select
-                    value={unit}
-                    onChange={(e) => setUnit(e.target.value)}
+                    value={subcategory}
+                    onChange={(e) => handleSubcategoryChange(e.target.value)}
                     className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-charcoal/20 focus:border-charcoal"
                   >
-                    <option value="EA">Each</option>
-                    <option value="SF">Sq Ft</option>
-                    <option value="LF">Lin Ft</option>
-                    <option value="JOB">Job</option>
-                    <option value="ROOM">Room</option>
+                    <option value="">-- Select --</option>
+                    {ASSEMBLY_CATEGORIES[category]?.subcategories?.map((sub) => (
+                      <option key={sub.id} value={sub.id}>
+                        {sub.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">
+                  Unit
+                </label>
+                <select
+                  value={unit}
+                  onChange={(e) => setUnit(e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-charcoal/20 focus:border-charcoal"
+                >
+                  <option value="EA">Each</option>
+                  <option value="SF">Sq Ft</option>
+                  <option value="LF">Lin Ft</option>
+                  <option value="SQ">Square (100 SF)</option>
+                  <option value="JOB">Job</option>
+                  <option value="ROOM">Room</option>
+                </select>
               </div>
             </div>
 

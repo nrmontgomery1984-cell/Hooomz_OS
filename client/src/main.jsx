@@ -4,7 +4,8 @@ import { registerSW } from 'virtual:pwa-register'
 import './index.css'
 import App from './App.jsx'
 import { DevAuthProvider } from './contexts/DevAuthContext'
-import { DevPersonaSwitcher, DevBorder, MobilePreviewToggle, MobilePreviewWrapper } from './components/dev'
+import { DevBorder, MobilePreviewWrapper } from './components/dev'
+import { ToastProvider } from './components/ui'
 
 // Load Google Maps Places API for address autocomplete
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -33,13 +34,13 @@ if ('serviceWorker' in navigator) {
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <DevAuthProvider>
-      <MobilePreviewWrapper>
-        <DevBorder>
-          <App />
-          <DevPersonaSwitcher />
-          <MobilePreviewToggle />
-        </DevBorder>
-      </MobilePreviewWrapper>
+      <ToastProvider>
+        <MobilePreviewWrapper>
+          <DevBorder>
+            <App />
+          </DevBorder>
+        </MobilePreviewWrapper>
+      </ToastProvider>
     </DevAuthProvider>
   </StrictMode>,
 )

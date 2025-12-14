@@ -15,10 +15,10 @@ import { formatCurrency } from '../../../lib/costCatalogue';
  * Scope Step - Instance-based scope entry with BulkAddMode and TallyMode
  *
  * Uses building configuration from ProjectInfoStep to derive levels.
- * Tabs for: Walls, Openings, Surfaces, MEP
+ * Tabs for: Structure, Openings, Surfaces, MEP
  */
 export function ScopeStep({ data, errors, onChange }) {
-  const [activeTab, setActiveTab] = useState('walls');
+  const [activeTab, setActiveTab] = useState('structure');
   const [showAssemblyPanel, setShowAssemblyPanel] = useState(false);
   const [showAssemblyBuilder, setShowAssemblyBuilder] = useState(false);
   const [editingAssembly, setEditingAssembly] = useState(null); // Assembly being edited
@@ -131,9 +131,9 @@ export function ScopeStep({ data, errors, onChange }) {
 
   // Tab configuration
   const tabs = [
-    { id: 'walls', label: 'Walls', icon: Layers, mode: 'bulk' },
+    { id: 'structure', label: 'Structure', icon: Layers, mode: 'bulk' },  // Floors, walls, ceilings, roof framing
     { id: 'openings', label: 'Openings', icon: Package, mode: 'tally' },
-    { id: 'surfaces', label: 'Surfaces', icon: Ruler, mode: 'bulk' },
+    { id: 'surfaces', label: 'Finishes', icon: Ruler, mode: 'bulk' },
     { id: 'mep', label: 'MEP', icon: Zap, mode: 'tally' },
   ];
 

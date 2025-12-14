@@ -9,3 +9,4 @@ export { Select, MultiSelect } from './Select';
 export { Logo } from './Logo';
 export { Modal } from './Modal';
 export { AddressInput } from './AddressInput';
+export { ToastProvider, useToast } from './Toast';

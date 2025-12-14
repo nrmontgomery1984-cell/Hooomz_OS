@@ -24,6 +24,7 @@ export { TaskDetail } from './TaskDetail';
 export { EstimateBuilder } from './EstimateBuilder';
 export { HomeownerQuote } from './HomeownerQuote';
 export { Selections } from './Selections';
+export { PhaseBuilder } from './PhaseBuilder';
 
 // Other
 export { Profile } from './Profile';

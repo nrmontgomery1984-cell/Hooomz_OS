@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   ArrowRight,
   ArrowLeft,
@@ -8,6 +8,9 @@ import {
   XCircle,
   Calendar,
   X,
+  Plus,
+  Trash2,
+  Layers,
 } from 'lucide-react';
 import { Modal, Button, TextArea, Input } from '../ui';
 import {
@@ -27,11 +30,24 @@ export function PhaseTransitionModal({
   project,
   targetPhase,
   onConfirm,
+  transitionError, // Error from API call
 }) {
   const [notes, setNotes] = useState('');
   const [dateValue, setDateValue] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [wallSections, setWallSections] = useState(['', '', '', '']); // Default 4 sections
+  const [showWallSections, setShowWallSections] = useState(false);
 
+  // Check if project has exterior wall framing in scope
+  // NOTE: useMemo must be called before any early returns to follow Rules of Hooks
+  const hasExteriorWalls = useMemo(() => {
+    if (!project) return false;
+    const intake = project?.intake_data || {};
+    const scope = intake?.scope || {};
+    return scope?.framing?.enabled || scope?.FR?.enabled || false;
+  }, [project]);
+
+  // Early return after all hooks
   if (!project || !targetPhase) return null;
 
   const currentPhase = project.phase;
@@ -45,20 +61,51 @@ export function PhaseTransitionModal({
   const targetPhaseData = PHASES[targetPhase];
   const targetColors = getPhaseColors(targetPhase);
 
+  // Should show wall section naming prompt
+  const shouldPromptWallSections = gate?.promptsForWallSections && hasExteriorWalls && canProceed;
+
   const handleConfirm = async () => {
     if (!canProceed) return;
 
     setIsSubmitting(true);
     try {
-      await onConfirm({
+      // Filter out empty wall section names and generate defaults for unnamed ones
+      const namedSections = wallSections
+        .filter((_, idx) => idx < wallSections.length) // Keep all slots
+        .map((name, idx) => name.trim() || `Wall Section ${idx + 1}`);
+
+      console.log('[PhaseTransitionModal] Calling onConfirm with:', {
         fromPhase: currentPhase,
         toPhase: targetPhase,
         notes: notes.trim(),
         date: dateValue || undefined,
       });
-      onClose();
+
+      const result = await onConfirm({
+        fromPhase: currentPhase,
+        toPhase: targetPhase,
+        notes: notes.trim(),
+        date: dateValue || undefined,
+        wallSections: shouldPromptWallSections ? namedSections : undefined,
+      });
+
+      console.log('[PhaseTransitionModal] onConfirm result:', result);
+
+      // Only close if successful - the hook handles closing on success anyway
+      // but we check here to avoid double-close and to handle errors properly
+      if (result?.success) {
+        // Modal will be closed by the hook's setShowModal(false)
+        // Reset local state
+        setNotes('');
+        setDateValue('');
+        setWallSections(['', '', '', '']);
+        setShowWallSections(false);
+      } else if (result?.error) {
+        console.error('[PhaseTransitionModal] Transition failed:', result.error);
+        // Don't close - let user see the error in the hook's transitionError state
+      }
     } catch (error) {
-      console.error('Phase transition failed:', error);
+      console.error('[PhaseTransitionModal] Phase transition threw:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -67,7 +114,25 @@ export function PhaseTransitionModal({
   const handleClose = () => {
     setNotes('');
     setDateValue('');
+    setWallSections(['', '', '', '']);
+    setShowWallSections(false);
     onClose();
+  };
+
+  const addWallSection = () => {
+    setWallSections([...wallSections, '']);
+  };
+
+  const removeWallSection = (index) => {
+    if (wallSections.length > 1) {
+      setWallSections(wallSections.filter((_, i) => i !== index));
+    }
+  };
+
+  const updateWallSection = (index, value) => {
+    const updated = [...wallSections];
+    updated[index] = value;
+    setWallSections(updated);
   };
 
   return (
@@ -158,8 +223,20 @@ export function PhaseTransitionModal({
           </div>
         )}
 
+        {/* API/Transition Error (from failed attempt) */}
+        {transitionError && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-500" />
+              <span className="text-sm text-red-700">
+                {transitionError}
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* All Clear */}
-        {canProceed && blockers.length === 0 && warnings.length === 0 && (
+        {canProceed && blockers.length === 0 && warnings.length === 0 && !transitionError && (
           <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-emerald-500" />
@@ -196,6 +273,70 @@ export function PhaseTransitionModal({
                 ? "Today's date will be recorded as the completion date"
                 : `${gate.setsDate} will be set to today`
             }
+          </div>
+        )}
+
+        {/* Wall Section Naming (for exterior wall framing) */}
+        {shouldPromptWallSections && (
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={() => setShowWallSections(!showWallSections)}
+              className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-charcoal"
+            >
+              <Layers className="w-4 h-4" />
+              Name Wall Sections (Optional)
+              <span className="text-xs text-gray-500 font-normal">
+                {showWallSections ? '▼' : '▶'}
+              </span>
+            </button>
+
+            {showWallSections && (
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <p className="text-xs text-gray-500 mb-3">
+                  Name your exterior wall sections for better tracking. Leave blank for default names (Wall Section 1, 2, 3...).
+                  Tip: Use descriptive names like "North 32'" or "Front Wall".
+                </p>
+
+                <div className="space-y-2">
+                  {wallSections.map((section, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400 w-4">{index + 1}.</span>
+                      <Input
+                        value={section}
+                        onChange={(e) => updateWallSection(index, e.target.value)}
+                        placeholder={`Wall Section ${index + 1}`}
+                        className="flex-1 text-sm"
+                      />
+                      {wallSections.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeWallSection(index)}
+                          className="p-1 text-gray-400 hover:text-red-500"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={addWallSection}
+                  className="mt-2 flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700"
+                >
+                  <Plus className="w-3 h-3" />
+                  Add Section
+                </button>
+              </div>
+            )}
+
+            {!showWallSections && (
+              <p className="text-xs text-gray-500 ml-6">
+                {wallSections.length} wall sections will use default names
+              </p>
+            )}
           </div>
         )}
 
