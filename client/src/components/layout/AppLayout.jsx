@@ -88,10 +88,52 @@ function DesktopPersonaBar() {
   );
 }
 
+function PersonaToggleFixed() {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const { currentPersona, switchPersona } = useDevAuth();
+  const currentConfig = PERSONA_CONFIG[currentPersona?.role] || PERSONA_CONFIG.contractor;
+  const CurrentIcon = currentConfig.icon;
+
+  return (
+    <div className="fixed top-2 right-2 z-[9999]">
+      <button
+        onClick={() => setShowDropdown(!showDropdown)}
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-900 text-white shadow-xl border-2 border-white"
+      >
+        <CurrentIcon className="w-5 h-5" />
+        <span className="text-sm font-bold">{currentConfig.label}</span>
+        <ChevronDown className={`w-4 h-4 ${showDropdown ? 'rotate-180' : ''}`} />
+      </button>
+      {showDropdown && (
+        <>
+          <div className="fixed inset-0 z-[9998]" onClick={() => setShowDropdown(false)} />
+          <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-xl border-2 border-gray-300 py-1 z-[9999] min-w-[160px]">
+            {Object.entries(PERSONA_CONFIG).map(([role, config]) => {
+              const Icon = config.icon;
+              const isActive = currentPersona?.role === role;
+              return (
+                <button
+                  key={role}
+                  onClick={() => { switchPersona(role); setShowDropdown(false); }}
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm ${isActive ? 'bg-blue-100 font-bold' : 'hover:bg-gray-100'}`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {config.label}
+                  {isActive && <span className="ml-auto">✓</span>}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export function AppLayout() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <DesktopPersonaBar />
+      <PersonaToggleFixed />
       <div className="flex flex-1">
         <Sidebar />
         <MobileHeader />
