@@ -222,6 +222,12 @@ export function QuickNotes({ projectFilter = null, compact = false }) {
               placeholder="Take a note..."
               value={newNote.content}
               onChange={(e) => setNewNote(prev => ({ ...prev, content: e.target.value }))}
+              onKeyDown={(e) => {
+                // Allow Enter for new lines in notes - don't let it submit
+                if (e.key === 'Enter') {
+                  e.stopPropagation();
+                }
+              }}
               rows={3}
               className="w-full text-sm text-gray-600 placeholder-gray-400 bg-transparent border-none outline-none resize-none"
             />

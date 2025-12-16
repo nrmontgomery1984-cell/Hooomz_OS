@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package, Layers, Eye, EyeOff } from 'lucide-react';
+import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package, Layers, Eye, EyeOff, Map } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button } from '../components/ui';
 import { ProjectDashboard, PhaseTransitionModal, AddChangeOrderModal, ChangeOrderDetailModal } from '../components/dashboard';
@@ -321,6 +321,13 @@ export function ProjectView() {
         >
           <Layers className="w-4 h-4 flex-shrink-0" />
           <span className="hidden sm:inline">Phases</span>
+        </button>
+        <button
+          onClick={() => navigate(`/projects/${projectId}/floor-plans`)}
+          className="flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 active:text-charcoal transition-colors"
+        >
+          <Map className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Floor Plans</span>
         </button>
 
         {/* View Mode Toggle - right side */}

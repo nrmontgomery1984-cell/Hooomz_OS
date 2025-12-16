@@ -10,3 +10,4 @@ export {
 export { useDashboard, useDashboardFromData } from './useDashboard';
 export { usePhaseTransition } from './usePhaseTransition';
 export { useTaskTracker } from './useTaskTracker';
+export { useFloorPlan } from './useFloorPlan';

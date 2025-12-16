@@ -873,8 +873,14 @@ export function EstimateBuilder() {
                   ceilingHeight={ceilingHeight}
                   catalogueData={catalogueData}
                   selectedTier={selectedTier}
+                  levels={levels}
                   onDeleteInstance={(id) => {
                     setInstances(prev => prev.filter(inst => inst.id !== id));
+                  }}
+                  onEditInstance={(updatedInstance) => {
+                    setInstances(prev => prev.map(inst =>
+                      inst.id === updatedInstance.id ? updatedInstance : inst
+                    ));
                   }}
                 />
               </>

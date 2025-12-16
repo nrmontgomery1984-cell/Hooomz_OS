@@ -29,12 +29,23 @@ import {
   selectionStatuses,
   selectionPhases,
   trades,
+  // Floor Plan imports
+  mockFloorPlans,
+  mockFloorPlanElements,
+  saveFloorPlansToStorage,
+  saveFloorPlanElementsToStorage,
+  FLOOR_PLAN_STATUS_COLORS,
+  ELEMENT_TYPE_DEFAULTS,
+  TRADE_COLORS,
 } from './mockData';
 import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
+// Force mock mode for projects (Supabase projects table may have different IDs)
+const USE_MOCK_PROJECTS = true;
+
 // Projects API
 export async function getProjects() {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     return { data: mockProjects, error: null };
   }
 
@@ -48,7 +59,7 @@ export async function getProjects() {
 }
 
 export async function getProject(id) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const project = mockProjects.find((p) => p.id === id);
     return { data: project || null, error: project ? null : 'Not found' };
   }
@@ -931,6 +942,9 @@ export async function createActivityEntry(entry) {
       task_id: entry.task_id,
       actor_id: entry.actor_id,
       actor_name: entry.actor_name,
+      category_code: entry.category_code || null,
+      subcategory_code: entry.subcategory_code || null,
+      contact_ids: entry.contact_ids || [],
     })
     .select()
     .single();
@@ -2414,4 +2428,419 @@ export function getSuggestedSelections(projectId) {
   suggestions.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
 
   return suggestions;
+}
+
+// =============================================================================
+// FLOOR PLANS API
+// =============================================================================
+
+// Floor plan tables don't exist in DB yet - always use mock data
+const USE_MOCK_FLOOR_PLANS = true;
+
+// Re-export constants for components to use
+export { FLOOR_PLAN_STATUS_COLORS, ELEMENT_TYPE_DEFAULTS, TRADE_COLORS };
+
+/**
+ * Get all floor plans for a project
+ */
+export async function getFloorPlans(projectId) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    const plans = mockFloorPlans[projectId] || [];
+    return { data: plans.filter(p => p.isActive).sort((a, b) => a.floorNumber - b.floorNumber), error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plans')
+    .select('*')
+    .eq('project_id', projectId)
+    .eq('is_active', true)
+    .order('floor_number', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Get a single floor plan by ID
+ */
+export async function getFloorPlan(floorPlanId) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    for (const projectPlans of Object.values(mockFloorPlans)) {
+      const plan = projectPlans.find(p => p.id === floorPlanId);
+      if (plan) return { data: plan, error: null };
+    }
+    return { data: null, error: 'Floor plan not found' };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plans')
+    .select('*')
+    .eq('id', floorPlanId)
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Create a new floor plan
+ */
+export async function createFloorPlan(floorPlanData) {
+  const now = new Date().toISOString();
+  const newPlan = {
+    id: crypto.randomUUID(),
+    projectId: floorPlanData.projectId,
+    name: floorPlanData.name,
+    svgViewbox: floorPlanData.svgViewbox || '0 0 800 600',
+    backgroundImageUrl: floorPlanData.backgroundImageUrl || null,
+    widthFeet: floorPlanData.widthFeet || null,
+    heightFeet: floorPlanData.heightFeet || null,
+    floorNumber: floorPlanData.floorNumber ?? 1,
+    isActive: true,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    if (!mockFloorPlans[floorPlanData.projectId]) {
+      mockFloorPlans[floorPlanData.projectId] = [];
+    }
+    mockFloorPlans[floorPlanData.projectId].push(newPlan);
+    mockFloorPlanElements[newPlan.id] = [];
+    saveFloorPlansToStorage();
+    saveFloorPlanElementsToStorage();
+    return { data: newPlan, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plans')
+    .insert({
+      project_id: floorPlanData.projectId,
+      name: floorPlanData.name,
+      svg_viewbox: floorPlanData.svgViewbox || '0 0 800 600',
+      background_image_url: floorPlanData.backgroundImageUrl || null,
+      width_feet: floorPlanData.widthFeet || null,
+      height_feet: floorPlanData.heightFeet || null,
+      floor_number: floorPlanData.floorNumber ?? 1,
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Update a floor plan
+ */
+export async function updateFloorPlan(floorPlanId, updates) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    for (const projectPlans of Object.values(mockFloorPlans)) {
+      const index = projectPlans.findIndex(p => p.id === floorPlanId);
+      if (index !== -1) {
+        projectPlans[index] = {
+          ...projectPlans[index],
+          ...updates,
+          updatedAt: new Date().toISOString(),
+        };
+        saveFloorPlansToStorage();
+        return { data: projectPlans[index], error: null };
+      }
+    }
+    return { data: null, error: 'Floor plan not found' };
+  }
+
+  const dbUpdates = {};
+  if (updates.name !== undefined) dbUpdates.name = updates.name;
+  if (updates.svgViewbox !== undefined) dbUpdates.svg_viewbox = updates.svgViewbox;
+  if (updates.backgroundImageUrl !== undefined) dbUpdates.background_image_url = updates.backgroundImageUrl;
+  if (updates.widthFeet !== undefined) dbUpdates.width_feet = updates.widthFeet;
+  if (updates.heightFeet !== undefined) dbUpdates.height_feet = updates.heightFeet;
+  if (updates.floorNumber !== undefined) dbUpdates.floor_number = updates.floorNumber;
+  if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
+
+  const { data, error } = await supabase
+    .from('floor_plans')
+    .update(dbUpdates)
+    .eq('id', floorPlanId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Delete a floor plan (soft delete)
+ */
+export async function deleteFloorPlan(floorPlanId) {
+  return updateFloorPlan(floorPlanId, { isActive: false });
+}
+
+// =============================================================================
+// FLOOR PLAN ELEMENTS API
+// =============================================================================
+
+/**
+ * Get all elements for a floor plan
+ */
+export async function getFloorPlanElements(floorPlanId) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    const elements = mockFloorPlanElements[floorPlanId] || [];
+    return { data: elements.sort((a, b) => a.zIndex - b.zIndex), error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plan_elements')
+    .select('*')
+    .eq('floor_plan_id', floorPlanId)
+    .order('z_index', { ascending: true });
+
+  return { data, error };
+}
+
+/**
+ * Get elements with their linked loop status
+ */
+export async function getFloorPlanElementsWithStatus(floorPlanId) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    const elements = mockFloorPlanElements[floorPlanId] || [];
+    // Enrich with loop status
+    const enrichedElements = elements.map(elem => {
+      let loopStatus = null;
+      let loopName = null;
+      if (elem.loopId) {
+        const loop = mockLoops.find(l => l.id === elem.loopId);
+        if (loop) {
+          loopStatus = loop.status;
+          loopName = loop.name;
+        }
+      }
+      return {
+        ...elem,
+        loopStatus,
+        loopName,
+      };
+    });
+    return { data: enrichedElements.sort((a, b) => a.zIndex - b.zIndex), error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plan_elements')
+    .select(`
+      *,
+      loops (
+        id,
+        name,
+        status,
+        health_color
+      )
+    `)
+    .eq('floor_plan_id', floorPlanId)
+    .order('z_index', { ascending: true });
+
+  if (data) {
+    // Flatten loop info
+    const enriched = data.map(elem => ({
+      ...elem,
+      loopStatus: elem.loops?.status || null,
+      loopName: elem.loops?.name || null,
+      loopHealthColor: elem.loops?.health_color || null,
+    }));
+    return { data: enriched, error: null };
+  }
+
+  return { data, error };
+}
+
+/**
+ * Create a new floor plan element
+ */
+export async function createFloorPlanElement(elementData) {
+  const now = new Date().toISOString();
+  const defaults = ELEMENT_TYPE_DEFAULTS[elementData.elementType] || ELEMENT_TYPE_DEFAULTS.custom;
+
+  const newElement = {
+    id: crypto.randomUUID(),
+    floorPlanId: elementData.floorPlanId,
+    loopId: elementData.loopId || null,
+    elementType: elementData.elementType,
+    label: elementData.label || null,
+    tradeCategory: elementData.tradeCategory || null,
+    svgType: elementData.svgType,
+    svgData: elementData.svgData,
+    strokeWidth: elementData.strokeWidth ?? defaults.strokeWidth,
+    defaultColor: elementData.defaultColor || defaults.color,
+    zIndex: elementData.zIndex ?? 0,
+    notes: elementData.notes || null,
+    specs: elementData.specs || null,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    if (!mockFloorPlanElements[elementData.floorPlanId]) {
+      mockFloorPlanElements[elementData.floorPlanId] = [];
+    }
+    mockFloorPlanElements[elementData.floorPlanId].push(newElement);
+    saveFloorPlanElementsToStorage();
+    return { data: newElement, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plan_elements')
+    .insert({
+      floor_plan_id: elementData.floorPlanId,
+      loop_id: elementData.loopId || null,
+      element_type: elementData.elementType,
+      label: elementData.label || null,
+      trade_category: elementData.tradeCategory || null,
+      svg_type: elementData.svgType,
+      svg_data: elementData.svgData,
+      stroke_width: elementData.strokeWidth ?? defaults.strokeWidth,
+      default_color: elementData.defaultColor || defaults.color,
+      z_index: elementData.zIndex ?? 0,
+      notes: elementData.notes || null,
+      specs: elementData.specs || null,
+    })
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Update a floor plan element
+ */
+export async function updateFloorPlanElement(elementId, updates) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    for (const elements of Object.values(mockFloorPlanElements)) {
+      const index = elements.findIndex(e => e.id === elementId);
+      if (index !== -1) {
+        elements[index] = {
+          ...elements[index],
+          ...updates,
+          updatedAt: new Date().toISOString(),
+        };
+        saveFloorPlanElementsToStorage();
+        return { data: elements[index], error: null };
+      }
+    }
+    return { data: null, error: 'Element not found' };
+  }
+
+  const dbUpdates = {};
+  if (updates.loopId !== undefined) dbUpdates.loop_id = updates.loopId;
+  if (updates.label !== undefined) dbUpdates.label = updates.label;
+  if (updates.tradeCategory !== undefined) dbUpdates.trade_category = updates.tradeCategory;
+  if (updates.svgData !== undefined) dbUpdates.svg_data = updates.svgData;
+  if (updates.strokeWidth !== undefined) dbUpdates.stroke_width = updates.strokeWidth;
+  if (updates.defaultColor !== undefined) dbUpdates.default_color = updates.defaultColor;
+  if (updates.zIndex !== undefined) dbUpdates.z_index = updates.zIndex;
+  if (updates.notes !== undefined) dbUpdates.notes = updates.notes;
+  if (updates.specs !== undefined) dbUpdates.specs = updates.specs;
+
+  const { data, error } = await supabase
+    .from('floor_plan_elements')
+    .update(dbUpdates)
+    .eq('id', elementId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Delete a floor plan element
+ */
+export async function deleteFloorPlanElement(elementId) {
+  if (!isSupabaseConfigured() || USE_MOCK_FLOOR_PLANS) {
+    for (const [floorPlanId, elements] of Object.entries(mockFloorPlanElements)) {
+      const index = elements.findIndex(e => e.id === elementId);
+      if (index !== -1) {
+        const deleted = elements.splice(index, 1)[0];
+        saveFloorPlanElementsToStorage();
+        return { data: deleted, error: null };
+      }
+    }
+    return { data: null, error: 'Element not found' };
+  }
+
+  const { data, error } = await supabase
+    .from('floor_plan_elements')
+    .delete()
+    .eq('id', elementId)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+/**
+ * Link an element to a loop (existing or create new)
+ */
+export async function linkElementToLoop(elementId, loopId = null, createLoopData = null) {
+  // If creating a new loop
+  if (createLoopData && !loopId) {
+    const { data: newLoop, error: loopError } = await createLoop(createLoopData);
+    if (loopError) {
+      return { data: null, error: loopError };
+    }
+    loopId = newLoop.id;
+  }
+
+  // Update element with loop ID
+  return updateFloorPlanElement(elementId, { loopId });
+}
+
+/**
+ * Unlink an element from its loop
+ */
+export async function unlinkElementFromLoop(elementId) {
+  return updateFloorPlanElement(elementId, { loopId: null });
+}
+
+/**
+ * Get floor plan status summary (for progress indicators)
+ */
+export async function getFloorPlanStatusSummary(floorPlanId) {
+  const { data: elements, error } = await getFloorPlanElementsWithStatus(floorPlanId);
+
+  if (error) return { data: null, error };
+
+  const statusCounts = {
+    not_started: 0,
+    pending: 0,
+    in_progress: 0,
+    active: 0,
+    blocked: 0,
+    complete: 0,
+    completed: 0,
+    unlinked: 0, // Elements without loops
+  };
+
+  let totalLinked = 0;
+  let completedCount = 0;
+
+  elements.forEach(elem => {
+    if (!elem.loopId) {
+      statusCounts.unlinked++;
+    } else {
+      totalLinked++;
+      const status = elem.loopStatus || 'pending';
+      statusCounts[status] = (statusCounts[status] || 0) + 1;
+      if (status === 'complete' || status === 'completed') {
+        completedCount++;
+      }
+    }
+  });
+
+  const overallProgress = totalLinked > 0 ? Math.round((completedCount / totalLinked) * 100) : 0;
+
+  return {
+    data: {
+      totalElements: elements.length,
+      linkedElements: totalLinked,
+      unlinkedElements: statusCounts.unlinked,
+      statusCounts,
+      overallProgress,
+    },
+    error: null,
+  };
 }

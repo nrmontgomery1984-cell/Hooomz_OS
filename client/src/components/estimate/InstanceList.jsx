@@ -6,6 +6,8 @@ import {
   Edit2,
   MapPin,
   Layers,
+  X,
+  Check,
 } from 'lucide-react';
 import {
   SCOPE_ITEMS,
@@ -34,6 +36,7 @@ export function InstanceList({
   onEditInstance,
   selectedTier = 'better',
   defaultCollapsed = true, // Default to collapsed view
+  levels = [{ value: 'main', label: 'Main Floor' }], // Available levels for editing
 }) {
   // Support both old single ceilingHeight and new per-level ceilingHeights
   const effectiveCeilingHeight = ceilingHeights || ceilingHeight || 9;
@@ -44,6 +47,7 @@ export function InstanceList({
     surfaces: false,
     mep: false,
   });
+  const [editingInstance, setEditingInstance] = useState(null); // Instance being edited
 
   // Helper to get ceiling height for a level
   const getCeilingHeightForLevel = (level) => {
@@ -140,6 +144,14 @@ export function InstanceList({
 
   const tierMultiplier = BUILD_TIERS[selectedTier]?.multiplier || 1;
 
+  // Handle saving an edited instance
+  const handleSaveEdit = (updatedInstance) => {
+    if (onEditInstance) {
+      onEditInstance(updatedInstance);
+    }
+    setEditingInstance(null);
+  };
+
   if (instances.length === 0) {
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-6">
@@ -191,15 +203,35 @@ export function InstanceList({
                   <div className="text-xs text-gray-500 mt-0.5 ml-6">
                     {item.assemblyName}
                   </div>
-                  {/* Level breakdown in pills */}
-                  {Object.keys(item.byLevel).length > 0 && (
+                  {/* Level breakdown in pills with edit/delete buttons */}
+                  {item.instances.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1.5 ml-6">
-                      {Object.entries(item.byLevel).map(([level, data]) => (
+                      {item.instances.map((instance) => (
                         <span
-                          key={level}
-                          className="inline-flex items-center px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-xs"
+                          key={instance.id}
+                          className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-xs group"
                         >
-                          <span className="capitalize">{level}</span>: {data.lf.toFixed(1)} LF
+                          <span className="capitalize">{instance.level}</span>: {instance.measurement} LF
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEditingInstance(instance);
+                            }}
+                            className="p-0.5 text-gray-400 hover:text-blue-500 rounded opacity-60 hover:opacity-100"
+                            title="Edit"
+                          >
+                            <Edit2 className="w-3 h-3" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onDeleteInstance?.(instance.id);
+                            }}
+                            className="p-0.5 text-gray-400 hover:text-red-500 rounded opacity-60 hover:opacity-100"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
                         </span>
                       ))}
                     </div>
@@ -303,6 +335,13 @@ export function InstanceList({
                             <span className="capitalize">{instance.level}</span>
                             <span>({instance.measurement})</span>
                             <button
+                              onClick={() => setEditingInstance(instance)}
+                              className="p-0.5 text-gray-400 hover:text-blue-500 rounded"
+                              title="Edit"
+                            >
+                              <Edit2 className="w-3 h-3" />
+                            </button>
+                            <button
                               onClick={() => onDeleteInstance?.(instance.id)}
                               className="p-0.5 text-gray-400 hover:text-red-500 rounded"
                               title="Delete"
@@ -373,7 +412,115 @@ export function InstanceList({
           </div>
         </div>
       </div>
+
+      {/* Edit Instance Modal */}
+      {editingInstance && (
+        <EditInstanceModal
+          instance={editingInstance}
+          levels={levels}
+          onSave={handleSaveEdit}
+          onClose={() => setEditingInstance(null)}
+        />
+      )}
     </div>
+  );
+}
+
+/**
+ * EditInstanceModal - Modal for editing an instance's measurement and level
+ */
+function EditInstanceModal({ instance, levels, onSave, onClose }) {
+  const [measurement, setMeasurement] = useState(instance.measurement || 0);
+  const [level, setLevel] = useState(instance.level || 'main');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave({
+      ...instance,
+      measurement: parseFloat(measurement) || 0,
+      level,
+    });
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/50 z-50"
+        onClick={onClose}
+      />
+      {/* Modal */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div
+          className="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-charcoal">Edit Instance</h3>
+            <button
+              onClick={onClose}
+              className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Measurement */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Measurement (LF)
+              </label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                value={measurement}
+                onChange={(e) => setMeasurement(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                autoFocus
+              />
+            </div>
+
+            {/* Level */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Level
+              </label>
+              <select
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {levels.map((lvl) => (
+                  <option key={lvl.value} value={lvl.value}>
+                    {lvl.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-end gap-3 pt-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2"
+              >
+                <Check className="w-4 h-4" />
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 }
 

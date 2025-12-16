@@ -25,6 +25,7 @@ export { EstimateBuilder } from './EstimateBuilder';
 export { HomeownerQuote } from './HomeownerQuote';
 export { Selections } from './Selections';
 export { PhaseBuilder } from './PhaseBuilder';
+export { FloorPlanPage } from './FloorPlanPage';
 
 // Other
 export { Profile } from './Profile';
@@ -34,6 +35,7 @@ export { ContractorIntake } from './ContractorIntake';
 // Settings & Tools
 export { CostCatalogue } from './CostCatalogue';
 export { Settings } from './Settings';
+export { TimeBudgetCalculator } from './TimeBudgetCalculator';
 
 // Training
 export { FieldGuide } from './FieldGuide';

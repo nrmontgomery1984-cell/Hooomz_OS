@@ -70,7 +70,7 @@ export function TaskItem({ task, onToggle, onStartTimer, activeTimerTaskId, cate
         )}
       </div>
       <div className="flex items-center gap-2 mt-0.5">
-        {/* Start Timer Button */}
+        {/* Start Timer Button - 44px touch target for mobile */}
         {onStartTimer && !isCompleted && (
           <button
             onClick={(e) => {
@@ -79,7 +79,7 @@ export function TaskItem({ task, onToggle, onStartTimer, activeTimerTaskId, cate
             }}
             disabled={activeTimerTaskId === task.id}
             className={`
-              p-1.5 rounded-lg transition-colors
+              p-2.5 -m-1 rounded-lg transition-colors active:bg-gray-100
               ${activeTimerTaskId === task.id
                 ? 'bg-emerald-100 text-emerald-600 cursor-default'
                 : 'hover:bg-emerald-50 text-gray-400 hover:text-emerald-600'
@@ -87,7 +87,7 @@ export function TaskItem({ task, onToggle, onStartTimer, activeTimerTaskId, cate
             `}
             title={activeTimerTaskId === task.id ? 'Timer running' : 'Start timer'}
           >
-            <Play className={`w-3.5 h-3.5 ${activeTimerTaskId === task.id ? 'fill-current' : ''}`} />
+            <Play className={`w-4 h-4 ${activeTimerTaskId === task.id ? 'fill-current' : ''}`} />
           </button>
         )}
         {task.estimated_hours && (
