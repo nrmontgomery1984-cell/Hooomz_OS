@@ -18,6 +18,7 @@ import {
   Timer,
   Receipt,
   ClipboardList,
+  Clock,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
@@ -60,6 +61,7 @@ const navSections = [
     items: [
       { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue' },
       { to: '/field-guide', icon: GraduationCap, label: 'Field Guide' },
+      { to: '/time-budget', icon: Clock, label: 'Time Budget' },
       { to: '/settings', icon: Settings, label: 'Settings' },
     ],
   },
