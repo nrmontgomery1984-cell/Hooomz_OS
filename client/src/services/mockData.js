@@ -156,7 +156,11 @@ if (typeof window !== 'undefined') {
 // PROJECTS - Generated from Intake
 // =============================================================================
 
-const defaultProjects = [
+// Production mode: Start with empty projects (users create their own)
+// Set to false to load demo projects for development/testing
+const LOAD_DEMO_DATA = false;
+
+const demoProjects = [
   // ============================================================================
   // PROJECT 1: INTAKE PHASE (New Lead / Sales)
   // ============================================================================
@@ -788,6 +792,9 @@ const defaultProjects = [
   },
 ];
 
+// Use empty array for production, demo data for development
+const defaultProjects = LOAD_DEMO_DATA ? demoProjects : [];
+
 // Load projects from localStorage or use defaults
 export const mockProjects = loadFromStorage(STORAGE_KEYS.projects, defaultProjects);
 
@@ -795,7 +802,7 @@ export const mockProjects = loadFromStorage(STORAGE_KEYS.projects, defaultProjec
 // LOOPS - Generated from Intake Room Selections & Templates
 // =============================================================================
 
-const defaultLoops = {
+const demoLoops = {
   // Henderson New Construction Loops - from estimate
   'proj-nc-001': [
     {
@@ -1098,6 +1105,9 @@ const defaultLoops = {
   ],
 };
 
+// Use empty object for production, demo data for development
+const defaultLoops = LOAD_DEMO_DATA ? demoLoops : {};
+
 // Load loops from localStorage or use defaults
 export const mockLoops = loadFromStorage(STORAGE_KEYS.loops, defaultLoops);
 
@@ -1105,7 +1115,7 @@ export const mockLoops = loadFromStorage(STORAGE_KEYS.loops, defaultLoops);
 // TASKS - Generated from Intake Templates
 // =============================================================================
 
-const defaultTasks = {
+const demoTasks = {
   // Henderson - Site Prep & Foundation (completed)
   'loop-nc-001': [
     { id: 'task-nc-001', loop_id: 'loop-nc-001', title: 'Clear lot and grub stumps', status: 'completed', category: 'GN', display_order: 1 },
@@ -1212,6 +1222,9 @@ const defaultTasks = {
 };
 
 // Load tasks from localStorage or use defaults
+// Use empty object for production, demo data for development
+const defaultTasks = LOAD_DEMO_DATA ? demoTasks : {};
+
 export const mockTasks = loadFromStorage(STORAGE_KEYS.tasks, defaultTasks);
 
 // =============================================================================
@@ -2053,7 +2066,7 @@ const defaultTaskTemplates = {
 };
 
 // Task Instances (Collapsed from Quantum State)
-const defaultTaskInstances = {
+const demoTaskInstances = {
   // Henderson New Construction - proj-nc-001
   'proj-nc-001': [
     // Foundation tasks (completed)
@@ -2548,6 +2561,9 @@ export const defaultPhaseChecklists = {
     { id: 'chk-tl-008', templateId: 'tpl-reno-tl-001', phaseCode: 'final', stepOrder: 2, stepDescription: 'Install fixtures and trim', isCritical: true },
   ],
 };
+
+// Use empty defaults for production, demo data for development
+const defaultTaskInstances = LOAD_DEMO_DATA ? demoTaskInstances : {};
 
 // Load from storage or use defaults
 export const mockTaskTrackerLocations = loadFromStorage(STORAGE_KEYS.taskTrackerLocations, defaultLocations);
