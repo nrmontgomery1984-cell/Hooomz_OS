@@ -8,6 +8,9 @@ import {
 import { calculateScopeCosts } from '../lib/scopeCostEstimator';
 import { calculateInstanceTotals, generateLineItemsFromInstances } from '../lib/estimateHelpers';
 
+// Force mock mode to match api.js - ensures projects are stored consistently
+const USE_MOCK_PROJECTS = true;
+
 /**
  * Contractor Intake Service
  *
@@ -121,8 +124,8 @@ export async function generateProjectFromContractorIntake(formData) {
       notes: 'Initial estimate from contractor intake',
     };
 
-    // Mock mode handling
-    if (!isSupabaseConfigured()) {
+    // Mock mode handling - use mock when Supabase not configured OR USE_MOCK_PROJECTS is true
+    if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
       const projectId = `p${Date.now()}`;
       const newProject = {
         id: projectId,
