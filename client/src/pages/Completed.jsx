@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Calendar, DollarSign, Star } from 'lucide-react';
+import { CheckCircle2, Calendar, DollarSign, Trash2 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
-import { getProjects } from '../services/api';
+import { getProjects, deleteProject } from '../services/api';
 
 /**
  * Completed Page
@@ -65,7 +65,11 @@ export function Completed() {
       ) : (
         <div className="space-y-3">
           {projects.map((project) => (
-            <CompletedCard key={project.id} project={project} />
+            <CompletedCard
+              key={project.id}
+              project={project}
+              onDelete={(id) => setProjects(projects.filter(p => p.id !== id))}
+            />
           ))}
         </div>
       )}
@@ -73,7 +77,20 @@ export function Completed() {
   );
 }
 
-function CompletedCard({ project }) {
+function CompletedCard({ project, onDelete }) {
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`Delete "${project.name}"? This cannot be undone.`)) {
+      const { error } = await deleteProject(project.id);
+      if (error) {
+        alert('Failed to delete');
+      } else if (onDelete) {
+        onDelete(project.id);
+      }
+    }
+  };
+
   return (
     <Link to={`/projects/${project.id}`}>
       <Card className="p-4 hover:border-gray-300 transition-colors">
@@ -82,7 +99,16 @@ function CompletedCard({ project }) {
             <h4 className="font-medium text-charcoal">{project.name}</h4>
             <p className="text-sm text-gray-500">{project.client_name}</p>
           </div>
-          <CheckCircle2 className="w-5 h-5 text-green-500" />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDelete}
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+              title="Delete"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <CheckCircle2 className="w-5 h-5 text-green-500" />
+          </div>
         </div>
 
         <div className="flex items-center gap-4 text-sm text-gray-500">

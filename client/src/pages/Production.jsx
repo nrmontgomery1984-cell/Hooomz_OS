@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { HardHat, MapPin, Clock, Users, ArrowRight } from 'lucide-react';
+import { HardHat, MapPin, Clock, Users, ArrowRight, Trash2 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card, ProgressBar } from '../components/ui';
-import { getProjects } from '../services/api';
+import { getProjects, deleteProject } from '../services/api';
 
 /**
  * Production Page
@@ -84,7 +84,11 @@ export function Production() {
       ) : (
         <div className="space-y-4">
           {projects.map((project) => (
-            <ProductionCard key={project.id} project={project} />
+            <ProductionCard
+              key={project.id}
+              project={project}
+              onDelete={(id) => setProjects(projects.filter(p => p.id !== id))}
+            />
           ))}
         </div>
       )}
@@ -92,7 +96,7 @@ export function Production() {
   );
 }
 
-function ProductionCard({ project }) {
+function ProductionCard({ project, onDelete }) {
   const progress = project.progress || 0;
 
   // Determine health color based on progress vs timeline
@@ -101,6 +105,19 @@ function ProductionCard({ project }) {
     if (progress >= 40) return 'blue';
     if (progress >= 20) return 'yellow';
     return 'gray';
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`Delete "${project.name}"? This cannot be undone.`)) {
+      const { error } = await deleteProject(project.id);
+      if (error) {
+        alert('Failed to delete');
+      } else if (onDelete) {
+        onDelete(project.id);
+      }
+    }
   };
 
   return (
@@ -115,15 +132,24 @@ function ProductionCard({ project }) {
               {project.address || 'Address pending'}
             </div>
           </div>
-          <span className={`
-            text-xs px-2 py-1 rounded-full
-            ${project.intake_type === 'new_construction'
-              ? 'bg-blue-100 text-blue-700'
-              : 'bg-amber-100 text-amber-700'
-            }
-          `}>
-            {project.intake_type === 'new_construction' ? 'New Build' : 'Renovation'}
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDelete}
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+              title="Delete"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <span className={`
+              text-xs px-2 py-1 rounded-full
+              ${project.intake_type === 'new_construction'
+                ? 'bg-blue-100 text-blue-700'
+                : 'bg-amber-100 text-amber-700'
+              }
+            `}>
+              {project.intake_type === 'new_construction' ? 'New Build' : 'Renovation'}
+            </span>
+          </div>
         </div>
 
         {/* Progress */}

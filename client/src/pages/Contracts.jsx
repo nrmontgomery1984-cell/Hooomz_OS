@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FileSignature, CheckCircle, Clock, AlertCircle, ArrowRight } from 'lucide-react';
+import { FileSignature, CheckCircle, Clock, AlertCircle, ArrowRight, Trash2 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card, Button } from '../components/ui';
-import { getProjects } from '../services/api';
+import { getProjects, deleteProject } from '../services/api';
 
 /**
  * Contracts Page
@@ -98,7 +98,11 @@ export function Contracts() {
       ) : (
         <div className="space-y-3">
           {contracts.map((project) => (
-            <ContractCard key={project.id} project={project} />
+            <ContractCard
+              key={project.id}
+              project={project}
+              onDelete={(id) => setContracts(contracts.filter(c => c.id !== id))}
+            />
           ))}
         </div>
       )}
@@ -106,7 +110,7 @@ export function Contracts() {
   );
 }
 
-function ContractCard({ project }) {
+function ContractCard({ project, onDelete }) {
   // Mock contract status - in real app would come from project data
   const contractStatus = 'sent'; // sent | viewed | signed
 
@@ -119,6 +123,19 @@ function ContractCard({ project }) {
   const status = statusConfig[contractStatus];
   const StatusIcon = status.icon;
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm(`Delete "${project.name}"? This cannot be undone.`)) {
+      const { error } = await deleteProject(project.id);
+      if (error) {
+        alert('Failed to delete');
+      } else if (onDelete) {
+        onDelete(project.id);
+      }
+    }
+  };
+
   return (
     <Link to={`/projects/${project.id}`}>
       <Card className="p-4 hover:border-gray-300 transition-colors">
@@ -127,10 +144,19 @@ function ContractCard({ project }) {
             <h4 className="font-medium text-charcoal">{project.name}</h4>
             <p className="text-sm text-gray-500">{project.client_name}</p>
           </div>
-          <span className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full ${status.bg} ${status.color}`}>
-            <StatusIcon className="w-3 h-3" />
-            {status.label}
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleDelete}
+              className="p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+              title="Delete"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <span className={`flex items-center gap-1 text-xs px-2 py-1 rounded-full ${status.bg} ${status.color}`}>
+              <StatusIcon className="w-3 h-3" />
+              {status.label}
+            </span>
+          </div>
         </div>
 
         {/* Contract Value */}
