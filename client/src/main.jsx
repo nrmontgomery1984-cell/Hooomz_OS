@@ -4,7 +4,7 @@ import { registerSW } from 'virtual:pwa-register'
 import './index.css'
 import App from './App.jsx'
 import { DevAuthProvider } from './contexts/DevAuthContext'
-import { DevBorder, MobilePreviewWrapper } from './components/dev'
+import { DevBorder } from './components/dev'
 import { ToastProvider } from './components/ui'
 
 // Load Google Maps Places API for address autocomplete
@@ -31,15 +31,17 @@ if ('serviceWorker' in navigator) {
   })
 }
 
+// Clear any stale mobile preview localStorage on load
+localStorage.removeItem('hooomz-preview-mode')
+localStorage.removeItem('hooomz-preview-device')
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <DevAuthProvider>
       <ToastProvider>
-        <MobilePreviewWrapper>
-          <DevBorder>
-            <App />
-          </DevBorder>
-        </MobilePreviewWrapper>
+        <DevBorder>
+          <App />
+        </DevBorder>
       </ToastProvider>
     </DevAuthProvider>
   </StrictMode>,
