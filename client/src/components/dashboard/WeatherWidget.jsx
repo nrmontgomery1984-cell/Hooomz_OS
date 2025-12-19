@@ -253,10 +253,12 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
             <div className="flex justify-between">
               {weather.forecast.map((day, idx) => {
                 const DayIcon = getWeatherIcon(day.weatherCode);
+                // Use index to determine day name - idx 0 is always today
+                const dayNames = ['Today', 'Tomorrow'];
+                const dayName = idx < 2
+                  ? dayNames[idx]
+                  : new Date(day.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short' });
                 const isToday = idx === 0;
-                const dayName = isToday
-                  ? 'Today'
-                  : new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
                 return (
                   <div key={idx} className="flex-1 text-center">
                     <p className={`text-[10px] mb-1 ${isToday ? 'text-gray-600 font-medium' : 'text-gray-400'}`}>{dayName}</p>
@@ -340,9 +342,11 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
             {weather.forecast.map((day, idx) => {
               const DayIcon = getWeatherIcon(day.weatherCode);
               const isToday = idx === 0;
-              const dayName = isToday
-                ? 'Today'
-                : new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
+              // Use index to determine day name - idx 0 is always today
+              const dayNames = ['Today', 'Tomorrow'];
+              const dayName = idx < 2
+                ? dayNames[idx]
+                : new Date(day.date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short' });
               return (
                 <div key={idx} className={`flex-1 text-center ${isToday ? 'font-medium' : ''}`}>
                   <p className="text-xs text-gray-500 mb-1">{dayName}</p>
