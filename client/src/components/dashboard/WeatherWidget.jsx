@@ -248,16 +248,19 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
         </div>
 
         {/* 3-day forecast */}
-        {weather.forecast?.length > 1 && (
+        {weather.forecast?.length > 0 && (
           <div className="mt-3 pt-3 border-t border-gray-100">
             <div className="flex justify-between">
-              {weather.forecast.slice(1, 3).map((day, idx) => {
+              {weather.forecast.map((day, idx) => {
                 const DayIcon = getWeatherIcon(day.weatherCode);
-                const dayName = new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
+                const isToday = idx === 0;
+                const dayName = isToday
+                  ? 'Today'
+                  : new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
                 return (
                   <div key={idx} className="flex-1 text-center">
-                    <p className="text-[10px] text-gray-400 mb-1">{dayName}</p>
-                    <DayIcon className="w-4 h-4 text-gray-500 mx-auto mb-1" />
+                    <p className={`text-[10px] mb-1 ${isToday ? 'text-gray-600 font-medium' : 'text-gray-400'}`}>{dayName}</p>
+                    <DayIcon className={`w-4 h-4 mx-auto mb-1 ${isToday ? 'text-blue-500' : 'text-gray-400'}`} />
                     <p className="text-xs font-medium">{day.maxTemp}° / {day.minTemp}°</p>
                   </div>
                 );
