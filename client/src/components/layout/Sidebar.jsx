@@ -7,7 +7,7 @@ import {
   FileSignature,
   HardHat,
   CheckCircle2,
-  Calendar,
+  // Calendar - reserved for Today page (field worker features)
   Settings,
   BookOpen,
   GraduationCap,
