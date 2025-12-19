@@ -24,3 +24,4 @@ export { BudgetBar, BudgetMini } from './BudgetBar';
 export { PhaseIndicator, PhaseChip } from './PhaseIndicator';
 export { QuickContactButton, ContactButtons, PreferredContactBadge } from './QuickContactButton';
 export { MilestoneCalendar, MilestoneItem, MilestoneTimeline } from './MilestoneCalendar';
+export { WeatherWidget } from './WeatherWidget';

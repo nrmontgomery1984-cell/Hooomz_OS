@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button, Card, StatusDot, ProgressBar } from '../components/ui';
+import { WeatherWidget } from '../components/dashboard';
+import { QuickNotes } from '../components/notes';
 import {
   getProjects,
   getWorkCategories,
@@ -484,42 +486,54 @@ export function Dashboard() {
         </Card>
       )}
 
-      {/* Category Groups with Drill-Down */}
-      <div className="space-y-3">
-        {groupedTasks.length > 0 ? (
-          groupedTasks.map(group => (
-            <CategoryGroup
-              key={group.code}
-              group={group}
-              isExpanded={expandedGroups[group.code]}
-              onToggle={() => toggleCategory(group.code)}
-              expandedSubgroups={expandedSubgroups}
-              onToggleSubcategory={(subcatId) => toggleSubcategory(group.code, subcatId)}
-              onTaskClick={(task) => navigate(`/projects/${task.projectId}`)}
-              onStatusChange={handleStatusChange}
-              contacts={contacts}
-              isOverdue={isOverdue}
-              getStatusColor={getStatusColor}
-            />
-          ))
-        ) : (
-          <Card className="p-8 text-center">
-            <ListTodo className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <h3 className="text-lg font-medium text-charcoal mb-2">
-              {hasActiveFilters ? 'No Tasks Match Filters' : 'No Active Tasks'}
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">
-              {hasActiveFilters
-                ? 'Try adjusting your filters to see more tasks.'
-                : 'Tasks will appear here when projects are in production.'}
-            </p>
-            {hasActiveFilters && (
-              <Button variant="secondary" onClick={clearAllFilters}>
-                Clear Filters
-              </Button>
-            )}
-          </Card>
-        )}
+      {/* Main Content Grid - Tasks + Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Category Groups with Drill-Down - Takes 2 columns */}
+        <div className="lg:col-span-2 space-y-3">
+          {groupedTasks.length > 0 ? (
+            groupedTasks.map(group => (
+              <CategoryGroup
+                key={group.code}
+                group={group}
+                isExpanded={expandedGroups[group.code]}
+                onToggle={() => toggleCategory(group.code)}
+                expandedSubgroups={expandedSubgroups}
+                onToggleSubcategory={(subcatId) => toggleSubcategory(group.code, subcatId)}
+                onTaskClick={(task) => navigate(`/projects/${task.projectId}`)}
+                onStatusChange={handleStatusChange}
+                contacts={contacts}
+                isOverdue={isOverdue}
+                getStatusColor={getStatusColor}
+              />
+            ))
+          ) : (
+            <Card className="p-8 text-center">
+              <ListTodo className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <h3 className="text-lg font-medium text-charcoal mb-2">
+                {hasActiveFilters ? 'No Tasks Match Filters' : 'No Active Tasks'}
+              </h3>
+              <p className="text-sm text-gray-500 mb-4">
+                {hasActiveFilters
+                  ? 'Try adjusting your filters to see more tasks.'
+                  : 'Tasks will appear here when projects are in production.'}
+              </p>
+              {hasActiveFilters && (
+                <Button variant="secondary" onClick={clearAllFilters}>
+                  Clear Filters
+                </Button>
+              )}
+            </Card>
+          )}
+        </div>
+
+        {/* Sidebar - Weather & Notes */}
+        <div className="space-y-6">
+          {/* Weather Widget */}
+          <WeatherWidget compact />
+
+          {/* Quick Notes */}
+          <QuickNotes compact />
+        </div>
       </div>
     </PageContainer>
   );

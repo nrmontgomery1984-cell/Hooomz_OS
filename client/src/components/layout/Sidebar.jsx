@@ -62,7 +62,8 @@ const navSections = [
     label: 'Overview',
     items: [
       { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-      { to: '/today', icon: Calendar, label: 'Today' },
+      // Today page hidden - reserved for field worker features
+      // { to: '/today', icon: Calendar, label: 'Today' },
     ],
   },
   {

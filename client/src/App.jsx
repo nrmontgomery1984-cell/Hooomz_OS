@@ -45,7 +45,8 @@ function App() {
         <Route element={<AppLayout />}>
           {/* Overview */}
           <Route path="/" element={<Dashboard />} />
-          <Route path="/today" element={<Today />} />
+          {/* Today page hidden - reserved for field worker features */}
+          {/* <Route path="/today" element={<Today />} /> */}
 
           {/* Pipeline - Pre-Contract */}
           <Route path="/sales" element={<Sales />} />
