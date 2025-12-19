@@ -68,8 +68,8 @@ const navSections = [
   {
     label: 'Daily',
     items: [
-      { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
-      { to: '/expenses', icon: Receipt, label: 'Expense Tracker' },
+      { to: '/time-tracker', icon: Timer, label: 'Time' },
+      { to: '/expenses', icon: Receipt, label: 'Expenses' },
       { to: '/daily-log', icon: ClipboardList, label: 'Daily Log' },
     ],
   },

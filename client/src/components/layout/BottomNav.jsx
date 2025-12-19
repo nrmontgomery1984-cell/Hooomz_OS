@@ -3,7 +3,7 @@ import { Home, Timer, User, Receipt, ClipboardList } from 'lucide-react';
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
-  { to: '/time-tracker', icon: Timer, label: 'Clock' },
+  { to: '/time-tracker', icon: Timer, label: 'Time' },
   { to: '/expenses', icon: Receipt, label: 'Expenses' },
   { to: '/daily-log', icon: ClipboardList, label: 'Log' },
   { to: '/profile', icon: User, label: 'Profile' },

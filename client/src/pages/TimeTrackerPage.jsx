@@ -5,13 +5,11 @@ import {
   Clock,
   ChevronRight,
   ChevronDown,
-  Calendar,
-  User,
   Building2,
-  CheckCircle2,
   X,
   Plus,
   History,
+  PenLine,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card, Button } from '../components/ui';
@@ -20,7 +18,6 @@ import {
   getWorkCategories,
   getWorkSubcategories,
   getTaskInstances,
-  getContacts,
   getActiveTimeEntry,
   getTimeEntries,
   clockIn,
@@ -28,20 +25,18 @@ import {
 } from '../services/api';
 
 /**
- * TimeTrackerPage - Clock in/out for workers
+ * TimeTrackerPage - Simple time tracking
  *
  * Features:
- * - Active timer display when clocked in
- * - Project → Category → Task drill-down for clock in
- * - Recent time entries history
- * - Only shows tasks in scope for selected project
+ * - Clock in/out with live timer
+ * - Manual time entry
+ * - Recent entries history
  */
 export function TimeTrackerPage() {
   // Data state
   const [projects, setProjects] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-  const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Active timer state
@@ -54,8 +49,6 @@ export function TimeTrackerPage() {
   // Clock-in selection state
   const [showClockIn, setShowClockIn] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [projectTasks, setProjectTasks] = useState([]);
   const [expandedCategories, setExpandedCategories] = useState({});
   const [expandedSubcategories, setExpandedSubcategories] = useState({});
@@ -68,39 +61,38 @@ export function TimeTrackerPage() {
   const [clockOutNotes, setClockOutNotes] = useState('');
   const [markComplete, setMarkComplete] = useState(false);
 
+  // Manual entry modal state
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const [manualEntry, setManualEntry] = useState({
+    projectId: '',
+    description: '',
+    date: new Date().toISOString().split('T')[0],
+    hours: '',
+    minutes: '',
+    notes: '',
+  });
+
   // Load initial data
   useEffect(() => {
     async function loadData() {
       setLoading(true);
       try {
-        const [projectsRes, categoriesRes, subcatsRes, contactsRes, activeRes, entriesRes] = await Promise.all([
+        const [projectsRes, categoriesRes, subcatsRes, activeRes, entriesRes] = await Promise.all([
           getProjects(),
           getWorkCategories(),
           getWorkSubcategories(),
-          getContacts(),
           getActiveTimeEntry(),
           getTimeEntries({ userId: currentUser.id }),
         ]);
 
-        // Filter for active/contracted projects only
-        const activeProjects = (projectsRes.data || []).filter(p =>
-          p.status === 'active' ||
-          p.status === 'contracted' ||
-          p.status === 'in_progress' ||
-          p.phase === 'active' ||
-          p.phase === 'contracted' ||
-          p.phase === 'in_progress' ||
-          p.phase === 'production'
-        );
-
-        setProjects(activeProjects);
+        // Get all projects for manual entry, filter active ones for clock-in
+        setProjects(projectsRes.data || []);
         setCategories(categoriesRes.data || []);
         setSubcategories(subcatsRes.data || []);
-        setContacts(contactsRes.data || []);
         setActiveEntry(activeRes.data);
         setTimeEntries(entriesRes.data || []);
       } catch (err) {
-        console.error('TimeTracker load error:', err);
+        console.error('Time load error:', err);
       } finally {
         setLoading(false);
       }
@@ -108,6 +100,19 @@ export function TimeTrackerPage() {
 
     loadData();
   }, [currentUser.id]);
+
+  // Filter active projects for clock-in
+  const activeProjects = useMemo(() => {
+    return projects.filter(p =>
+      p.status === 'active' ||
+      p.status === 'contracted' ||
+      p.status === 'in_progress' ||
+      p.phase === 'active' ||
+      p.phase === 'contracted' ||
+      p.phase === 'in_progress' ||
+      p.phase === 'production'
+    );
+  }, [projects]);
 
   // Update elapsed time when there's an active entry
   useEffect(() => {
@@ -292,7 +297,7 @@ export function TimeTrackerPage() {
 
   if (loading) {
     return (
-      <PageContainer title="Time Tracker">
+      <PageContainer title="Time">
         <div className="space-y-4">
           <div className="bg-gray-100 rounded-lg h-48 animate-pulse" />
           <div className="bg-gray-100 rounded-lg h-32 animate-pulse" />
@@ -301,11 +306,43 @@ export function TimeTrackerPage() {
     );
   }
 
+  // Handle manual entry save
+  const handleManualEntrySave = () => {
+    const totalMinutes = (parseInt(manualEntry.hours) || 0) * 60 + (parseInt(manualEntry.minutes) || 0);
+    if (!manualEntry.projectId || !manualEntry.description || totalMinutes === 0) return;
+
+    const project = projects.find(p => p.id === manualEntry.projectId);
+    const newEntry = {
+      id: `te-manual-${Date.now()}`,
+      taskId: null,
+      taskName: manualEntry.description,
+      projectId: manualEntry.projectId,
+      projectName: project?.name || 'Unknown Project',
+      categoryCode: null,
+      userId: currentUser.id,
+      userName: currentUser.name,
+      startTime: new Date(manualEntry.date).toISOString(),
+      endTime: new Date(manualEntry.date).toISOString(),
+      durationMinutes: totalMinutes,
+      notes: manualEntry.notes,
+      billable: true,
+      isManual: true,
+    };
+
+    setTimeEntries(prev => [newEntry, ...prev]);
+    setShowManualEntry(false);
+    setManualEntry({
+      projectId: '',
+      description: '',
+      date: new Date().toISOString().split('T')[0],
+      hours: '',
+      minutes: '',
+      notes: '',
+    });
+  };
+
   return (
-    <PageContainer
-      title="Time Tracker"
-      subtitle={activeEntry ? 'Currently clocked in' : 'Ready to clock in'}
-    >
+    <PageContainer title="Time">
       {/* Active Timer */}
       {activeEntry ? (
         <Card className="p-6 mb-6 border-2 border-emerald-300 bg-emerald-50/30">
@@ -364,14 +401,20 @@ export function TimeTrackerPage() {
           </div>
         </Card>
       ) : (
-        /* Clock In Button */
+        /* Clock In / Manual Entry Buttons */
         <Card className="p-6 mb-6 text-center">
           <Clock className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500 mb-4">You're not currently clocked in</p>
-          <Button onClick={() => setShowClockIn(true)}>
-            <Play className="w-4 h-4 mr-2" />
-            Clock In
-          </Button>
+          <p className="text-gray-500 mb-4">Track your time</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button onClick={() => setShowClockIn(true)}>
+              <Play className="w-4 h-4 mr-2" />
+              Clock In
+            </Button>
+            <Button variant="secondary" onClick={() => setShowManualEntry(true)}>
+              <PenLine className="w-4 h-4 mr-2" />
+              Manual Entry
+            </Button>
+          </div>
         </Card>
       )}
 
@@ -391,9 +434,9 @@ export function TimeTrackerPage() {
           {/* Step 1: Project Selection */}
           {!selectedProject ? (
             <div>
-              <p className="text-sm text-gray-500 mb-3">1. Select a project:</p>
+              <p className="text-sm text-gray-500 mb-3">Select a project:</p>
               <div className="space-y-2">
-                {projects.map(project => (
+                {activeProjects.map(project => (
                   <button
                     type="button"
                     key={project.id}
@@ -408,7 +451,7 @@ export function TimeTrackerPage() {
                     <ChevronRight className="w-4 h-4 text-gray-400" />
                   </button>
                 ))}
-                {projects.length === 0 && (
+                {activeProjects.length === 0 && (
                   <p className="text-sm text-gray-400 text-center py-4">
                     No active projects available
                   </p>
@@ -609,6 +652,129 @@ export function TimeTrackerPage() {
               >
                 <Square className="w-4 h-4 mr-2" />
                 Clock Out
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Manual Entry Modal */}
+      {showManualEntry && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-charcoal">Add Time Entry</h3>
+              <button onClick={() => setShowManualEntry(false)}>
+                <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+              </button>
+            </div>
+
+            {/* Project */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Project
+              </label>
+              <select
+                value={manualEntry.projectId}
+                onChange={(e) => setManualEntry(prev => ({ ...prev, projectId: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              >
+                <option value="">Select a project...</option>
+                {projects.map(project => (
+                  <option key={project.id} value={project.id}>{project.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Description */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                What did you work on?
+              </label>
+              <input
+                type="text"
+                value={manualEntry.description}
+                onChange={(e) => setManualEntry(prev => ({ ...prev, description: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                placeholder="e.g., Installed kitchen cabinets"
+              />
+            </div>
+
+            {/* Date */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Date
+              </label>
+              <input
+                type="date"
+                value={manualEntry.date}
+                onChange={(e) => setManualEntry(prev => ({ ...prev, date: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              />
+            </div>
+
+            {/* Duration */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Duration
+              </label>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <input
+                    type="number"
+                    min="0"
+                    max="24"
+                    value={manualEntry.hours}
+                    onChange={(e) => setManualEntry(prev => ({ ...prev, hours: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    placeholder="0"
+                  />
+                  <span className="text-xs text-gray-400 mt-1 block">Hours</span>
+                </div>
+                <div className="flex-1">
+                  <input
+                    type="number"
+                    min="0"
+                    max="59"
+                    value={manualEntry.minutes}
+                    onChange={(e) => setManualEntry(prev => ({ ...prev, minutes: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    placeholder="0"
+                  />
+                  <span className="text-xs text-gray-400 mt-1 block">Minutes</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Notes */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Notes (optional)
+              </label>
+              <textarea
+                value={manualEntry.notes}
+                onChange={(e) => setManualEntry(prev => ({ ...prev, notes: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                rows={2}
+                placeholder="Any additional details..."
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <Button
+                variant="secondary"
+                className="flex-1"
+                onClick={() => setShowManualEntry(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="flex-1"
+                onClick={handleManualEntrySave}
+                disabled={!manualEntry.projectId || !manualEntry.description || (!manualEntry.hours && !manualEntry.minutes)}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Entry
               </Button>
             </div>
           </Card>
