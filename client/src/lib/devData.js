@@ -5,19 +5,324 @@
  * This file should be tree-shaken out of production builds.
  */
 
+// =============================================================================
+// ROLE DEFINITIONS
+// =============================================================================
+
+/**
+ * Role hierarchy with permission levels
+ * Higher numbers = more permissions
+ */
+export const ROLES = {
+  // Internal team roles
+  administrator: {
+    level: 100,
+    label: 'Administrator',
+    shortLabel: 'Admin',
+    description: 'Full system access - settings, users, financials',
+    color: '#8b5cf6', // purple
+    icon: 'Shield',
+    canAccessAdmin: true,
+    canManageUsers: true,
+    canViewFinancials: true,
+    canEditSettings: true,
+  },
+  manager: {
+    level: 80,
+    label: 'Manager',
+    shortLabel: 'Manager',
+    description: 'Project oversight, team management, reporting',
+    color: '#3b82f6', // blue
+    icon: 'Briefcase',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: true,
+    canEditSettings: false,
+  },
+  foreman: {
+    level: 60,
+    label: 'Foreman',
+    shortLabel: 'Foreman',
+    description: 'Site supervision, crew coordination, quality control',
+    color: '#f59e0b', // amber
+    icon: 'HardHat',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: false,
+    canEditSettings: false,
+  },
+  tradesperson: {
+    level: 40,
+    label: 'Tradesperson',
+    shortLabel: 'Trade',
+    description: 'Skilled work, time tracking, task completion',
+    color: '#10b981', // emerald
+    icon: 'Wrench',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: false,
+    canEditSettings: false,
+  },
+  apprentice: {
+    level: 30,
+    label: 'Apprentice',
+    shortLabel: 'Apprentice',
+    description: 'Learning, assisting, time tracking',
+    color: '#06b6d4', // cyan
+    icon: 'GraduationCap',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: false,
+    canEditSettings: false,
+  },
+  labourer: {
+    level: 20,
+    label: 'Labourer',
+    shortLabel: 'Labourer',
+    description: 'General labour, time tracking',
+    color: '#64748b', // slate
+    icon: 'User',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: false,
+    canEditSettings: false,
+  },
+  // External roles (for reference)
+  homeowner: {
+    level: 10,
+    label: 'Homeowner',
+    shortLabel: 'Client',
+    description: 'Project client - view only access',
+    color: '#22c55e', // green
+    icon: 'Home',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: false,
+    canEditSettings: false,
+  },
+  subcontractor: {
+    level: 10,
+    label: 'Subcontractor',
+    shortLabel: 'Sub',
+    description: 'External contractor - assigned work only',
+    color: '#f97316', // orange
+    icon: 'Zap',
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canViewFinancials: false,
+    canEditSettings: false,
+  },
+};
+
+/**
+ * Feature permissions by role
+ * true = full access, 'view' = read-only, false = no access
+ */
+export const PERMISSIONS = {
+  // Dashboard & Overview
+  dashboard: {
+    administrator: true,
+    manager: true,
+    foreman: true,
+    tradesperson: 'limited', // simplified view
+    apprentice: 'limited',
+    labourer: 'limited',
+    homeowner: 'own_project',
+    subcontractor: 'assigned',
+  },
+  // Pipeline (Sales, Estimates, Contracts)
+  pipeline: {
+    administrator: true,
+    manager: true,
+    foreman: 'view',
+    tradesperson: false,
+    apprentice: false,
+    labourer: false,
+    homeowner: false,
+    subcontractor: false,
+  },
+  // Production management
+  production: {
+    administrator: true,
+    manager: true,
+    foreman: true,
+    tradesperson: 'assigned',
+    apprentice: 'assigned',
+    labourer: 'assigned',
+    homeowner: 'view',
+    subcontractor: 'assigned',
+  },
+  // Time tracking
+  time: {
+    administrator: true,
+    manager: true,
+    foreman: true,
+    tradesperson: true,
+    apprentice: true,
+    labourer: true,
+    homeowner: false,
+    subcontractor: true,
+  },
+  // Expenses
+  expenses: {
+    administrator: true,
+    manager: true,
+    foreman: true,
+    tradesperson: 'own',
+    apprentice: 'own',
+    labourer: 'own',
+    homeowner: false,
+    subcontractor: 'own',
+  },
+  // Daily log
+  dailyLog: {
+    administrator: true,
+    manager: true,
+    foreman: true,
+    tradesperson: true,
+    apprentice: true,
+    labourer: true,
+    homeowner: false,
+    subcontractor: true,
+  },
+  // Cost catalogue
+  costCatalogue: {
+    administrator: true,
+    manager: true,
+    foreman: 'view',
+    tradesperson: false,
+    apprentice: false,
+    labourer: false,
+    homeowner: false,
+    subcontractor: false,
+  },
+  // Settings
+  settings: {
+    administrator: true,
+    manager: 'view',
+    foreman: false,
+    tradesperson: false,
+    apprentice: false,
+    labourer: false,
+    homeowner: false,
+    subcontractor: false,
+  },
+  // Field guide (training)
+  fieldGuide: {
+    administrator: true,
+    manager: true,
+    foreman: true,
+    tradesperson: true,
+    apprentice: true,
+    labourer: true,
+    homeowner: false,
+    subcontractor: true,
+  },
+};
+
+// =============================================================================
+// TEST PERSONAS
+// =============================================================================
+
 export const TEST_PERSONAS = {
-  contractor: {
-    id: 'dev-contractor-001',
+  // Administrator - full access
+  administrator: {
+    id: 'dev-admin-001',
     name: 'Nathan Henderson',
     email: 'nathan@hendersoncontracting.ca',
-    role: 'contractor',
+    role: 'administrator',
     company: 'Henderson Contracting',
-    avatar: null, // Will use initials
+    avatar: null,
     initials: 'NH',
-    color: '#3b82f6', // blue
-    permissions: ['all'],
+    color: ROLES.administrator.color,
     projects: ['all'],
-    description: 'Full access to all features and projects',
+    description: 'Full access to all features and settings',
+  },
+
+  // Manager - project & team oversight
+  manager: {
+    id: 'dev-manager-001',
+    name: 'Lisa Chen',
+    email: 'lisa@hendersoncontracting.ca',
+    role: 'manager',
+    company: 'Henderson Contracting',
+    avatar: null,
+    initials: 'LC',
+    color: ROLES.manager.color,
+    projects: ['all'],
+    description: 'Project management and team coordination',
+  },
+
+  // Foreman - site supervision
+  foreman: {
+    id: 'dev-foreman-001',
+    name: 'Mike Sullivan',
+    email: 'mike@hendersoncontracting.ca',
+    role: 'foreman',
+    company: 'Henderson Contracting',
+    avatar: null,
+    initials: 'MS',
+    color: ROLES.foreman.color,
+    projects: ['dev-project-001', 'dev-project-002'],
+    description: 'Site supervision and crew management',
+  },
+
+  // Tradesperson - skilled worker
+  tradesperson: {
+    id: 'dev-trade-001',
+    name: 'Joe Martinez',
+    email: 'joe@hendersoncontracting.ca',
+    role: 'tradesperson',
+    trade: 'Carpentry',
+    company: 'Henderson Contracting',
+    avatar: null,
+    initials: 'JM',
+    color: ROLES.tradesperson.color,
+    projects: ['dev-project-001'],
+    description: 'Skilled trade work and time tracking',
+  },
+
+  // Apprentice
+  apprentice: {
+    id: 'dev-apprentice-001',
+    name: 'Tyler Brooks',
+    email: 'tyler@hendersoncontracting.ca',
+    role: 'apprentice',
+    trade: 'Carpentry',
+    company: 'Henderson Contracting',
+    avatar: null,
+    initials: 'TB',
+    color: ROLES.apprentice.color,
+    projects: ['dev-project-001'],
+    description: 'Apprentice - learning and assisting',
+  },
+
+  // Labourer
+  labourer: {
+    id: 'dev-labourer-001',
+    name: 'Sam Wilson',
+    email: 'sam@hendersoncontracting.ca',
+    role: 'labourer',
+    company: 'Henderson Contracting',
+    avatar: null,
+    initials: 'SW',
+    color: ROLES.labourer.color,
+    projects: ['dev-project-001'],
+    description: 'General labour and cleanup',
+  },
+
+  // Legacy aliases for backwards compatibility
+  contractor: {
+    id: 'dev-admin-001',
+    name: 'Nathan Henderson',
+    email: 'nathan@hendersoncontracting.ca',
+    role: 'administrator', // Maps to administrator
+    company: 'Henderson Contracting',
+    avatar: null,
+    initials: 'NH',
+    color: ROLES.administrator.color,
+    projects: ['all'],
+    description: 'Full access to all features and settings',
   },
 
   homeowner: {
@@ -27,20 +332,7 @@ export const TEST_PERSONAS = {
     role: 'homeowner',
     avatar: null,
     initials: 'SM',
-    color: '#22c55e', // green
-    permissions: [
-      'view_own_project',
-      'view_project_overview',
-      'view_project_schedule',
-      'view_project_photos',
-      'view_documents',
-      'approve_decisions',
-      'approve_change_orders',
-      'send_messages',
-      'view_messages',
-      'make_payments',
-      'view_payment_history',
-    ],
+    color: ROLES.homeowner.color,
     projects: ['dev-project-001'],
     description: 'Can view their project and approve decisions',
   },
@@ -53,23 +345,34 @@ export const TEST_PERSONAS = {
     trade: 'Electrical',
     avatar: null,
     initials: 'ME',
-    color: '#f97316', // orange
-    permissions: [
-      'view_assigned_tasks',
-      'update_task_status',
-      'log_hours',
-      'upload_photos',
-      'send_messages',
-      'view_messages',
-      'view_project_schedule',
-      'view_relevant_documents',
-      'view_own_billing',
-    ],
+    color: ROLES.subcontractor.color,
     projects: ['dev-project-001', 'dev-project-002'],
     assignedTasks: ['task-electrical-rough', 'task-electrical-finish', 'task-panel-upgrade'],
     description: 'Can manage assigned tasks and log time',
   },
 };
+
+/**
+ * Helper to check if a role has permission for a feature
+ */
+export function hasPermission(role, feature) {
+  const permission = PERMISSIONS[feature]?.[role];
+  return permission === true || permission === 'view' || permission === 'own' || permission === 'assigned' || permission === 'limited' || permission === 'own_project';
+}
+
+/**
+ * Helper to check if role has full (edit) access to a feature
+ */
+export function hasFullAccess(role, feature) {
+  return PERMISSIONS[feature]?.[role] === true;
+}
+
+/**
+ * Get role config
+ */
+export function getRoleConfig(role) {
+  return ROLES[role] || ROLES.labourer;
+}
 
 export const TEST_PROJECT = {
   id: 'dev-project-001',

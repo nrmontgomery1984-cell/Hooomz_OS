@@ -7,7 +7,6 @@ import {
   FileSignature,
   HardHat,
   CheckCircle2,
-  // Calendar - reserved for Today page (field worker features)
   Settings,
   BookOpen,
   GraduationCap,
@@ -19,10 +18,15 @@ import {
   Zap,
   ChevronDown,
   Clock,
+  Shield,
+  Briefcase,
+  Wrench,
+  User,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
 import { useDevAuth } from '../../hooks/useDevAuth';
+import { ROLES } from '../../lib/devData';
 
 // Check if nav item should be active based on current path
 // Handles project subpages like /projects/xxx/estimate -> Estimates
@@ -98,43 +102,59 @@ const navSections = [
   },
 ];
 
-// Persona configuration for the quick switcher
-const PERSONA_CONFIG = {
-  contractor: {
-    icon: HardHat,
-    label: 'Contractor',
-    shortLabel: 'CONT',
-    bgColor: 'bg-blue-500',
-    textColor: 'text-blue-600',
-    borderColor: 'border-blue-500',
-  },
-  homeowner: {
-    icon: Home,
-    label: 'Homeowner',
-    shortLabel: 'HOME',
-    bgColor: 'bg-emerald-500',
-    textColor: 'text-emerald-600',
-    borderColor: 'border-emerald-500',
-  },
-  subcontractor: {
-    icon: Zap,
-    label: 'Sub',
-    shortLabel: 'SUB',
-    bgColor: 'bg-orange-500',
-    textColor: 'text-orange-600',
-    borderColor: 'border-orange-500',
-  },
+// Icon mapping for roles
+const ROLE_ICONS = {
+  administrator: Shield,
+  manager: Briefcase,
+  foreman: HardHat,
+  tradesperson: Wrench,
+  apprentice: GraduationCap,
+  labourer: User,
+  homeowner: Home,
+  subcontractor: Zap,
+  contractor: Shield, // Legacy alias
 };
+
+// Get color classes from hex color
+const getColorClasses = (hexColor) => {
+  const colorMap = {
+    '#8b5cf6': { text: 'text-purple-600', border: 'border-purple-500', bg: 'bg-purple-500' },
+    '#3b82f6': { text: 'text-blue-600', border: 'border-blue-500', bg: 'bg-blue-500' },
+    '#f59e0b': { text: 'text-amber-600', border: 'border-amber-500', bg: 'bg-amber-500' },
+    '#10b981': { text: 'text-emerald-600', border: 'border-emerald-500', bg: 'bg-emerald-500' },
+    '#06b6d4': { text: 'text-cyan-600', border: 'border-cyan-500', bg: 'bg-cyan-500' },
+    '#64748b': { text: 'text-slate-600', border: 'border-slate-500', bg: 'bg-slate-500' },
+    '#22c55e': { text: 'text-green-600', border: 'border-green-500', bg: 'bg-green-500' },
+    '#f97316': { text: 'text-orange-600', border: 'border-orange-500', bg: 'bg-orange-500' },
+  };
+  return colorMap[hexColor] || { text: 'text-gray-600', border: 'border-gray-500', bg: 'bg-gray-500' };
+};
+
+// Get persona display config from role
+const getPersonaConfig = (role) => {
+  const roleConfig = ROLES[role] || ROLES.tradesperson;
+  const colors = getColorClasses(roleConfig.color);
+  return {
+    icon: ROLE_ICONS[role] || User,
+    label: roleConfig.label,
+    shortLabel: roleConfig.shortLabel,
+    description: roleConfig.description,
+    ...colors,
+  };
+};
+
+// Roles to show in the persona switcher (internal team roles only)
+const SWITCHABLE_ROLES = ['administrator', 'manager', 'foreman', 'tradesperson', 'apprentice', 'labourer'];
 
 export function Sidebar() {
   const location = useLocation();
   const pathname = location.pathname;
   const [showSearch, setShowSearch] = useState(false);
   const [showPersonaDropdown, setShowPersonaDropdown] = useState(false);
-  const { currentPersona, switchPersona, isDevMode } = useDevAuth();
+  const { currentPersona, switchPersona } = useDevAuth();
 
-  const currentConfig = PERSONA_CONFIG[currentPersona?.role] || PERSONA_CONFIG.contractor;
-  const CurrentIcon = currentConfig?.icon || HardHat;
+  const currentConfig = getPersonaConfig(currentPersona?.role || 'administrator');
+  const CurrentIcon = currentConfig.icon;
 
   return (
     <aside className="hidden lg:flex w-60 bg-white border-r border-gray-200 h-screen flex-col">
@@ -154,19 +174,19 @@ export function Sidebar() {
         </button>
       </div>
 
-      {/* Persona Switcher - Always visible */}
+      {/* Role Switcher */}
       <div className="px-3 pt-3 relative">
         <button
           onClick={() => setShowPersonaDropdown(!showPersonaDropdown)}
-          className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-lg transition-colors border-2 ${currentConfig.borderColor} bg-white hover:bg-gray-50`}
+          className={`w-full flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-lg transition-colors border-2 ${currentConfig.border} bg-white hover:bg-gray-50`}
         >
           <div className="flex items-center gap-2">
-            <CurrentIcon className={`w-4 h-4 ${currentConfig.textColor}`} />
-            <span className={`font-medium ${currentConfig.textColor}`}>
+            <CurrentIcon className={`w-4 h-4 ${currentConfig.text}`} />
+            <span className={`font-medium ${currentConfig.text}`}>
               {currentConfig.label}
             </span>
           </div>
-          <ChevronDown className={`w-4 h-4 ${currentConfig.textColor} transition-transform ${showPersonaDropdown ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`w-4 h-4 ${currentConfig.text} transition-transform ${showPersonaDropdown ? 'rotate-180' : ''}`} />
         </button>
 
         {showPersonaDropdown && (
@@ -175,10 +195,12 @@ export function Sidebar() {
               className="fixed inset-0 z-40"
               onClick={() => setShowPersonaDropdown(false)}
             />
-            <div className="absolute left-3 right-3 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-              {Object.entries(PERSONA_CONFIG).map(([role, config]) => {
+            <div className="absolute left-3 right-3 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 max-h-80 overflow-y-auto">
+              {SWITCHABLE_ROLES.map((role) => {
+                const config = getPersonaConfig(role);
                 const Icon = config.icon;
-                const isActive = currentPersona?.role === role;
+                const isActive = currentPersona?.role === role ||
+                  (role === 'administrator' && currentPersona?.role === 'contractor');
                 return (
                   <button
                     key={role}
@@ -188,13 +210,16 @@ export function Sidebar() {
                     }}
                     className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
                       isActive
-                        ? `${config.textColor} bg-gray-50 font-medium`
+                        ? `${config.text} bg-gray-50 font-medium`
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${isActive ? config.textColor : 'text-gray-400'}`} />
-                    {config.label}
-                    {isActive && <span className="ml-auto text-xs">✓</span>}
+                    <Icon className={`w-4 h-4 ${isActive ? config.text : 'text-gray-400'}`} />
+                    <div className="flex-1 text-left">
+                      <div>{config.label}</div>
+                      <div className="text-xs text-gray-400 font-normal">{config.description}</div>
+                    </div>
+                    {isActive && <span className="text-xs">✓</span>}
                   </button>
                 );
               })}
