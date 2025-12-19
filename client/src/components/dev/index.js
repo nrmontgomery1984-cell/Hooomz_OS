@@ -1,6 +1,6 @@
 export { DevPersonaSwitcher } from './DevPersonaSwitcher';
 export { PersonaIndicator, DevBorder } from './PersonaIndicator';
-export { MobilePreviewToggle, MobilePreviewWrapper } from './MobilePreview';
+// MobilePreview removed - use browser DevTools for mobile preview
 export {
   PermissionGate,
   RoleGate,
