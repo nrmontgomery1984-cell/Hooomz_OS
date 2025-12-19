@@ -82,19 +82,48 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
         throw new Error('No weather data available');
       }
 
+      // Get forecast data
+      const forecast = data.weather?.[0];
+      const todayHourly = forecast?.hourly || [];
+
       setWeather({
         temp: current.temp_C,
         tempF: current.temp_F,
         feelsLike: current.FeelsLikeC,
+        feelsLikeF: current.FeelsLikeF,
         condition: current.weatherDesc?.[0]?.value || 'Unknown',
         humidity: current.humidity,
         windSpeed: current.windspeedKmph,
+        windSpeedMph: current.windspeedMiles,
         windDir: current.winddir16Point,
+        windGust: current.WindGustKmph,
         precipitation: current.precipMM,
         uvIndex: current.uvIndex,
+        visibility: current.visibility,
+        pressure: current.pressure,
+        cloudCover: current.cloudcover,
         city: area?.areaName?.[0]?.value || 'Unknown',
         region: area?.region?.[0]?.value || '',
         weatherCode: parseInt(current.weatherCode) || 0,
+        // Today's forecast
+        maxTemp: forecast?.maxtempC,
+        minTemp: forecast?.mintempC,
+        maxTempF: forecast?.maxtempF,
+        minTempF: forecast?.mintempF,
+        sunrise: forecast?.astronomy?.[0]?.sunrise,
+        sunset: forecast?.astronomy?.[0]?.sunset,
+        chanceOfRain: todayHourly[Math.floor(new Date().getHours() / 3)]?.chanceofrain || '0',
+        // 3-day forecast
+        forecast: data.weather?.slice(0, 3).map(day => ({
+          date: day.date,
+          maxTemp: day.maxtempC,
+          minTemp: day.mintempC,
+          maxTempF: day.maxtempF,
+          minTempF: day.mintempF,
+          condition: day.hourly?.[4]?.weatherDesc?.[0]?.value || 'Unknown',
+          weatherCode: parseInt(day.hourly?.[4]?.weatherCode) || 0,
+          chanceOfRain: day.hourly?.[4]?.chanceofrain || '0',
+        })) || [],
       });
     } catch (err) {
       setError(err.message || 'Failed to load weather');
@@ -161,25 +190,81 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
 
   if (compact) {
     return (
-      <Card className="p-3">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <WeatherIcon className="w-6 h-6 text-blue-500" />
+      <Card className="p-4">
+        {/* Header with location */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-1 text-xs text-gray-500">
+            <MapPin className="w-3 h-3" />
+            <span>{weather.city}</span>
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-semibold text-charcoal">{weather.temp}°C</span>
-              <span className="text-sm text-gray-400">{weather.tempF}°F</span>
-            </div>
-            <p className="text-xs text-gray-500 truncate">{weather.condition}</p>
+          <button
+            onClick={fetchWeather}
+            className="p-1 hover:bg-gray-100 rounded transition-colors"
+            title="Refresh"
+          >
+            <RefreshCw className="w-3 h-3 text-gray-400" />
+          </button>
+        </div>
+
+        {/* Main temp and condition */}
+        <div className="flex items-center gap-3 mb-3">
+          <div className="p-2 bg-gradient-to-br from-blue-50 to-sky-100 rounded-xl">
+            <WeatherIcon className="w-8 h-8 text-blue-500" />
           </div>
-          <div className="text-right">
-            <div className="flex items-center gap-1 text-xs text-gray-500">
-              <MapPin className="w-3 h-3" />
-              <span className="truncate max-w-20">{weather.city}</span>
+          <div className="flex-1">
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-bold text-charcoal">{weather.temp}°</span>
+              <span className="text-sm text-gray-400">C</span>
             </div>
+            <p className="text-xs text-gray-500">{weather.condition}</p>
+          </div>
+          <div className="text-right text-xs text-gray-500">
+            <p>H: {weather.maxTemp}° L: {weather.minTemp}°</p>
           </div>
         </div>
+
+        {/* Key stats row */}
+        <div className="grid grid-cols-4 gap-2 text-center">
+          <div className="p-1.5 bg-gray-50 rounded">
+            <Thermometer className="w-3 h-3 text-orange-500 mx-auto mb-0.5" />
+            <p className="text-[10px] text-gray-400">Feels</p>
+            <p className="text-xs font-medium">{weather.feelsLike}°</p>
+          </div>
+          <div className="p-1.5 bg-gray-50 rounded">
+            <Wind className="w-3 h-3 text-teal-500 mx-auto mb-0.5" />
+            <p className="text-[10px] text-gray-400">Wind</p>
+            <p className="text-xs font-medium">{weather.windSpeed} km/h</p>
+          </div>
+          <div className="p-1.5 bg-gray-50 rounded">
+            <Droplets className="w-3 h-3 text-blue-500 mx-auto mb-0.5" />
+            <p className="text-[10px] text-gray-400">Humidity</p>
+            <p className="text-xs font-medium">{weather.humidity}%</p>
+          </div>
+          <div className="p-1.5 bg-gray-50 rounded">
+            <CloudRain className="w-3 h-3 text-indigo-500 mx-auto mb-0.5" />
+            <p className="text-[10px] text-gray-400">Rain</p>
+            <p className="text-xs font-medium">{weather.chanceOfRain}%</p>
+          </div>
+        </div>
+
+        {/* 3-day forecast */}
+        {weather.forecast?.length > 1 && (
+          <div className="mt-3 pt-3 border-t border-gray-100">
+            <div className="flex justify-between">
+              {weather.forecast.slice(1, 3).map((day, idx) => {
+                const DayIcon = getWeatherIcon(day.weatherCode);
+                const dayName = new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
+                return (
+                  <div key={idx} className="flex-1 text-center">
+                    <p className="text-[10px] text-gray-400 mb-1">{dayName}</p>
+                    <DayIcon className="w-4 h-4 text-gray-500 mx-auto mb-1" />
+                    <p className="text-xs font-medium">{day.maxTemp}° / {day.minTemp}°</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </Card>
     );
   }
@@ -206,21 +291,26 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
         <div className="p-3 bg-gradient-to-br from-blue-50 to-sky-100 rounded-xl">
           <WeatherIcon className="w-10 h-10 text-blue-500" />
         </div>
-        <div>
+        <div className="flex-1">
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-bold text-charcoal">{weather.temp}°</span>
             <span className="text-lg text-gray-400">C</span>
           </div>
           <p className="text-sm text-gray-600">{weather.condition}</p>
         </div>
+        <div className="text-right">
+          <p className="text-sm text-gray-500">H: {weather.maxTemp}° L: {weather.minTemp}°</p>
+          <p className="text-xs text-gray-400">Feels like {weather.feelsLike}°</p>
+        </div>
       </div>
 
       {/* Details Grid */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-4 gap-2 mb-4">
         <div className="text-center p-2 bg-gray-50 rounded-lg">
-          <Thermometer className="w-4 h-4 text-orange-500 mx-auto mb-1" />
-          <p className="text-xs text-gray-500">Feels Like</p>
-          <p className="text-sm font-medium text-charcoal">{weather.feelsLike}°</p>
+          <Wind className="w-4 h-4 text-teal-500 mx-auto mb-1" />
+          <p className="text-xs text-gray-500">Wind</p>
+          <p className="text-sm font-medium text-charcoal">{weather.windSpeed} km/h</p>
+          <p className="text-[10px] text-gray-400">{weather.windDir}</p>
         </div>
         <div className="text-center p-2 bg-gray-50 rounded-lg">
           <Droplets className="w-4 h-4 text-blue-500 mx-auto mb-1" />
@@ -228,11 +318,42 @@ export function WeatherWidget({ projectAddress = null, compact = false }) {
           <p className="text-sm font-medium text-charcoal">{weather.humidity}%</p>
         </div>
         <div className="text-center p-2 bg-gray-50 rounded-lg">
-          <Wind className="w-4 h-4 text-teal-500 mx-auto mb-1" />
-          <p className="text-xs text-gray-500">Wind</p>
-          <p className="text-sm font-medium text-charcoal">{weather.windSpeed} km/h</p>
+          <CloudRain className="w-4 h-4 text-indigo-500 mx-auto mb-1" />
+          <p className="text-xs text-gray-500">Rain</p>
+          <p className="text-sm font-medium text-charcoal">{weather.chanceOfRain}%</p>
+        </div>
+        <div className="text-center p-2 bg-gray-50 rounded-lg">
+          <Sun className="w-4 h-4 text-yellow-500 mx-auto mb-1" />
+          <p className="text-xs text-gray-500">UV Index</p>
+          <p className="text-sm font-medium text-charcoal">{weather.uvIndex}</p>
         </div>
       </div>
+
+      {/* 3-day forecast */}
+      {weather.forecast?.length > 0 && (
+        <div className="pt-3 border-t border-gray-100">
+          <p className="text-xs font-medium text-gray-500 mb-2">3-Day Forecast</p>
+          <div className="flex justify-between">
+            {weather.forecast.map((day, idx) => {
+              const DayIcon = getWeatherIcon(day.weatherCode);
+              const isToday = idx === 0;
+              const dayName = isToday
+                ? 'Today'
+                : new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' });
+              return (
+                <div key={idx} className={`flex-1 text-center ${isToday ? 'font-medium' : ''}`}>
+                  <p className="text-xs text-gray-500 mb-1">{dayName}</p>
+                  <DayIcon className={`w-5 h-5 mx-auto mb-1 ${isToday ? 'text-blue-500' : 'text-gray-400'}`} />
+                  <p className="text-sm">{day.maxTemp}° / {day.minTemp}°</p>
+                  {parseInt(day.chanceOfRain) > 20 && (
+                    <p className="text-[10px] text-blue-500">{day.chanceOfRain}% rain</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Location source indicator */}
       {location && (
