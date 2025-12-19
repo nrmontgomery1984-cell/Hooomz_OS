@@ -1228,107 +1228,17 @@ const defaultTasks = LOAD_DEMO_DATA ? demoTasks : {};
 export const mockTasks = loadFromStorage(STORAGE_KEYS.tasks, defaultTasks);
 
 // =============================================================================
-// TODAY TASKS
+// TODAY TASKS - Start empty, populated dynamically from active projects
 // =============================================================================
 
-export const mockTodayTasks = [
-  {
-    id: 'task-nc-011',
-    loop_id: 'loop-nc-002',
-    project_name: 'Henderson Family - 45 Riverside Drive',
-    loop_name: 'Framing',
-    title: 'Install ceiling joists',
-    status: 'in_progress',
-    priority: 1,
-    estimated_hours: 16,
-  },
-  {
-    id: 'task-nc-015',
-    loop_id: 'loop-nc-003',
-    project_name: 'Henderson Family - 45 Riverside Drive',
-    loop_name: 'Exterior Envelope',
-    title: 'Install house wrap',
-    status: 'in_progress',
-    priority: 2,
-    estimated_hours: 8,
-  },
-  {
-    id: 'task-reno-005',
-    loop_id: 'loop-reno-001',
-    project_name: 'MacDonald Renovation - 78 King Street',
-    loop_name: 'Kitchen',
-    title: 'Rough electrical relocations',
-    status: 'in_progress',
-    priority: 1,
-    estimated_hours: 12,
-  },
-  {
-    id: 'task-reno-039',
-    loop_id: 'loop-reno-005',
-    project_name: 'MacDonald Renovation - 78 King Street',
-    loop_name: 'Basement',
-    title: 'Frame walls and bulkheads',
-    status: 'in_progress',
-    priority: 2,
-    estimated_hours: 24,
-  },
-];
+export const mockTodayTasks = [];
 
 // =============================================================================
 // TIME ENTRIES - Full time tracking system
 // =============================================================================
 
-// Default time entries - sample historical data
-const defaultTimeEntries = [
-  {
-    id: 'te-001',
-    taskId: 'inst-proj-nc-001-el-001',
-    taskName: 'Rough-In Electrical - Kitchen',
-    projectId: 'proj-nc-001',
-    projectName: 'Henderson New Construction',
-    categoryCode: 'EL',
-    subcategoryCode: 'EL-SVC',
-    userId: 'c1', // Joe Martinez
-    userName: 'Joe Martinez',
-    startTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 8 * 60 * 60 * 1000).toISOString(), // 2 days ago, 8am
-    endTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 12 * 60 * 60 * 1000).toISOString(), // 2 days ago, 12pm
-    durationMinutes: 240, // 4 hours
-    notes: 'Ran wiring for kitchen outlets and lighting',
-    billable: true,
-  },
-  {
-    id: 'te-002',
-    taskId: 'inst-proj-nc-001-el-001',
-    taskName: 'Rough-In Electrical - Kitchen',
-    projectId: 'proj-nc-001',
-    projectName: 'Henderson New Construction',
-    categoryCode: 'EL',
-    subcategoryCode: 'EL-SVC',
-    userId: 'c1',
-    userName: 'Joe Martinez',
-    startTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 13 * 60 * 60 * 1000).toISOString(), // 2 days ago, 1pm
-    endTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 17 * 60 * 60 * 1000).toISOString(), // 2 days ago, 5pm
-    durationMinutes: 240, // 4 hours
-    notes: 'Completed kitchen rough-in, started panel work',
-    billable: true,
-  },
-  {
-    id: 'te-003',
-    taskId: 'inst-proj-nc-001-pl-002',
-    taskName: 'Rough-In Plumbing - Primary Bath',
-    projectId: 'proj-nc-001',
-    projectName: 'Henderson New Construction',
-    categoryCode: 'PL',
-    subcategoryCode: 'PL-DWV',
-    userId: 'c2', // Mike Thompson
-    userName: 'Mike Thompson',
-    startTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 7 * 60 * 60 * 1000).toISOString(), // yesterday, 7am
-    endTime: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000 + 15 * 60 * 60 * 1000).toISOString(), // yesterday, 3pm
-    durationMinutes: 480, // 8 hours
-    notes: 'DWV rough-in for primary bath, shower drain and supply lines',
-    billable: true,
-  },
-];
+// Start with empty time entries - users will populate via clock in/out
+const defaultTimeEntries = [];
 
 // Load time entries from storage
 export const mockTimeEntries = loadFromStorage(STORAGE_KEYS.timeEntries, defaultTimeEntries);
@@ -1336,16 +1246,8 @@ export const mockTimeEntries = loadFromStorage(STORAGE_KEYS.timeEntries, default
 // Active time entry (currently running timer) - null if no active timer
 export let mockActiveTimeEntry = loadFromStorage(STORAGE_KEYS.activeTimeEntry, null);
 
-// Legacy single entry for backwards compatibility
-export const mockTimeEntry = mockActiveTimeEntry || {
-  id: 'te1',
-  task_id: 'task-reno-005',
-  task_title: 'Rough electrical relocations',
-  project_name: 'MacDonald Renovation - 78 King Street',
-  start_time: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-  allocated_minutes: 480,
-  duration_minutes: 180,
-};
+// Legacy single entry for backwards compatibility (returns null when no active entry)
+export const mockTimeEntry = mockActiveTimeEntry || null;
 
 // Save time entries to localStorage
 export function saveTimeEntriesToStorage() {
