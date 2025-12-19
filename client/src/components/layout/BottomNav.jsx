@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Timer, ListTodo, User, Receipt } from 'lucide-react';
+import { Home, Timer, User, Receipt, ClipboardList } from 'lucide-react';
 
 const navItems = [
   { to: '/', icon: Home, label: 'Home' },
-  { to: '/loop-tracker', icon: ListTodo, label: 'Tasks' },
   { to: '/time-tracker', icon: Timer, label: 'Clock' },
   { to: '/expenses', icon: Receipt, label: 'Expenses' },
+  { to: '/daily-log', icon: ClipboardList, label: 'Log' },
   { to: '/profile', icon: User, label: 'Profile' },
 ];
 

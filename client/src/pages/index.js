@@ -12,7 +12,6 @@ export { Production } from './Production';
 export { Completed } from './Completed';
 
 // Daily
-export { LoopTracker } from './LoopTracker';
 export { TimeTrackerPage } from './TimeTrackerPage';
 export { ExpenseTracker } from './ExpenseTracker';
 export { DailyLog } from './DailyLog';

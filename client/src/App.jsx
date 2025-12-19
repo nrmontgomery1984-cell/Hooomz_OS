@@ -8,7 +8,6 @@ import {
   Contracts,
   Production,
   Completed,
-  LoopTracker,
   TimeTrackerPage,
   ExpenseTracker,
   DailyLog,
@@ -58,7 +57,6 @@ function App() {
           <Route path="/completed" element={<Completed />} />
 
           {/* Daily */}
-          <Route path="/loop-tracker" element={<LoopTracker />} />
           <Route path="/time-tracker" element={<TimeTrackerPage />} />
           <Route path="/expenses" element={<ExpenseTracker />} />
           <Route path="/daily-log" element={<DailyLog />} />

@@ -11,7 +11,6 @@ import {
   Settings,
   BookOpen,
   GraduationCap,
-  ListTodo,
   Timer,
   Search,
   Receipt,
@@ -69,7 +68,6 @@ const navSections = [
   {
     label: 'Daily',
     items: [
-      { to: '/loop-tracker', icon: ListTodo, label: 'Loop Tracker' },
       { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
       { to: '/expenses', icon: Receipt, label: 'Expense Tracker' },
       { to: '/daily-log', icon: ClipboardList, label: 'Daily Log' },

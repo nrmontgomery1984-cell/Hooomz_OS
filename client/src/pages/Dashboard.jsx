@@ -3,18 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import {
   ChevronDown,
   ChevronRight,
-  Clock,
-  TrendingUp,
   AlertTriangle,
   CheckCircle2,
   ListTodo,
-  Building2,
   Users,
   Briefcase,
   Filter,
-  X,
   Calendar,
-  Plus,
+  User,
+  MapPin,
+  Layers,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button, Card, StatusDot, ProgressBar } from '../components/ui';
@@ -45,7 +43,7 @@ export function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   // UI state
-  const [viewMode, setViewMode] = useState('by-category'); // by-category, by-project, by-team
+  const [viewMode, setViewMode] = useState('by-category'); // by-category, by-project, by-trade, by-team, by-status
   const [expandedGroups, setExpandedGroups] = useState({});
   const [expandedSubgroups, setExpandedSubgroups] = useState({});
   const [showFilters, setShowFilters] = useState(false);
@@ -195,60 +193,139 @@ export function Dashboard() {
     };
   }, [filteredTasks]);
 
-  // Group tasks by category with subcategory nesting
+  // Get group key based on view mode
+  const getGroupKey = useCallback((task, mode) => {
+    switch (mode) {
+      case 'by-category':
+      case 'by-trade':
+        return task.categoryCode || 'uncategorized';
+      case 'by-project':
+        return task.projectId || 'unknown-project';
+      case 'by-team':
+        return task.assignedTo || 'unassigned';
+      case 'by-status':
+        return task.status || 'pending';
+      default:
+        return task.categoryCode || 'uncategorized';
+    }
+  }, []);
+
+  // Group tasks based on current view mode
   const groupedTasks = useMemo(() => {
     const groups = {};
 
     filteredTasks.forEach(task => {
-      const categoryCode = task.categoryCode || 'uncategorized';
+      const key = getGroupKey(task, viewMode);
 
-      if (!groups[categoryCode]) {
-        const category = categories.find(c => c.code === categoryCode);
-        groups[categoryCode] = {
-          code: categoryCode,
-          category,
-          name: category?.name || categoryCode,
-          color: category?.color || '#6b7280',
-          subcategories: {},
+      if (!groups[key]) {
+        groups[key] = {
+          key,
           tasks: [],
+          subcategories: {},
           stats: { total: 0, completed: 0, inProgress: 0, blocked: 0 },
         };
       }
 
-      const group = groups[categoryCode];
+      const group = groups[key];
       group.tasks.push(task);
       group.stats.total++;
       if (task.status === 'completed') group.stats.completed++;
       if (task.status === 'in_progress') group.stats.inProgress++;
       if (task.status === 'blocked') group.stats.blocked++;
 
-      // Group by subcategory within category
-      const subcatId = task.subcategoryId || task.stageCode || 'general';
-      if (!group.subcategories[subcatId]) {
-        group.subcategories[subcatId] = {
-          id: subcatId,
-          name: task.subcategoryName || stages.find(s => s.code === subcatId)?.name || subcatId,
-          tasks: [],
-          stats: { total: 0, completed: 0, inProgress: 0, blocked: 0 },
-        };
-      }
+      // For category view, also group by subcategory
+      if (viewMode === 'by-category') {
+        const subcatId = task.subcategoryId || task.stageCode || 'general';
+        if (!group.subcategories[subcatId]) {
+          group.subcategories[subcatId] = {
+            id: subcatId,
+            name: task.subcategoryName || stages.find(s => s.code === subcatId)?.name || subcatId,
+            tasks: [],
+            stats: { total: 0, completed: 0, inProgress: 0, blocked: 0 },
+          };
+        }
 
-      const subcat = group.subcategories[subcatId];
-      subcat.tasks.push(task);
-      subcat.stats.total++;
-      if (task.status === 'completed') subcat.stats.completed++;
-      if (task.status === 'in_progress') subcat.stats.inProgress++;
-      if (task.status === 'blocked') subcat.stats.blocked++;
+        const subcat = group.subcategories[subcatId];
+        subcat.tasks.push(task);
+        subcat.stats.total++;
+        if (task.status === 'completed') subcat.stats.completed++;
+        if (task.status === 'in_progress') subcat.stats.inProgress++;
+        if (task.status === 'blocked') subcat.stats.blocked++;
+      }
     });
 
-    // Sort by active work (blocked/in-progress first)
+    // Add labels and metadata based on view mode
+    Object.values(groups).forEach(group => {
+      switch (viewMode) {
+        case 'by-category':
+        case 'by-trade': {
+          const category = categories.find(c => c.code === group.key);
+          group.code = group.key;
+          group.name = category?.name || group.key;
+          group.color = category?.color || '#6b7280';
+          group.icon = Layers;
+          break;
+        }
+        case 'by-project': {
+          const project = projects.find(p => p.id === group.key);
+          group.name = project?.name || 'Unknown Project';
+          group.color = '#3b82f6';
+          group.icon = Briefcase;
+          group.meta = project;
+          break;
+        }
+        case 'by-team': {
+          if (group.key === 'unassigned') {
+            group.name = 'Unassigned';
+            group.color = '#6b7280';
+          } else {
+            const contact = contacts.find(c => c.id === group.key);
+            group.name = contact?.name || 'Unknown';
+            group.color = '#8b5cf6';
+            group.meta = contact;
+          }
+          group.icon = User;
+          break;
+        }
+        case 'by-status': {
+          const statusLabels = {
+            pending: 'Pending',
+            in_progress: 'In Progress',
+            blocked: 'Blocked',
+            completed: 'Completed',
+          };
+          const statusColors = {
+            pending: '#6b7280',
+            in_progress: '#3b82f6',
+            blocked: '#ef4444',
+            completed: '#10b981',
+          };
+          group.name = statusLabels[group.key] || group.key;
+          group.color = statusColors[group.key] || '#6b7280';
+          group.icon = ListTodo;
+          break;
+        }
+        default:
+          group.name = group.key;
+          group.color = '#6b7280';
+          group.icon = ListTodo;
+      }
+    });
+
+    // Sort groups
     return Object.values(groups).sort((a, b) => {
+      // By status: blocked first, then in_progress, pending, completed
+      if (viewMode === 'by-status') {
+        const order = { blocked: 0, in_progress: 1, pending: 2, completed: 3 };
+        return (order[a.key] ?? 4) - (order[b.key] ?? 4);
+      }
+      // Otherwise sort by active work (blocked/in-progress first)
       const aActive = a.stats.inProgress + a.stats.blocked;
       const bActive = b.stats.inProgress + b.stats.blocked;
       if (aActive !== bActive) return bActive - aActive;
       return a.name.localeCompare(b.name);
     });
-  }, [filteredTasks, categories, stages]);
+  }, [filteredTasks, viewMode, categories, stages, projects, contacts, getGroupKey]);
 
   // Toggle category expansion
   const toggleCategory = (code) => {
@@ -377,30 +454,58 @@ export function Dashboard() {
         />
       </div>
 
-      {/* Filter Toggle & Active Filters */}
-      <div className="flex flex-wrap items-center gap-2 mb-4">
-        <Button
-          variant={showFilters || hasActiveFilters ? 'primary' : 'secondary'}
-          size="sm"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          <Filter className="w-4 h-4 mr-1" />
-          Filters
-          {hasActiveFilters && (
-            <span className="ml-1 px-1.5 py-0.5 text-xs bg-white/20 rounded-full">
-              {Object.values(filters).filter(v => v !== null).length}
-            </span>
-          )}
-        </Button>
+      {/* View Mode Selector & Filters */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-4">
+        {/* View Mode Tabs */}
+        <div className="flex gap-1 p-1 bg-gray-100 rounded-lg overflow-x-auto">
+          {[
+            { value: 'by-category', label: 'Category', icon: Layers },
+            { value: 'by-project', label: 'Project', icon: Briefcase },
+            { value: 'by-team', label: 'Team', icon: Users },
+            { value: 'by-status', label: 'Status', icon: ListTodo },
+          ].map(({ value, label, icon: Icon }) => (
+            <button
+              key={value}
+              onClick={() => setViewMode(value)}
+              className={`
+                flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap
+                ${viewMode === value
+                  ? 'bg-white text-charcoal shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
+                }
+              `}
+            >
+              <Icon className="w-4 h-4" />
+              <span className="hidden sm:inline">{label}</span>
+            </button>
+          ))}
+        </div>
 
-        {hasActiveFilters && (
-          <button
-            onClick={clearAllFilters}
-            className="text-sm text-gray-500 hover:text-gray-700"
+        {/* Filters */}
+        <div className="flex items-center gap-2 sm:ml-auto">
+          <Button
+            variant={showFilters || hasActiveFilters ? 'primary' : 'secondary'}
+            size="sm"
+            onClick={() => setShowFilters(!showFilters)}
           >
-            Clear all
-          </button>
-        )}
+            <Filter className="w-4 h-4 mr-1" />
+            Filters
+            {hasActiveFilters && (
+              <span className="ml-1 px-1.5 py-0.5 text-xs bg-white/20 rounded-full">
+                {Object.values(filters).filter(v => v !== null).length}
+              </span>
+            )}
+          </Button>
+
+          {hasActiveFilters && (
+            <button
+              onClick={clearAllFilters}
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Clear all
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Filter Panel */}
@@ -488,20 +593,22 @@ export function Dashboard() {
 
       {/* Main Content Grid - Tasks + Sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Category Groups with Drill-Down - Takes 2 columns */}
+        {/* Task Groups - Takes 2 columns */}
         <div className="lg:col-span-2 space-y-3">
           {groupedTasks.length > 0 ? (
             groupedTasks.map(group => (
-              <CategoryGroup
-                key={group.code}
+              <TaskGroup
+                key={group.key}
                 group={group}
-                isExpanded={expandedGroups[group.code]}
-                onToggle={() => toggleCategory(group.code)}
+                viewMode={viewMode}
+                isExpanded={expandedGroups[group.key]}
+                onToggle={() => toggleCategory(group.key)}
                 expandedSubgroups={expandedSubgroups}
-                onToggleSubcategory={(subcatId) => toggleSubcategory(group.code, subcatId)}
+                onToggleSubcategory={(subcatId) => toggleSubcategory(group.key, subcatId)}
                 onTaskClick={(task) => navigate(`/projects/${task.projectId}`)}
                 onStatusChange={handleStatusChange}
                 contacts={contacts}
+                categories={categories}
                 isOverdue={isOverdue}
                 getStatusColor={getStatusColor}
               />
@@ -565,9 +672,10 @@ function StatCard({ label, value, color, highlight, onClick, active }) {
   );
 }
 
-// Category Group Component with nested subcategories
-function CategoryGroup({
+// Task Group Component - handles all view modes
+function TaskGroup({
   group,
+  viewMode,
   isExpanded,
   onToggle,
   expandedSubgroups,
@@ -575,17 +683,21 @@ function CategoryGroup({
   onTaskClick,
   onStatusChange,
   contacts,
+  categories,
   isOverdue,
-  getStatusColor,
 }) {
-  const { code, name, color, subcategories, stats } = group;
-  const subcatList = Object.values(subcategories).sort((a, b) => {
-    // Sort by active work first
-    const aActive = a.stats.inProgress + a.stats.blocked;
-    const bActive = b.stats.inProgress + b.stats.blocked;
-    if (aActive !== bActive) return bActive - aActive;
-    return a.name.localeCompare(b.name);
-  });
+  const { name, color, stats, subcategories, tasks, icon: GroupIcon } = group;
+
+  // For category view, use subcategories; otherwise show tasks directly
+  const hasSubcategories = viewMode === 'by-category' && Object.keys(subcategories || {}).length > 0;
+  const subcatList = hasSubcategories
+    ? Object.values(subcategories).sort((a, b) => {
+        const aActive = a.stats.inProgress + a.stats.blocked;
+        const bActive = b.stats.inProgress + b.stats.blocked;
+        if (aActive !== bActive) return bActive - aActive;
+        return a.name.localeCompare(b.name);
+      })
+    : [];
 
   const progressPercent = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
 
@@ -605,7 +717,7 @@ function CategoryGroup({
 
   return (
     <Card className={`overflow-hidden border-2 ${cardStyles[statusColor]}`}>
-      {/* Category Header */}
+      {/* Group Header */}
       <button
         onClick={onToggle}
         className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/50 transition-colors"
@@ -615,13 +727,15 @@ function CategoryGroup({
           {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </div>
 
-        {/* Category Color Bar */}
+        {/* Group Icon/Color */}
         <div
-          className="w-1 h-8 rounded-full"
-          style={{ backgroundColor: color }}
-        />
+          className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+          style={{ backgroundColor: `${color}20`, color }}
+        >
+          {GroupIcon && <GroupIcon className="w-4 h-4" />}
+        </div>
 
-        {/* Category Name & Progress */}
+        {/* Group Name & Progress */}
         <div className="flex-1 min-w-0 text-left">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-charcoal truncate">{name}</span>
@@ -653,34 +767,46 @@ function CategoryGroup({
             </span>
           )}
         </div>
-
-        {/* Category Code */}
-        <span
-          className="px-2 py-0.5 text-xs font-medium rounded"
-          style={{ backgroundColor: `${color}20`, color }}
-        >
-          {code}
-        </span>
       </button>
 
-      {/* Expanded: Subcategories */}
+      {/* Expanded Content */}
       {isExpanded && (
         <div className="border-t border-gray-100">
-          {subcatList.map(subcat => (
-            <SubcategorySection
-              key={subcat.id}
-              subcat={subcat}
-              categoryColor={color}
-              categoryCode={code}
-              isExpanded={expandedSubgroups[`${code}-${subcat.id}`]}
-              onToggle={() => onToggleSubcategory(subcat.id)}
-              onTaskClick={onTaskClick}
-              onStatusChange={onStatusChange}
-              contacts={contacts}
-              isOverdue={isOverdue}
-              getStatusColor={getStatusColor}
-            />
-          ))}
+          {hasSubcategories ? (
+            // Category view with subcategories
+            subcatList.map(subcat => (
+              <SubcategorySection
+                key={subcat.id}
+                subcat={subcat}
+                categoryColor={color}
+                categoryCode={group.code}
+                isExpanded={expandedSubgroups[`${group.key}-${subcat.id}`]}
+                onToggle={() => onToggleSubcategory(subcat.id)}
+                onTaskClick={onTaskClick}
+                onStatusChange={onStatusChange}
+                contacts={contacts}
+                categories={categories}
+                viewMode={viewMode}
+                isOverdue={isOverdue}
+              />
+            ))
+          ) : (
+            // Other views - show tasks directly
+            <div className="divide-y divide-gray-100">
+              {tasks.map(task => (
+                <TaskRow
+                  key={task.id}
+                  task={task}
+                  viewMode={viewMode}
+                  onClick={() => onTaskClick(task)}
+                  onStatusChange={onStatusChange}
+                  contacts={contacts}
+                  categories={categories}
+                  isOverdue={isOverdue(task)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </Card>
@@ -691,14 +817,14 @@ function CategoryGroup({
 function SubcategorySection({
   subcat,
   categoryColor,
-  categoryCode,
   isExpanded,
   onToggle,
   onTaskClick,
   onStatusChange,
   contacts,
+  categories,
+  viewMode,
   isOverdue,
-  getStatusColor,
 }) {
   const { name, tasks, stats } = subcat;
 
@@ -733,14 +859,15 @@ function SubcategorySection({
       {isExpanded && (
         <div className="divide-y divide-gray-100">
           {tasks.map(task => (
-            <TaskItem
+            <TaskRow
               key={task.id}
               task={task}
+              viewMode={viewMode}
               onClick={() => onTaskClick(task)}
               onStatusChange={onStatusChange}
               contacts={contacts}
-              isOverdue={isOverdue}
-              getStatusColor={getStatusColor}
+              categories={categories}
+              isOverdue={isOverdue(task)}
             />
           ))}
         </div>
@@ -749,22 +876,10 @@ function SubcategorySection({
   );
 }
 
-// Task Item Component
-function TaskItem({ task, onClick, onStatusChange, contacts, isOverdue, getStatusColor }) {
+// Task Row Component - shows contextual info based on view mode
+function TaskRow({ task, viewMode, onClick, onStatusChange, contacts, categories, isOverdue }) {
   const contact = contacts.find(c => c.id === task.assignedTo);
-  const overdue = isOverdue(task);
-
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'pending': return Clock;
-      case 'in_progress': return TrendingUp;
-      case 'blocked': return AlertTriangle;
-      case 'completed': return CheckCircle2;
-      default: return Clock;
-    }
-  };
-
-  const StatusIcon = getStatusIcon(task.status);
+  const category = categories.find(c => c.code === task.categoryCode);
 
   const statusColors = {
     pending: 'text-gray-500 bg-gray-100',
@@ -776,9 +891,12 @@ function TaskItem({ task, onClick, onStatusChange, contacts, isOverdue, getStatu
   return (
     <div
       onClick={onClick}
-      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-50 cursor-pointer transition-colors"
+      className={`
+        px-4 py-3 flex items-center gap-3 hover:bg-gray-50 cursor-pointer transition-colors
+        ${isOverdue ? 'bg-orange-50/50' : ''}
+      `}
     >
-      {/* Status indicator */}
+      {/* Status toggle */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -789,11 +907,14 @@ function TaskItem({ task, onClick, onStatusChange, contacts, isOverdue, getStatu
           w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0
           ${task.status === 'completed'
             ? 'border-emerald-500 bg-emerald-500 text-white'
-            : 'border-gray-300 hover:border-emerald-400'
+            : task.status === 'blocked'
+              ? 'border-red-300 bg-red-100'
+              : 'border-gray-300 hover:border-emerald-400'
           }
         `}
       >
         {task.status === 'completed' && <CheckCircle2 className="w-3 h-3" />}
+        {task.status === 'blocked' && <AlertTriangle className="w-3 h-3 text-red-500" />}
       </button>
 
       {/* Task info */}
@@ -801,37 +922,56 @@ function TaskItem({ task, onClick, onStatusChange, contacts, isOverdue, getStatu
         <p className={`text-sm ${task.status === 'completed' ? 'text-gray-400 line-through' : 'text-charcoal'}`}>
           {task.name}
         </p>
-        <div className="flex items-center gap-2 mt-0.5">
-          <span className="text-xs text-gray-400 truncate">
-            {task.project?.name}
-          </span>
+        <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+          {/* Show project name if not in project view */}
+          {viewMode !== 'by-project' && task.project && (
+            <span className="text-xs text-blue-600">
+              {task.project.name}
+            </span>
+          )}
+          {/* Show category if not in category/trade view */}
+          {viewMode !== 'by-category' && viewMode !== 'by-trade' && category && (
+            <span
+              className="px-1.5 py-0.5 text-xs rounded"
+              style={{ backgroundColor: `${category.color}20`, color: category.color }}
+            >
+              {category.name}
+            </span>
+          )}
+          {/* Show location */}
           {task.locationPath && (
-            <span className="text-xs text-gray-300">• {task.locationPath.split('.').pop()}</span>
+            <span className="text-xs text-gray-400 flex items-center gap-1">
+              <MapPin className="w-3 h-3" />
+              {task.locationPath.split('.').pop()}
+            </span>
           )}
         </div>
       </div>
 
-      {/* Assignee */}
-      {contact && (
+      {/* Assignee (hide in team view) */}
+      {viewMode !== 'by-team' && contact && (
         <span className="text-xs text-gray-500 hidden sm:block">
-          {contact.name}
+          {contact.name.split(' ')[0]}
         </span>
       )}
 
       {/* Due date */}
       {task.dueDate && (
-        <span className={`text-xs ${overdue ? 'text-red-500 font-medium' : 'text-gray-400'}`}>
+        <span className={`text-xs flex items-center gap-1 ${isOverdue ? 'text-orange-600 font-medium' : 'text-gray-400'}`}>
+          <Calendar className="w-3 h-3" />
           {new Date(task.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
         </span>
       )}
 
-      {/* Status badge */}
-      <span className={`
-        px-2 py-0.5 text-xs rounded-full capitalize
-        ${statusColors[task.status] || statusColors.pending}
-      `}>
-        {task.status === 'in_progress' ? 'Active' : task.status}
-      </span>
+      {/* Status badge (hide in status view) */}
+      {viewMode !== 'by-status' && (
+        <span className={`
+          px-2 py-0.5 text-xs rounded-full
+          ${statusColors[task.status] || statusColors.pending}
+        `}>
+          {task.status === 'in_progress' ? 'Active' : task.status === 'pending' ? 'Todo' : task.status}
+        </span>
+      )}
     </div>
   );
 }

@@ -10,11 +10,9 @@ import {
   FileSignature,
   HardHat,
   CheckCircle2,
-  Calendar,
   Settings,
   BookOpen,
   GraduationCap,
-  ListTodo,
   Timer,
   Receipt,
   ClipboardList,
@@ -36,7 +34,6 @@ const navSections = [
   {
     label: 'Daily',
     items: [
-      { to: '/loop-tracker', icon: ListTodo, label: 'Loop Tracker' },
       { to: '/time-tracker', icon: Timer, label: 'Time Tracker' },
       { to: '/expenses', icon: Receipt, label: 'Expense Tracker' },
       { to: '/daily-log', icon: ClipboardList, label: 'Daily Log' },
