@@ -74,13 +74,6 @@ export function PhaseTransitionModal({
         .filter((_, idx) => idx < wallSections.length) // Keep all slots
         .map((name, idx) => name.trim() || `Wall Section ${idx + 1}`);
 
-      console.log('[PhaseTransitionModal] Calling onConfirm with:', {
-        fromPhase: currentPhase,
-        toPhase: targetPhase,
-        notes: notes.trim(),
-        date: dateValue || undefined,
-      });
-
       const result = await onConfirm({
         fromPhase: currentPhase,
         toPhase: targetPhase,
@@ -88,8 +81,6 @@ export function PhaseTransitionModal({
         date: dateValue || undefined,
         wallSections: shouldPromptWallSections ? namedSections : undefined,
       });
-
-      console.log('[PhaseTransitionModal] onConfirm result:', result);
 
       // Only close if successful - the hook handles closing on success anyway
       // but we check here to avoid double-close and to handle errors properly
@@ -100,12 +91,10 @@ export function PhaseTransitionModal({
         setDateValue('');
         setWallSections(['', '', '', '']);
         setShowWallSections(false);
-      } else if (result?.error) {
-        console.error('[PhaseTransitionModal] Transition failed:', result.error);
-        // Don't close - let user see the error in the hook's transitionError state
       }
-    } catch (error) {
-      console.error('[PhaseTransitionModal] Phase transition threw:', error);
+      // If result?.error, don't close - let user see the error in the hook's transitionError state
+    } catch {
+      // Error handled by hook's transitionError state
     } finally {
       setIsSubmitting(false);
     }
@@ -420,9 +409,9 @@ export function PhaseSelector({ project, onSelect }) {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-sm text-gray-600 hover:text-charcoal underline"
+        className="px-3 py-1.5 text-sm font-medium bg-charcoal text-white rounded-lg hover:bg-gray-800 transition-colors shadow-sm"
       >
-        Change phase...
+        Change Phase
       </button>
 
       {isOpen && (

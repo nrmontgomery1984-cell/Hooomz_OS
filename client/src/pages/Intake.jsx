@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { IntakeWizard } from '../components/intake';
 import { generateProjectFromIntake } from '../services/intakeService';
+import { useToast } from '../components/ui';
 
 /**
  * Intake Page - Customer intake form entry point
@@ -10,6 +11,7 @@ import { generateProjectFromIntake } from '../services/intakeService';
  */
 export function Intake() {
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleComplete = async (formData, estimate) => {
     try {
@@ -17,15 +19,14 @@ export function Intake() {
       const result = await generateProjectFromIntake(formData, estimate);
 
       if (result.error) {
-        console.error('Failed to create project:', result.error);
-        // TODO: Show error toast
+        showToast(`Failed to create project: ${result.error}`, 'error');
         return;
       }
 
       // Navigate to the new project
       navigate(`/projects/${result.data.id}`);
-    } catch (err) {
-      console.error('Intake submission error:', err);
+    } catch {
+      showToast('Failed to create project. Please try again.', 'error');
     }
   };
 

@@ -83,7 +83,6 @@ export async function deleteProject(projectId) {
     mockProjects.splice(index, 1);
     // Persist to localStorage
     saveProjectsToStorage();
-    console.log('Project deleted (mock):', projectId);
     return { data: { id: projectId }, error: null };
   }
 
@@ -123,7 +122,6 @@ export async function createProject(projectData) {
     mockProjects.unshift(newProject);
     // Persist to localStorage
     saveProjectsToStorage();
-    console.log('Project created (mock):', newProject);
     return { data: newProject, error: null };
   }
 
@@ -195,7 +193,6 @@ export async function getOrGenerateLoops(projectId, project) {
       delete mockTaskInstances[projectId];
       saveProjectsToStorage();
       saveTaskTrackerToStorage();
-      console.log('Cleared existing loops for project:', projectId, 'Count:', existingLoopsToDelete.length);
     }
 
     // Generate new loops from estimate
@@ -206,11 +203,9 @@ export async function getOrGenerateLoops(projectId, project) {
     );
 
     if (genError) {
-      console.error('Failed to generate loops from estimate:', genError);
       return { data: [], error: null };
     }
 
-    console.log('Generated loops from estimate:', loops.length, 'Tasks:', tasks.length);
     return { data: loops, error: null };
   }
 
@@ -308,7 +303,6 @@ export async function getTask(id) {
 
 export async function updateTask(id, updates) {
   if (!isSupabaseConfigured()) {
-    console.log('Task updated (mock):', id, updates);
     return { data: { id, ...updates }, error: null };
   }
 
@@ -756,7 +750,6 @@ export async function createTask(task) {
       saveProjectsToStorage();
     }
 
-    console.log('Task created (mock):', newTask);
     return { data: newTask, error: null };
   }
 
@@ -789,7 +782,6 @@ export async function createLoop(loop) {
       saveProjectsToStorage();
     }
 
-    console.log('Loop created (mock):', newLoop);
     return { data: newLoop, error: null };
   }
 
@@ -826,7 +818,6 @@ export async function addTaskNote(taskId, note) {
       ...note,
       created_at: new Date().toISOString(),
     };
-    console.log('Note added (mock):', newNote);
     return { data: newNote, error: null };
   }
 
@@ -867,7 +858,6 @@ export async function addTaskPhoto(taskId, photo) {
       ...photo,
       created_at: new Date().toISOString(),
     };
-    console.log('Photo added (mock):', newPhoto);
     return { data: newPhoto, error: null };
   }
 
@@ -928,7 +918,6 @@ export async function createActivityEntry(entry) {
       mockActivityLog[projectId].unshift(newEntry);
     }
 
-    console.log('Activity logged (mock):', newEntry);
     return { data: newEntry, error: null };
   }
 
@@ -964,7 +953,7 @@ export async function createActivityEntry(entry) {
  * @param {string} [updates.quote_sent_at] - Quote sent date
  */
 export async function updateProjectPhase(projectId, updates) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Mock: find and update project
     const projectIndex = mockProjects.findIndex(p => p.id === projectId);
     if (projectIndex === -1) {
@@ -982,7 +971,6 @@ export async function updateProjectPhase(projectId, updates) {
     // Persist to localStorage
     saveProjectsToStorage();
 
-    console.log('Project phase updated (mock):', updatedProject);
     return { data: updatedProject, error: null };
   }
 
@@ -1005,7 +993,7 @@ export async function updateProjectPhase(projectId, updates) {
  * @param {Object} updates - Fields to update
  */
 export async function updateProject(projectId, updates) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const projectIndex = mockProjects.findIndex(p => p.id === projectId);
     if (projectIndex === -1) {
       return { data: null, error: 'Project not found' };
@@ -1020,7 +1008,6 @@ export async function updateProject(projectId, updates) {
     mockProjects[projectIndex] = updatedProject;
     // Persist to localStorage
     saveProjectsToStorage();
-    console.log('Project updated (mock):', updatedProject);
     return { data: updatedProject, error: null };
   }
 
@@ -1167,7 +1154,6 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
     // Create the loop
     const { data: createdLoop, error: loopError } = await createLoop(loop);
     if (loopError) {
-      console.error('Failed to create loop:', loopError);
       continue;
     }
     createdLoops.push(createdLoop || loop);
@@ -1204,7 +1190,6 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
 
       const { data: createdTask, error: taskError } = await createTask(task);
       if (taskError) {
-        console.error('Failed to create task:', taskError);
         continue;
       }
       createdTasks.push(createdTask || task);
@@ -1263,9 +1248,7 @@ export async function startProduction(projectId, project) {
       buildTier
     );
 
-    if (scopeError) {
-      console.error('Failed to generate scope:', scopeError);
-    } else {
+    if (!scopeError) {
       loops = newLoops;
       tasks = newTasks;
     }
@@ -1338,10 +1321,6 @@ export async function signContract(projectId, contractData) {
     lineItems,
     selectedTier
   );
-
-  if (scopeError) {
-    console.error('Failed to generate scope:', scopeError);
-  }
 
   // Log activity
   await createActivityEntry({
@@ -1558,12 +1537,8 @@ function convertLoopTasksToInstances(projectId, loops, tasksMap) {
   const instances = [];
   let priority = 1;
 
-  console.log('[convertLoopTasksToInstances] Converting', loops.length, 'loops for project:', projectId);
-  console.log('[convertLoopTasksToInstances] tasksMap keys:', Object.keys(tasksMap));
-
   for (const loop of loops) {
     const loopTasks = tasksMap[loop.id] || [];
-    console.log('[convertLoopTasksToInstances] Loop', loop.id, loop.name, 'has', loopTasks.length, 'tasks');
 
     if (loopTasks.length > 0) {
       // Convert actual tasks from the loop
@@ -1622,7 +1597,6 @@ function convertLoopTasksToInstances(projectId, loops, tasksMap) {
     }
   }
 
-  console.log('[convertLoopTasksToInstances] Created', instances.length, 'task instances');
   return instances;
 }
 
@@ -1655,19 +1629,14 @@ export async function getTaskInstances(projectId, filters = {}) {
       // 2. Existing instances aren't from estimate, OR
       // 3. Loop IDs don't match (loops were regenerated)
       if (!existingAreFromEstimate || existingInstances.length === 0 || !loopsMatch) {
-        console.log('[getTaskInstances] Converting estimate loops to task instances for project:', projectId);
-        console.log('[getTaskInstances] Reason: existingAreFromEstimate=', existingAreFromEstimate,
-          'existingLength=', existingInstances.length, 'loopsMatch=', loopsMatch);
         instances = convertLoopTasksToInstances(projectId, projectLoops, mockTasks);
         // Store these instances so updates persist
         if (instances.length > 0) {
           mockTaskInstances[projectId] = instances;
           saveTaskTrackerToStorage();
-          console.log('[getTaskInstances] Stored', instances.length, 'task instances from estimate');
         }
       } else {
         instances = existingInstances;
-        console.log('[getTaskInstances] Using existing estimate instances:', existingInstances.length);
       }
     } else if (projectLoops.length > 0) {
       // Non-estimate loops exist, convert them
@@ -2098,14 +2067,12 @@ export async function getMaterialSelections(projectId, filters = {}) {
 
     // If Supabase returns an error (e.g., table doesn't exist), fall back to mock data
     if (error) {
-      console.warn('Supabase material_selections query failed, using mock data:', error.message);
       const projectSelections = mockMaterialSelections[projectId] || [];
       return { data: projectSelections, error: null };
     }
 
     return { data, error };
-  } catch (err) {
-    console.warn('Supabase error, falling back to mock data:', err);
+  } catch {
     const projectSelections = mockMaterialSelections[projectId] || [];
     return { data: projectSelections, error: null };
   }
@@ -2129,15 +2096,13 @@ export async function getMaterialSelection(projectId, selectionId) {
       .single();
 
     if (error) {
-      console.warn('Supabase getMaterialSelection failed, using mock data:', error.message);
       const projectSelections = mockMaterialSelections[projectId] || [];
       const selection = projectSelections.find(s => s.id === selectionId);
       return { data: selection || null, error: selection ? null : 'Not found' };
     }
 
     return { data, error };
-  } catch (err) {
-    console.warn('Supabase error, falling back to mock data:', err);
+  } catch {
     const projectSelections = mockMaterialSelections[projectId] || [];
     const selection = projectSelections.find(s => s.id === selectionId);
     return { data: selection || null, error: selection ? null : 'Not found' };

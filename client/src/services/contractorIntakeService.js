@@ -89,24 +89,9 @@ export async function generateProjectFromContractorIntake(formData) {
         },
       };
 
-      console.log('=== CONTRACTOR INTAKE COST ESTIMATE (INSTANCES) ===');
-      console.log('Instance count:', instances.length);
-      console.log('Assemblies:', assemblies?.length || 0);
-      console.log('Instance totals:', instanceTotals);
-      console.log('==================================================');
     } else {
       // Fallback to old scope-based calculation
       costEstimate = calculateScopeCosts(scope, project.specLevel);
-
-      console.log('=== CONTRACTOR INTAKE COST ESTIMATE (SCOPE) ===');
-      console.log('Scope data:', JSON.stringify(scope, null, 2));
-      console.log('Spec level:', project.specLevel);
-      console.log('Cost estimate result:', costEstimate);
-      console.log('Total Labour:', costEstimate.totalLabour);
-      console.log('Total Materials:', costEstimate.totalMaterials);
-      console.log('Grand Total:', costEstimate.grandTotal);
-      console.log('Item count:', costEstimate.itemCount);
-      console.log('===============================================');
     }
 
     // Create initial estimate snapshot for history
@@ -235,12 +220,6 @@ export async function generateProjectFromContractorIntake(formData) {
       // Persist to localStorage
       saveProjectsToStorage();
 
-      console.log('Contractor project created (mock):', newProject);
-      console.log('Task instances created:', taskInstances.length);
-      if (hasInstances) {
-        console.log('Instance-based estimate - instances:', instances.length);
-      }
-
       return {
         data: {
           ...newProject,
@@ -280,7 +259,6 @@ export async function generateProjectFromContractorIntake(formData) {
       .single();
 
     if (projectError) {
-      console.error('Project creation error:', projectError);
       // Fall back to mock mode
       return generateProjectFromContractorIntakeMock(formData);
     }
@@ -342,7 +320,6 @@ export async function generateProjectFromContractorIntake(formData) {
       error: null,
     };
   } catch (err) {
-    console.error('generateProjectFromContractorIntake error:', err);
     return { data: null, error: err.message };
   }
 }
@@ -542,10 +519,6 @@ export async function recalculateProjectEstimate(projectId, notes = '') {
     // Persist changes
     saveProjectsToStorage();
 
-    console.log('Project estimate recalculated:', projectId);
-    console.log('New total:', costEstimate.grandTotal);
-    console.log('History entries:', project.estimate_history.length);
-
     return {
       data: {
         ...project,
@@ -556,7 +529,6 @@ export async function recalculateProjectEstimate(projectId, notes = '') {
       error: null,
     };
   } catch (err) {
-    console.error('recalculateProjectEstimate error:', err);
     return { data: null, error: err.message };
   }
 }

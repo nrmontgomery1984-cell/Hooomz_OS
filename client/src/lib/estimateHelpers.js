@@ -1918,8 +1918,11 @@ export function calculateEstimateTotals(lineItems, estimateType = 'both') {
         });
       }
     } else {
-      // No catalogue breakdown - use legacy unitPrice fields
-      // Flag as missing pricing data
+      // No catalogue breakdown - use legacy unitPrice fields with estimated split
+      // Apply industry-standard 40% materials / 60% labor split
+      const MATERIALS_RATIO = 0.40;
+      const LABOR_RATIO = 0.60;
+
       totals.missingPricingCount++;
       totals.missingPricingItems.push({
         id: item.id,
@@ -1929,16 +1932,26 @@ export function calculateEstimateTotals(lineItems, estimateType = 'both') {
         category: item.category,
       });
 
-      // Use the combined price (can't split accurately without data)
       const goodPrice = (item.unitPriceGood || 0) * qty;
       const betterPrice = (item.unitPriceBetter || 0) * qty;
       const bestPrice = (item.unitPriceBest || 0) * qty;
 
-      // For items without breakdown, include full price regardless of type
-      // (we can't accurately split without catalogue data)
-      totals.good += goodPrice;
-      totals.better += betterPrice;
-      totals.best += bestPrice;
+      if (estimateType === 'both') {
+        // Full price for combined
+        totals.good += goodPrice;
+        totals.better += betterPrice;
+        totals.best += bestPrice;
+      } else if (estimateType === 'materials') {
+        // Estimated materials portion (40%)
+        totals.good += goodPrice * MATERIALS_RATIO;
+        totals.better += betterPrice * MATERIALS_RATIO;
+        totals.best += bestPrice * MATERIALS_RATIO;
+      } else if (estimateType === 'labor') {
+        // Estimated labor portion (60%)
+        totals.good += goodPrice * LABOR_RATIO;
+        totals.better += betterPrice * LABOR_RATIO;
+        totals.best += bestPrice * LABOR_RATIO;
+      }
     }
   });
 

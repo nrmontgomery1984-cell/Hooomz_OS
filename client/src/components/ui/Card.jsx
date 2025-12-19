@@ -28,7 +28,7 @@ export function Card({
   // Auto-detect interactive if onClick is provided, or use legacy hover prop
   const isInteractive = (interactive ?? (!!onClick || hover)) && !disabled;
 
-  const baseClasses = 'bg-white rounded-lg shadow-card';
+  const baseClasses = 'bg-white rounded-lg shadow-card border border-gray-200';
 
   const interactiveClasses = isInteractive
     ? 'cursor-pointer hover:shadow-elevated active:scale-[0.99] transition-all duration-150'

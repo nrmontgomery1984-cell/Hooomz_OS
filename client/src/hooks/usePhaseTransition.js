@@ -44,9 +44,7 @@ export function usePhaseTransition(project, onUpdate) {
    * Confirm and execute the phase transition
    */
   const confirmTransition = useCallback(async ({ fromPhase, toPhase, notes, date }) => {
-    console.log('[usePhaseTransition] confirmTransition called:', { fromPhase, toPhase, notes, date });
     if (!project) {
-      console.log('[usePhaseTransition] No project, returning early');
       return;
     }
 
@@ -55,9 +53,7 @@ export function usePhaseTransition(project, onUpdate) {
 
     try {
       // Validate one more time
-      console.log('[usePhaseTransition] Validating transition...');
       const validation = validateTransition(project, fromPhase, toPhase);
-      console.log('[usePhaseTransition] Validation result:', validation);
       if (!validation.canProceed) {
         throw new Error(validation.blockers.join(', '));
       }
@@ -76,9 +72,7 @@ export function usePhaseTransition(project, onUpdate) {
           lineItems: intakeData.estimate_line_items || project.estimate_line_items || [],
         };
 
-        console.log('[usePhaseTransition] signContract with:', contractData);
         const { data, error } = await signContract(project.id, contractData);
-        console.log('[usePhaseTransition] signContract response:', { data, error });
 
         if (error) {
           // Handle Supabase error object
@@ -89,17 +83,11 @@ export function usePhaseTransition(project, onUpdate) {
         }
 
         resultData = data?.project;
-
-        // Log additional info about generated scope
-        if (data?.loops?.length > 0) {
-          console.log(`Generated ${data.loops.length} loops and ${data.tasks?.length || 0} tasks from estimate`);
-        }
       }
       // Special handling for starting construction (contracted → active)
       // This generates loops/tasks from estimate if they don't exist
       else if (toPhase === 'active' && fromPhase === 'contracted') {
         const { data, error } = await startProduction(project.id, project);
-        console.log('[usePhaseTransition] startProduction response:', { data, error });
 
         if (error) {
           // Handle Supabase error object
@@ -110,11 +98,6 @@ export function usePhaseTransition(project, onUpdate) {
         }
 
         resultData = data?.project;
-
-        // Log info about generated scope
-        if (data?.loops?.length > 0 || data?.tasks?.length > 0) {
-          console.log(`Production started: ${data.loops?.length || 0} loops, ${data.tasks?.length || 0} tasks`);
-        }
       } else {
         // Standard phase transition
         // Note: Many date fields don't exist as top-level columns in the database
@@ -149,12 +132,8 @@ export function usePhaseTransition(project, onUpdate) {
         // Include the intake_data updates
         updateData.intake_data = intakeDataUpdates;
 
-        console.log('[usePhaseTransition] Update payload:', updateData);
-
         // Call API to update project
         const { data, error } = await updateProjectPhase(project.id, updateData);
-
-        console.log('[usePhaseTransition] API response:', { data, error });
 
         if (error) {
           // Handle Supabase error object

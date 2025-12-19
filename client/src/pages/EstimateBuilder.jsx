@@ -254,18 +254,41 @@ export function EstimateBuilder() {
   const hasInstanceData = instances.length > 0;
   const displayTotals = useMemo(() => {
     if (hasInstanceData && instanceTotals.good > 0) {
+      // Apply estimateType filter to instance totals
+      const labor = instanceTotals.labor || 0;
+      const materials = instanceTotals.materials || 0;
+
+      // Calculate tier values based on estimateType
+      let baseGood, baseBetter, baseBest;
+      if (estimateType === 'materials') {
+        // Materials only - no tier multiplier for materials
+        baseGood = materials;
+        baseBetter = materials;
+        baseBest = materials;
+      } else if (estimateType === 'labor') {
+        // Labor only - apply tier multipliers
+        baseGood = labor;
+        baseBetter = labor * 1.15;
+        baseBest = labor * 1.35;
+      } else {
+        // Both - use original instance totals (already calculated with tier multipliers)
+        baseGood = instanceTotals.good;
+        baseBetter = instanceTotals.better;
+        baseBest = instanceTotals.best;
+      }
+
       return {
-        good: instanceTotals.good,
-        better: instanceTotals.better,
-        best: instanceTotals.best,
-        labor: instanceTotals.labor,
-        materials: instanceTotals.materials,
+        good: Math.round(baseGood * 100) / 100,
+        better: Math.round(baseBetter * 100) / 100,
+        best: Math.round(baseBest * 100) / 100,
+        labor: labor,
+        materials: materials,
         missingPricingCount: 0,
         missingPricingItems: [],
       };
     }
     return totals;
-  }, [hasInstanceData, instanceTotals, totals]);
+  }, [hasInstanceData, instanceTotals, totals, estimateType]);
 
   // Calculate display range based on display totals
   const displayRange = useMemo(() => {
@@ -370,8 +393,6 @@ export function EstimateBuilder() {
   // Save estimate
   const handleSave = async () => {
     setSaving(true);
-    console.log('[EstimateBuilder] Saving instances:', instances);
-    console.log('[EstimateBuilder] Instances count:', instances.length);
 
     // Build the update payload
     // Note: 'notes' column doesn't exist in the live DB, so we store it in intake_data
@@ -389,13 +410,9 @@ export function EstimateBuilder() {
       },
     };
 
-    console.log('[EstimateBuilder] Update payload:', JSON.stringify(updatePayload, null, 2));
-
     try {
       const result = await updateProject(projectId, updatePayload);
-      console.log('[EstimateBuilder] Save result:', result);
       if (result.error) {
-        console.error('[EstimateBuilder] Save error:', result.error);
         showToast(`Failed to save: ${result.error.message || result.error}`, 'error');
       } else {
         showToast('Estimate saved successfully', 'success');
@@ -404,8 +421,7 @@ export function EstimateBuilder() {
           setProject(result.data);
         }
       }
-    } catch (error) {
-      console.error('Failed to save estimate:', error);
+    } catch {
       showToast('Failed to save estimate', 'error');
     }
     setSaving(false);

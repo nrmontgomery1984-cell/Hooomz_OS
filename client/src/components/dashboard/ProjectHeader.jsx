@@ -52,17 +52,16 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition, vi
           <PhaseIndicator currentPhase={header.phase} healthStatus={header.healthStatus} />
         </div>
 
-        {/* Phase chip + days + health in one row - wrap if needed */}
-        <div className="flex items-center flex-wrap gap-2 mb-3">
+        {/* Phase chip + days + change phase button */}
+        <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
             <PhaseChip phase={header.phase} />
             <span className="text-xs text-gray-500">{header.daysInPhase}d</span>
           </div>
-          <HealthIndicator
-            status={header.healthStatus}
-            reason={header.healthReason}
-            size="sm"
-          />
+          {/* Phase selector - prominent button */}
+          {project && onPhaseTransition && (
+            <PhaseSelector project={project} onSelect={onPhaseTransition} />
+          )}
         </div>
 
         {/* Quick Actions - wrap instead of scroll */}
@@ -162,18 +161,20 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition, vi
         </div>
 
         {/* Phase info row */}
-        <div className="flex flex-wrap items-center gap-2 text-sm mb-3">
-          <PhaseChip phase={header.phase} />
-          <span className="text-gray-500">
-            {header.daysInPhase}d in phase
-          </span>
-          {header.phaseStartDate && (
-            <span className="text-gray-400 flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5" />
-              {formatDate(header.phaseStartDate)}
+        <div className="flex flex-wrap items-center justify-between gap-2 text-sm mb-3">
+          <div className="flex items-center gap-2">
+            <PhaseChip phase={header.phase} />
+            <span className="text-gray-500">
+              {header.daysInPhase}d in phase
             </span>
-          )}
-          {/* Phase selector for manual transitions */}
+            {header.phaseStartDate && (
+              <span className="text-gray-400 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5" />
+                {formatDate(header.phaseStartDate)}
+              </span>
+            )}
+          </div>
+          {/* Phase selector - prominent button */}
           {project && onPhaseTransition && (
             <PhaseSelector project={project} onSelect={onPhaseTransition} />
           )}
