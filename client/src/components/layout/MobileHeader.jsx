@@ -17,6 +17,7 @@ import {
   Receipt,
   ClipboardList,
   Clock,
+  Users,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
@@ -52,6 +53,12 @@ const navSections = [
     items: [
       { to: '/production', icon: HardHat, label: 'In Progress' },
       { to: '/completed', icon: CheckCircle2, label: 'Completed' },
+    ],
+  },
+  {
+    label: 'People',
+    items: [
+      { to: '/team', icon: Users, label: 'Team' },
     ],
   },
   {
