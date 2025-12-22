@@ -2851,8 +2851,12 @@ export async function getEmployees() {
   const { data, error } = await supabase
     .from('employees')
     .select('*')
-    .is('deleted_at', null)
-    .order('lastName', { ascending: true });
+    .is('deleted_at', null);
+
+  // Sort client-side to avoid column name issues with Postgres
+  if (data) {
+    data.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+  }
 
   return { data, error };
 }
