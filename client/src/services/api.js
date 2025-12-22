@@ -2876,14 +2876,16 @@ export async function getEmployee(id) {
 
 // CREATE employee
 export async function createEmployee(employeeData) {
+  // Generate ID for new employees
+  const newEmployee = {
+    id: `emp-${Date.now()}`,
+    ...employeeData,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  };
+
   if (!isSupabaseConfigured()) {
     const employees = loadEmployeesFromStorage();
-    const newEmployee = {
-      id: `emp-${Date.now()}`,
-      ...employeeData,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
     employees.push(newEmployee);
     saveEmployeesToStorage(employees);
     return { data: newEmployee, error: null };
@@ -2891,7 +2893,7 @@ export async function createEmployee(employeeData) {
 
   const { data, error } = await supabase
     .from('employees')
-    .insert(employeeData)
+    .insert(newEmployee)
     .select()
     .single();
 
