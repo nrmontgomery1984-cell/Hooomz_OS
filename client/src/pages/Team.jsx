@@ -10,86 +10,27 @@ import {
   Edit,
   Trash2,
   Filter,
+  Users,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
 import { ROLES } from '../lib/devData';
 
-// Mock employees data - will be replaced with real data later
-const MOCK_EMPLOYEES = [
-  {
-    id: 'emp-001',
-    firstName: 'Nathan',
-    lastName: 'Henderson',
-    preferredName: '',
-    email: 'nathan@hendersoncontracting.ca',
-    phone: '(506) 555-1001',
-    role: 'administrator',
-    status: 'active',
-    hireDate: '2020-01-15',
-    address: { city: 'Moncton', province: 'NB' },
-  },
-  {
-    id: 'emp-002',
-    firstName: 'Lisa',
-    lastName: 'Chen',
-    preferredName: '',
-    email: 'lisa@hendersoncontracting.ca',
-    phone: '(506) 555-1002',
-    role: 'manager',
-    status: 'active',
-    hireDate: '2021-03-10',
-    address: { city: 'Moncton', province: 'NB' },
-  },
-  {
-    id: 'emp-003',
-    firstName: 'Mike',
-    lastName: 'Sullivan',
-    preferredName: '',
-    email: 'mike@hendersoncontracting.ca',
-    phone: '(506) 555-1003',
-    role: 'foreman',
-    status: 'active',
-    hireDate: '2021-06-01',
-    address: { city: 'Dieppe', province: 'NB' },
-  },
-  {
-    id: 'emp-004',
-    firstName: 'Joe',
-    lastName: 'Martinez',
-    preferredName: '',
-    email: 'joe@hendersoncontracting.ca',
-    phone: '(506) 555-1004',
-    role: 'carpenter',
-    status: 'active',
-    hireDate: '2022-02-14',
-    address: { city: 'Riverview', province: 'NB' },
-  },
-  {
-    id: 'emp-005',
-    firstName: 'Tyler',
-    lastName: 'Brooks',
-    preferredName: 'Ty',
-    email: 'tyler@hendersoncontracting.ca',
-    phone: '(506) 555-1005',
-    role: 'apprentice',
-    status: 'active',
-    hireDate: '2023-09-01',
-    address: { city: 'Moncton', province: 'NB' },
-  },
-  {
-    id: 'emp-006',
-    firstName: 'Sam',
-    lastName: 'Wilson',
-    preferredName: '',
-    email: 'sam@hendersoncontracting.ca',
-    phone: '(506) 555-1006',
-    role: 'labourer',
-    status: 'active',
-    hireDate: '2024-01-08',
-    address: { city: 'Moncton', province: 'NB' },
-  },
-];
+// Employees data - loaded from localStorage, starts empty
+const STORAGE_KEY = 'hooomz_employees';
+
+function loadEmployees() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveEmployees(employees) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+}
 
 // Contact Card Component
 function ContactCard({ employee }) {
@@ -220,7 +161,13 @@ function ContactCard({ employee }) {
 export function Team() {
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
-  const [employees] = useState(MOCK_EMPLOYEES);
+  const [employees, setEmployees] = useState(() => loadEmployees());
+
+  // Save employees whenever they change
+  const updateEmployees = (newEmployees) => {
+    setEmployees(newEmployees);
+    saveEmployees(newEmployees);
+  };
 
   // Filter employees
   const filteredEmployees = employees.filter(emp => {
@@ -354,14 +301,30 @@ export function Team() {
       {/* Empty State */}
       {filteredEmployees.length === 0 && (
         <Card className="p-8 text-center">
-          <p className="text-gray-500 mb-2">No team members found</p>
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Clear search
-            </button>
+          {employees.length === 0 ? (
+            <>
+              <Users className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500 mb-3">No team members yet</p>
+              <Link
+                to="/team/new"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal text-white rounded-lg hover:bg-charcoal/90 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                Add Your First Employee
+              </Link>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-500 mb-2">No team members found</p>
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  Clear search
+                </button>
+              )}
+            </>
           )}
         </Card>
       )}

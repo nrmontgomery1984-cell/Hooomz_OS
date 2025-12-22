@@ -177,7 +177,7 @@ if (typeof window !== 'undefined') {
 
 // Production mode: Start with empty projects (users create their own)
 // Set to true to load demo projects for development/testing
-const LOAD_DEMO_DATA = true;
+const LOAD_DEMO_DATA = false;
 
 // Export demoProjects so expenses lib can access embedded expense data
 export const demoProjects = [
