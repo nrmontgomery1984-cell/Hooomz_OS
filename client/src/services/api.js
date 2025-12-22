@@ -2852,7 +2852,7 @@ export async function getEmployees() {
     .from('employees')
     .select('*')
     .is('deleted_at', null)
-    .order('last_name', { ascending: true });
+    .order('lastName', { ascending: true });
 
   return { data, error };
 }
