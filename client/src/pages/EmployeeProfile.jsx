@@ -224,18 +224,13 @@ export function EmployeeProfile() {
     }));
   };
 
-  // Validate form
+  // Validate form - only require name and role
   const validate = () => {
     const newErrors = {};
 
-    if (!profile.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!profile.lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!profile.phone.trim()) newErrors.phone = 'Phone number is required';
-    if (!profile.email.trim()) newErrors.email = 'Email is required';
+    if (!profile.firstName?.trim()) newErrors.firstName = 'First name is required';
+    if (!profile.lastName?.trim()) newErrors.lastName = 'Last name is required';
     if (!profile.role) newErrors.role = 'Role is required';
-    if (!profile.hireDate) newErrors.hireDate = 'Hire date is required';
-    if (!profile.emergencyContact.name.trim()) newErrors.emergencyContactName = 'Emergency contact name is required';
-    if (!profile.emergencyContact.phone.trim()) newErrors.emergencyContactPhone = 'Emergency contact phone is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -243,12 +238,17 @@ export function EmployeeProfile() {
 
   // Handle save
   const handleSave = async () => {
-    if (!validate()) return;
+    if (!validate()) {
+      console.log('Validation failed:', errors);
+      return;
+    }
 
     setSaving(true);
 
     // Save to localStorage
+    console.log('Saving employee:', profile);
     saveEmployee(profile);
+    console.log('Employees after save:', loadEmployees());
 
     setSaving(false);
     navigate('/team');
