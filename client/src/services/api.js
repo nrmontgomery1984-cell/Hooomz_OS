@@ -1,6 +1,7 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import {
   mockProjects,
+  demoProjects,
   mockLoops,
   mockTasks,
   mockTodayTasks,
@@ -61,7 +62,17 @@ export async function getProjects() {
 export async function getProject(id) {
   if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const project = mockProjects.find((p) => p.id === id);
-    return { data: project || null, error: project ? null : 'Not found' };
+    if (!project) {
+      return { data: null, error: 'Not found' };
+    }
+
+    // Merge expense data from demoProjects (localStorage may have stale data)
+    const demoProject = demoProjects.find((p) => p.id === id);
+    if (demoProject?.expenses) {
+      return { data: { ...project, expenses: demoProject.expenses }, error: null };
+    }
+
+    return { data: project, error: null };
   }
 
   const { data, error } = await supabase

@@ -5,6 +5,25 @@
 // LOCAL STORAGE PERSISTENCE
 // =============================================================================
 
+// Data version - increment this when data structure changes to force refresh
+const DATA_VERSION = 2; // v2: Added expenses structure to projects
+const DATA_VERSION_KEY = 'hooomz_data_version';
+
+// Check and handle data version migration
+function checkDataVersion() {
+  const storedVersion = parseInt(localStorage.getItem(DATA_VERSION_KEY) || '0', 10);
+  if (storedVersion < DATA_VERSION) {
+    // Clear stale project data to force refresh with new structure
+    console.log(`Upgrading data from v${storedVersion} to v${DATA_VERSION}`);
+    localStorage.removeItem('hooomz_mock_projects');
+    localStorage.removeItem('hooomz_time_entries');
+    localStorage.setItem(DATA_VERSION_KEY, DATA_VERSION.toString());
+  }
+}
+
+// Run version check on module load
+checkDataVersion();
+
 const STORAGE_KEYS = {
   projects: 'hooomz_mock_projects',
   loops: 'hooomz_mock_loops',
@@ -157,10 +176,11 @@ if (typeof window !== 'undefined') {
 // =============================================================================
 
 // Production mode: Start with empty projects (users create their own)
-// Set to false to load demo projects for development/testing
-const LOAD_DEMO_DATA = false;
+// Set to true to load demo projects for development/testing
+const LOAD_DEMO_DATA = true;
 
-const demoProjects = [
+// Export demoProjects so expenses lib can access embedded expense data
+export const demoProjects = [
   // ============================================================================
   // PROJECT 1: INTAKE PHASE (New Lead / Sales)
   // ============================================================================
@@ -429,10 +449,216 @@ const demoProjects = [
     estimate_low: 485000,
     estimate_high: 565000,
     contract_value: 525000,
-    spent: 185000,
     committed: 95000,
     contract_signed_at: '2025-02-15T10:00:00Z',
     actual_start: '2025-03-01',
+
+    // Expenses - Separated into Labor and Material
+    expenses: {
+      // Summary totals
+      total_budget: 525000,
+      total_spent: 185000,
+      total_committed: 95000,
+
+      // Labor Expenses (from time entries)
+      labor: {
+        budget: 96000, // $40/hr average blended rate × 2400 estimated hours
+        spent: 33600,
+        committed: 0,
+        estimated_hours: 2400,
+        logged_hours: 840,
+        by_category: {
+          'FI': { budgeted_hours: 400, logged_hours: 380, cost_budgeted: 16000, cost_spent: 15200 },
+          'EL': { budgeted_hours: 200, logged_hours: 85, cost_budgeted: 8000, cost_spent: 3400 },
+          'PL': { budgeted_hours: 180, logged_hours: 120, cost_budgeted: 7200, cost_spent: 4800 },
+          'HV': { budgeted_hours: 120, logged_hours: 0, cost_budgeted: 4800, cost_spent: 0 },
+          'IA': { budgeted_hours: 160, logged_hours: 95, cost_budgeted: 6400, cost_spent: 3800 },
+          'DW': { budgeted_hours: 280, logged_hours: 0, cost_budgeted: 11200, cost_spent: 0 },
+          'PT': { budgeted_hours: 200, logged_hours: 0, cost_budgeted: 8000, cost_spent: 0 },
+          'FL': { budgeted_hours: 160, logged_hours: 0, cost_budgeted: 6400, cost_spent: 0 },
+          'FC': { budgeted_hours: 300, logged_hours: 160, cost_budgeted: 12000, cost_spent: 6400 },
+          'GN': { budgeted_hours: 400, logged_hours: 0, cost_budgeted: 16000, cost_spent: 0 },
+        },
+        // Time entries linked to this project (references by ID)
+        time_entry_ids: ['te-demo-001', 'te-demo-002', 'te-demo-003', 'te-demo-004', 'te-demo-005'],
+      },
+
+      // Material Expenses
+      material: {
+        budget: 329000, // Remaining after labor budget
+        spent: 151400,
+        committed: 95000,
+        entries: [
+          {
+            id: 'mat-001',
+            date: '2025-03-15',
+            vendor: 'Kent Building Supplies',
+            description: 'Framing lumber package - main floor',
+            categoryCode: 'FI',
+            amount: 18500,
+            invoiceNumber: 'KBS-2025-1234',
+            status: 'paid',
+          },
+          {
+            id: 'mat-002',
+            date: '2025-03-22',
+            vendor: 'Kent Building Supplies',
+            description: 'Framing lumber package - second floor',
+            categoryCode: 'FI',
+            amount: 16200,
+            invoiceNumber: 'KBS-2025-1298',
+            status: 'paid',
+          },
+          {
+            id: 'mat-003',
+            date: '2025-04-10',
+            vendor: 'Moncton Truss & Components',
+            description: 'Roof trusses - delivered',
+            categoryCode: 'FI',
+            amount: 24500,
+            invoiceNumber: 'MTC-8876',
+            status: 'paid',
+          },
+          {
+            id: 'mat-004',
+            date: '2025-04-15',
+            vendor: 'Atlantic Windows',
+            description: 'Window package - fiberglass frames',
+            categoryCode: 'EX',
+            amount: 32000,
+            invoiceNumber: 'AW-2025-0456',
+            status: 'paid',
+          },
+          {
+            id: 'mat-005',
+            date: '2025-05-01',
+            vendor: 'Regal Plumbing Supply',
+            description: 'Rough-in plumbing package',
+            categoryCode: 'PL',
+            amount: 12800,
+            invoiceNumber: 'RPS-55423',
+            status: 'paid',
+          },
+          {
+            id: 'mat-006',
+            date: '2025-05-10',
+            vendor: 'Spark Electric Supply',
+            description: 'Electrical rough-in materials',
+            categoryCode: 'EL',
+            amount: 8900,
+            invoiceNumber: 'SES-2025-789',
+            status: 'paid',
+          },
+          {
+            id: 'mat-007',
+            date: '2025-05-20',
+            vendor: 'James Hardie Siding',
+            description: 'Fiber cement siding package',
+            categoryCode: 'EX',
+            amount: 18500,
+            invoiceNumber: 'JH-ATL-3421',
+            status: 'paid',
+          },
+          {
+            id: 'mat-008',
+            date: '2025-06-01',
+            vendor: 'IKO Roofing',
+            description: 'Architectural shingles + underlayment',
+            categoryCode: 'EX',
+            amount: 9500,
+            invoiceNumber: 'IKO-2025-1122',
+            status: 'paid',
+          },
+          {
+            id: 'mat-009',
+            date: '2025-06-15',
+            vendor: 'Superior Insulation',
+            description: 'Spray foam insulation - full house',
+            categoryCode: 'IA',
+            amount: 10500,
+            invoiceNumber: 'SI-2025-0098',
+            status: 'paid',
+          },
+        ],
+        // Committed materials (ordered but not yet delivered/paid)
+        committed_entries: [
+          {
+            id: 'mat-c001',
+            date: '2025-06-20',
+            vendor: 'Kitchen Craft Cabinets',
+            description: 'Semi-custom cabinet package',
+            categoryCode: 'FC',
+            amount: 28000,
+            poNumber: 'PO-2025-0045',
+            expectedDelivery: '2025-07-15',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-c002',
+            date: '2025-06-22',
+            vendor: 'Cambria Quartz',
+            description: 'Quartz countertops - kitchen & baths',
+            categoryCode: 'FC',
+            amount: 18500,
+            poNumber: 'PO-2025-0046',
+            expectedDelivery: '2025-07-25',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-c003',
+            date: '2025-06-25',
+            vendor: 'Lennox HVAC',
+            description: 'Ducted heat pump system',
+            categoryCode: 'HV',
+            amount: 22000,
+            poNumber: 'PO-2025-0047',
+            expectedDelivery: '2025-07-22',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-c004',
+            date: '2025-06-28',
+            vendor: 'Moncton Hardwood Flooring',
+            description: 'Engineered hardwood - main floor',
+            categoryCode: 'FL',
+            amount: 14500,
+            poNumber: 'PO-2025-0048',
+            expectedDelivery: '2025-08-10',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-c005',
+            date: '2025-06-28',
+            vendor: 'Beaulieu Canada',
+            description: 'Carpet - bedrooms & stairs',
+            categoryCode: 'FL',
+            amount: 6500,
+            poNumber: 'PO-2025-0049',
+            expectedDelivery: '2025-08-15',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-c006',
+            date: '2025-06-30',
+            vendor: 'CGC Drywall',
+            description: 'Drywall package - full house',
+            categoryCode: 'DW',
+            amount: 5500,
+            poNumber: 'PO-2025-0050',
+            expectedDelivery: '2025-07-10',
+            status: 'ordered',
+          },
+        ],
+      },
+
+      // Subcontractor Expenses (labor + material combined)
+      subcontractor: {
+        budget: 100000,
+        spent: 0,
+        committed: 0,
+        entries: [],
+      },
+    },
 
     // Dashboard-specific data
     dashboard: {
@@ -612,10 +838,187 @@ const demoProjects = [
     estimate_low: 127000,
     estimate_high: 178000,
     contract_value: 152000,
-    spent: 33440,
     committed: 45000,
     contract_signed_at: '2025-01-25T10:00:00Z',
     actual_start: '2025-02-03',
+
+    // Expenses - Separated into Labor and Material
+    expenses: {
+      // Summary totals
+      total_budget: 152000,
+      total_spent: 33440,
+      total_committed: 45000,
+
+      // Labor Expenses (from time entries)
+      labor: {
+        budget: 38400, // $40/hr average blended rate × 960 estimated hours
+        spent: 8440,
+        committed: 0,
+        estimated_hours: 960,
+        logged_hours: 211,
+        by_category: {
+          'DM': { budgeted_hours: 80, logged_hours: 80, cost_budgeted: 3200, cost_spent: 3200 },
+          'FI': { budgeted_hours: 120, logged_hours: 48, cost_budgeted: 4800, cost_spent: 1920 },
+          'EL': { budgeted_hours: 100, logged_hours: 16, cost_budgeted: 4000, cost_spent: 640 },
+          'PL': { budgeted_hours: 80, logged_hours: 0, cost_budgeted: 3200, cost_spent: 0 },
+          'IA': { budgeted_hours: 60, logged_hours: 24, cost_budgeted: 2400, cost_spent: 960 },
+          'DW': { budgeted_hours: 160, logged_hours: 0, cost_budgeted: 6400, cost_spent: 0 },
+          'PT': { budgeted_hours: 100, logged_hours: 0, cost_budgeted: 4000, cost_spent: 0 },
+          'TL': { budgeted_hours: 120, logged_hours: 0, cost_budgeted: 4800, cost_spent: 0 },
+          'FL': { budgeted_hours: 60, logged_hours: 0, cost_budgeted: 2400, cost_spent: 0 },
+          'FC': { budgeted_hours: 80, logged_hours: 43, cost_budgeted: 3200, cost_spent: 1720 },
+        },
+        // Time entries linked to this project (references by ID)
+        time_entry_ids: ['te-demo-006', 'te-demo-007', 'te-demo-008'],
+      },
+
+      // Material Expenses
+      material: {
+        budget: 88600, // Remaining after labor budget
+        spent: 25000,
+        committed: 45000,
+        entries: [
+          {
+            id: 'mat-r001',
+            date: '2025-02-10',
+            vendor: 'Kent Building Supplies',
+            description: 'Demo supplies & disposal fees',
+            categoryCode: 'DM',
+            amount: 1800,
+            invoiceNumber: 'KBS-2025-2001',
+            status: 'paid',
+          },
+          {
+            id: 'mat-r002',
+            date: '2025-02-20',
+            vendor: 'Kent Building Supplies',
+            description: 'Framing lumber - basement walls',
+            categoryCode: 'FI',
+            amount: 3200,
+            invoiceNumber: 'KBS-2025-2045',
+            status: 'paid',
+          },
+          {
+            id: 'mat-r003',
+            date: '2025-03-01',
+            vendor: 'Spark Electric Supply',
+            description: 'Electrical panel upgrade materials',
+            categoryCode: 'EL',
+            amount: 4500,
+            invoiceNumber: 'SES-2025-0234',
+            status: 'paid',
+          },
+          {
+            id: 'mat-r004',
+            date: '2025-03-10',
+            vendor: 'Superior Insulation',
+            description: 'Basement wall insulation',
+            categoryCode: 'IA',
+            amount: 3500,
+            invoiceNumber: 'SI-2025-0067',
+            status: 'paid',
+          },
+          {
+            id: 'mat-r005',
+            date: '2025-03-15',
+            vendor: 'Regal Plumbing Supply',
+            description: 'Kitchen & bathroom rough-in',
+            categoryCode: 'PL',
+            amount: 6200,
+            invoiceNumber: 'RPS-55501',
+            status: 'paid',
+          },
+          {
+            id: 'mat-r006',
+            date: '2025-03-20',
+            vendor: 'Tile Town',
+            description: 'Bathroom tile package',
+            categoryCode: 'TL',
+            amount: 5800,
+            invoiceNumber: 'TT-2025-0345',
+            status: 'paid',
+          },
+        ],
+        // Committed materials (ordered but not yet delivered/paid)
+        committed_entries: [
+          {
+            id: 'mat-rc001',
+            date: '2025-03-25',
+            vendor: 'IKEA Kitchen',
+            description: 'Kitchen cabinet package',
+            categoryCode: 'FC',
+            amount: 18000,
+            poNumber: 'PO-2025-R001',
+            expectedDelivery: '2025-04-15',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-rc002',
+            date: '2025-03-25',
+            vendor: 'Home Depot',
+            description: 'Quartz countertops - kitchen',
+            categoryCode: 'FC',
+            amount: 8500,
+            poNumber: 'PO-2025-R002',
+            expectedDelivery: '2025-04-20',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-rc003',
+            date: '2025-03-28',
+            vendor: 'Moncton Flooring',
+            description: 'LVP flooring - kitchen & basement',
+            categoryCode: 'FL',
+            amount: 6500,
+            poNumber: 'PO-2025-R003',
+            expectedDelivery: '2025-05-01',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-rc004',
+            date: '2025-03-28',
+            vendor: 'CGC Drywall',
+            description: 'Drywall for basement & repairs',
+            categoryCode: 'DW',
+            amount: 2800,
+            poNumber: 'PO-2025-R004',
+            expectedDelivery: '2025-04-05',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-rc005',
+            date: '2025-04-01',
+            vendor: 'Sherwin-Williams',
+            description: 'Paint package - full house',
+            categoryCode: 'PT',
+            amount: 4200,
+            poNumber: 'PO-2025-R005',
+            expectedDelivery: '2025-05-10',
+            status: 'ordered',
+          },
+          {
+            id: 'mat-rc006',
+            date: '2025-04-01',
+            vendor: 'ProSource Wholesale',
+            description: 'Bathroom vanities & fixtures',
+            categoryCode: 'FC',
+            amount: 5000,
+            poNumber: 'PO-2025-R006',
+            expectedDelivery: '2025-04-25',
+            status: 'ordered',
+          },
+        ],
+      },
+
+      // Subcontractor Expenses (labor + material combined)
+      subcontractor: {
+        budget: 25000,
+        spent: 0,
+        committed: 0,
+        entries: [],
+      },
+    },
+
     estimate_breakdown: [
       { room: 'kitchen', tier: 'full', low: 45000, high: 65000 },
       { room: 'primary_bath', tier: 'full', low: 25000, high: 35000 },
@@ -1237,8 +1640,200 @@ export const mockTodayTasks = [];
 // TIME ENTRIES - Full time tracking system
 // =============================================================================
 
-// Start with empty time entries - users will populate via clock in/out
-const defaultTimeEntries = [];
+// Team member hourly rates (matches Team.jsx MOCK_EMPLOYEES)
+export const TEAM_HOURLY_RATES = {
+  'emp-001': { name: 'Nathan Henderson', role: 'administrator', hourlyRate: 75 },
+  'emp-002': { name: 'Lisa Chen', role: 'manager', hourlyRate: 55 },
+  'emp-003': { name: 'Mike Sullivan', role: 'foreman', hourlyRate: 48 },
+  'emp-004': { name: 'Joe Martinez', role: 'carpenter', hourlyRate: 42 },
+  'emp-005': { name: 'Tyler Brooks', role: 'apprentice', hourlyRate: 28 },
+  'emp-006': { name: 'Sam Wilson', role: 'labourer', hourlyRate: 24 },
+};
+
+// Demo time entries linked to projects - Start with some historical data
+// Export so expenses lib can access labor entries
+export const demoTimeEntries = [
+  // Henderson Family New Construction - proj-nc-001
+  {
+    id: 'te-demo-001',
+    taskId: null,
+    taskName: 'Framing → Wall Framing → Main Floor Exterior',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson Family - 45 Riverside Drive',
+    categoryCode: 'FI',
+    subcategoryCode: 'FI-01',
+    userId: 'emp-004',
+    userName: 'Joe Martinez',
+    hourlyRate: 42,
+    startTime: '2025-06-10T08:00:00Z',
+    endTime: '2025-06-10T16:30:00Z',
+    durationMinutes: 510,
+    laborCost: 357, // 8.5 hrs * $42
+    notes: 'Completed main floor exterior wall framing',
+    billable: true,
+    isManual: false,
+  },
+  {
+    id: 'te-demo-002',
+    taskId: null,
+    taskName: 'Framing → Wall Framing → Second Floor',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson Family - 45 Riverside Drive',
+    categoryCode: 'FI',
+    subcategoryCode: 'FI-01',
+    userId: 'emp-004',
+    userName: 'Joe Martinez',
+    hourlyRate: 42,
+    startTime: '2025-06-11T08:00:00Z',
+    endTime: '2025-06-11T16:00:00Z',
+    durationMinutes: 480,
+    laborCost: 336, // 8 hrs * $42
+    notes: 'Started second floor framing',
+    billable: true,
+    isManual: false,
+  },
+  {
+    id: 'te-demo-003',
+    taskId: null,
+    taskName: 'Framing → Wall Framing',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson Family - 45 Riverside Drive',
+    categoryCode: 'FI',
+    subcategoryCode: 'FI-01',
+    userId: 'emp-005',
+    userName: 'Ty Brooks',
+    hourlyRate: 28,
+    startTime: '2025-06-11T08:00:00Z',
+    endTime: '2025-06-11T15:30:00Z',
+    durationMinutes: 450,
+    laborCost: 210, // 7.5 hrs * $28
+    notes: 'Assisted with framing',
+    billable: true,
+    isManual: false,
+  },
+  {
+    id: 'te-demo-004',
+    taskId: null,
+    taskName: 'Electrical → Rough-In → Main Panel',
+    projectId: 'proj-nc-001',
+    projectName: 'Henderson Family - 45 Riverside Drive',
+    categoryCode: 'EL',
+    subcategoryCode: 'EL-01',
+    userId: 'emp-003',
+    userName: 'Mike Sullivan',
+    hourlyRate: 48,
+    startTime: '2025-06-12T09:00:00Z',
+    endTime: '2025-06-12T14:00:00Z',
+    durationMinutes: 300,
+    laborCost: 240, // 5 hrs * $48
+    notes: 'Coordinated with electrician on panel location',
+    billable: true,
+    isManual: false,
+  },
+
+  // MacDonald Renovation - proj-reno-001
+  {
+    id: 'te-demo-005',
+    taskId: null,
+    taskName: 'Demo → Kitchen Demo',
+    projectId: 'proj-reno-001',
+    projectName: 'MacDonald Renovation - 78 King Street',
+    categoryCode: 'DM',
+    subcategoryCode: null,
+    userId: 'emp-006',
+    userName: 'Sam Wilson',
+    hourlyRate: 24,
+    startTime: '2025-02-03T08:00:00Z',
+    endTime: '2025-02-03T16:00:00Z',
+    durationMinutes: 480,
+    laborCost: 192, // 8 hrs * $24
+    notes: 'Kitchen demo day 1 - cabinets and counters removed',
+    billable: true,
+    isManual: false,
+  },
+  {
+    id: 'te-demo-006',
+    taskId: null,
+    taskName: 'Demo → Kitchen Demo',
+    projectId: 'proj-reno-001',
+    projectName: 'MacDonald Renovation - 78 King Street',
+    categoryCode: 'DM',
+    subcategoryCode: null,
+    userId: 'emp-006',
+    userName: 'Sam Wilson',
+    hourlyRate: 24,
+    startTime: '2025-02-04T08:00:00Z',
+    endTime: '2025-02-04T16:00:00Z',
+    durationMinutes: 480,
+    laborCost: 192, // 8 hrs * $24
+    notes: 'Kitchen demo day 2 - flooring and disposal',
+    billable: true,
+    isManual: false,
+  },
+  {
+    id: 'te-demo-007',
+    taskId: null,
+    taskName: 'Framing → Kitchen Wall Modifications',
+    projectId: 'proj-reno-001',
+    projectName: 'MacDonald Renovation - 78 King Street',
+    categoryCode: 'FI',
+    subcategoryCode: 'FI-01',
+    userId: 'emp-004',
+    userName: 'Joe Martinez',
+    hourlyRate: 42,
+    startTime: '2025-02-05T08:00:00Z',
+    endTime: '2025-02-05T14:00:00Z',
+    durationMinutes: 360,
+    laborCost: 252, // 6 hrs * $42
+    notes: 'Opened wall between kitchen and dining room',
+    billable: true,
+    isManual: false,
+  },
+  {
+    id: 'te-demo-008',
+    taskId: null,
+    taskName: 'Electrical → Panel Upgrade',
+    projectId: 'proj-reno-001',
+    projectName: 'MacDonald Renovation - 78 King Street',
+    categoryCode: 'EL',
+    subcategoryCode: 'EL-01',
+    userId: 'emp-003',
+    userName: 'Mike Sullivan',
+    hourlyRate: 48,
+    startTime: '2025-02-06T10:00:00Z',
+    endTime: '2025-02-06T14:00:00Z',
+    durationMinutes: 240,
+    laborCost: 192, // 4 hrs * $48
+    notes: 'Supervised electrician for panel upgrade',
+    billable: true,
+    isManual: false,
+  },
+
+  // Shop time example
+  {
+    id: 'te-demo-009',
+    taskId: null,
+    taskName: 'Finish Carpentry → Cabinet Prep',
+    projectId: 'shop',
+    projectName: 'Shop',
+    categoryCode: 'FC',
+    subcategoryCode: null,
+    userId: 'emp-004',
+    userName: 'Joe Martinez',
+    hourlyRate: 42,
+    startTime: '2025-06-09T08:00:00Z',
+    endTime: '2025-06-09T12:00:00Z',
+    durationMinutes: 240,
+    laborCost: 168, // 4 hrs * $42
+    notes: 'Prepped cabinet trim pieces for Henderson project',
+    billable: false,
+    isManual: true,
+    isShop: true,
+  },
+];
+
+// Use demo time entries when demo data is enabled
+const defaultTimeEntries = LOAD_DEMO_DATA ? demoTimeEntries : [];
 
 // Load time entries from storage
 export const mockTimeEntries = loadFromStorage(STORAGE_KEYS.timeEntries, defaultTimeEntries);

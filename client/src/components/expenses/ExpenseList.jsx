@@ -12,12 +12,14 @@ import {
   Edit2,
   Trash,
   Store,
+  Clock,
 } from 'lucide-react';
 import { EXPENSE_CATEGORIES, formatCurrency, formatDate, deleteExpense } from '../../lib/expenses';
 
 const CATEGORY_ICONS = {
   materials: Package,
-  labor: Users,
+  labor: Clock,
+  subcontractor: Users,
   equipment: Truck,
   permits: FileText,
   delivery: MapPin,
@@ -25,12 +27,24 @@ const CATEGORY_ICONS = {
   other: MoreHorizontal,
 };
 
+// Format duration in minutes to readable string
+function formatDuration(minutes) {
+  if (!minutes) return '';
+  const hrs = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (hrs === 0) return `${mins}m`;
+  if (mins === 0) return `${hrs}h`;
+  return `${hrs}h ${mins}m`;
+}
+
 function ExpenseRow({ expense, onDelete, onEdit }) {
   const [expanded, setExpanded] = useState(false);
   const Icon = CATEGORY_ICONS[expense.category] || Package;
   const category = EXPENSE_CATEGORIES.find(c => c.id === expense.category);
+  const isEmbedded = expense.isEmbedded; // Embedded expenses from project data
 
   const handleDelete = () => {
+    if (isEmbedded) return; // Can't delete embedded expenses
     if (window.confirm('Delete this expense?')) {
       deleteExpense(expense.id);
       onDelete(expense.id);
@@ -45,7 +59,8 @@ function ExpenseRow({ expense, onDelete, onEdit }) {
       >
         <div className={`p-2 rounded-lg ${
           expense.category === 'materials' ? 'bg-blue-100 text-blue-600' :
-          expense.category === 'labor' ? 'bg-purple-100 text-purple-600' :
+          expense.category === 'labor' ? 'bg-emerald-100 text-emerald-600' :
+          expense.category === 'subcontractor' ? 'bg-purple-100 text-purple-600' :
           expense.category === 'equipment' ? 'bg-amber-100 text-amber-600' :
           expense.category === 'permits' ? 'bg-green-100 text-green-600' :
           'bg-gray-100 text-gray-600'
@@ -61,6 +76,12 @@ function ExpenseRow({ expense, onDelete, onEdit }) {
               <>
                 <span>•</span>
                 <span>{expense.vendor}</span>
+              </>
+            )}
+            {expense.isLabor && expense.durationMinutes && (
+              <>
+                <span>•</span>
+                <span>{formatDuration(expense.durationMinutes)}</span>
               </>
             )}
           </div>
@@ -81,20 +102,50 @@ function ExpenseRow({ expense, onDelete, onEdit }) {
       {expanded && (
         <div className="px-4 pb-3 pl-14 space-y-2">
           <div className="grid grid-cols-2 gap-4 text-sm">
-            {expense.vendor && (
+            {expense.vendor && !expense.isLabor && (
               <div>
                 <span className="text-gray-500">Vendor:</span>
                 <span className="ml-2 text-charcoal">{expense.vendor}</span>
               </div>
             )}
-            <div>
-              <span className="text-gray-500">Payment:</span>
-              <span className="ml-2 text-charcoal capitalize">{expense.paymentMethod?.replace('_', ' ')}</span>
-            </div>
+            {expense.isLabor && (
+              <>
+                <div>
+                  <span className="text-gray-500">Worker:</span>
+                  <span className="ml-2 text-charcoal">{expense.vendor}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Duration:</span>
+                  <span className="ml-2 text-charcoal">{formatDuration(expense.durationMinutes)}</span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Rate:</span>
+                  <span className="ml-2 text-charcoal">${expense.hourlyRate}/hr</span>
+                </div>
+              </>
+            )}
+            {expense.invoiceNumber && (
+              <div>
+                <span className="text-gray-500">Invoice #:</span>
+                <span className="ml-2 text-charcoal">{expense.invoiceNumber}</span>
+              </div>
+            )}
+            {expense.paymentMethod && (
+              <div>
+                <span className="text-gray-500">Payment:</span>
+                <span className="ml-2 text-charcoal capitalize">{expense.paymentMethod?.replace('_', ' ')}</span>
+              </div>
+            )}
             {expense.receiptRef && (
               <div>
                 <span className="text-gray-500">Receipt #:</span>
                 <span className="ml-2 text-charcoal">{expense.receiptRef}</span>
+              </div>
+            )}
+            {expense.categoryCode && (
+              <div>
+                <span className="text-gray-500">Work Category:</span>
+                <span className="ml-2 text-charcoal">{expense.categoryCode}</span>
               </div>
             )}
           </div>
@@ -103,28 +154,36 @@ function ExpenseRow({ expense, onDelete, onEdit }) {
               {expense.notes}
             </p>
           )}
-          <div className="flex items-center gap-2 pt-2">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit?.(expense);
-              }}
-              className="flex items-center gap-1 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <Edit2 className="w-3 h-3" />
-              Edit
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete();
-              }}
-              className="flex items-center gap-1 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              <Trash className="w-3 h-3" />
-              Delete
-            </button>
-          </div>
+          {/* Only show edit/delete for manual expenses, not embedded ones */}
+          {!isEmbedded && (
+            <div className="flex items-center gap-2 pt-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit?.(expense);
+                }}
+                className="flex items-center gap-1 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <Edit2 className="w-3 h-3" />
+                Edit
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete();
+                }}
+                className="flex items-center gap-1 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <Trash className="w-3 h-3" />
+                Delete
+              </button>
+            </div>
+          )}
+          {isEmbedded && (
+            <p className="text-xs text-gray-400 italic pt-2">
+              {expense.isLabor ? 'From time tracking' : 'From project materials'}
+            </p>
+          )}
         </div>
       )}
     </div>

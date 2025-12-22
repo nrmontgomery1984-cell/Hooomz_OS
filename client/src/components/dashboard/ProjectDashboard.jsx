@@ -53,16 +53,9 @@ function CollapsibleSection({ title, icon: Icon, badge, defaultExpanded = false,
  * Central command center for contractors managing renovation
  * and new construction projects.
  *
- * Layout (Mobile):
- * - Header (full width, compact)
- * - Collapsible sections for each area
- *
- * Layout (Desktop):
- * - Header (full width)
- * - Grid: Client | Budget
- * - Grid: Schedule | Scope
- * - Action Items (full width)
- * - Grid: Team | Activity
+ * Layout adapts based on project phase:
+ * - Early phases (intake/estimating): Simplified view focused on client + estimate
+ * - Later phases: Full dashboard with budget, schedule, scope tracking
  *
  * @param {Object} dashboardData - Transformed dashboard data
  * @param {Object} project - Full project object (for phase transitions)
@@ -81,6 +74,15 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
     team,
     activities,
   } = dashboardData;
+
+  // Determine if this is an early-phase project (less data to show)
+  const isEarlyPhase = ['intake', 'estimating', 'estimate'].includes(header.phase?.toLowerCase());
+
+  // Check if we have meaningful data to show
+  const hasEstimate = budget.estimatedTotal > 0 || budget.contractValue > 0;
+  const hasSchedule = schedule.targetCompletion;
+  const hasScope = scope.rooms?.length > 0;
+  const hasTeam = team.teamMembers?.length > 0 || team.subcontractors?.length > 0;
 
   // Action handlers
   const handleHeaderAction = (action) => {
@@ -146,7 +148,7 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
         viewMode={viewMode}
       />
 
-      {/* Mobile Layout: Collapsible Sections */}
+      {/* Mobile Layout: Collapsible Sections - Adaptive based on phase */}
       <div className="lg:hidden space-y-2">
         {/* Action Items - Always visible if urgent */}
         {hasUrgentActions && (
@@ -165,18 +167,20 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
           </CollapsibleSection>
         )}
 
-        {/* Quick Stats Row */}
-        <div className="grid grid-cols-2 gap-2">
-          <BudgetSummaryCard budget={budget} />
-          <ScheduleSummaryCard schedule={schedule} />
-        </div>
+        {/* Quick Stats Row - only show if we have data */}
+        {(hasEstimate || hasSchedule) && (
+          <div className="grid grid-cols-2 gap-2">
+            <BudgetSummaryCard budget={budget} />
+            <ScheduleSummaryCard schedule={schedule} />
+          </div>
+        )}
 
-        {/* Client Section */}
+        {/* Client Section - always show, expanded by default for early phase */}
         <CollapsibleSection
           title="Client"
           icon={User}
           badge={pendingDecisionsCount > 0 ? `${pendingDecisionsCount} pending` : null}
-          defaultExpanded={pendingDecisionsCount > 0}
+          defaultExpanded={isEarlyPhase || pendingDecisionsCount > 0}
         >
           <ClientCard
             clientData={client}
@@ -184,42 +188,48 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
           />
         </CollapsibleSection>
 
-        {/* Budget Section */}
-        <CollapsibleSection
-          title="Budget Details"
-          icon={DollarSign}
-          defaultExpanded={false}
-        >
-          <BudgetTracker
-            budget={budget}
-            onAddChangeOrder={handleAddChangeOrder}
-            onViewChangeOrder={handleViewChangeOrder}
-          />
-        </CollapsibleSection>
+        {/* Budget Section - only show if we have estimate data */}
+        {hasEstimate && (
+          <CollapsibleSection
+            title="Budget Details"
+            icon={DollarSign}
+            defaultExpanded={false}
+          >
+            <BudgetTracker
+              budget={budget}
+              onAddChangeOrder={handleAddChangeOrder}
+              onViewChangeOrder={handleViewChangeOrder}
+            />
+          </CollapsibleSection>
+        )}
 
-        {/* Schedule Section */}
-        <CollapsibleSection
-          title="Schedule"
-          icon={Calendar}
-          defaultExpanded={false}
-        >
-          <ScheduleSnapshot schedule={schedule} />
-        </CollapsibleSection>
+        {/* Schedule Section - only show if we have schedule data */}
+        {hasSchedule && (
+          <CollapsibleSection
+            title="Schedule"
+            icon={Calendar}
+            defaultExpanded={false}
+          >
+            <ScheduleSnapshot schedule={schedule} />
+          </CollapsibleSection>
+        )}
 
-        {/* Scope Section */}
-        <CollapsibleSection
-          title="Scope"
-          icon={ClipboardList}
-          defaultExpanded={false}
-        >
-          <ScopeSummary
-            scope={scope}
-            onViewFullScope={handleViewFullScope}
-          />
-        </CollapsibleSection>
+        {/* Scope Section - only show if we have scope data */}
+        {hasScope && (
+          <CollapsibleSection
+            title="Scope"
+            icon={ClipboardList}
+            defaultExpanded={false}
+          >
+            <ScopeSummary
+              scope={scope}
+              onViewFullScope={handleViewFullScope}
+            />
+          </CollapsibleSection>
+        )}
 
-        {/* Action Items - Show if not urgent (collapsed) */}
-        {!hasUrgentActions && (
+        {/* Action Items - Show if not urgent (collapsed) - skip for early phase with no actions */}
+        {!hasUrgentActions && !isEarlyPhase && (
           <CollapsibleSection
             title="Action Items"
             icon={AlertTriangle}
@@ -234,20 +244,22 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
           </CollapsibleSection>
         )}
 
-        {/* Team Section */}
-        <CollapsibleSection
-          title="Team"
-          icon={Users}
-          defaultExpanded={false}
-        >
-          <TeamSection team={team} />
-        </CollapsibleSection>
+        {/* Team Section - only show if we have team members */}
+        {hasTeam && (
+          <CollapsibleSection
+            title="Team"
+            icon={Users}
+            defaultExpanded={false}
+          >
+            <TeamSection team={team} />
+          </CollapsibleSection>
+        )}
 
-        {/* Activity Section */}
+        {/* Activity Section - always show */}
         <CollapsibleSection
           title="Activity"
           icon={Activity}
-          defaultExpanded={false}
+          defaultExpanded={isEarlyPhase}
         >
           <DashboardActivityFeed
             activities={activities}
@@ -256,46 +268,89 @@ export function ProjectDashboard({ dashboardData, project, onAction, onPhaseTran
         </CollapsibleSection>
       </div>
 
-      {/* Desktop Layout: Grid */}
+      {/* Desktop Layout: Adaptive based on phase */}
       <div className="hidden lg:block space-y-4">
-        {/* Row 1: Client + Budget */}
-        <div className="grid grid-cols-2 gap-4">
-          <ClientCard
-            clientData={client}
-            onRequestDecision={handleRequestDecision}
-          />
-          <BudgetTracker
-            budget={budget}
-            onAddChangeOrder={handleAddChangeOrder}
-            onViewChangeOrder={handleViewChangeOrder}
-          />
-        </div>
+        {/* Early Phase: Simplified layout focused on getting started */}
+        {isEarlyPhase ? (
+          <>
+            {/* Primary: Client info - full width for emphasis */}
+            <ClientCard
+              clientData={client}
+              onRequestDecision={handleRequestDecision}
+            />
 
-        {/* Row 2: Schedule + Scope */}
-        <div className="grid grid-cols-2 gap-4">
-          <ScheduleSnapshot schedule={schedule} />
-          <ScopeSummary
-            scope={scope}
-            onViewFullScope={handleViewFullScope}
-          />
-        </div>
+            {/* Quick Stats Row - only show if we have data */}
+            {(hasEstimate || hasSchedule) && (
+              <div className="grid grid-cols-2 gap-4">
+                {hasEstimate && (
+                  <BudgetTracker
+                    budget={budget}
+                    onAddChangeOrder={handleAddChangeOrder}
+                    onViewChangeOrder={handleViewChangeOrder}
+                  />
+                )}
+                {hasSchedule && <ScheduleSnapshot schedule={schedule} />}
+                {!hasSchedule && hasScope && (
+                  <ScopeSummary
+                    scope={scope}
+                    onViewFullScope={handleViewFullScope}
+                  />
+                )}
+              </div>
+            )}
 
-        {/* Action Items - Full Width */}
-        <ActionItems
-          actionItems={actionItems}
-          onResolveBlocker={handleResolveBlocker}
-          onCompleteTask={handleCompleteTask}
-          onApprove={handleApprove}
-        />
+            {/* Activity - keep users informed of what's happening */}
+            <DashboardActivityFeed
+              activities={activities}
+              onAddNote={handleAddNote}
+            />
+          </>
+        ) : (
+          <>
+            {/* Full Phase: Complete dashboard */}
+            {/* Row 1: Client + Budget */}
+            <div className="grid grid-cols-2 gap-4">
+              <ClientCard
+                clientData={client}
+                onRequestDecision={handleRequestDecision}
+              />
+              <BudgetTracker
+                budget={budget}
+                onAddChangeOrder={handleAddChangeOrder}
+                onViewChangeOrder={handleViewChangeOrder}
+              />
+            </div>
 
-        {/* Row 3: Team + Activity */}
-        <div className="grid grid-cols-2 gap-4">
-          <TeamSection team={team} />
-          <DashboardActivityFeed
-            activities={activities}
-            onAddNote={handleAddNote}
-          />
-        </div>
+            {/* Row 2: Schedule + Scope */}
+            <div className="grid grid-cols-2 gap-4">
+              <ScheduleSnapshot schedule={schedule} />
+              <ScopeSummary
+                scope={scope}
+                onViewFullScope={handleViewFullScope}
+              />
+            </div>
+
+            {/* Action Items - Full Width */}
+            {(actionItems.blockers.length > 0 || actionItems.overdueTasks.length > 0 || actionItems.todayTasks?.length > 0) && (
+              <ActionItems
+                actionItems={actionItems}
+                onResolveBlocker={handleResolveBlocker}
+                onCompleteTask={handleCompleteTask}
+                onApprove={handleApprove}
+              />
+            )}
+
+            {/* Row 3: Team + Activity */}
+            <div className="grid grid-cols-2 gap-4">
+              {hasTeam && <TeamSection team={team} />}
+              <DashboardActivityFeed
+                activities={activities}
+                onAddNote={handleAddNote}
+                className={!hasTeam ? 'col-span-2' : ''}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

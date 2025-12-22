@@ -16,6 +16,7 @@ export function ScheduleSnapshot({ schedule }) {
     upcomingMilestones,
   } = schedule;
 
+  const hasSchedule = targetCompletion;
   const daysToTarget = daysUntil(targetCompletion);
 
   return (
@@ -36,37 +37,51 @@ export function ScheduleSnapshot({ schedule }) {
             <Target className="w-3 h-3" />
             Target
           </div>
-          <p className="font-medium text-charcoal">{formatDate(targetCompletion, 'long')}</p>
-          <p className="text-xs text-gray-500">{daysToTarget}d remaining</p>
+          {hasSchedule ? (
+            <>
+              <p className="font-medium text-charcoal">{formatDate(targetCompletion, 'long')}</p>
+              <p className="text-xs text-gray-500">{daysToTarget}d remaining</p>
+            </>
+          ) : (
+            <p className="text-sm text-gray-400">Not set</p>
+          )}
         </div>
         <div className={`
           p-2 rounded-lg
-          ${slippageDays > 7
-            ? 'bg-red-50'
-            : slippageDays > 0
-              ? 'bg-amber-50'
-              : 'bg-emerald-50'
+          ${!hasSchedule
+            ? 'bg-gray-50'
+            : slippageDays > 7
+              ? 'bg-red-50'
+              : slippageDays > 0
+                ? 'bg-amber-50'
+                : 'bg-emerald-50'
           }
         `}>
           <div className="flex items-center gap-1 text-xs text-gray-500 mb-1">
             <Clock className="w-3 h-3" />
             Projected
           </div>
-          <p className="font-medium text-charcoal">{formatDate(currentCompletion, 'long')}</p>
-          {slippageDays !== 0 && (
-            <p className={`text-xs font-medium flex items-center gap-1 ${slippageDays > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
-              {slippageDays > 0 ? (
-                <>
-                  <TrendingDown className="w-3 h-3" />
-                  {slippageDays}d behind
-                </>
-              ) : (
-                <>
-                  <TrendingUp className="w-3 h-3" />
-                  {Math.abs(slippageDays)}d ahead
-                </>
+          {hasSchedule ? (
+            <>
+              <p className="font-medium text-charcoal">{formatDate(currentCompletion, 'long')}</p>
+              {slippageDays !== 0 && (
+                <p className={`text-xs font-medium flex items-center gap-1 ${slippageDays > 0 ? 'text-red-600' : 'text-emerald-600'}`}>
+                  {slippageDays > 0 ? (
+                    <>
+                      <TrendingDown className="w-3 h-3" />
+                      {slippageDays}d behind
+                    </>
+                  ) : (
+                    <>
+                      <TrendingUp className="w-3 h-3" />
+                      {Math.abs(slippageDays)}d ahead
+                    </>
+                  )}
+                </p>
               )}
-            </p>
+            </>
+          ) : (
+            <p className="text-sm text-gray-400">Not set</p>
           )}
         </div>
       </div>
@@ -137,6 +152,7 @@ function PhaseBar({ phase }) {
  * ScheduleSummaryCard - Compact schedule display
  */
 export function ScheduleSummaryCard({ schedule }) {
+  const hasSchedule = schedule.targetCompletion;
   const daysRemaining = daysUntil(schedule.targetCompletion);
   const isDelayed = schedule.slippageDays > 0;
 
@@ -144,14 +160,14 @@ export function ScheduleSummaryCard({ schedule }) {
     <div className="p-2 bg-white border border-gray-200 rounded-lg min-w-0">
       <div className="flex items-center justify-between mb-1">
         <span className="text-xs text-gray-500">Schedule</span>
-        {isDelayed && (
+        {isDelayed && hasSchedule && (
           <span className="text-xs text-red-600 font-medium">
             {schedule.slippageDays}d late
           </span>
         )}
       </div>
       <p className="text-sm font-medium text-charcoal truncate">
-        {daysRemaining > 0 ? `${daysRemaining}d left` : 'Passed'}
+        {!hasSchedule ? 'Not set' : daysRemaining > 0 ? `${daysRemaining}d left` : 'Passed'}
       </p>
     </div>
   );

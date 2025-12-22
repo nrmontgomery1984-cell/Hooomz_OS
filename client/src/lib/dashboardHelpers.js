@@ -31,10 +31,12 @@ export function daysSince(date) {
 /**
  * Calculate days until a date (from today)
  * @param {string|Date} date
- * @returns {number} Negative if in the past
+ * @returns {number} Negative if in the past, 0 if no date
  */
 export function daysUntil(date) {
+  if (!date) return 0;
   const target = new Date(date);
+  if (isNaN(target.getTime())) return 0;
   const today = new Date();
   const diffTime = target - today;
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -304,16 +306,26 @@ export function createDashboardFromProject(project) {
     daysSinceContact: daysSince(project.updated_at || project.created_at),
   };
 
-  // Budget - use rich data if available
+  // Budget - use expenses data if available, fallback to project-level spent
+  const expensesData = project.expenses || {};
+  const totalSpent = expensesData.total_spent || project.spent || 0;
+  const totalCommitted = expensesData.total_committed || project.committed || 0;
+  const contractValue = project.contract_value || project.estimate_high || 0;
+
   const budget = {
     estimatedTotal: project.estimate_high || 0,
-    contractValue: project.contract_value || project.estimate_high || 0,
-    totalSpent: project.spent || 0,
-    totalCommitted: project.committed || 0,
-    totalRemaining: (project.contract_value || project.estimate_high || 0) - (project.spent || 0) - (project.committed || 0),
+    contractValue: contractValue,
+    totalSpent: totalSpent,
+    totalCommitted: totalCommitted,
+    totalRemaining: contractValue - totalSpent - totalCommitted,
     changeOrders: dashData.changeOrders || [],
     marginTarget: 20,
-    currentMargin: project.spent > 0 ? 18.5 : 20, // Simulated margin compression
+    currentMargin: totalSpent > 0 ? 18.5 : 20, // Simulated margin compression
+    // Labor and material breakdown from expenses
+    laborSpent: expensesData.labor?.spent || 0,
+    laborBudget: expensesData.labor?.budget || 0,
+    materialSpent: expensesData.material?.spent || 0,
+    materialBudget: expensesData.material?.budget || 0,
     costsByCategory: project.estimate_breakdown?.map(b => ({
       category: formatRoomName(b.room),
       budgeted: b.high || 0,

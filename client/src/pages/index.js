@@ -31,6 +31,10 @@ export { Profile } from './Profile';
 export { Intake } from './Intake';
 export { ContractorIntake } from './ContractorIntake';
 
+// People
+export { Team } from './Team';
+export { EmployeeProfile } from './EmployeeProfile';
+
 // Settings & Tools
 export { CostCatalogue } from './CostCatalogue';
 export { Settings } from './Settings';

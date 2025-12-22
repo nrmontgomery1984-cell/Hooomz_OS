@@ -20,24 +20,36 @@ import {
   Clock,
   Shield,
   Briefcase,
-  Wrench,
+  Hammer,
   User,
+  Users,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
 import { useDevAuth } from '../../hooks/useDevAuth';
 import { ROLES } from '../../lib/devData';
+import { mockProjects } from '../../services/mockData';
+
+// Map project phase to nav path
+const PHASE_TO_NAV = {
+  intake: '/sales',
+  estimating: '/estimates',
+  approval: '/estimates',
+  contracted: '/contracts',
+  active: '/production',
+  complete: '/completed',
+};
 
 // Check if nav item should be active based on current path
 // Handles project subpages like /projects/xxx/estimate -> Estimates
-const checkIsActive = (to, pathname) => {
+const checkIsActive = (to, pathname, projectPhase = null) => {
   // Exact match for root
   if (to === '/') return pathname === '/';
 
   // Direct match
   if (pathname === to || pathname.startsWith(to + '/')) return true;
 
-  // Project page matching - highlight appropriate nav based on URL
+  // Project page matching - highlight appropriate nav based on URL subpage or phase
   if (pathname.includes('/projects/')) {
     // Estimate builder page
     if (pathname.includes('/estimate')) {
@@ -51,9 +63,11 @@ const checkIsActive = (to, pathname) => {
     if (pathname.includes('/quote')) {
       return to === '/estimates';
     }
-    // Main project dashboard - highlight Estimates as default
-    // (Most project work happens in the estimating/quoting phase)
-    return to === '/estimates';
+    // Main project view - highlight based on project's current phase
+    if (projectPhase && PHASE_TO_NAV[projectPhase]) {
+      return to === PHASE_TO_NAV[projectPhase];
+    }
+    return false;
   }
 
   return false;
@@ -93,6 +107,12 @@ const navSections = [
     ],
   },
   {
+    label: 'People',
+    items: [
+      { to: '/team', icon: Users, label: 'Team' },
+    ],
+  },
+  {
     label: 'Tools',
     items: [
       { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue' },
@@ -107,7 +127,7 @@ const ROLE_ICONS = {
   administrator: Shield,
   manager: Briefcase,
   foreman: HardHat,
-  tradesperson: Wrench,
+  carpenter: Hammer,
   apprentice: GraduationCap,
   labourer: User,
   homeowner: Home,
@@ -144,7 +164,7 @@ const getPersonaConfig = (role) => {
 };
 
 // Roles to show in the persona switcher (internal team roles only)
-const SWITCHABLE_ROLES = ['administrator', 'manager', 'foreman', 'tradesperson', 'apprentice', 'labourer'];
+const SWITCHABLE_ROLES = ['administrator', 'manager', 'foreman', 'carpenter', 'apprentice', 'labourer'];
 
 export function Sidebar() {
   const location = useLocation();
@@ -152,6 +172,17 @@ export function Sidebar() {
   const [showSearch, setShowSearch] = useState(false);
   const [showPersonaDropdown, setShowPersonaDropdown] = useState(false);
   const { currentPersona, switchPersona } = useDevAuth();
+
+  // Get current project's phase if we're on a project page
+  const currentProjectPhase = (() => {
+    const projectMatch = pathname.match(/\/projects\/([^/]+)/);
+    if (projectMatch) {
+      const projectId = projectMatch[1];
+      const project = mockProjects.find(p => p.id === projectId);
+      return project?.phase || null;
+    }
+    return null;
+  })();
 
   const currentConfig = getPersonaConfig(currentPersona?.role || 'administrator');
   const CurrentIcon = currentConfig.icon;
@@ -250,7 +281,7 @@ export function Sidebar() {
             </h3>
             <div className="space-y-1">
               {section.items.map(({ to, icon: Icon, label }) => {
-                const isActive = checkIsActive(to, pathname);
+                const isActive = checkIsActive(to, pathname, currentProjectPhase);
                 return (
                   <NavLink
                     key={to}

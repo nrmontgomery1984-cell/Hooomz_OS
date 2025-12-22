@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package, Layers, Eye, EyeOff, Map } from 'lucide-react';
+import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package, Layers, Eye, EyeOff, Map, FileText } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button } from '../components/ui';
-import { ProjectDashboard, PhaseTransitionModal, AddChangeOrderModal, ChangeOrderDetailModal } from '../components/dashboard';
+import { ProjectDashboard, PhaseTransitionModal, AddChangeOrderModal, ChangeOrderDetailModal, DocumentChecklist } from '../components/dashboard';
 import { AddLoopModal, LoopsView } from '../components/loops';
 import { ActivityFeed, AddActivityModal } from '../components/activity';
 import { AddExpenseModal, ExpenseList, ExpenseSummary } from '../components/expenses';
@@ -244,7 +244,7 @@ export function ProjectView() {
     <PageContainer
       backTo={getBackLink()}
       title={project.name}
-      subtitle={`${project.client_name} • ${project.intake_type === 'new_construction' ? 'New Build' : 'Renovation'}`}
+      subtitle={`${project.client_name || 'Client TBD'} • ${project.intake_type === 'new_construction' ? 'New Build' : 'Renovation'}`}
       action={
         <button className="p-2 hover:bg-gray-100 rounded-md transition-colors">
           <MoreHorizontal className="w-5 h-5 text-gray-600" />
@@ -328,6 +328,17 @@ export function ProjectView() {
         >
           <Map className="w-4 h-4 flex-shrink-0" />
           <span className="hidden sm:inline">Floor Plans</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('documents')}
+          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'documents'
+              ? 'border-charcoal text-charcoal'
+              : 'border-transparent text-gray-500 active:text-charcoal'
+          }`}
+        >
+          <FileText className="w-4 h-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Documents</span>
         </button>
 
         {/* View Mode Toggle - right side */}
@@ -451,6 +462,22 @@ export function ProjectView() {
           <EstimatePanel
             project={project}
             onProjectUpdate={setProject}
+          />
+        </>
+      )}
+
+      {/* Documents View */}
+      {activeTab === 'documents' && (
+        <>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-charcoal">Document Checklist</h2>
+            <p className="text-sm text-gray-500">
+              Track required documents from intake through completion
+            </p>
+          </div>
+          <DocumentChecklist
+            projectId={projectId}
+            projectPhase={project.phase}
           />
         </>
       )}

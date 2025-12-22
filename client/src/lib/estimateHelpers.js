@@ -1867,8 +1867,14 @@ export function calculateEstimateTotals(lineItems, estimateType = 'both') {
     missingPricingItems: [],
   };
 
+  // Safety helper to ensure we're adding valid numbers
+  const safeNumber = (val) => {
+    const num = Number(val);
+    return isNaN(num) || !isFinite(num) ? 0 : num;
+  };
+
   lineItems.forEach((item) => {
-    const qty = item.quantity || 1;
+    const qty = safeNumber(item.quantity) || 1;
 
     // Check if item has actual materials/labor breakdown from catalogue
     const hasMaterialsCost = item.materialsCost !== undefined && item.materialsCost !== null;
@@ -1877,8 +1883,8 @@ export function calculateEstimateTotals(lineItems, estimateType = 'both') {
 
     if (hasActualBreakdown) {
       // Use actual catalogue data
-      const materialsCost = (item.materialsCost || 0) * qty;
-      const laborCost = (item.laborCost || 0) * qty;
+      const materialsCost = safeNumber(item.materialsCost) * qty;
+      const laborCost = safeNumber(item.laborCost) * qty;
 
       // Apply tier multipliers to labor (materials cost is fixed)
       // Good: standard labor rate
@@ -1932,9 +1938,9 @@ export function calculateEstimateTotals(lineItems, estimateType = 'both') {
         category: item.category,
       });
 
-      const goodPrice = (item.unitPriceGood || 0) * qty;
-      const betterPrice = (item.unitPriceBetter || 0) * qty;
-      const bestPrice = (item.unitPriceBest || 0) * qty;
+      const goodPrice = safeNumber(item.unitPriceGood) * qty;
+      const betterPrice = safeNumber(item.unitPriceBetter) * qty;
+      const bestPrice = safeNumber(item.unitPriceBest) * qty;
 
       if (estimateType === 'both') {
         // Full price for combined
@@ -2722,12 +2728,18 @@ function getCategoryFromScopeItem(scopeItemId) {
 export function calculateInstanceTotals(instances, assemblies, ceilingHeight, catalogueData) {
   const summary = summarizeInstances(instances, assemblies, ceilingHeight, catalogueData);
 
+  // Safety helper to ensure we're adding valid numbers
+  const safeNumber = (val) => {
+    const num = Number(val);
+    return isNaN(num) || !isFinite(num) ? 0 : num;
+  };
+
   let totalLabor = 0;
   let totalMaterials = 0;
 
   Object.values(summary).forEach(item => {
-    totalLabor += item.totalLabor;
-    totalMaterials += item.totalMaterials;
+    totalLabor += safeNumber(item.totalLabor);
+    totalMaterials += safeNumber(item.totalMaterials);
   });
 
   const baseCost = totalLabor + totalMaterials;

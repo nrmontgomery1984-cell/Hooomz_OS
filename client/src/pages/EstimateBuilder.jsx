@@ -12,7 +12,6 @@ import {
   AlertTriangle,
   ChevronDown,
   ChevronRight,
-  Calculator,
   FileText,
   Filter,
   Home,
@@ -31,7 +30,6 @@ import {
 } from 'lucide-react';
 import { Card, Button, Input, TextArea, useToast } from '../components/ui';
 import { usePermissions } from '../hooks/usePermissions';
-import { ContractorOnly, NotRole } from '../components/dev/PermissionGate';
 import {
   generateEstimateFromIntake,
   calculateEstimateTotals,
@@ -50,7 +48,7 @@ import { loadCatalogueData } from '../lib/costCatalogue';
 import { getProject, updateProject, updateProjectPhase } from '../services/api';
 import { SetupPanel, BulkAddMode, TallyMode, InstanceList } from '../components/estimate';
 import { AssemblyBuilder } from '../components/catalogue/AssemblyBuilder';
-import { AcceptanceCriteriaToggle, AcceptanceCriteriaDisplay } from '../components/estimates';
+import { AcceptanceCriteriaDisplay } from '../components/estimates';
 import { getBestMatchingCriteria } from '../data/acceptanceCriteria';
 
 /**
@@ -334,7 +332,16 @@ export function EstimateBuilder() {
       if (groupBy === 'trade') {
         groupKey = item.tradeName || TRADE_NAMES[item.tradeCode] || item.tradeCode || 'Other';
       } else {
-        groupKey = item.roomLabel || item.category || 'Other';
+        // When grouping by room, prioritize roomLabel, then check if category is a trade code
+        // that needs translation, otherwise use category as-is
+        if (item.roomLabel) {
+          groupKey = item.roomLabel;
+        } else if (item.category && TRADE_NAMES[item.category]) {
+          // Category is a trade code - translate it
+          groupKey = TRADE_NAMES[item.category];
+        } else {
+          groupKey = item.category || 'Other';
+        }
       }
       if (!groups[groupKey]) {
         groups[groupKey] = [];
@@ -600,205 +607,134 @@ export function EstimateBuilder() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content - Line Items */}
           <div className="lg:col-span-2 space-y-4">
-            {/* Estimate Type Selector */}
-            <Card className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-medium text-charcoal flex items-center gap-2">
-                  <Layers className="w-5 h-5" />
-                  Estimate Type
-                </h2>
-                <p className="text-sm text-gray-500">
-                  What to include in pricing
-                </p>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                <button
-                  onClick={() => canEdit && setEstimateType('both')}
-                  disabled={!canEdit}
-                  className={`
-                    p-3 rounded-lg border-2 text-left transition-all
-                    ${estimateType === 'both'
-                      ? 'border-charcoal bg-gray-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                    }
-                    ${!canEdit ? 'cursor-default' : ''}
-                  `}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-charcoal flex items-center gap-2">
-                      <Layers className="w-4 h-4" />
-                      Both
-                    </span>
-                    {estimateType === 'both' && (
-                      <Check className="w-4 h-4 text-charcoal" />
-                    )}
+            {/* Consolidated Settings Panel */}
+            {canEdit && (
+              <Card className="p-4">
+                <div className="flex flex-wrap items-center gap-4">
+                  {/* Estimate Type - Compact toggle */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500 font-medium">Include:</span>
+                    <div className="flex rounded-lg border border-gray-200 overflow-hidden">
+                      <button
+                        onClick={() => setEstimateType('both')}
+                        className={`px-2.5 py-1.5 text-xs flex items-center gap-1 ${
+                          estimateType === 'both'
+                            ? 'bg-charcoal text-white'
+                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Layers className="w-3 h-3" />
+                        Both
+                      </button>
+                      <button
+                        onClick={() => setEstimateType('materials')}
+                        className={`px-2.5 py-1.5 text-xs flex items-center gap-1 ${
+                          estimateType === 'materials'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Package className="w-3 h-3" />
+                        Materials
+                      </button>
+                      <button
+                        onClick={() => setEstimateType('labor')}
+                        className={`px-2.5 py-1.5 text-xs flex items-center gap-1 ${
+                          estimateType === 'labor'
+                            ? 'bg-amber-500 text-white'
+                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Hammer className="w-3 h-3" />
+                        Labor
+                      </button>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500">Materials + Labor</p>
-                </button>
 
-                <button
-                  onClick={() => canEdit && setEstimateType('materials')}
-                  disabled={!canEdit}
-                  className={`
-                    p-3 rounded-lg border-2 text-left transition-all
-                    ${estimateType === 'materials'
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                    }
-                    ${!canEdit ? 'cursor-default' : ''}
-                  `}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-charcoal flex items-center gap-2">
-                      <Package className="w-4 h-4" />
-                      Materials
-                    </span>
-                    {estimateType === 'materials' && (
-                      <Check className="w-4 h-4 text-blue-500" />
-                    )}
-                  </div>
-                  <p className="text-xs text-gray-500">Materials only</p>
-                </button>
+                  {/* Divider */}
+                  <div className="h-6 w-px bg-gray-200" />
 
-                <button
-                  onClick={() => canEdit && setEstimateType('labor')}
-                  disabled={!canEdit}
-                  className={`
-                    p-3 rounded-lg border-2 text-left transition-all
-                    ${estimateType === 'labor'
-                      ? 'border-amber-500 bg-amber-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                    }
-                    ${!canEdit ? 'cursor-default' : ''}
-                  `}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-charcoal flex items-center gap-2">
-                      <Hammer className="w-4 h-4" />
-                      Labor
-                    </span>
-                    {estimateType === 'labor' && (
-                      <Check className="w-4 h-4 text-amber-500" />
-                    )}
-                  </div>
-                  <p className="text-xs text-gray-500">Labor only</p>
-                </button>
-              </div>
-            </Card>
-
-            {/* Entry Mode Toggle */}
-            <Card className="p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-medium text-charcoal flex items-center gap-2">
-                    <Ruler className="w-5 h-5" />
-                    Entry Mode
-                  </h2>
-                  <p className="text-sm text-gray-500">
-                    How to enter measurements
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => setEntryMode('classic')}
-                    className={`
-                      p-3 rounded-lg border-2 text-left transition-all
-                      ${entryMode === 'classic'
-                        ? 'border-charcoal bg-gray-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                      }
-                    `}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-charcoal flex items-center gap-2">
-                        <FileText className="w-4 h-4" />
+                  {/* Entry Mode - Compact toggle */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500 font-medium">Mode:</span>
+                    <div className="flex rounded-lg border border-gray-200 overflow-hidden">
+                      <button
+                        onClick={() => setEntryMode('classic')}
+                        className={`px-2.5 py-1.5 text-xs flex items-center gap-1 ${
+                          entryMode === 'classic'
+                            ? 'bg-charcoal text-white'
+                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <FileText className="w-3 h-3" />
                         Classic
-                      </span>
-                      {entryMode === 'classic' && (
-                        <Check className="w-4 h-4 text-charcoal" />
-                      )}
-                    </div>
-                    <p className="text-xs text-gray-500">Line items with totals</p>
-                  </button>
-
-                  <button
-                    onClick={() => setEntryMode('instance')}
-                    className={`
-                      p-3 rounded-lg border-2 text-left transition-all
-                      ${entryMode === 'instance'
-                        ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                      }
-                    `}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-charcoal flex items-center gap-2">
-                        <Ruler className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => setEntryMode('instance')}
+                        className={`px-2.5 py-1.5 text-xs flex items-center gap-1 ${
+                          entryMode === 'instance'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-white text-gray-600 hover:bg-gray-50'
+                        }`}
+                      >
+                        <Ruler className="w-3 h-3" />
                         Instance
-                      </span>
-                      {entryMode === 'instance' && (
-                        <Check className="w-4 h-4 text-blue-500" />
-                      )}
+                      </button>
                     </div>
-                    <p className="text-xs text-gray-500">Bulk add by measurement</p>
-                  </button>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="h-6 w-px bg-gray-200" />
+
+                  {/* Acceptance Criteria Toggle - Compact */}
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={showAcceptanceCriteria}
+                      onChange={(e) => setShowAcceptanceCriteria(e.target.checked)}
+                      className="w-4 h-4 rounded border-gray-300 text-charcoal focus:ring-charcoal"
+                    />
+                    <span className="text-xs text-gray-600">Show specs</span>
+                  </label>
                 </div>
-            </Card>
+              </Card>
+            )}
 
-            {/* Acceptance Criteria Toggle */}
-            <AcceptanceCriteriaToggle
-              enabled={showAcceptanceCriteria}
-              onChange={setShowAcceptanceCriteria}
-            />
-
-            {/* Tier Selector */}
-            <Card className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-medium text-charcoal flex items-center gap-2">
-                  <Calculator className="w-5 h-5" />
-                  {effectiveViewMode === 'homeowner' ? 'Selected Package' : 'Build Tier'}
-                </h2>
-                {project.build_tier ? (
-                  <p className="text-sm text-gray-500">
-                    {effectiveViewMode === 'homeowner' ? 'Your selection:' : 'Selected by client:'} {formatSelectionLabel(project.build_tier)}
-                  </p>
-                ) : canEdit ? (
-                  <p className="text-sm text-gray-500">
-                    Select a tier for this estimate
-                  </p>
-                ) : null}
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                {Object.values(BUILD_TIERS).map((tier) => (
-                  <button
-                    key={tier.id}
-                    onClick={() => canEdit && setSelectedTier(tier.id)}
-                    disabled={!canEdit}
-                    className={`
-                      p-3 rounded-lg border-2 text-left transition-all
-                      ${selectedTier === tier.id
-                        ? 'border-charcoal bg-gray-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                      }
-                      ${!canEdit ? 'cursor-default' : ''}
-                    `}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-charcoal">{tier.label}</span>
-                      {selectedTier === tier.id && (
-                        <Check className="w-4 h-4 text-charcoal" />
-                      )}
-                    </div>
-                    <p className="text-xs text-gray-500">{tier.description}</p>
-                    <p className="text-sm font-medium text-charcoal mt-2">
-                      {formatCurrency(displayTotals[tier.id])}
-                    </p>
-                  </button>
-                ))}
-              </div>
-            </Card>
+            {/* Build Tier Selection - Only show for contractors */}
+            {canEdit && (
+              <Card className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="font-medium text-charcoal text-sm">Quality Tier</h2>
+                  {project.build_tier && (
+                    <span className="text-xs text-gray-500">
+                      Client selected: {formatSelectionLabel(project.build_tier)}
+                    </span>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  {Object.values(BUILD_TIERS).map((tier) => (
+                    <button
+                      key={tier.id}
+                      onClick={() => setSelectedTier(tier.id)}
+                      className={`
+                        flex-1 p-3 rounded-lg border-2 text-center transition-all
+                        ${selectedTier === tier.id
+                          ? 'border-charcoal bg-gray-50'
+                          : 'border-gray-200 hover:border-gray-300'
+                        }
+                      `}
+                    >
+                      <span className={`text-sm font-medium ${selectedTier === tier.id ? 'text-charcoal' : 'text-gray-600'}`}>
+                        {tier.label}
+                      </span>
+                      <p className="text-lg font-semibold text-charcoal mt-1">
+                        {formatCurrency(displayTotals[tier.id])}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </Card>
+            )}
 
             {/* Instance Mode UI */}
             {entryMode === 'instance' && canEdit && (

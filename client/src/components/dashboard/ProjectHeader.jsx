@@ -4,7 +4,6 @@ import { HealthIndicator } from './HealthIndicator';
 import { PhaseIndicator, PhaseChip } from './PhaseIndicator';
 import { PhaseTransitionButton, PhaseSelector } from './PhaseTransitionModal';
 import { formatDate } from '../../lib/dashboardHelpers';
-import { usePermissions } from '../../hooks/usePermissions';
 
 /**
  * ProjectHeader - Status bar with project name, address, phase indicator
@@ -15,7 +14,6 @@ import { usePermissions } from '../../hooks/usePermissions';
  * @param {Function} onPhaseTransition - Handler for initiating phase transitions
  */
 export function ProjectHeader({ header, project, onAction, onPhaseTransition, viewMode = 'contractor' }) {
-  const { isContractor } = usePermissions();
   const isNewConstruction = header.projectType === 'new_construction';
   const isHomeownerView = viewMode === 'homeowner';
 
@@ -26,21 +24,18 @@ export function ProjectHeader({ header, project, onAction, onPhaseTransition, vi
     project?.estimate_low > 0;
 
   // Determine button label based on phase and user role
-  // Contractors can edit, homeowners can only view
   const getEstimateButtonLabel = () => {
     const phase = header.phase?.toLowerCase();
     if (!hasEstimate) return 'Create Estimate';
 
-    const action = isContractor ? 'Edit' : 'View';
-
     if (phase === 'estimate' || phase === 'estimating' || phase === 'intake') {
-      return `${action} Estimate`;
+      return 'Edit Estimate';
     } else if (phase === 'quoted' || phase === 'quote') {
-      return `${action} Quote`;
+      return 'View Quote';
     } else if (phase === 'contract' || phase === 'contracted' || phase === 'active' || phase === 'complete' || phase === 'punch_list') {
       return 'View Contract';
     }
-    return `${action} Estimate`;
+    return 'Edit Estimate';
   };
 
   return (

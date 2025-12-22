@@ -20,6 +20,8 @@ import {
   PhaseBuilder,
   FloorPlanPage,
   Profile,
+  Team,
+  EmployeeProfile,
   Intake,
   ContractorIntake,
   CostCatalogue,
@@ -73,6 +75,11 @@ function App() {
 
           {/* Other */}
           <Route path="/profile" element={<Profile />} />
+
+          {/* People */}
+          <Route path="/team" element={<Team />} />
+          <Route path="/team/new" element={<EmployeeProfile />} />
+          <Route path="/team/:employeeId" element={<EmployeeProfile />} />
 
           {/* Settings & Tools */}
           <Route path="/cost-catalogue" element={<CostCatalogue />} />
