@@ -232,23 +232,30 @@ export function EmployeeProfile() {
     if (!profile.lastName?.trim()) newErrors.lastName = 'Last name is required';
     if (!profile.role) newErrors.role = 'Role is required';
 
+    console.log('Validation check:', { profile, newErrors });
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   // Handle save
   const handleSave = async () => {
+    console.log('Save button clicked, profile:', profile);
+
     if (!validate()) {
-      console.log('Validation failed:', errors);
+      console.log('Validation failed');
       return;
     }
 
+    console.log('Validation passed, saving...');
     setSaving(true);
 
     // Save to localStorage
-    console.log('Saving employee:', profile);
-    saveEmployee(profile);
-    console.log('Employees after save:', loadEmployees());
+    try {
+      saveEmployee(profile);
+      console.log('Save successful, employees:', loadEmployees());
+    } catch (err) {
+      console.error('Save error:', err);
+    }
 
     setSaving(false);
     navigate('/team');
