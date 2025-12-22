@@ -20,6 +20,38 @@ import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
 import { ROLES } from '../lib/devData';
 
+// Employee storage
+const STORAGE_KEY = 'hooomz_employees';
+
+function loadEmployees() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveEmployees(employees) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+}
+
+function getEmployee(id) {
+  const employees = loadEmployees();
+  return employees.find(e => e.id === id) || null;
+}
+
+function saveEmployee(employee) {
+  const employees = loadEmployees();
+  const index = employees.findIndex(e => e.id === employee.id);
+  if (index >= 0) {
+    employees[index] = employee;
+  } else {
+    employees.push(employee);
+  }
+  saveEmployees(employees);
+}
+
 // Common certifications
 const CERTIFICATION_TYPES = [
   { id: 'whmis', name: 'WHMIS', required: true },
@@ -83,44 +115,54 @@ export function EmployeeProfile() {
   const navigate = useNavigate();
   const isNew = !employeeId || employeeId === 'new';
 
-  // Form state
-  const [profile, setProfile] = useState({
-    // Personal Information
-    firstName: '',
-    lastName: '',
-    preferredName: '',
-    dateOfBirth: '',
-    phone: '',
-    email: '',
-    address: {
-      street: '',
-      city: '',
-      province: 'NB',
-      postalCode: '',
-    },
-
-    // Emergency Contact
-    emergencyContact: {
-      name: '',
-      relationship: '',
+  // Load existing employee or create new
+  const getInitialProfile = () => {
+    if (!isNew) {
+      const existing = getEmployee(employeeId);
+      if (existing) return existing;
+    }
+    return {
+      id: `emp-${Date.now()}`,
+      // Personal Information
+      firstName: '',
+      lastName: '',
+      preferredName: '',
+      dateOfBirth: '',
       phone: '',
-      altPhone: '',
-    },
+      email: '',
+      address: {
+        street: '',
+        city: '',
+        province: 'NB',
+        postalCode: '',
+      },
 
-    // Employment Information
-    employeeId: '',
-    role: 'labourer',
-    hireDate: '',
-    employmentType: 'full_time', // full_time, part_time, contract, seasonal
-    status: 'active', // active, inactive, on_leave, terminated
-    hourlyRate: '',
+      // Emergency Contact
+      emergencyContact: {
+        name: '',
+        relationship: '',
+        phone: '',
+        altPhone: '',
+      },
 
-    // Certifications
-    certifications: [],
+      // Employment Information
+      employeeId: '',
+      role: 'labourer',
+      hireDate: '',
+      employmentType: 'full_time',
+      status: 'active',
+      hourlyRate: '',
 
-    // Notes
-    notes: '',
-  });
+      // Certifications
+      certifications: [],
+
+      // Notes
+      notes: '',
+    };
+  };
+
+  // Form state
+  const [profile, setProfile] = useState(getInitialProfile);
 
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -204,8 +246,10 @@ export function EmployeeProfile() {
     if (!validate()) return;
 
     setSaving(true);
-    // TODO: Implement actual save logic
-    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
+
+    // Save to localStorage
+    saveEmployee(profile);
+
     setSaving(false);
     navigate('/team');
   };
