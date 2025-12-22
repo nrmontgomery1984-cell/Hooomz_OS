@@ -2820,3 +2820,139 @@ export async function getFloorPlanStatusSummary(floorPlanId) {
     error: null,
   };
 }
+
+// ============================================
+// Employee API
+// ============================================
+
+const EMPLOYEES_STORAGE_KEY = 'hooomz_employees';
+
+// Helper to load employees from localStorage (fallback)
+function loadEmployeesFromStorage() {
+  try {
+    const stored = localStorage.getItem(EMPLOYEES_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+// Helper to save employees to localStorage (fallback)
+function saveEmployeesToStorage(employees) {
+  localStorage.setItem(EMPLOYEES_STORAGE_KEY, JSON.stringify(employees));
+}
+
+// GET all employees
+export async function getEmployees() {
+  if (!isSupabaseConfigured()) {
+    return { data: loadEmployeesFromStorage(), error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('employees')
+    .select('*')
+    .is('deleted_at', null)
+    .order('last_name', { ascending: true });
+
+  return { data, error };
+}
+
+// GET single employee by ID
+export async function getEmployee(id) {
+  if (!isSupabaseConfigured()) {
+    const employees = loadEmployeesFromStorage();
+    const employee = employees.find(e => e.id === id);
+    return { data: employee || null, error: employee ? null : 'Not found' };
+  }
+
+  const { data, error } = await supabase
+    .from('employees')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  return { data, error };
+}
+
+// CREATE employee
+export async function createEmployee(employeeData) {
+  if (!isSupabaseConfigured()) {
+    const employees = loadEmployeesFromStorage();
+    const newEmployee = {
+      id: `emp-${Date.now()}`,
+      ...employeeData,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    employees.push(newEmployee);
+    saveEmployeesToStorage(employees);
+    return { data: newEmployee, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('employees')
+    .insert(employeeData)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+// UPDATE employee
+export async function updateEmployee(id, updates) {
+  if (!isSupabaseConfigured()) {
+    const employees = loadEmployeesFromStorage();
+    const index = employees.findIndex(e => e.id === id);
+    if (index === -1) {
+      // Upsert - create if not found
+      const newEmployee = {
+        id,
+        ...updates,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      employees.push(newEmployee);
+      saveEmployeesToStorage(employees);
+      return { data: newEmployee, error: null };
+    }
+    employees[index] = {
+      ...employees[index],
+      ...updates,
+      updated_at: new Date().toISOString()
+    };
+    saveEmployeesToStorage(employees);
+    return { data: employees[index], error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('employees')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+
+  return { data, error };
+}
+
+// DELETE employee (soft delete)
+export async function deleteEmployee(id) {
+  if (!isSupabaseConfigured()) {
+    const employees = loadEmployeesFromStorage();
+    const index = employees.findIndex(e => e.id === id);
+    if (index === -1) {
+      return { data: null, error: 'Employee not found' };
+    }
+    employees.splice(index, 1);
+    saveEmployeesToStorage(employees);
+    return { data: { id, deleted: true }, error: null };
+  }
+
+  const { data, error } = await supabase
+    .from('employees')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+
+  return { data, error };
+}

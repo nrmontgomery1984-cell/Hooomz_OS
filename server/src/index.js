@@ -5,6 +5,7 @@ import projectRoutes from './routes/projects.js';
 import loopRoutes from './routes/loops.js';
 import taskRoutes from './routes/tasks.js';
 import timeRoutes from './routes/time.js';
+import employeeRoutes from './routes/employees.js';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/loops', loopRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/time', timeRoutes);
+app.use('/api/employees', employeeRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {

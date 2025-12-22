@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   User,
@@ -19,38 +19,7 @@ import {
 import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
 import { ROLES } from '../lib/devData';
-
-// Employee storage
-const STORAGE_KEY = 'hooomz_employees';
-
-function loadEmployees() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveEmployees(employees) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-}
-
-function getEmployee(id) {
-  const employees = loadEmployees();
-  return employees.find(e => e.id === id) || null;
-}
-
-function saveEmployee(employee) {
-  const employees = loadEmployees();
-  const index = employees.findIndex(e => e.id === employee.id);
-  if (index >= 0) {
-    employees[index] = employee;
-  } else {
-    employees.push(employee);
-  }
-  saveEmployees(employees);
-}
+import { getEmployee as fetchEmployee, createEmployee, updateEmployee } from '../services/api';
 
 // Common certifications
 const CERTIFICATION_TYPES = [
@@ -110,62 +79,68 @@ function Field({ label, required, children, className = '' }) {
 const inputClass = 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm';
 const selectClass = 'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white';
 
+const getEmptyProfile = () => ({
+  // Personal Information
+  firstName: '',
+  lastName: '',
+  preferredName: '',
+  dateOfBirth: '',
+  phone: '',
+  email: '',
+  address: {
+    street: '',
+    city: '',
+    province: 'NB',
+    postalCode: '',
+  },
+
+  // Emergency Contact
+  emergencyContact: {
+    name: '',
+    relationship: '',
+    phone: '',
+    altPhone: '',
+  },
+
+  // Employment Information
+  employeeId: '',
+  role: 'labourer',
+  hireDate: '',
+  employmentType: 'full_time',
+  status: 'active',
+  hourlyRate: '',
+
+  // Certifications
+  certifications: [],
+
+  // Notes
+  notes: '',
+});
+
 export function EmployeeProfile() {
   const { employeeId } = useParams();
   const navigate = useNavigate();
   const isNew = !employeeId || employeeId === 'new';
 
-  // Load existing employee or create new
-  const getInitialProfile = () => {
-    if (!isNew) {
-      const existing = getEmployee(employeeId);
-      if (existing) return existing;
-    }
-    return {
-      id: `emp-${Date.now()}`,
-      // Personal Information
-      firstName: '',
-      lastName: '',
-      preferredName: '',
-      dateOfBirth: '',
-      phone: '',
-      email: '',
-      address: {
-        street: '',
-        city: '',
-        province: 'NB',
-        postalCode: '',
-      },
-
-      // Emergency Contact
-      emergencyContact: {
-        name: '',
-        relationship: '',
-        phone: '',
-        altPhone: '',
-      },
-
-      // Employment Information
-      employeeId: '',
-      role: 'labourer',
-      hireDate: '',
-      employmentType: 'full_time',
-      status: 'active',
-      hourlyRate: '',
-
-      // Certifications
-      certifications: [],
-
-      // Notes
-      notes: '',
-    };
-  };
-
   // Form state
-  const [profile, setProfile] = useState(getInitialProfile);
-
+  const [profile, setProfile] = useState(getEmptyProfile);
+  const [loading, setLoading] = useState(!isNew);
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
+
+  // Load existing employee
+  useEffect(() => {
+    if (!isNew && employeeId) {
+      async function loadData() {
+        const { data, error } = await fetchEmployee(employeeId);
+        if (!error && data) {
+          setProfile(data);
+        }
+        setLoading(false);
+      }
+      loadData();
+    }
+  }, [isNew, employeeId]);
 
   // Update field helper
   const updateField = (path, value) => {
@@ -239,26 +214,33 @@ export function EmployeeProfile() {
 
   // Handle save
   const handleSave = async () => {
-    console.log('Save button clicked, profile:', profile);
-
     if (!validate()) {
-      console.log('Validation failed');
       return;
     }
 
-    console.log('Validation passed, saving...');
     setSaving(true);
 
-    // Save to localStorage
     try {
-      saveEmployee(profile);
-      console.log('Save successful, employees:', loadEmployees());
+      if (isNew) {
+        const { error } = await createEmployee(profile);
+        if (error) {
+          console.error('Create error:', error);
+          setSaving(false);
+          return;
+        }
+      } else {
+        const { error } = await updateEmployee(employeeId, profile);
+        if (error) {
+          console.error('Update error:', error);
+          setSaving(false);
+          return;
+        }
+      }
+      navigate('/team');
     } catch (err) {
       console.error('Save error:', err);
+      setSaving(false);
     }
-
-    setSaving(false);
-    navigate('/team');
   };
 
   // Get role color

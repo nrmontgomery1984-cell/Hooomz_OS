@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Plus,
@@ -15,25 +15,10 @@ import {
 import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
 import { ROLES } from '../lib/devData';
-
-// Employees data - loaded from localStorage, starts empty
-const STORAGE_KEY = 'hooomz_employees';
-
-function loadEmployees() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveEmployees(employees) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-}
+import { getEmployees, deleteEmployee } from '../services/api';
 
 // Contact Card Component
-function ContactCard({ employee }) {
+function ContactCard({ employee, onDelete }) {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const roleConfig = ROLES[employee.role] || ROLES.labourer;
@@ -126,7 +111,7 @@ function ContactCard({ employee }) {
                 <button
                   className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
                   onClick={() => {
-                    // TODO: Implement delete
+                    onDelete(employee.id);
                     setShowMenu(false);
                   }}
                 >
@@ -161,12 +146,27 @@ function ContactCard({ employee }) {
 export function Team() {
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
-  const [employees, setEmployees] = useState(() => loadEmployees());
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Save employees whenever they change
-  const updateEmployees = (newEmployees) => {
-    setEmployees(newEmployees);
-    saveEmployees(newEmployees);
+  // Load employees on mount
+  useEffect(() => {
+    async function loadData() {
+      const { data, error } = await getEmployees();
+      if (!error && data) {
+        setEmployees(data);
+      }
+      setLoading(false);
+    }
+    loadData();
+  }, []);
+
+  // Handle delete
+  const handleDelete = async (id) => {
+    const { error } = await deleteEmployee(id);
+    if (!error) {
+      setEmployees(prev => prev.filter(e => e.id !== id));
+    }
   };
 
   // Filter employees
@@ -282,7 +282,7 @@ export function Team() {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {roleEmployees.map(emp => (
-                    <ContactCard key={emp.id} employee={emp} />
+                    <ContactCard key={emp.id} employee={emp} onDelete={handleDelete} />
                   ))}
                 </div>
               </div>
@@ -293,13 +293,20 @@ export function Team() {
         // Flat list for filtered view
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredEmployees.map(emp => (
-            <ContactCard key={emp.id} employee={emp} />
+            <ContactCard key={emp.id} employee={emp} onDelete={handleDelete} />
           ))}
         </div>
       )}
 
+      {/* Loading State */}
+      {loading && (
+        <Card className="p-8 text-center">
+          <p className="text-gray-500">Loading team members...</p>
+        </Card>
+      )}
+
       {/* Empty State */}
-      {filteredEmployees.length === 0 && (
+      {!loading && filteredEmployees.length === 0 && (
         <Card className="p-8 text-center">
           {employees.length === 0 ? (
             <>
