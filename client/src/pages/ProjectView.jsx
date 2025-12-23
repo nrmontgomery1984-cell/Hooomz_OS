@@ -56,15 +56,18 @@ export function ProjectView() {
 
   useEffect(() => {
     async function loadData() {
+      console.log('[ProjectView] Loading project:', projectId);
       setLoading(true);
       setActivityLoading(true);
 
       try {
         // First get project and activity in parallel
+        console.log('[ProjectView] Fetching project and activity...');
         const [projectRes, activityRes] = await Promise.all([
           getProject(projectId),
           getProjectActivity(projectId),
         ]);
+        console.log('[ProjectView] Project result:', projectRes);
 
         setProject(projectRes.data);
         setActivities(activityRes.data || []);
@@ -72,16 +75,19 @@ export function ProjectView() {
         // Only load related data if project exists
         if (projectRes.data) {
           // Then get or generate loops (needs project data to check for estimate)
+          console.log('[ProjectView] Getting loops...');
           const loopsRes = await getOrGenerateLoops(projectId, projectRes.data);
+          console.log('[ProjectView] Loops result:', loopsRes);
           setLoops(loopsRes.data || []);
 
           setExpenses(getProjectExpenses(projectId));
           setChangeOrders(getProjectChangeOrders(projectId));
         }
       } catch (error) {
-        console.error('Error loading project data:', error);
+        console.error('[ProjectView] Error:', error);
         setProject(null);
       } finally {
+        console.log('[ProjectView] Done loading');
         setLoading(false);
         setActivityLoading(false);
       }
