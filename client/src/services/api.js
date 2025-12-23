@@ -56,7 +56,18 @@ export async function getProjects() {
     .is('deleted_at', null)
     .order('updated_at', { ascending: false });
 
-  return { data, error };
+  // Merge with localStorage projects (for migration period)
+  // This ensures projects created before Supabase was enabled still appear
+  const supabaseProjects = data || [];
+  const supabaseIds = new Set(supabaseProjects.map(p => p.id));
+  const localOnlyProjects = mockProjects.filter(p => !supabaseIds.has(p.id));
+
+  if (localOnlyProjects.length > 0) {
+    console.log('Found localStorage-only projects:', localOnlyProjects.length);
+    return { data: [...supabaseProjects, ...localOnlyProjects], error: null };
+  }
+
+  return { data: supabaseProjects, error };
 }
 
 export async function getProject(id) {
@@ -80,6 +91,15 @@ export async function getProject(id) {
     .select('*')
     .eq('id', id)
     .single();
+
+  // Fallback to localStorage if not found in Supabase (for migration period)
+  if (error || !data) {
+    const localProject = mockProjects.find((p) => p.id === id);
+    if (localProject) {
+      console.log('Project found in localStorage, not in Supabase:', id);
+      return { data: localProject, error: null };
+    }
+  }
 
   return { data, error };
 }
