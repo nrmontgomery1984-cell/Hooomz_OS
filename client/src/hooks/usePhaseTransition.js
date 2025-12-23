@@ -133,7 +133,9 @@ export function usePhaseTransition(project, onUpdate) {
         updateData.intake_data = intakeDataUpdates;
 
         // Call API to update project
+        console.log('[phaseTransition] Calling updateProjectPhase with:', updateData);
         const { data, error } = await updateProjectPhase(project.id, updateData);
+        console.log('[phaseTransition] updateProjectPhase result:', { data, error });
 
         if (error) {
           // Handle Supabase error object
@@ -161,8 +163,12 @@ export function usePhaseTransition(project, onUpdate) {
       }
 
       // Callback with updated project
+      console.log('[phaseTransition] resultData:', resultData);
       if (onUpdate && resultData) {
+        console.log('[phaseTransition] Calling onUpdate callback');
         onUpdate(resultData);
+      } else {
+        console.log('[phaseTransition] NOT calling onUpdate:', { hasOnUpdate: !!onUpdate, hasResultData: !!resultData });
       }
 
       // Close modal

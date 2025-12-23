@@ -81,7 +81,7 @@ const getDefaultVisibility = () => {
       dailyLog: level >= 20, // All team members
       pipeline: level >= 60, // Foreman and above
       production: level >= 40, // Carpenter and above
-      team: level >= 80, // Manager and above
+      team: level >= 60, // Foreman and above (view team directory)
       costCatalogue: level >= 60, // Foreman and above
       fieldGuide: level >= 20, // All team members
       timeBudget: level >= 60, // Foreman and above
