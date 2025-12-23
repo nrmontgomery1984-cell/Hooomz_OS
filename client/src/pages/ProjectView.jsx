@@ -386,6 +386,23 @@ export function ProjectView() {
         />
       )}
 
+      {/* Fallback when dashboard data couldn't be generated */}
+      {activeTab === 'dashboard' && !dashboardData && project && (
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-charcoal mb-2">{project.name}</h3>
+          <p className="text-gray-600 mb-4">
+            {project.address || 'Address pending'}
+          </p>
+          <div className="text-sm text-gray-500 space-y-1">
+            <p>Phase: {project.phase || 'Estimating'}</p>
+            <p>Status: {project.status || 'Active'}</p>
+            {project.estimate_total > 0 && (
+              <p>Estimate: ${project.estimate_total?.toLocaleString()}</p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Phase Transition Modal */}
       <PhaseTransitionModal
         isOpen={phaseTransition.showModal}
