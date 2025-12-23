@@ -41,8 +41,8 @@ import {
 } from './mockData';
 import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
-// Force mock mode for projects (Supabase projects table may have different IDs)
-const USE_MOCK_PROJECTS = true;
+// Use Supabase for projects when configured, fallback to mock/localStorage
+const USE_MOCK_PROJECTS = false;
 
 // Projects API
 export async function getProjects() {
