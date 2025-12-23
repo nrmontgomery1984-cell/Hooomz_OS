@@ -8,8 +8,9 @@ import {
 import { calculateScopeCosts } from '../lib/scopeCostEstimator';
 import { calculateInstanceTotals, generateLineItemsFromInstances } from '../lib/estimateHelpers';
 
-// Match api.js - use Supabase when configured, fallback to localStorage
-const USE_MOCK_PROJECTS = false;
+// Use localStorage until Supabase tables are properly set up
+// Set to false once Supabase 'projects' table exists and is configured
+const USE_MOCK_PROJECTS = true;
 
 /**
  * Contractor Intake Service
@@ -25,12 +26,19 @@ const USE_MOCK_PROJECTS = false;
  * @returns {{ data: Object|null, error: string|null }}
  */
 export async function generateProjectFromContractorIntake(formData) {
+  console.log('[contractorIntakeService] generateProjectFromContractorIntake START');
   try {
     const { project, client, scope, schedule, instances, assemblies, building } = formData;
+    console.log('[contractorIntakeService] Destructured formData:', {
+      hasProject: !!project,
+      hasScope: !!scope,
+      instanceCount: instances?.length || 0
+    });
 
     // Check if we're using the new instance-based format
     const hasInstances = instances && instances.length > 0;
     const ceilingHeights = building?.ceilingHeights || { basement: 8, main: 9, second: 8, third: 8 };
+    console.log('[contractorIntakeService] hasInstances:', hasInstances);
 
     // Build project data
     const projectData = {
@@ -66,14 +74,18 @@ export async function generateProjectFromContractorIntake(formData) {
     };
 
     // Get enabled categories and their items
+    console.log('[contractorIntakeService] Getting enabled categories...');
     const enabledCategories = getEnabledCategories(scope);
+    console.log('[contractorIntakeService] enabledCategories:', enabledCategories);
 
     // Calculate cost estimates - use instances if available, otherwise fallback to scope
     let costEstimate;
 
     if (hasInstances) {
       // Use new instance-based calculation
+      console.log('[contractorIntakeService] Calculating instance totals...');
       const instanceTotals = calculateInstanceTotals(instances, assemblies, ceilingHeights, null);
+      console.log('[contractorIntakeService] instanceTotals:', instanceTotals);
       costEstimate = {
         totalLabour: instanceTotals.labor,
         totalMaterials: instanceTotals.materials,
@@ -91,7 +103,9 @@ export async function generateProjectFromContractorIntake(formData) {
 
     } else {
       // Fallback to old scope-based calculation
+      console.log('[contractorIntakeService] Calculating scope costs (no instances)...');
       costEstimate = calculateScopeCosts(scope, project.specLevel);
+      console.log('[contractorIntakeService] costEstimate:', costEstimate);
     }
 
     // Create initial estimate snapshot for history
@@ -109,8 +123,13 @@ export async function generateProjectFromContractorIntake(formData) {
       notes: 'Initial estimate from contractor intake',
     };
 
+    console.log('[contractorIntakeService] Created estimate snapshot');
+    console.log('[contractorIntakeService] isSupabaseConfigured:', isSupabaseConfigured());
+    console.log('[contractorIntakeService] USE_MOCK_PROJECTS:', USE_MOCK_PROJECTS);
+
     // Mock mode handling - use mock when Supabase not configured OR USE_MOCK_PROJECTS is true
     if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
+      console.log('[contractorIntakeService] Using MOCK mode (localStorage)');
       const projectId = `p${Date.now()}`;
       const newProject = {
         id: projectId,
@@ -232,6 +251,16 @@ export async function generateProjectFromContractorIntake(formData) {
     }
 
     // Real Supabase implementation
+    console.log('Using Supabase for project creation');
+    console.log('supabase client:', supabase);
+    console.log('isSupabaseConfigured:', isSupabaseConfigured());
+
+    // Double-check supabase is actually available
+    if (!supabase) {
+      console.log('Supabase client is null, falling back to mock mode');
+      return generateProjectFromContractorIntakeMock(formData);
+    }
+
     const dbProjectData = {
       name: projectData.name,
       status: 'estimate',
@@ -252,14 +281,34 @@ export async function generateProjectFromContractorIntake(formData) {
       intake_data: formData,
     };
 
-    const { data: createdProject, error: projectError } = await supabase
-      .from('projects')
-      .insert(dbProjectData)
-      .select()
-      .single();
+    console.log('Inserting project into Supabase:', dbProjectData);
 
-    if (projectError) {
-      // Fall back to mock mode
+    let createdProject = null;
+    let projectError = null;
+
+    try {
+      const result = await Promise.race([
+        supabase
+          .from('projects')
+          .insert(dbProjectData)
+          .select()
+          .single(),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Supabase insert timeout after 10s')), 10000)
+        )
+      ]);
+      createdProject = result.data;
+      projectError = result.error;
+    } catch (timeoutErr) {
+      console.error('Supabase insert error:', timeoutErr);
+      projectError = timeoutErr;
+    }
+
+    console.log('Supabase insert result:', { createdProject, projectError });
+
+    if (projectError || !createdProject) {
+      console.error('Supabase project creation failed, falling back to localStorage:', projectError);
+      // Fall back to mock mode - this ensures projects still save locally
       return generateProjectFromContractorIntakeMock(formData);
     }
 

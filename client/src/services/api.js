@@ -42,7 +42,8 @@ import {
 import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
 // Use Supabase for projects when configured, fallback to mock/localStorage
-const USE_MOCK_PROJECTS = false;
+// Use localStorage until Supabase tables are properly set up
+const USE_MOCK_PROJECTS = true;
 
 // Projects API
 export async function getProjects() {
