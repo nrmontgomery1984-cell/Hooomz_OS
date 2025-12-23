@@ -13,42 +13,47 @@ export function SetPassword() {
   const [error, setError] = useState('');
   const [formLoading, setFormLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [waitingForAuth, setWaitingForAuth] = useState(true);
+  const [ready, setReady] = useState(false);
 
   // Check if URL has recovery token - if so, wait for auth to process it
   const hasTokenInUrl = window.location.hash.includes('access_token') ||
                         window.location.hash.includes('type=recovery') ||
                         window.location.hash.includes('type=magiclink');
 
-  // Wait for auth to finish loading before deciding to redirect
+  // Wait for auth to finish loading, then show form or redirect
   useEffect(() => {
     // If auth is still loading, wait
     if (authLoading) {
       return;
     }
 
-    // If we have a token in URL, give extra time for processing
+    // If we have a token in URL, wait for it to be processed then show form
     if (hasTokenInUrl) {
+      // Token in URL means we should show the form once auth processes it
       const timer = setTimeout(() => {
-        setWaitingForAuth(false);
-      }, 3000);
+        setReady(true);
+      }, 2000);
       return () => clearTimeout(timer);
     }
 
-    // If user is authenticated or in recovery mode, show the form
-    if (user || isRecoveryMode) {
-      setWaitingForAuth(false);
+    // If in recovery mode (set by auth when PASSWORD_RECOVERY event fires), show form
+    if (isRecoveryMode) {
+      setReady(true);
       return;
     }
 
-    // No user and no token - redirect after a short delay
+    // If user is authenticated (from magic link/invite), show form to set password
+    if (user) {
+      setReady(true);
+      return;
+    }
+
+    // No user, no token, no recovery mode - redirect to login
     const timer = setTimeout(() => {
-      if (!user && !isRecoveryMode) {
-        navigate('/login');
-      }
-    }, 5000);
+      navigate('/login');
+    }, 3000);
     return () => clearTimeout(timer);
-  }, [user, authLoading, isRecoveryMode, hasTokenInUrl, navigate]);
+  }, [authLoading, hasTokenInUrl, isRecoveryMode, user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +88,7 @@ export function SetPassword() {
   };
 
   // Show loading while waiting for auth to process token
-  if (waitingForAuth || authLoading) {
+  if (!ready || authLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-md">
