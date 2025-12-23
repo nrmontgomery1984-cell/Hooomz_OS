@@ -1,0 +1,1305 @@
+/**
+ * Build Assemblies Database for New Brunswick Construction
+ * Comprehensive assembly data for walls, floors, roofs, and foundations
+ *
+ * Each assembly includes:
+ * - Detailed component breakdown
+ * - Labor hours and costs
+ * - Material costs
+ * - Code references (NBCC 2020)
+ * - Confidence levels for estimates
+ */
+
+// ============================================================================
+// WALL ASSEMBLIES
+// ============================================================================
+
+export const wallAssemblies = {
+  exterior: {
+    label: 'Exterior Walls',
+    assemblies: {
+      'ext-2x6-standard': {
+        id: 'ext-2x6-standard',
+        category: 'wall',
+        subcategory: 'exterior',
+        name: '2x6 Standard Exterior Wall',
+        description: 'Standard 2x6 exterior wall with fiberglass batt insulation, meets NBC minimum R-24 for Zone 6',
+        components: [
+          { item: '2x6 SPF Stud', quantity: 1.2, unit: 'bf/sf', unitCost: 0.85 },
+          { item: 'Bottom Plate 2x6', quantity: 0.17, unit: 'lf/sf', unitCost: 1.20 },
+          { item: 'Double Top Plate 2x6', quantity: 0.34, unit: 'lf/sf', unitCost: 1.20 },
+          { item: 'R-24 Fiberglass Batt', quantity: 1.0, unit: 'sf', unitCost: 1.15 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.05, unit: 'sf', unitCost: 0.12 },
+          { item: '7/16" OSB Sheathing', quantity: 1.0, unit: 'sf', unitCost: 0.95 },
+          { item: 'House Wrap (Tyvek)', quantity: 1.05, unit: 'sf', unitCost: 0.25 },
+          { item: 'Vinyl Siding', quantity: 1.0, unit: 'sf', unitCost: 3.50 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.18,
+        laborCost: 9.00,
+        materialCost: 8.57,
+        totalCost: 17.57,
+        confidence: 'high',
+        codeReference: 'NBC 9.36.2 - Zone 6 minimum R-24 effective',
+        notes: 'Most common wall assembly in NB residential. Meets minimum code but not ideal for energy efficiency.',
+      },
+      'ext-2x6-advanced': {
+        id: 'ext-2x6-advanced',
+        category: 'wall',
+        subcategory: 'exterior',
+        name: '2x6 Advanced Framing',
+        description: '2x6 wall with 24" OC advanced framing, reduces thermal bridging',
+        components: [
+          { item: '2x6 SPF Stud 24" OC', quantity: 0.9, unit: 'bf/sf', unitCost: 0.85 },
+          { item: 'Bottom Plate 2x6', quantity: 0.17, unit: 'lf/sf', unitCost: 1.20 },
+          { item: 'Single Top Plate 2x6', quantity: 0.17, unit: 'lf/sf', unitCost: 1.20 },
+          { item: 'R-24 Fiberglass Batt', quantity: 1.0, unit: 'sf', unitCost: 1.15 },
+          { item: 'Drywall Clips', quantity: 0.25, unit: 'ea', unitCost: 0.35 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.05, unit: 'sf', unitCost: 0.12 },
+          { item: '7/16" OSB Sheathing', quantity: 1.0, unit: 'sf', unitCost: 0.95 },
+          { item: 'House Wrap', quantity: 1.05, unit: 'sf', unitCost: 0.25 },
+          { item: 'Vinyl Siding', quantity: 1.0, unit: 'sf', unitCost: 3.50 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.16,
+        laborCost: 8.00,
+        materialCost: 7.92,
+        totalCost: 15.92,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.3.4 - Advanced framing permitted with engineering',
+        notes: 'Uses less lumber, better thermal performance. Requires different header details.',
+      },
+      'ext-2x6-cont-ins': {
+        id: 'ext-2x6-cont-ins',
+        category: 'wall',
+        subcategory: 'exterior',
+        name: '2x6 + Continuous Insulation',
+        description: '2x6 wall with 1.5" exterior rigid insulation, exceeds NBC minimum',
+        components: [
+          { item: '2x6 SPF Stud', quantity: 1.2, unit: 'bf/sf', unitCost: 0.85 },
+          { item: 'Plates 2x6', quantity: 0.51, unit: 'lf/sf', unitCost: 1.20 },
+          { item: 'R-24 Fiberglass Batt', quantity: 1.0, unit: 'sf', unitCost: 1.15 },
+          { item: '1.5" XPS Rigid Insulation', quantity: 1.0, unit: 'sf', unitCost: 1.85 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.05, unit: 'sf', unitCost: 0.12 },
+          { item: '7/16" OSB Sheathing', quantity: 1.0, unit: 'sf', unitCost: 0.95 },
+          { item: 'House Wrap', quantity: 1.05, unit: 'sf', unitCost: 0.25 },
+          { item: '1x4 Strapping', quantity: 0.33, unit: 'lf/sf', unitCost: 0.45 },
+          { item: 'Vinyl Siding', quantity: 1.0, unit: 'sf', unitCost: 3.50 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.22,
+        laborCost: 11.00,
+        materialCost: 10.87,
+        totalCost: 21.87,
+        confidence: 'high',
+        codeReference: 'NBC 9.36.2 - Exceeds Zone 6, approaches Zone 7A',
+        notes: 'Good balance of cost and performance. Popular for energy-conscious builds.',
+      },
+      'ext-2x6-rockwool': {
+        id: 'ext-2x6-rockwool',
+        category: 'wall',
+        subcategory: 'exterior',
+        name: '2x6 + Rockwool Comfortboard',
+        description: '2x6 wall with 1.5" exterior mineral wool, excellent moisture management',
+        components: [
+          { item: '2x6 SPF Stud', quantity: 1.2, unit: 'bf/sf', unitCost: 0.85 },
+          { item: 'Plates 2x6', quantity: 0.51, unit: 'lf/sf', unitCost: 1.20 },
+          { item: 'R-24 Rockwool Batt', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: '1.5" Rockwool Comfortboard', quantity: 1.0, unit: 'sf', unitCost: 2.25 },
+          { item: 'Smart Vapour Retarder', quantity: 1.05, unit: 'sf', unitCost: 0.35 },
+          { item: '7/16" OSB Sheathing', quantity: 1.0, unit: 'sf', unitCost: 0.95 },
+          { item: 'House Wrap', quantity: 1.05, unit: 'sf', unitCost: 0.25 },
+          { item: '1x4 Strapping', quantity: 0.33, unit: 'lf/sf', unitCost: 0.45 },
+          { item: 'Vinyl Siding', quantity: 1.0, unit: 'sf', unitCost: 3.50 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.24,
+        laborCost: 12.00,
+        materialCost: 12.00,
+        totalCost: 24.00,
+        confidence: 'high',
+        codeReference: 'NBC 9.36.2 - Premium thermal envelope',
+        notes: 'Premium wall system. Fire resistant, moisture tolerant, excellent performance.',
+      },
+      'ext-double-stud': {
+        id: 'ext-double-stud',
+        category: 'wall',
+        subcategory: 'exterior',
+        name: 'Double Stud Wall (12")',
+        description: '12" double stud wall with dense-pack cellulose, high performance',
+        components: [
+          { item: '2x4 SPF Stud (x2 walls)', quantity: 1.8, unit: 'bf/sf', unitCost: 0.75 },
+          { item: 'Plates 2x4 (x2)', quantity: 0.68, unit: 'lf/sf', unitCost: 0.95 },
+          { item: 'Dense Pack Cellulose R-42', quantity: 1.0, unit: 'sf', unitCost: 2.50 },
+          { item: 'Smart Vapour Retarder', quantity: 1.05, unit: 'sf', unitCost: 0.35 },
+          { item: '7/16" OSB Sheathing', quantity: 1.0, unit: 'sf', unitCost: 0.95 },
+          { item: 'House Wrap', quantity: 1.05, unit: 'sf', unitCost: 0.25 },
+          { item: 'Vinyl Siding', quantity: 1.0, unit: 'sf', unitCost: 3.50 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.28,
+        laborCost: 14.00,
+        materialCost: 11.18,
+        totalCost: 25.18,
+        confidence: 'medium',
+        codeReference: 'NBC 9.36.2 - Passive House approach',
+        notes: 'High performance wall. Thermal bridge free. Requires careful moisture detailing.',
+      },
+    },
+  },
+  interior: {
+    label: 'Interior Walls',
+    assemblies: {
+      'int-partition-std': {
+        id: 'int-partition-std',
+        category: 'wall',
+        subcategory: 'interior',
+        name: 'Standard Interior Partition',
+        description: '2x4 non-load bearing partition wall',
+        components: [
+          { item: '2x4 SPF Stud', quantity: 0.9, unit: 'bf/sf', unitCost: 0.75 },
+          { item: 'Plates 2x4', quantity: 0.34, unit: 'lf/sf', unitCost: 0.95 },
+          { item: '1/2" Drywall (2 sides)', quantity: 2.0, unit: 'sf', unitCost: 0.55 },
+          { item: 'Drywall Screws', quantity: 0.02, unit: 'lb', unitCost: 3.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.12,
+        laborCost: 6.00,
+        materialCost: 2.89,
+        totalCost: 8.89,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.13 - Non-load bearing partitions',
+        notes: 'Standard partition. No insulation unless for sound.',
+      },
+      'int-partition-sound': {
+        id: 'int-partition-sound',
+        category: 'wall',
+        subcategory: 'interior',
+        name: 'Sound-Rated Partition (STC 50)',
+        description: '2x4 partition with sound insulation and resilient channel',
+        components: [
+          { item: '2x4 SPF Stud', quantity: 0.9, unit: 'bf/sf', unitCost: 0.75 },
+          { item: 'Plates 2x4', quantity: 0.34, unit: 'lf/sf', unitCost: 0.95 },
+          { item: 'R-14 Rockwool Safe n Sound', quantity: 1.0, unit: 'sf', unitCost: 0.95 },
+          { item: 'Resilient Channel', quantity: 0.33, unit: 'lf', unitCost: 0.85 },
+          { item: '5/8" Type X Drywall (2 sides)', quantity: 2.0, unit: 'sf', unitCost: 0.75 },
+          { item: 'Acoustic Sealant', quantity: 0.03, unit: 'tube', unitCost: 8.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.16,
+        laborCost: 8.00,
+        materialCost: 5.00,
+        totalCost: 13.00,
+        confidence: 'high',
+        codeReference: 'NBC 9.11 - Sound transmission requirements',
+        notes: 'For bedrooms, bathrooms, media rooms. STC 50 rating.',
+      },
+      'int-plumbing-wall': {
+        id: 'int-plumbing-wall',
+        category: 'wall',
+        subcategory: 'interior',
+        name: 'Plumbing Wall (2x6)',
+        description: '2x6 wall for plumbing runs',
+        components: [
+          { item: '2x6 SPF Stud', quantity: 1.1, unit: 'bf/sf', unitCost: 0.85 },
+          { item: 'Plates 2x6', quantity: 0.34, unit: 'lf/sf', unitCost: 1.20 },
+          { item: '1/2" Drywall (2 sides)', quantity: 2.0, unit: 'sf', unitCost: 0.55 },
+          { item: 'Backing Blocks', quantity: 0.15, unit: 'ea', unitCost: 1.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.14,
+        laborCost: 7.00,
+        materialCost: 3.58,
+        totalCost: 10.58,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.13 - Accommodate plumbing',
+        notes: 'Behind toilets, vanities. Allows 3" DWV pipe.',
+      },
+    },
+  },
+  bearing: {
+    label: 'Bearing Walls',
+    assemblies: {
+      'int-bearing-2x6': {
+        id: 'int-bearing-2x6',
+        category: 'wall',
+        subcategory: 'bearing',
+        name: 'Interior Bearing Wall (2x6)',
+        description: '2x6 load bearing interior wall',
+        components: [
+          { item: '2x6 SPF #2 Stud', quantity: 1.2, unit: 'bf/sf', unitCost: 0.95 },
+          { item: 'Plates 2x6', quantity: 0.51, unit: 'lf/sf', unitCost: 1.20 },
+          { item: '1/2" Drywall (2 sides)', quantity: 2.0, unit: 'sf', unitCost: 0.55 },
+          { item: 'Joist Hangers/Hardware', quantity: 0.1, unit: 'ea', unitCost: 4.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.15,
+        laborCost: 7.50,
+        materialCost: 3.99,
+        totalCost: 11.49,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.10 - Load bearing walls',
+        notes: 'Requires double top plate. Stud spacing per span tables.',
+      },
+    },
+  },
+  foundation: {
+    label: 'Foundation Walls',
+    assemblies: {
+      'fnd-poured-8': {
+        id: 'fnd-poured-8',
+        category: 'wall',
+        subcategory: 'foundation',
+        name: '8" Poured Concrete Foundation',
+        description: 'Standard 8" poured concrete foundation wall',
+        components: [
+          { item: 'Concrete 25MPa', quantity: 0.67, unit: 'cf/sf', unitCost: 6.50 },
+          { item: 'Rebar #4 Horizontal', quantity: 0.25, unit: 'lb/sf', unitCost: 1.20 },
+          { item: 'Rebar #4 Vertical', quantity: 0.20, unit: 'lb/sf', unitCost: 1.20 },
+          { item: 'Forms (rental)', quantity: 1.0, unit: 'sf', unitCost: 3.50 },
+          { item: 'Form Ties', quantity: 0.25, unit: 'ea', unitCost: 0.85 },
+          { item: 'Dampproofing', quantity: 1.0, unit: 'sf', unitCost: 0.75 },
+          { item: 'Drain Board', quantity: 1.0, unit: 'sf', unitCost: 1.25 },
+        ],
+        unit: 'sf',
+        laborHours: 0.35,
+        laborCost: 17.50,
+        materialCost: 11.14,
+        totalCost: 28.64,
+        confidence: 'medium',
+        codeReference: 'NBC 9.15.4 - Foundation walls',
+        notes: 'Standard for full basements. Forms are biggest cost variable.',
+      },
+      'fnd-icf-10': {
+        id: 'fnd-icf-10',
+        category: 'wall',
+        subcategory: 'foundation',
+        name: '10" ICF Foundation Wall',
+        description: 'Insulated concrete form foundation wall',
+        components: [
+          { item: 'ICF Forms (10" core)', quantity: 1.0, unit: 'sf', unitCost: 8.50 },
+          { item: 'Concrete 25MPa', quantity: 0.83, unit: 'cf/sf', unitCost: 6.50 },
+          { item: 'Rebar #4 Horizontal', quantity: 0.30, unit: 'lb/sf', unitCost: 1.20 },
+          { item: 'Rebar #4 Vertical', quantity: 0.25, unit: 'lb/sf', unitCost: 1.20 },
+          { item: 'ICF Accessories', quantity: 1.0, unit: 'sf', unitCost: 1.50 },
+          { item: 'Parging/Protection Board', quantity: 1.0, unit: 'sf', unitCost: 2.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.30,
+        laborCost: 15.00,
+        materialCost: 19.31,
+        totalCost: 34.31,
+        confidence: 'high',
+        codeReference: 'NBC 9.15.4 & 9.36.2 - Insulated foundations',
+        notes: 'No additional insulation needed. Faster than traditional forming.',
+      },
+      'fnd-block-10': {
+        id: 'fnd-block-10',
+        category: 'wall',
+        subcategory: 'foundation',
+        name: '10" Concrete Block Foundation',
+        description: 'Concrete masonry unit foundation wall',
+        components: [
+          { item: '10" CMU Block', quantity: 1.125, unit: 'ea/sf', unitCost: 3.25 },
+          { item: 'Type S Mortar', quantity: 0.01, unit: 'cf/sf', unitCost: 12.00 },
+          { item: 'Rebar #4 Vertical (grouted)', quantity: 0.20, unit: 'lb/sf', unitCost: 1.20 },
+          { item: 'Grout', quantity: 0.15, unit: 'cf/sf', unitCost: 5.50 },
+          { item: 'Bond Beam Block', quantity: 0.08, unit: 'ea', unitCost: 4.50 },
+          { item: 'Dampproofing', quantity: 1.0, unit: 'sf', unitCost: 0.75 },
+        ],
+        unit: 'sf',
+        laborHours: 0.40,
+        laborCost: 20.00,
+        materialCost: 8.89,
+        totalCost: 28.89,
+        confidence: 'medium',
+        codeReference: 'NBC 9.15.3 - Masonry foundations',
+        notes: 'Traditional method. Labor intensive but no forming cost.',
+      },
+    },
+  },
+  basement: {
+    label: 'Basement Walls',
+    assemblies: {
+      'bsmt-framed-std': {
+        id: 'bsmt-framed-std',
+        category: 'wall',
+        subcategory: 'basement',
+        name: 'Framed Basement Wall (Standard)',
+        description: '2x4 framed basement wall with fiberglass insulation',
+        components: [
+          { item: '2x4 SPF Stud', quantity: 0.9, unit: 'bf/sf', unitCost: 0.75 },
+          { item: 'Plates 2x4 (PT bottom)', quantity: 0.34, unit: 'lf/sf', unitCost: 1.10 },
+          { item: 'R-14 Fiberglass Batt', quantity: 1.0, unit: 'sf', unitCost: 0.85 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.05, unit: 'sf', unitCost: 0.12 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.12,
+        laborCost: 6.00,
+        materialCost: 3.42,
+        totalCost: 9.42,
+        confidence: 'high',
+        codeReference: 'NBC 9.36.2 - Basement insulation Zone 6',
+        notes: 'Minimum code. Leave 1" gap from concrete. Use PT bottom plate.',
+      },
+      'bsmt-rigid-framed': {
+        id: 'bsmt-rigid-framed',
+        category: 'wall',
+        subcategory: 'basement',
+        name: 'Rigid + Framed Basement Wall',
+        description: '2" XPS against concrete + 2x4 frame with R-14',
+        components: [
+          { item: '2" XPS Rigid (R-10)', quantity: 1.0, unit: 'sf', unitCost: 2.25 },
+          { item: '2x4 SPF Stud', quantity: 0.9, unit: 'bf/sf', unitCost: 0.75 },
+          { item: 'Plates 2x4 (PT bottom)', quantity: 0.34, unit: 'lf/sf', unitCost: 1.10 },
+          { item: 'R-14 Fiberglass Batt', quantity: 1.0, unit: 'sf', unitCost: 0.85 },
+          { item: '1/2" Drywall', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf',
+        laborHours: 0.16,
+        laborCost: 8.00,
+        materialCost: 5.55,
+        totalCost: 13.55,
+        confidence: 'high',
+        codeReference: 'NBC 9.36.2 - High performance basement',
+        notes: 'XPS acts as vapour barrier. No poly needed. Better moisture management.',
+      },
+    },
+  },
+};
+
+// ============================================================================
+// FLOOR ASSEMBLIES
+// ============================================================================
+
+export const floorAssemblies = {
+  dimensional: {
+    label: 'Dimensional Lumber',
+    assemblies: {
+      'flr-2x8-16oc': {
+        id: 'flr-2x8-16oc',
+        category: 'floor',
+        subcategory: 'dimensional',
+        name: '2x8 Floor @ 16" OC',
+        description: '2x8 floor joists at 16" on center, up to 10\' span',
+        components: [
+          { item: '2x8 SPF #2 Joist', quantity: 0.9, unit: 'bf/sf', unitCost: 0.90 },
+          { item: 'Rim Board 2x8', quantity: 0.17, unit: 'lf/sf', unitCost: 1.10 },
+          { item: 'Blocking/Bridging', quantity: 0.08, unit: 'lf/sf', unitCost: 0.90 },
+          { item: 'Joist Hangers', quantity: 0.05, unit: 'ea', unitCost: 2.50 },
+          { item: '3/4" T&G OSB Subfloor', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: 'Subfloor Adhesive', quantity: 0.02, unit: 'tube', unitCost: 6.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.10,
+        laborCost: 5.00,
+        materialCost: 3.63,
+        totalCost: 8.63,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.4 - Span tables',
+        notes: 'Good for spans up to 10\'. Minimum joist for most applications.',
+      },
+      'flr-2x10-16oc': {
+        id: 'flr-2x10-16oc',
+        category: 'floor',
+        subcategory: 'dimensional',
+        name: '2x10 Floor @ 16" OC',
+        description: '2x10 floor joists at 16" on center, up to 13\' span',
+        components: [
+          { item: '2x10 SPF #2 Joist', quantity: 1.2, unit: 'bf/sf', unitCost: 1.00 },
+          { item: 'Rim Board 2x10', quantity: 0.17, unit: 'lf/sf', unitCost: 1.45 },
+          { item: 'Blocking/Bridging', quantity: 0.08, unit: 'lf/sf', unitCost: 1.00 },
+          { item: 'Joist Hangers', quantity: 0.05, unit: 'ea', unitCost: 3.25 },
+          { item: '3/4" T&G OSB Subfloor', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: 'Subfloor Adhesive', quantity: 0.02, unit: 'tube', unitCost: 6.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.11,
+        laborCost: 5.50,
+        materialCost: 4.25,
+        totalCost: 9.75,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.4 - Span tables',
+        notes: 'Most common floor joist. Good for 12-13\' spans.',
+      },
+      'flr-2x12-16oc': {
+        id: 'flr-2x12-16oc',
+        category: 'floor',
+        subcategory: 'dimensional',
+        name: '2x12 Floor @ 16" OC',
+        description: '2x12 floor joists at 16" on center, up to 16\' span',
+        components: [
+          { item: '2x12 SPF #2 Joist', quantity: 1.5, unit: 'bf/sf', unitCost: 1.10 },
+          { item: 'Rim Board 2x12', quantity: 0.17, unit: 'lf/sf', unitCost: 1.75 },
+          { item: 'Blocking/Bridging', quantity: 0.08, unit: 'lf/sf', unitCost: 1.10 },
+          { item: 'Joist Hangers', quantity: 0.05, unit: 'ea', unitCost: 4.00 },
+          { item: '3/4" T&G OSB Subfloor', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: 'Subfloor Adhesive', quantity: 0.02, unit: 'tube', unitCost: 6.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.12,
+        laborCost: 6.00,
+        materialCost: 5.05,
+        totalCost: 11.05,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.4 - Span tables',
+        notes: 'For longer spans. Also allows more room for mechanicals.',
+      },
+    },
+  },
+  engineered: {
+    label: 'Engineered Lumber',
+    assemblies: {
+      'flr-tji-11-7/8': {
+        id: 'flr-tji-11-7/8',
+        category: 'floor',
+        subcategory: 'engineered',
+        name: 'TJI 11-7/8" Floor System',
+        description: 'Engineered I-joist floor system, long spans, quiet floor',
+        components: [
+          { item: 'TJI 210 @ 16" OC', quantity: 0.75, unit: 'lf/sf', unitCost: 3.25 },
+          { item: 'LVL Rim Board 1-1/4"x11-7/8"', quantity: 0.17, unit: 'lf/sf', unitCost: 4.50 },
+          { item: 'Blocking Panels', quantity: 0.08, unit: 'sf', unitCost: 1.25 },
+          { item: 'Web Stiffeners', quantity: 0.05, unit: 'ea', unitCost: 1.50 },
+          { item: 'TJI Hangers', quantity: 0.05, unit: 'ea', unitCost: 4.50 },
+          { item: '3/4" T&G OSB Subfloor', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: 'Subfloor Adhesive', quantity: 0.02, unit: 'tube', unitCost: 6.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.09,
+        laborCost: 4.50,
+        materialCost: 5.32,
+        totalCost: 9.82,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.4 + manufacturer tables',
+        notes: 'Straighter, longer spans. Easy mechanical runs. Requires hangers.',
+      },
+      'flr-tji-14': {
+        id: 'flr-tji-14',
+        category: 'floor',
+        subcategory: 'engineered',
+        name: 'TJI 14" Floor System',
+        description: 'Deep engineered I-joist for long spans or heavy loads',
+        components: [
+          { item: 'TJI 360 @ 16" OC', quantity: 0.75, unit: 'lf/sf', unitCost: 4.25 },
+          { item: 'LVL Rim Board 1-1/4"x14"', quantity: 0.17, unit: 'lf/sf', unitCost: 5.50 },
+          { item: 'Blocking Panels', quantity: 0.08, unit: 'sf', unitCost: 1.50 },
+          { item: 'Web Stiffeners', quantity: 0.05, unit: 'ea', unitCost: 1.75 },
+          { item: 'TJI Hangers', quantity: 0.05, unit: 'ea', unitCost: 5.25 },
+          { item: '3/4" T&G OSB Subfloor', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: 'Subfloor Adhesive', quantity: 0.02, unit: 'tube', unitCost: 6.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.09,
+        laborCost: 4.50,
+        materialCost: 6.57,
+        totalCost: 11.07,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.4 + manufacturer tables',
+        notes: 'For 20\'+ spans. More room for HVAC. Premium floor system.',
+      },
+      'flr-lvl-beam': {
+        id: 'flr-lvl-beam',
+        category: 'floor',
+        subcategory: 'engineered',
+        name: 'LVL Beam (per LF)',
+        description: 'Laminated veneer lumber beam for point loads',
+        components: [
+          { item: '1-3/4" x 11-7/8" LVL', quantity: 2.0, unit: 'ea/lf', unitCost: 12.50 },
+          { item: 'Through Bolts', quantity: 0.33, unit: 'ea/lf', unitCost: 3.50 },
+          { item: 'Beam Hangers', quantity: 0.05, unit: 'ea/lf', unitCost: 25.00 },
+          { item: 'Steel Column/Post', quantity: 0.05, unit: 'ea/lf', unitCost: 85.00 },
+        ],
+        unit: 'lf',
+        laborHours: 0.40,
+        laborCost: 20.00,
+        materialCost: 32.66,
+        totalCost: 52.66,
+        confidence: 'medium',
+        codeReference: 'NBC 9.23 + engineering',
+        notes: 'Priced as 2-ply 11-7/8". Adjust for actual beam size required.',
+      },
+      'flr-glulam-beam': {
+        id: 'flr-glulam-beam',
+        category: 'floor',
+        subcategory: 'engineered',
+        name: 'Glulam Beam (per LF)',
+        description: 'Glue-laminated timber beam for heavy/long spans',
+        components: [
+          { item: '5-1/8" x 12" Glulam 24F-V4', quantity: 1.0, unit: 'lf', unitCost: 28.00 },
+          { item: 'Beam Hardware', quantity: 0.10, unit: 'ea/lf', unitCost: 35.00 },
+          { item: 'Steel Column', quantity: 0.04, unit: 'ea/lf', unitCost: 125.00 },
+        ],
+        unit: 'lf',
+        laborHours: 0.50,
+        laborCost: 25.00,
+        materialCost: 36.50,
+        totalCost: 61.50,
+        confidence: 'medium',
+        codeReference: 'NBC 9.23 + engineering required',
+        notes: 'For exposed beams or heavy loads. Size per engineering.',
+      },
+      'flr-steel-beam': {
+        id: 'flr-steel-beam',
+        category: 'floor',
+        subcategory: 'engineered',
+        name: 'Steel Beam (W8x18)',
+        description: 'Wide flange steel beam for point loads',
+        components: [
+          { item: 'W8x18 Steel Beam', quantity: 18.0, unit: 'lb/lf', unitCost: 1.85 },
+          { item: 'Primer Paint', quantity: 1.0, unit: 'lf', unitCost: 2.50 },
+          { item: 'Bearing Plates', quantity: 0.10, unit: 'ea/lf', unitCost: 45.00 },
+          { item: 'Steel Column 4" Lally', quantity: 0.04, unit: 'ea/lf', unitCost: 95.00 },
+        ],
+        unit: 'lf',
+        laborHours: 0.45,
+        laborCost: 22.50,
+        materialCost: 43.60,
+        totalCost: 66.10,
+        confidence: 'medium',
+        codeReference: 'NBC 4.3 + engineering required',
+        notes: 'Most common basement beam. Size per engineering. Often hidden.',
+      },
+    },
+  },
+  subfloor: {
+    label: 'Subfloor & Underlayment',
+    assemblies: {
+      'subfloor-osb-3/4': {
+        id: 'subfloor-osb-3/4',
+        category: 'floor',
+        subcategory: 'subfloor',
+        name: '3/4" OSB T&G Subfloor',
+        description: 'Standard tongue and groove OSB subfloor',
+        components: [
+          { item: '3/4" T&G OSB (23/32")', quantity: 1.05, unit: 'sf', unitCost: 1.45 },
+          { item: 'Subfloor Adhesive', quantity: 0.02, unit: 'tube', unitCost: 6.00 },
+          { item: 'Subfloor Screws', quantity: 0.04, unit: 'lb', unitCost: 4.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.04,
+        laborCost: 2.00,
+        materialCost: 1.82,
+        totalCost: 3.82,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.14 - Subfloor requirements',
+        notes: 'Standard subfloor. Always glue and screw. Stagger joints.',
+      },
+      'subfloor-advantech': {
+        id: 'subfloor-advantech',
+        category: 'floor',
+        subcategory: 'subfloor',
+        name: 'AdvanTech Subfloor',
+        description: 'Premium moisture-resistant subfloor panel',
+        components: [
+          { item: '3/4" AdvanTech T&G', quantity: 1.05, unit: 'sf', unitCost: 2.15 },
+          { item: 'AdvanTech Adhesive', quantity: 0.02, unit: 'tube', unitCost: 8.00 },
+          { item: 'Subfloor Screws', quantity: 0.04, unit: 'lb', unitCost: 4.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.04,
+        laborCost: 2.00,
+        materialCost: 2.60,
+        totalCost: 4.60,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.14 - Enhanced subfloor',
+        notes: 'Premium option. 50-year warranty. No sanding, no swelling.',
+      },
+      'underlay-plywood': {
+        id: 'underlay-plywood',
+        category: 'floor',
+        subcategory: 'subfloor',
+        name: '1/4" Plywood Underlayment',
+        description: 'Smooth underlayment for vinyl or tile',
+        components: [
+          { item: '1/4" Lauan Plywood', quantity: 1.05, unit: 'sf', unitCost: 0.65 },
+          { item: 'Underlayment Staples', quantity: 0.02, unit: 'lb', unitCost: 5.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.03,
+        laborCost: 1.50,
+        materialCost: 0.78,
+        totalCost: 2.28,
+        confidence: 'high',
+        codeReference: 'Manufacturer requirements',
+        notes: 'For smooth surface under vinyl. Not for wet areas.',
+      },
+    },
+  },
+  specialty: {
+    label: 'Specialty Floors',
+    assemblies: {
+      'flr-cantilevered': {
+        id: 'flr-cantilevered',
+        category: 'floor',
+        subcategory: 'specialty',
+        name: 'Cantilevered Floor (Bay Window)',
+        description: 'Cantilevered floor for bump-out or bay window',
+        components: [
+          { item: '2x10 SPF #2 Extended', quantity: 1.5, unit: 'bf/sf', unitCost: 1.00 },
+          { item: 'Blocking 2x10', quantity: 0.25, unit: 'lf/sf', unitCost: 1.00 },
+          { item: 'Plywood Box (2 sides)', quantity: 2.0, unit: 'sf', unitCost: 1.25 },
+          { item: 'R-24 Batt Insulation', quantity: 1.0, unit: 'sf', unitCost: 1.15 },
+          { item: '3/4" OSB Subfloor', quantity: 1.0, unit: 'sf', unitCost: 1.45 },
+          { item: 'Vapour Barrier', quantity: 1.0, unit: 'sf', unitCost: 0.12 },
+        ],
+        unit: 'sf',
+        laborHours: 0.25,
+        laborCost: 12.50,
+        materialCost: 6.72,
+        totalCost: 19.22,
+        confidence: 'medium',
+        codeReference: 'NBC 9.23.9 - Cantilevers',
+        notes: 'Max 2\' cantilever with 2x10. Must insulate. Air seal critical.',
+      },
+      'flr-basement-slab': {
+        id: 'flr-basement-slab',
+        category: 'floor',
+        subcategory: 'specialty',
+        name: 'Insulated Basement Slab',
+        description: '4" concrete slab with under-slab insulation',
+        components: [
+          { item: '2" XPS Under-slab Insulation', quantity: 1.0, unit: 'sf', unitCost: 2.25 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.1, unit: 'sf', unitCost: 0.12 },
+          { item: '4" Gravel Base', quantity: 0.033, unit: 'cy/sf', unitCost: 45.00 },
+          { item: '4" Concrete 25MPa', quantity: 0.012, unit: 'cy/sf', unitCost: 185.00 },
+          { item: 'WWF 6x6 W1.4', quantity: 1.0, unit: 'sf', unitCost: 0.35 },
+          { item: 'Control Joints', quantity: 0.05, unit: 'lf/sf', unitCost: 1.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.12,
+        laborCost: 6.00,
+        materialCost: 7.68,
+        totalCost: 13.68,
+        confidence: 'medium',
+        codeReference: 'NBC 9.16 & 9.36.2 - Basement slabs',
+        notes: 'Under-slab insulation now code in Zone 6. R-10 minimum.',
+      },
+    },
+  },
+};
+
+// ============================================================================
+// ROOF ASSEMBLIES
+// ============================================================================
+
+export const roofAssemblies = {
+  trusses: {
+    label: 'Roof Trusses',
+    assemblies: {
+      'roof-truss-std': {
+        id: 'roof-truss-std',
+        category: 'roof',
+        subcategory: 'trusses',
+        name: 'Standard Roof Truss',
+        description: 'Engineered wood truss, 24" OC, typical residential',
+        components: [
+          { item: 'Engineered Truss 24" OC', quantity: 0.042, unit: 'ea/sf', unitCost: 85.00 },
+          { item: 'Hurricane Ties', quantity: 0.042, unit: 'ea', unitCost: 2.50 },
+          { item: 'Truss Bracing 2x4', quantity: 0.05, unit: 'lf/sf', unitCost: 0.75 },
+          { item: 'Gable End Studs', quantity: 0.02, unit: 'bf/sf', unitCost: 0.75 },
+        ],
+        unit: 'sf roof',
+        laborHours: 0.06,
+        laborCost: 3.00,
+        materialCost: 4.00,
+        totalCost: 7.00,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.6 - Roof framing',
+        notes: 'Price varies by span and pitch. Get truss quote for project.',
+      },
+      'roof-truss-raised-heel': {
+        id: 'roof-truss-raised-heel',
+        category: 'roof',
+        subcategory: 'trusses',
+        name: 'Raised Heel (Energy) Truss',
+        description: 'Truss with raised heel for full attic insulation depth',
+        components: [
+          { item: 'Energy Heel Truss 24" OC', quantity: 0.042, unit: 'ea/sf', unitCost: 105.00 },
+          { item: 'Hurricane Ties', quantity: 0.042, unit: 'ea', unitCost: 2.50 },
+          { item: 'Truss Bracing 2x4', quantity: 0.05, unit: 'lf/sf', unitCost: 0.75 },
+          { item: 'Raised Fascia 2x8', quantity: 0.04, unit: 'lf/sf', unitCost: 1.10 },
+        ],
+        unit: 'sf roof',
+        laborHours: 0.07,
+        laborCost: 3.50,
+        materialCost: 4.92,
+        totalCost: 8.42,
+        confidence: 'high',
+        codeReference: 'NBC 9.36.2 - Energy trusses recommended',
+        notes: 'Allows R-60 at eaves. Now standard for energy code compliance.',
+      },
+      'roof-truss-attic': {
+        id: 'roof-truss-attic',
+        category: 'roof',
+        subcategory: 'trusses',
+        name: 'Attic Truss (Room-in-Roof)',
+        description: 'Truss with open center for attic room',
+        components: [
+          { item: 'Attic Truss 24" OC', quantity: 0.042, unit: 'ea/sf', unitCost: 165.00 },
+          { item: 'Hurricane Ties', quantity: 0.042, unit: 'ea', unitCost: 2.50 },
+          { item: 'Truss Bracing 2x4', quantity: 0.06, unit: 'lf/sf', unitCost: 0.75 },
+          { item: 'Attic Floor (included area)', quantity: 0.4, unit: 'sf', unitCost: 4.00 },
+        ],
+        unit: 'sf roof',
+        laborHours: 0.08,
+        laborCost: 4.00,
+        materialCost: 8.64,
+        totalCost: 12.64,
+        confidence: 'medium',
+        codeReference: 'NBC 9.23.6 - Attic trusses',
+        notes: 'Creates bonus room. Requires HVAC and egress window.',
+      },
+    },
+  },
+  rafters: {
+    label: 'Stick-Framed Rafters',
+    assemblies: {
+      'roof-rafter-2x8': {
+        id: 'roof-rafter-2x8',
+        category: 'roof',
+        subcategory: 'rafters',
+        name: '2x8 Rafter Roof @ 16" OC',
+        description: 'Conventional stick-framed 2x8 rafter roof',
+        components: [
+          { item: '2x8 SPF Rafter', quantity: 1.2, unit: 'bf/sf', unitCost: 0.90 },
+          { item: 'Ridge Board 2x10', quantity: 0.04, unit: 'lf/sf', unitCost: 1.35 },
+          { item: 'Collar Ties 2x6', quantity: 0.03, unit: 'lf/sf', unitCost: 0.95 },
+          { item: 'Ceiling Joist 2x6', quantity: 0.8, unit: 'bf/sf', unitCost: 0.85 },
+          { item: 'Rafter Ties/Hardware', quantity: 0.03, unit: 'ea', unitCost: 3.50 },
+          { item: 'Birdsmouth/Seat Cuts', quantity: 0.06, unit: 'ea', unitCost: 5.00 },
+        ],
+        unit: 'sf roof',
+        laborHours: 0.15,
+        laborCost: 7.50,
+        materialCost: 3.35,
+        totalCost: 10.85,
+        confidence: 'medium',
+        codeReference: 'NBC 9.23.6 - Conventional framing',
+        notes: 'More labor than trusses. Allows cathedral ceilings.',
+      },
+      'roof-rafter-2x10': {
+        id: 'roof-rafter-2x10',
+        category: 'roof',
+        subcategory: 'rafters',
+        name: '2x10 Rafter Roof @ 16" OC',
+        description: 'Conventional 2x10 rafter for longer spans',
+        components: [
+          { item: '2x10 SPF Rafter', quantity: 1.5, unit: 'bf/sf', unitCost: 1.00 },
+          { item: 'Ridge Board 2x12', quantity: 0.04, unit: 'lf/sf', unitCost: 1.75 },
+          { item: 'Collar Ties 2x6', quantity: 0.03, unit: 'lf/sf', unitCost: 0.95 },
+          { item: 'Ceiling Joist 2x8', quantity: 1.0, unit: 'bf/sf', unitCost: 0.90 },
+          { item: 'Rafter Hardware', quantity: 0.03, unit: 'ea', unitCost: 4.00 },
+        ],
+        unit: 'sf roof',
+        laborHours: 0.16,
+        laborCost: 8.00,
+        materialCost: 3.70,
+        totalCost: 11.70,
+        confidence: 'medium',
+        codeReference: 'NBC 9.23.6 - Conventional framing',
+        notes: 'For longer spans. More insulation depth for cathedral ceiling.',
+      },
+      'roof-rafter-cathedral': {
+        id: 'roof-rafter-cathedral',
+        category: 'roof',
+        subcategory: 'rafters',
+        name: 'Cathedral Ceiling Rafter Assembly',
+        description: 'Insulated cathedral ceiling with ventilation channel',
+        components: [
+          { item: '2x12 SPF Rafter', quantity: 1.8, unit: 'bf/sf', unitCost: 1.10 },
+          { item: 'Ridge Board/Beam', quantity: 0.04, unit: 'lf/sf', unitCost: 2.50 },
+          { item: 'Vent Chutes', quantity: 1.0, unit: 'sf', unitCost: 0.45 },
+          { item: 'R-38 Batt Insulation', quantity: 1.0, unit: 'sf', unitCost: 1.85 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.05, unit: 'sf', unitCost: 0.12 },
+          { item: '1/2" Drywall Ceiling', quantity: 1.0, unit: 'sf', unitCost: 0.55 },
+        ],
+        unit: 'sf ceiling',
+        laborHours: 0.22,
+        laborCost: 11.00,
+        materialCost: 5.49,
+        totalCost: 16.49,
+        confidence: 'medium',
+        codeReference: 'NBC 9.36.2 & 9.19 - Vented cathedral',
+        notes: 'Must maintain 2" vent space. R-38 effective minimum.',
+      },
+    },
+  },
+  sheathing: {
+    label: 'Roof Sheathing',
+    assemblies: {
+      'roof-sheath-osb': {
+        id: 'roof-sheath-osb',
+        category: 'roof',
+        subcategory: 'sheathing',
+        name: '7/16" OSB Roof Sheathing',
+        description: 'Standard OSB roof sheathing',
+        components: [
+          { item: '7/16" OSB Sheathing', quantity: 1.05, unit: 'sf', unitCost: 0.95 },
+          { item: 'H-Clips', quantity: 0.25, unit: 'ea', unitCost: 0.15 },
+          { item: 'Ring Shank Nails', quantity: 0.02, unit: 'lb', unitCost: 3.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.04,
+        laborCost: 2.00,
+        materialCost: 1.14,
+        totalCost: 3.14,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.15 - Roof sheathing',
+        notes: 'Standard sheathing. Use H-clips if unsupported edges.',
+      },
+      'roof-sheath-plywood': {
+        id: 'roof-sheath-plywood',
+        category: 'roof',
+        subcategory: 'sheathing',
+        name: '1/2" Plywood Roof Sheathing',
+        description: 'Plywood sheathing for improved performance',
+        components: [
+          { item: '1/2" CDX Plywood', quantity: 1.05, unit: 'sf', unitCost: 1.35 },
+          { item: 'Ring Shank Nails', quantity: 0.02, unit: 'lb', unitCost: 3.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.04,
+        laborCost: 2.00,
+        materialCost: 1.49,
+        totalCost: 3.49,
+        confidence: 'high',
+        codeReference: 'NBC 9.23.15 - Roof sheathing',
+        notes: 'Better for nail holding and moisture. Required by some roofing.',
+      },
+    },
+  },
+  shingles: {
+    label: 'Asphalt Shingles',
+    assemblies: {
+      'roof-shingle-3tab': {
+        id: 'roof-shingle-3tab',
+        category: 'roof',
+        subcategory: 'shingles',
+        name: '3-Tab Asphalt Shingles',
+        description: 'Basic 25-year asphalt shingles',
+        components: [
+          { item: '3-Tab Shingles', quantity: 1.1, unit: 'sf', unitCost: 1.15 },
+          { item: '15lb Felt Underlayment', quantity: 1.1, unit: 'sf', unitCost: 0.18 },
+          { item: 'Ice & Water Shield (eaves)', quantity: 0.15, unit: 'sf', unitCost: 1.25 },
+          { item: 'Drip Edge', quantity: 0.08, unit: 'lf/sf', unitCost: 1.25 },
+          { item: 'Roofing Nails', quantity: 0.02, unit: 'lb', unitCost: 4.50 },
+          { item: 'Roof Vents', quantity: 0.007, unit: 'ea', unitCost: 45.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.06,
+        laborCost: 3.00,
+        materialCost: 2.04,
+        totalCost: 5.04,
+        confidence: 'high',
+        codeReference: 'NBC 9.26 - Roof covering',
+        notes: 'Economy option. 25-year warranty typical.',
+      },
+      'roof-shingle-arch': {
+        id: 'roof-shingle-arch',
+        category: 'roof',
+        subcategory: 'shingles',
+        name: 'Architectural Asphalt Shingles',
+        description: 'Dimensional 30-50 year shingles',
+        components: [
+          { item: 'Architectural Shingles', quantity: 1.1, unit: 'sf', unitCost: 1.65 },
+          { item: 'Synthetic Underlayment', quantity: 1.1, unit: 'sf', unitCost: 0.25 },
+          { item: 'Ice & Water Shield', quantity: 0.15, unit: 'sf', unitCost: 1.25 },
+          { item: 'Drip Edge', quantity: 0.08, unit: 'lf/sf', unitCost: 1.25 },
+          { item: 'Ridge Cap Shingles', quantity: 0.03, unit: 'lf/sf', unitCost: 3.50 },
+          { item: 'Roofing Nails', quantity: 0.02, unit: 'lb', unitCost: 4.50 },
+          { item: 'Roof Vents', quantity: 0.007, unit: 'ea', unitCost: 55.00 },
+        ],
+        unit: 'sf',
+        laborHours: 0.07,
+        laborCost: 3.50,
+        materialCost: 2.69,
+        totalCost: 6.19,
+        confidence: 'high',
+        codeReference: 'NBC 9.26 - Roof covering',
+        notes: 'Most popular choice. 30-50 year warranty. Better wind rating.',
+      },
+      'roof-shingle-premium': {
+        id: 'roof-shingle-premium',
+        category: 'roof',
+        subcategory: 'shingles',
+        name: 'Premium Designer Shingles',
+        description: 'High-end designer shingles, slate/cedar look',
+        components: [
+          { item: 'Designer Shingles', quantity: 1.1, unit: 'sf', unitCost: 3.25 },
+          { item: 'Premium Synthetic Underlayment', quantity: 1.1, unit: 'sf', unitCost: 0.35 },
+          { item: 'Ice & Water Shield', quantity: 0.20, unit: 'sf', unitCost: 1.25 },
+          { item: 'Drip Edge (colored)', quantity: 0.08, unit: 'lf/sf', unitCost: 1.85 },
+          { item: 'Ridge Vent', quantity: 0.03, unit: 'lf/sf', unitCost: 5.50 },
+          { item: 'Hip/Ridge Caps', quantity: 0.03, unit: 'lf/sf', unitCost: 5.25 },
+        ],
+        unit: 'sf',
+        laborHours: 0.08,
+        laborCost: 4.00,
+        materialCost: 4.57,
+        totalCost: 8.57,
+        confidence: 'high',
+        codeReference: 'NBC 9.26 - Premium roof',
+        notes: 'Luxury appearance. Lifetime warranty. Impact resistant options.',
+      },
+    },
+  },
+  metal: {
+    label: 'Metal Roofing',
+    assemblies: {
+      'roof-metal-standing-seam': {
+        id: 'roof-metal-standing-seam',
+        category: 'roof',
+        subcategory: 'metal',
+        name: 'Standing Seam Metal Roof',
+        description: 'Premium standing seam steel roofing',
+        components: [
+          { item: '24ga Standing Seam Panels', quantity: 1.05, unit: 'sf', unitCost: 4.50 },
+          { item: 'Synthetic Underlayment', quantity: 1.1, unit: 'sf', unitCost: 0.25 },
+          { item: 'Ice & Water Shield (full)', quantity: 1.1, unit: 'sf', unitCost: 1.25 },
+          { item: 'Metal Trim/Flashing', quantity: 0.1, unit: 'lf/sf', unitCost: 4.50 },
+          { item: 'Clips and Fasteners', quantity: 1.0, unit: 'sf', unitCost: 0.65 },
+          { item: 'Ridge Cap', quantity: 0.03, unit: 'lf/sf', unitCost: 8.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.12,
+        laborCost: 6.00,
+        materialCost: 7.69,
+        totalCost: 13.69,
+        confidence: 'medium',
+        codeReference: 'NBC 9.26 - Metal roofing',
+        notes: 'Premium, long-lasting. 50+ year life. Good for snow shedding.',
+      },
+      'roof-metal-ribbed': {
+        id: 'roof-metal-ribbed',
+        category: 'roof',
+        subcategory: 'metal',
+        name: 'Ribbed/Agricultural Metal Roof',
+        description: 'Exposed fastener ribbed metal roofing',
+        components: [
+          { item: '29ga Ribbed Steel Panels', quantity: 1.05, unit: 'sf', unitCost: 1.85 },
+          { item: 'Synthetic Underlayment', quantity: 1.1, unit: 'sf', unitCost: 0.25 },
+          { item: 'Self-Tapping Screws', quantity: 0.04, unit: 'ea', unitCost: 0.15 },
+          { item: 'Foam Closure Strips', quantity: 0.08, unit: 'lf/sf', unitCost: 0.85 },
+          { item: 'Ridge Cap', quantity: 0.03, unit: 'lf/sf', unitCost: 4.50 },
+          { item: 'Trim/Flashing', quantity: 0.08, unit: 'lf/sf', unitCost: 2.50 },
+        ],
+        unit: 'sf',
+        laborHours: 0.08,
+        laborCost: 4.00,
+        materialCost: 3.04,
+        totalCost: 7.04,
+        confidence: 'high',
+        codeReference: 'NBC 9.26 - Metal roofing',
+        notes: 'Economical metal option. Good for cottages, garages, barns.',
+      },
+    },
+  },
+};
+
+// ============================================================================
+// FOUNDATION ASSEMBLIES
+// ============================================================================
+
+export const foundationAssemblies = {
+  footings: {
+    label: 'Footings',
+    assemblies: {
+      'fnd-footing-strip': {
+        id: 'fnd-footing-strip',
+        category: 'foundation',
+        subcategory: 'footings',
+        name: 'Strip Footing (20"x8")',
+        description: 'Standard continuous strip footing for foundation walls',
+        components: [
+          { item: 'Concrete 25MPa', quantity: 0.10, unit: 'cy/lf', unitCost: 185.00 },
+          { item: 'Rebar #4 (2 bars)', quantity: 1.5, unit: 'lb/lf', unitCost: 1.20 },
+          { item: 'Form Lumber 2x8', quantity: 2.5, unit: 'bf/lf', unitCost: 0.90 },
+          { item: 'Form Stakes', quantity: 0.5, unit: 'ea/lf', unitCost: 1.25 },
+          { item: 'Keyway Form', quantity: 1.0, unit: 'lf', unitCost: 0.45 },
+        ],
+        unit: 'lf',
+        laborHours: 0.25,
+        laborCost: 12.50,
+        materialCost: 23.33,
+        totalCost: 35.83,
+        confidence: 'high',
+        codeReference: 'NBC 9.15.3 - Footings',
+        notes: 'Standard for residential. Size per soil bearing capacity.',
+      },
+      'fnd-footing-stepped': {
+        id: 'fnd-footing-stepped',
+        category: 'foundation',
+        subcategory: 'footings',
+        name: 'Stepped Footing',
+        description: 'Stepped footing for sloped sites',
+        components: [
+          { item: 'Concrete 25MPa', quantity: 0.12, unit: 'cy/lf', unitCost: 185.00 },
+          { item: 'Rebar #4 (continuous)', quantity: 2.0, unit: 'lb/lf', unitCost: 1.20 },
+          { item: 'Vertical Rebar #4', quantity: 0.5, unit: 'lb/step', unitCost: 1.20 },
+          { item: 'Form Lumber', quantity: 4.0, unit: 'bf/lf', unitCost: 0.90 },
+          { item: 'Step Form Lumber', quantity: 6.0, unit: 'bf/step', unitCost: 0.90 },
+        ],
+        unit: 'lf',
+        laborHours: 0.40,
+        laborCost: 20.00,
+        materialCost: 28.80,
+        totalCost: 48.80,
+        confidence: 'medium',
+        codeReference: 'NBC 9.15.3 - Stepped footings',
+        notes: 'Add step cost per step (typically every 2\' of slope).',
+      },
+      'fnd-footing-pad': {
+        id: 'fnd-footing-pad',
+        category: 'foundation',
+        subcategory: 'footings',
+        name: 'Column Pad Footing (24"x24"x12")',
+        description: 'Isolated pad footing for point loads',
+        components: [
+          { item: 'Concrete 25MPa', quantity: 0.18, unit: 'cy/ea', unitCost: 185.00 },
+          { item: 'Rebar #4 Grid', quantity: 12.0, unit: 'lb/ea', unitCost: 1.20 },
+          { item: 'Form Lumber', quantity: 10.0, unit: 'bf/ea', unitCost: 0.90 },
+          { item: 'Anchor Bolts', quantity: 2.0, unit: 'ea', unitCost: 4.50 },
+        ],
+        unit: 'ea',
+        laborHours: 1.0,
+        laborCost: 50.00,
+        materialCost: 65.10,
+        totalCost: 115.10,
+        confidence: 'high',
+        codeReference: 'NBC 9.15.3 - Isolated footings',
+        notes: 'For posts, columns. Size per load and soil capacity.',
+      },
+    },
+  },
+  slabs: {
+    label: 'Concrete Slabs',
+    assemblies: {
+      'fnd-slab-garage': {
+        id: 'fnd-slab-garage',
+        category: 'foundation',
+        subcategory: 'slabs',
+        name: 'Garage Slab (4" with thickened edge)',
+        description: '4" concrete garage slab with perimeter thickening',
+        components: [
+          { item: 'Compacted Gravel Base 6"', quantity: 0.019, unit: 'cy/sf', unitCost: 45.00 },
+          { item: '6mil Poly Vapour Barrier', quantity: 1.1, unit: 'sf', unitCost: 0.12 },
+          { item: 'Concrete 32MPa', quantity: 0.013, unit: 'cy/sf', unitCost: 195.00 },
+          { item: 'WWF 6x6 W1.4', quantity: 1.0, unit: 'sf', unitCost: 0.35 },
+          { item: 'Edge Form 2x4', quantity: 0.1, unit: 'lf/sf', unitCost: 0.75 },
+          { item: 'Expansion Joint', quantity: 0.05, unit: 'lf/sf', unitCost: 1.25 },
+          { item: 'Broom Finish', quantity: 1.0, unit: 'sf', unitCost: 0.25 },
+        ],
+        unit: 'sf',
+        laborHours: 0.10,
+        laborCost: 5.00,
+        materialCost: 4.09,
+        totalCost: 9.09,
+        confidence: 'high',
+        codeReference: 'NBC 9.16.2 - Garage floors',
+        notes: 'Thickened edge to 12" at perimeter. Control joints every 10\'.',
+      },
+      'fnd-slab-frost-protected': {
+        id: 'fnd-slab-frost-protected',
+        category: 'foundation',
+        subcategory: 'slabs',
+        name: 'Frost-Protected Shallow Foundation',
+        description: 'Insulated slab-on-grade with wing insulation',
+        components: [
+          { item: 'Gravel Base 12"', quantity: 0.037, unit: 'cy/sf', unitCost: 45.00 },
+          { item: '4" XPS Under-slab (R-20)', quantity: 1.0, unit: 'sf', unitCost: 4.25 },
+          { item: '2" XPS Wing Insulation', quantity: 0.5, unit: 'sf', unitCost: 2.25 },
+          { item: '6mil Poly', quantity: 1.1, unit: 'sf', unitCost: 0.12 },
+          { item: 'Concrete 25MPa (6")', quantity: 0.019, unit: 'cy/sf', unitCost: 185.00 },
+          { item: 'Rebar #4 Grid', quantity: 0.35, unit: 'lb/sf', unitCost: 1.20 },
+          { item: 'Edge Insulation', quantity: 0.08, unit: 'sf', unitCost: 4.25 },
+        ],
+        unit: 'sf',
+        laborHours: 0.15,
+        laborCost: 7.50,
+        materialCost: 12.36,
+        totalCost: 19.86,
+        confidence: 'medium',
+        codeReference: 'NBC 9.12.2.2 - FPSF',
+        notes: 'Eliminates deep excavation. Good for additions, garages.',
+      },
+      'fnd-slab-heated': {
+        id: 'fnd-slab-heated',
+        category: 'foundation',
+        subcategory: 'slabs',
+        name: 'Heated Slab (Radiant Ready)',
+        description: 'Insulated slab prepared for in-floor radiant heating',
+        components: [
+          { item: 'Gravel Base 8"', quantity: 0.025, unit: 'cy/sf', unitCost: 45.00 },
+          { item: '4" XPS Insulation (R-20)', quantity: 1.0, unit: 'sf', unitCost: 4.25 },
+          { item: '6mil Poly', quantity: 1.1, unit: 'sf', unitCost: 0.12 },
+          { item: 'PEX Tubing', quantity: 1.0, unit: 'lf/sf', unitCost: 0.75 },
+          { item: 'PEX Clips/Staples', quantity: 0.5, unit: 'ea/sf', unitCost: 0.15 },
+          { item: 'Concrete 25MPa (4")', quantity: 0.013, unit: 'cy/sf', unitCost: 185.00 },
+          { item: 'WWF 6x6', quantity: 1.0, unit: 'sf', unitCost: 0.35 },
+          { item: 'Perimeter Insulation', quantity: 0.08, unit: 'sf', unitCost: 4.25 },
+        ],
+        unit: 'sf',
+        laborHours: 0.18,
+        laborCost: 9.00,
+        materialCost: 10.06,
+        totalCost: 19.06,
+        confidence: 'medium',
+        codeReference: 'NBC 9.36.2 - Heated slabs',
+        notes: 'Does not include mechanical (manifold, boiler). PEX by HVAC trade.',
+      },
+    },
+  },
+};
+
+// ============================================================================
+// ASSEMBLY CATEGORIES - For UI organization
+// ============================================================================
+
+export const ASSEMBLY_CATEGORIES = {
+  wall: {
+    id: 'wall',
+    label: 'Walls',
+    icon: 'Wall',
+    assemblies: wallAssemblies,
+    subcategories: {
+      exterior: 'Exterior Walls',
+      interior: 'Interior Walls',
+      bearing: 'Bearing Walls',
+      foundation: 'Foundation Walls',
+      basement: 'Basement Walls',
+    },
+  },
+  floor: {
+    id: 'floor',
+    label: 'Floors',
+    icon: 'Layers',
+    assemblies: floorAssemblies,
+    subcategories: {
+      dimensional: 'Dimensional Lumber',
+      engineered: 'Engineered Lumber',
+      subfloor: 'Subfloor & Underlayment',
+      specialty: 'Specialty Floors',
+    },
+  },
+  roof: {
+    id: 'roof',
+    label: 'Roofs',
+    icon: 'Home',
+    assemblies: roofAssemblies,
+    subcategories: {
+      trusses: 'Roof Trusses',
+      rafters: 'Stick-Framed Rafters',
+      sheathing: 'Roof Sheathing',
+      shingles: 'Asphalt Shingles',
+      metal: 'Metal Roofing',
+    },
+  },
+  foundation: {
+    id: 'foundation',
+    label: 'Foundation',
+    icon: 'Square',
+    assemblies: foundationAssemblies,
+    subcategories: {
+      footings: 'Footings',
+      slabs: 'Concrete Slabs',
+    },
+  },
+};
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Get all assemblies as a flat array
+ */
+export function getAllAssemblies() {
+  const all = [];
+  Object.values(ASSEMBLY_CATEGORIES).forEach(category => {
+    Object.values(category.assemblies).forEach(subcategory => {
+      Object.values(subcategory.assemblies).forEach(assembly => {
+        all.push(assembly);
+      });
+    });
+  });
+  return all;
+}
+
+/**
+ * Get assemblies for a specific category
+ */
+export function getAssembliesByCategory(categoryId) {
+  const category = ASSEMBLY_CATEGORIES[categoryId];
+  if (!category) return [];
+
+  const assemblies = [];
+  Object.values(category.assemblies).forEach(subcategory => {
+    Object.values(subcategory.assemblies).forEach(assembly => {
+      assemblies.push(assembly);
+    });
+  });
+  return assemblies;
+}
+
+/**
+ * Get assemblies for a specific subcategory
+ */
+export function getAssembliesBySubcategory(categoryId, subcategoryId) {
+  const category = ASSEMBLY_CATEGORIES[categoryId];
+  if (!category) return [];
+
+  const subcategory = category.assemblies[subcategoryId];
+  if (!subcategory) return [];
+
+  return Object.values(subcategory.assemblies);
+}
+
+/**
+ * Find assembly by ID
+ */
+export function findAssemblyById(id) {
+  for (const category of Object.values(ASSEMBLY_CATEGORIES)) {
+    for (const subcategory of Object.values(category.assemblies)) {
+      if (subcategory.assemblies[id]) {
+        return subcategory.assemblies[id];
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Calculate assembly cost for a given quantity
+ */
+export function calculateAssemblyCost(assembly, quantity) {
+  const materialTotal = assembly.materialCost * quantity;
+  const laborTotal = assembly.laborCost * quantity;
+  const laborHoursTotal = assembly.laborHours * quantity;
+
+  return {
+    materialCost: materialTotal,
+    laborCost: laborTotal,
+    totalCost: materialTotal + laborTotal,
+    laborHours: laborHoursTotal,
+    quantity,
+    unit: assembly.unit,
+  };
+}
+
+/**
+ * Get component breakdown for an assembly at a given quantity
+ */
+export function getComponentBreakdown(assembly, quantity) {
+  return assembly.components.map(component => ({
+    ...component,
+    totalQuantity: component.quantity * quantity,
+    totalCost: component.quantity * quantity * component.unitCost,
+  }));
+}

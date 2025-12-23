@@ -2248,16 +2248,19 @@ export const CEILING_HEIGHTS = [
 ];
 
 /**
- * Default wall assemblies
+ * Default build assemblies (legacy wall assemblies)
  *
- * Wall assemblies now support dynamic pricing from the Cost Catalogue.
+ * These are the original wall assemblies, kept for backwards compatibility.
+ * New projects should use the assembliesDatabase.js which includes walls,
+ * floors, roofs, and foundations with NB-specific pricing.
+ *
  * The `calculatorConfig` field defines how to calculate material costs
  * using the wallMaterialCalculator.
  *
  * If calculatorConfig is present, materialCostPerUnit is calculated dynamically.
  * The fallback materialCostPerUnit is used when catalogue data is unavailable.
  */
-export const DEFAULT_WALL_ASSEMBLIES = [
+export const DEFAULT_BUILD_ASSEMBLIES = [
   {
     id: 'ext-2x6',
     name: '2x6 Exterior Wall',
@@ -2328,6 +2331,9 @@ export const DEFAULT_WALL_ASSEMBLIES = [
     },
   },
 ];
+
+// Backwards compatibility alias
+export const DEFAULT_WALL_ASSEMBLIES = DEFAULT_BUILD_ASSEMBLIES;
 
 /**
  * Calculate dynamic material cost per LF for a wall assembly
@@ -2566,8 +2572,14 @@ export function calculateInstanceCost(instance, assemblies, ceilingHeight, catal
   let materialsCost = 0;
 
   if (assembly) {
-    // Check if assembly has dynamic pricing from catalogue
-    if (assembly.calculatorConfig) {
+    // Check if assembly is from the new database (has source: 'database')
+    if (assembly.source === 'database') {
+      // New database assemblies have different field names
+      // Pricing is per unit (sf for walls, lf for linear items, etc.)
+      laborCost = (assembly.laborCostPerUnit || assembly.laborCost || 0) * quantity;
+      materialsCost = (assembly.materialCostPerUnit || assembly.materialsCost || 0) * quantity;
+      displayUnit = assembly.unit || 'sf';
+    } else if (assembly.calculatorConfig) {
       // Use dynamic material pricing from Cost Catalogue
       const dynamicMaterialCost = calculateAssemblyMaterialCost(
         assembly,
@@ -2809,8 +2821,33 @@ export function saveAssemblyTemplate(assembly) {
 
 /**
  * Load assembly templates from localStorage
+ * Returns legacy build assemblies for backwards compatibility
+ * New code should use assembliesDatabase.js directly
  */
 export function loadAssemblyTemplates() {
   const templates = JSON.parse(localStorage.getItem('hooomz_assembly_templates') || '[]');
-  return [...DEFAULT_WALL_ASSEMBLIES, ...templates];
+  return [...DEFAULT_BUILD_ASSEMBLIES, ...templates];
+}
+
+/**
+ * Convert a new database assembly to the legacy format
+ * Used for compatibility with existing estimate calculations
+ */
+export function convertDatabaseAssemblyToLegacy(dbAssembly) {
+  return {
+    id: dbAssembly.id,
+    name: dbAssembly.name,
+    description: dbAssembly.description,
+    category: dbAssembly.category,
+    unit: dbAssembly.unit,
+    laborCostPerUnit: dbAssembly.laborCost,
+    materialCostPerUnit: dbAssembly.materialCost,
+    totalCostPerUnit: dbAssembly.totalCost,
+    laborHours: dbAssembly.laborHours,
+    components: dbAssembly.components,
+    codeReference: dbAssembly.codeReference,
+    notes: dbAssembly.notes,
+    confidence: dbAssembly.confidence,
+    source: 'database',
+  };
 }

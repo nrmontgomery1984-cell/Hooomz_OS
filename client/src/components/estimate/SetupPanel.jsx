@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   ChevronDown,
   ChevronUp,
@@ -9,8 +9,16 @@ import {
   Edit2,
   Trash2,
   X,
+  Home,
+  Square,
+  Hammer,
 } from 'lucide-react';
 import { CEILING_HEIGHTS, loadAssemblyTemplates } from '../../lib/estimateHelpers';
+import {
+  ASSEMBLY_CATEGORIES,
+  getAssembliesByCategory,
+  getAssembliesBySubcategory,
+} from '../../lib/assembliesDatabase';
 
 // Common level presets for quick add
 const LEVEL_PRESETS = [
@@ -24,12 +32,20 @@ const LEVEL_PRESETS = [
   { value: 'exterior', label: 'Exterior' },
 ];
 
+// Category tab icons
+const CATEGORY_ICONS = {
+  wall: Layers,
+  floor: Square,
+  roof: Home,
+  foundation: Hammer,
+};
+
 /**
  * SetupPanel - One-time configuration for estimate
  *
  * - Ceiling height selector (persists for all wall calculations)
  * - Project levels display (derived from intake) + add custom levels
- * - Wall assembly selector/builder
+ * - Build assembly selector with category tabs (walls, floors, roofs, foundation)
  */
 export function SetupPanel({
   ceilingHeight,
@@ -42,13 +58,34 @@ export function SetupPanel({
   collapsed = false,
   onToggleCollapse,
 }) {
-  const [selectedAssemblies, setSelectedAssemblies] = useState(
-    assemblies?.filter(a => a.selected)?.map(a => a.id) || ['ext-2x6', 'int-2x4']
-  );
+  // Track selected assemblies from the new database
+  const [selectedAssemblies, setSelectedAssemblies] = useState(() => {
+    // Get IDs from existing assemblies prop or use defaults
+    const existingIds = assemblies?.filter(a => a.selected)?.map(a => a.id) || [];
+    // Default selections for new projects
+    return existingIds.length > 0 ? existingIds : ['ext-2x6-standard', 'int-partition-std'];
+  });
   const [showAddLevel, setShowAddLevel] = useState(false);
   const [customLevelName, setCustomLevelName] = useState('');
 
-  const allAssemblies = loadAssemblyTemplates();
+  // Build Assemblies tab state
+  const [activeCategory, setActiveCategory] = useState('wall');
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [showAllAssemblies, setShowAllAssemblies] = useState(false);
+
+  // Get legacy assemblies for backwards compatibility
+  const legacyAssemblies = loadAssemblyTemplates();
+
+  // Get assemblies for current category
+  const categoryAssemblies = useMemo(() => {
+    if (activeSubcategory) {
+      return getAssembliesBySubcategory(activeCategory, activeSubcategory);
+    }
+    return getAssembliesByCategory(activeCategory);
+  }, [activeCategory, activeSubcategory]);
+
+  // Get current category config
+  const currentCategory = ASSEMBLY_CATEGORIES[activeCategory];
 
   // Get available presets (not already added)
   const availablePresets = LEVEL_PRESETS.filter(
@@ -83,18 +120,55 @@ export function SetupPanel({
     onLevelsChange(newLevels);
   };
 
-  const handleAssemblyToggle = (assemblyId) => {
+  const handleAssemblyToggle = (assembly) => {
+    const assemblyId = assembly.id;
     const newSelected = selectedAssemblies.includes(assemblyId)
       ? selectedAssemblies.filter(id => id !== assemblyId)
       : [...selectedAssemblies, assemblyId];
 
     setSelectedAssemblies(newSelected);
 
-    // Update parent with selected assemblies
-    const updatedAssemblies = allAssemblies.map(a => ({
-      ...a,
-      selected: newSelected.includes(a.id),
-    }));
+    // Convert new database assembly format to the format expected by the estimate system
+    // Combine legacy assemblies with new ones
+    const updatedAssemblies = [
+      // Include legacy assemblies that are still selected
+      ...legacyAssemblies.map(a => ({
+        ...a,
+        selected: newSelected.includes(a.id),
+      })),
+      // Add newly selected database assemblies (converted to estimate format)
+      ...newSelected
+        .filter(id => !legacyAssemblies.some(a => a.id === id))
+        .map(id => {
+          // Find assembly in database
+          for (const cat of Object.values(ASSEMBLY_CATEGORIES)) {
+            for (const subcat of Object.values(cat.assemblies)) {
+              if (subcat.assemblies[id]) {
+                const dbAssembly = subcat.assemblies[id];
+                return {
+                  id: dbAssembly.id,
+                  name: dbAssembly.name,
+                  description: dbAssembly.description,
+                  category: dbAssembly.category,
+                  unit: dbAssembly.unit,
+                  laborCostPerUnit: dbAssembly.laborCost,
+                  materialCostPerUnit: dbAssembly.materialCost,
+                  totalCostPerUnit: dbAssembly.totalCost,
+                  laborHours: dbAssembly.laborHours,
+                  components: dbAssembly.components,
+                  codeReference: dbAssembly.codeReference,
+                  notes: dbAssembly.notes,
+                  confidence: dbAssembly.confidence,
+                  selected: true,
+                  source: 'database',
+                };
+              }
+            }
+          }
+          return null;
+        })
+        .filter(Boolean),
+    ];
     onAssembliesChange?.(updatedAssemblies);
   };
 
@@ -251,28 +325,98 @@ export function SetupPanel({
             </p>
           </div>
 
-          {/* Wall Assemblies */}
+          {/* Build Assemblies - Tabbed Interface */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                 <Layers className="w-4 h-4" />
-                Wall Assemblies
+                Build Assemblies
+                <span className="text-xs text-gray-400 font-normal">
+                  ({selectedAssemblies.length} selected)
+                </span>
               </label>
               <button
                 onClick={onOpenAssemblyBuilder}
                 className="flex items-center gap-1 text-sm text-charcoal hover:text-charcoal/80 font-medium"
               >
                 <Plus className="w-4 h-4" />
-                Define New
+                Define Custom
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              {allAssemblies.map((assembly) => {
+
+            {/* Category Tabs */}
+            <div className="flex border-b border-gray-200 mb-3">
+              {Object.values(ASSEMBLY_CATEGORIES).map((category) => {
+                const Icon = CATEGORY_ICONS[category.id] || Layers;
+                const isActive = activeCategory === category.id;
+                const selectedCount = selectedAssemblies.filter(id =>
+                  getAssembliesByCategory(category.id).some(a => a.id === id)
+                ).length;
+
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => {
+                      setActiveCategory(category.id);
+                      setActiveSubcategory(null);
+                    }}
+                    className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium border-b-2 transition-colors ${
+                      isActive
+                        ? 'text-charcoal border-charcoal'
+                        : 'text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {category.label}
+                    {selectedCount > 0 && (
+                      <span className={`ml-1 px-1.5 py-0.5 text-xs rounded-full ${
+                        isActive ? 'bg-charcoal text-white' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {selectedCount}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Subcategory Filter Pills */}
+            {currentCategory && (
+              <div className="flex flex-wrap gap-1 mb-3">
+                <button
+                  onClick={() => setActiveSubcategory(null)}
+                  className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                    !activeSubcategory
+                      ? 'bg-charcoal text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  All
+                </button>
+                {Object.entries(currentCategory.subcategories).map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setActiveSubcategory(key)}
+                    className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                      activeSubcategory === key
+                        ? 'bg-charcoal text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Assembly Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-y-auto">
+              {(showAllAssemblies ? categoryAssemblies : categoryAssemblies.slice(0, 6)).map((assembly) => {
                 const isSelected = selectedAssemblies.includes(assembly.id);
                 return (
                   <button
                     key={assembly.id}
-                    onClick={() => handleAssemblyToggle(assembly.id)}
+                    onClick={() => handleAssemblyToggle(assembly)}
                     className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-colors ${
                       isSelected
                         ? 'bg-green-50 border-green-300'
@@ -292,19 +436,53 @@ export function SetupPanel({
                       <div className="font-medium text-sm text-charcoal truncate">
                         {assembly.name}
                       </div>
-                      <div className="text-xs text-gray-500 truncate">
+                      <div className="text-xs text-gray-500 line-clamp-2">
                         {assembly.description}
                       </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        ${(assembly.laborCostPerUnit + assembly.materialCostPerUnit).toFixed(2)}/SF
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-emerald-600 font-medium">
+                          ${assembly.totalCost?.toFixed(2) || '0.00'}/{assembly.unit}
+                        </span>
+                        {assembly.confidence && (
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${
+                            assembly.confidence === 'high'
+                              ? 'bg-green-100 text-green-700'
+                              : assembly.confidence === 'medium'
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-gray-100 text-gray-600'
+                          }`}>
+                            {assembly.confidence}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </button>
                 );
               })}
             </div>
+
+            {/* Show More / Less Button */}
+            {categoryAssemblies.length > 6 && (
+              <button
+                onClick={() => setShowAllAssemblies(!showAllAssemblies)}
+                className="w-full mt-2 py-2 text-sm text-gray-500 hover:text-charcoal flex items-center justify-center gap-1"
+              >
+                {showAllAssemblies ? (
+                  <>
+                    <ChevronUp className="w-4 h-4" />
+                    Show Less
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="w-4 h-4" />
+                    Show All ({categoryAssemblies.length - 6} more)
+                  </>
+                )}
+              </button>
+            )}
+
             <p className="text-xs text-gray-500 mt-2">
-              Select assemblies to use for wall calculations. Labor + materials from catalogue.
+              Select assemblies to use for cost calculations. Costs include labor + materials based on NB pricing.
             </p>
           </div>
         </div>

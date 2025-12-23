@@ -356,7 +356,7 @@ export const getDefaultContractorIntakeState = () => ({
   // Array of: { id, scopeItemId, level, measurement, assemblyId, notes }
   instances: [],
 
-  // Wall assemblies selected for this project
+  // Build assemblies selected for this project (walls, floors, roofs, foundation)
   assemblies: [],
 
   // Schedule

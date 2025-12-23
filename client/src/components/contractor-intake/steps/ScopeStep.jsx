@@ -1,15 +1,28 @@
 import { useState, useMemo } from 'react';
-import { Layers, Ruler, Package, Zap, AlertCircle, Check, ChevronDown, ChevronUp, Settings, Plus, Trash2, Edit2 } from 'lucide-react';
+import { Layers, Ruler, Package, Zap, AlertCircle, Check, ChevronDown, ChevronUp, Settings, Plus, Trash2, Edit2, Home, Square, Hammer } from 'lucide-react';
 import { Card } from '../../ui';
 import { BulkAddMode, TallyMode, InstanceList, InlineAssemblyBuilder } from '../../estimate';
 import {
   SCOPE_ITEMS,
-  DEFAULT_WALL_ASSEMBLIES,
+  DEFAULT_BUILD_ASSEMBLIES,
   calculateInstanceTotals,
   loadAssemblyTemplates,
   saveAssemblyTemplate,
 } from '../../../lib/estimateHelpers';
 import { formatCurrency } from '../../../lib/costCatalogue';
+import {
+  ASSEMBLY_CATEGORIES,
+  getAssembliesByCategory,
+  getAssembliesBySubcategory,
+} from '../../../lib/assembliesDatabase';
+
+// Category tab icons for Build Assemblies
+const CATEGORY_ICONS = {
+  wall: Layers,
+  floor: Square,
+  roof: Home,
+  foundation: Hammer,
+};
 
 /**
  * Scope Step - Instance-based scope entry with BulkAddMode and TallyMode
@@ -22,6 +35,11 @@ export function ScopeStep({ data, errors, onChange }) {
   const [showAssemblyPanel, setShowAssemblyPanel] = useState(false);
   const [showAssemblyBuilder, setShowAssemblyBuilder] = useState(false);
   const [editingAssembly, setEditingAssembly] = useState(null); // Assembly being edited
+
+  // Build Assemblies category tabs state
+  const [activeAssemblyCategory, setActiveAssemblyCategory] = useState('wall');
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [showAllAssemblies, setShowAllAssemblies] = useState(false);
 
   // Derive levels from building configuration
   const levels = useMemo(() => {
@@ -48,26 +66,126 @@ export function ScopeStep({ data, errors, onChange }) {
   const ceilingHeights = data.building?.ceilingHeights || { basement: 8, main: 9, second: 8, third: 8 };
   const instances = data.instances || [];
 
-  // Load all available assemblies and merge with project-selected ones
-  const allAssemblies = loadAssemblyTemplates();
-  const projectAssemblyIds = data.assemblies?.map(a => a.id) || [];
-  const assemblies = allAssemblies.map(a => ({
-    ...a,
-    selected: projectAssemblyIds.length > 0
-      ? projectAssemblyIds.includes(a.id)
-      : ['ext-2x6', 'int-2x4'].includes(a.id), // Default selections
-  }));
-  const selectedAssemblies = assemblies.filter(a => a.selected);
+  // Track selected assembly IDs
+  const [selectedAssemblyIds, setSelectedAssemblyIds] = useState(() => {
+    const existingIds = data.assemblies?.map(a => a.id) || [];
+    return existingIds.length > 0 ? existingIds : ['ext-2x6-standard', 'int-partition-std'];
+  });
+
+  // Get legacy assemblies for backwards compatibility
+  const legacyAssemblies = loadAssemblyTemplates();
+
+  // Get assemblies for current category from the new database
+  const categoryAssemblies = useMemo(() => {
+    if (activeSubcategory) {
+      return getAssembliesBySubcategory(activeAssemblyCategory, activeSubcategory);
+    }
+    return getAssembliesByCategory(activeAssemblyCategory);
+  }, [activeAssemblyCategory, activeSubcategory]);
+
+  // Get current category config
+  const currentCategory = ASSEMBLY_CATEGORIES[activeAssemblyCategory];
+
+  // Build the selected assemblies list (combining legacy and new database formats)
+  const selectedAssemblies = useMemo(() => {
+    const result = [];
+
+    // Add legacy assemblies that are selected
+    legacyAssemblies.forEach(a => {
+      if (selectedAssemblyIds.includes(a.id)) {
+        result.push({ ...a, selected: true });
+      }
+    });
+
+    // Add database assemblies that are selected (convert to legacy format)
+    selectedAssemblyIds.forEach(id => {
+      // Skip if already in result (from legacy)
+      if (result.some(a => a.id === id)) return;
+
+      // Find in database
+      for (const cat of Object.values(ASSEMBLY_CATEGORIES)) {
+        for (const subcat of Object.values(cat.assemblies)) {
+          if (subcat.assemblies[id]) {
+            const dbAssembly = subcat.assemblies[id];
+            result.push({
+              id: dbAssembly.id,
+              name: dbAssembly.name,
+              description: dbAssembly.description,
+              category: dbAssembly.category,
+              unit: dbAssembly.unit,
+              laborCostPerUnit: dbAssembly.laborCost,
+              materialCostPerUnit: dbAssembly.materialCost,
+              totalCostPerUnit: dbAssembly.totalCost,
+              laborHours: dbAssembly.laborHours,
+              components: dbAssembly.components,
+              codeReference: dbAssembly.codeReference,
+              notes: dbAssembly.notes,
+              confidence: dbAssembly.confidence,
+              selected: true,
+              source: 'database',
+            });
+            return;
+          }
+        }
+      }
+    });
+
+    return result;
+  }, [selectedAssemblyIds, legacyAssemblies]);
 
   // Handle assembly selection toggle
-  const handleAssemblyToggle = (assemblyId) => {
-    const newAssemblies = assemblies.map(a => ({
-      ...a,
-      selected: a.id === assemblyId ? !a.selected : a.selected,
-    }));
+  const handleAssemblyToggle = (assembly) => {
+    const assemblyId = typeof assembly === 'string' ? assembly : assembly.id;
+    const newSelectedIds = selectedAssemblyIds.includes(assemblyId)
+      ? selectedAssemblyIds.filter(id => id !== assemblyId)
+      : [...selectedAssemblyIds, assemblyId];
+
+    setSelectedAssemblyIds(newSelectedIds);
+
+    // Update parent with selected assemblies in legacy format
+    const updatedAssemblies = [];
+
+    // Add legacy assemblies
+    legacyAssemblies.forEach(a => {
+      if (newSelectedIds.includes(a.id)) {
+        updatedAssemblies.push({ ...a, selected: true });
+      }
+    });
+
+    // Add database assemblies (converted to legacy format)
+    newSelectedIds.forEach(id => {
+      if (updatedAssemblies.some(a => a.id === id)) return;
+
+      for (const cat of Object.values(ASSEMBLY_CATEGORIES)) {
+        for (const subcat of Object.values(cat.assemblies)) {
+          if (subcat.assemblies[id]) {
+            const dbAssembly = subcat.assemblies[id];
+            updatedAssemblies.push({
+              id: dbAssembly.id,
+              name: dbAssembly.name,
+              description: dbAssembly.description,
+              category: dbAssembly.category,
+              unit: dbAssembly.unit,
+              laborCostPerUnit: dbAssembly.laborCost,
+              materialCostPerUnit: dbAssembly.materialCost,
+              totalCostPerUnit: dbAssembly.totalCost,
+              laborHours: dbAssembly.laborHours,
+              components: dbAssembly.components,
+              codeReference: dbAssembly.codeReference,
+              notes: dbAssembly.notes,
+              confidence: dbAssembly.confidence,
+              selected: true,
+              source: 'database',
+            });
+            return;
+          }
+        }
+      }
+    });
+
     onChange(prev => ({
       ...prev,
-      assemblies: newAssemblies.filter(a => a.selected),
+      assemblies: updatedAssemblies,
     }));
   };
 
@@ -173,7 +291,7 @@ export function ScopeStep({ data, errors, onChange }) {
         >
           <div className="flex items-center gap-2">
             <Settings className="w-4 h-4 text-gray-500" />
-            <span className="font-medium text-charcoal text-sm">Wall Assemblies</span>
+            <span className="font-medium text-charcoal text-sm">Build Assemblies</span>
             <span className="text-xs text-gray-500">
               ({selectedAssemblies.length} selected)
             </span>
@@ -189,7 +307,7 @@ export function ScopeStep({ data, errors, onChange }) {
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs text-gray-500">
-                Select wall assemblies to use for measurements. These determine labor + material costs.
+                Select build assemblies to use for measurements. These determine labor + material costs.
               </p>
               {!showAssemblyBuilder && (
                 <button
@@ -213,72 +331,147 @@ export function ScopeStep({ data, errors, onChange }) {
               </div>
             )}
 
-            {/* Assembly Grid */}
-            <div className="grid grid-cols-2 gap-2">
-              {assemblies.map((assembly) => (
-                <div
-                  key={assembly.id}
-                  className={`relative flex items-start gap-2 p-3 rounded-lg border text-left transition-colors ${
-                    assembly.selected
-                      ? 'bg-green-50 border-green-300'
-                      : 'bg-white border-gray-200 hover:border-gray-300'
+            {/* Category Tabs */}
+            <div className="flex border-b border-gray-200 mb-3">
+              {Object.values(ASSEMBLY_CATEGORIES).map((category) => {
+                const Icon = CATEGORY_ICONS[category.id] || Layers;
+                const isActive = activeAssemblyCategory === category.id;
+                const selectedCount = selectedAssemblyIds.filter(id =>
+                  getAssembliesByCategory(category.id).some(a => a.id === id)
+                ).length;
+
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => {
+                      setActiveAssemblyCategory(category.id);
+                      setActiveSubcategory(null);
+                      setShowAllAssemblies(false);
+                    }}
+                    className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium border-b-2 transition-colors ${
+                      isActive
+                        ? 'text-charcoal border-charcoal'
+                        : 'text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {category.label}
+                    {selectedCount > 0 && (
+                      <span className={`ml-1 px-1.5 py-0.5 text-xs rounded-full ${
+                        isActive ? 'bg-charcoal text-white' : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        {selectedCount}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Subcategory Filter Pills */}
+            {currentCategory && (
+              <div className="flex flex-wrap gap-1 mb-3">
+                <button
+                  onClick={() => setActiveSubcategory(null)}
+                  className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                    !activeSubcategory
+                      ? 'bg-charcoal text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
+                  All
+                </button>
+                {Object.entries(currentCategory.subcategories).map(([key, label]) => (
                   <button
-                    onClick={() => handleAssemblyToggle(assembly.id)}
-                    className="flex items-start gap-2 flex-1"
+                    key={key}
+                    onClick={() => setActiveSubcategory(key)}
+                    className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                      activeSubcategory === key
+                        ? 'bg-charcoal text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Assembly Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-y-auto">
+              {(showAllAssemblies ? categoryAssemblies : categoryAssemblies.slice(0, 6)).map((assembly) => {
+                const isSelected = selectedAssemblyIds.includes(assembly.id);
+                return (
+                  <button
+                    key={assembly.id}
+                    onClick={() => handleAssemblyToggle(assembly)}
+                    className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-colors ${
+                      isSelected
+                        ? 'bg-green-50 border-green-300'
+                        : 'bg-white border-gray-200 hover:border-gray-300'
+                    }`}
                   >
                     <div
                       className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                        assembly.selected
+                        isSelected
                           ? 'bg-green-500 text-white'
                           : 'border-2 border-gray-300'
                       }`}
                     >
-                      {assembly.selected && <Check className="w-3 h-3" />}
+                      {isSelected && <Check className="w-3 h-3" />}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-sm text-charcoal truncate">
                         {assembly.name}
-                        {assembly.isCustom && (
-                          <span className="ml-1 text-xs text-blue-600">(custom)</span>
-                        )}
                       </div>
-                      <div className="text-xs text-gray-500 truncate">
+                      <div className="text-xs text-gray-500 line-clamp-2">
                         {assembly.description}
                       </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        ${(assembly.laborCostPerUnit + assembly.materialCostPerUnit).toFixed(2)}/SF
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs text-emerald-600 font-medium">
+                          ${assembly.totalCost?.toFixed(2) || '0.00'}/{assembly.unit}
+                        </span>
+                        {assembly.confidence && (
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${
+                            assembly.confidence === 'high'
+                              ? 'bg-green-100 text-green-700'
+                              : assembly.confidence === 'medium'
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-gray-100 text-gray-600'
+                          }`}>
+                            {assembly.confidence}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </button>
-                  {assembly.isCustom && (
-                    <div className="absolute top-2 right-2 flex items-center gap-1">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleEditAssembly(assembly);
-                        }}
-                        className="p-1 text-gray-400 hover:text-blue-500"
-                        title="Edit assembly"
-                      >
-                        <Edit2 className="w-3 h-3" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteAssembly(assembly.id);
-                        }}
-                        className="p-1 text-gray-400 hover:text-red-500"
-                        title="Delete custom assembly"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
+
+            {/* Show More / Less Button */}
+            {categoryAssemblies.length > 6 && (
+              <button
+                onClick={() => setShowAllAssemblies(!showAllAssemblies)}
+                className="w-full mt-2 py-2 text-sm text-gray-500 hover:text-charcoal flex items-center justify-center gap-1"
+              >
+                {showAllAssemblies ? (
+                  <>
+                    <ChevronUp className="w-4 h-4" />
+                    Show Less
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="w-4 h-4" />
+                    Show All ({categoryAssemblies.length - 6} more)
+                  </>
+                )}
+              </button>
+            )}
+
+            <p className="text-xs text-gray-500 mt-2">
+              Select assemblies for cost calculations. Costs include labor + materials based on NB pricing.
+            </p>
           </div>
         )}
       </Card>
@@ -321,7 +514,7 @@ export function ScopeStep({ data, errors, onChange }) {
             scopeCategory={activeTab}
             levels={levels}
             ceilingHeights={ceilingHeights}
-            assemblies={selectedAssemblies.length > 0 ? selectedAssemblies : DEFAULT_WALL_ASSEMBLIES}
+            assemblies={selectedAssemblies.length > 0 ? selectedAssemblies : DEFAULT_BUILD_ASSEMBLIES}
             instances={instances}
             onInstancesChange={handleInstancesChange}
           />
@@ -340,7 +533,7 @@ export function ScopeStep({ data, errors, onChange }) {
         <div className="mt-6">
           <InstanceList
             instances={instances}
-            assemblies={selectedAssemblies.length > 0 ? selectedAssemblies : DEFAULT_WALL_ASSEMBLIES}
+            assemblies={selectedAssemblies.length > 0 ? selectedAssemblies : DEFAULT_BUILD_ASSEMBLIES}
             ceilingHeights={ceilingHeights}
             catalogueData={null}
             onDeleteInstance={(id) => {
