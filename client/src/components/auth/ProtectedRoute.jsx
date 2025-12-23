@@ -1,19 +1,19 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
-import { useAuth } from '../../contexts';
+import { useAuth } from '../../hooks/useAuth';
+import { isSupabaseConfigured } from '../../services/supabase';
 
 /**
  * ProtectedRoute - Wraps routes that require authentication
  *
  * Flow:
  * 1. If loading, show loading spinner
- * 2. If in mock mode (no Supabase), allow access (for demo)
+ * 2. If Supabase not configured (dev mode), allow access
  * 3. If not authenticated, redirect to login
- * 4. If authenticated but no organization, redirect to onboarding
- * 5. Otherwise, render children
+ * 4. Otherwise, render children
  */
-export function ProtectedRoute({ children, requireOrg = true }) {
-  const { user, organization, loading, isMockMode } = useAuth();
+export function ProtectedRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
   // Show loading while checking auth
@@ -28,19 +28,14 @@ export function ProtectedRoute({ children, requireOrg = true }) {
     );
   }
 
-  // In mock mode, allow access without auth
-  if (isMockMode) {
+  // In dev mode without Supabase, allow access
+  if (!isSupabaseConfigured()) {
     return children;
   }
 
   // Not authenticated - redirect to login
-  if (!user) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  // Authenticated but no organization - redirect to onboarding
-  if (requireOrg && !organization) {
-    return <Navigate to="/onboarding" replace />;
   }
 
   // All checks passed - render children
@@ -52,7 +47,12 @@ export function ProtectedRoute({ children, requireOrg = true }) {
  * (like login/signup pages)
  */
 export function PublicRoute({ children }) {
-  const { user, organization, loading, isMockMode } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  // In dev mode without Supabase, allow access immediately
+  if (!isSupabaseConfigured()) {
+    return children;
+  }
 
   // Show loading while checking auth
   if (loading) {
@@ -66,19 +66,9 @@ export function PublicRoute({ children }) {
     );
   }
 
-  // In mock mode, allow access
-  if (isMockMode) {
-    return children;
-  }
-
-  // If authenticated and has org, redirect to dashboard
-  if (user && organization) {
+  // If authenticated, redirect to dashboard
+  if (isAuthenticated) {
     return <Navigate to="/" replace />;
-  }
-
-  // If authenticated but no org, redirect to onboarding
-  if (user && !organization) {
-    return <Navigate to="/onboarding" replace />;
   }
 
   return children;

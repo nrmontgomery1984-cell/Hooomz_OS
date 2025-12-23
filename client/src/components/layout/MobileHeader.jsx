@@ -18,9 +18,12 @@ import {
   ClipboardList,
   Clock,
   Users,
+  LogOut,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
+import { useAuth } from '../../hooks/useAuth';
+import { isSupabaseConfigured } from '../../services/supabase';
 
 // Navigation organized by business phase
 const navSections = [
@@ -76,6 +79,7 @@ export function MobileHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
+  const { employee, signOut, isAuthenticated } = useAuth();
 
   // Get current page title
   const getCurrentPageTitle = () => {
@@ -188,6 +192,28 @@ export function MobileHeader() {
             </div>
           ))}
         </nav>
+
+        {/* User info and logout */}
+        {isAuthenticated && isSupabaseConfigured() && (
+          <div className="flex-shrink-0 p-3 border-t border-gray-100">
+            <div className="px-3 py-2 text-xs text-gray-500">
+              Signed in as
+            </div>
+            <div className="px-3 py-1 text-sm font-medium text-charcoal truncate">
+              {employee?.preferredName || employee?.firstName || 'User'}
+            </div>
+            <button
+              onClick={() => {
+                signOut();
+                setIsOpen(false);
+              }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors mt-1"
+            >
+              <LogOut className="w-5 h-5" />
+              Sign Out
+            </button>
+          </div>
+        )}
       </aside>
     </>
   );

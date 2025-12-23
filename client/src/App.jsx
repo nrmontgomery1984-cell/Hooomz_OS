@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppLayout } from './components/layout';
+import { ProtectedRoute, PublicRoute } from './components/auth/ProtectedRoute';
+import { AuthProvider } from './hooks/useAuth';
 import {
   Dashboard,
   Today,
@@ -28,22 +30,30 @@ import {
   Settings,
   FieldGuide,
   TimeBudgetCalculator,
+  Login,
+  SetPassword,
 } from './pages';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Intake wizards - standalone, no app layout */}
-        <Route path="/intake" element={<Intake />} />
-        <Route path="/intake/new-construction" element={<Intake />} />
-        <Route path="/intake/renovation" element={<Intake />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Auth routes - no layout */}
+          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+          <Route path="/set-password" element={<SetPassword />} />
+          <Route path="/reset-password" element={<SetPassword />} />
 
-        {/* Contractor intake - scope-of-work focused */}
-        <Route path="/contractor/intake" element={<ContractorIntake />} />
+          {/* Intake wizards - standalone, no app layout */}
+          <Route path="/intake" element={<Intake />} />
+          <Route path="/intake/new-construction" element={<Intake />} />
+          <Route path="/intake/renovation" element={<Intake />} />
 
-        {/* Main app with layout */}
-        <Route element={<AppLayout />}>
+          {/* Contractor intake - scope-of-work focused */}
+          <Route path="/contractor/intake" element={<ContractorIntake />} />
+
+        {/* Main app with layout - protected */}
+        <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
           {/* Overview */}
           <Route path="/" element={<Dashboard />} />
           {/* Today page hidden - reserved for field worker features */}
@@ -89,8 +99,9 @@ function App() {
           {/* Training */}
           <Route path="/field-guide" element={<FieldGuide />} />
         </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

@@ -23,12 +23,15 @@ import {
   Hammer,
   User,
   Users,
+  LogOut,
 } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
 import { useDevAuth } from '../../hooks/useDevAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { ROLES } from '../../lib/devData';
 import { mockProjects } from '../../services/mockData';
+import { isSupabaseConfigured } from '../../services/supabase';
 
 // Map project phase to nav path
 const PHASE_TO_NAV = {
@@ -172,6 +175,7 @@ export function Sidebar() {
   const [showSearch, setShowSearch] = useState(false);
   const [showPersonaDropdown, setShowPersonaDropdown] = useState(false);
   const { currentPersona, switchPersona } = useDevAuth();
+  const { employee, signOut, isAuthenticated } = useAuth();
 
   // Get current project's phase if we're on a project page
   const currentProjectPhase = (() => {
@@ -304,8 +308,8 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Settings at bottom */}
-      <div className="p-3 border-t border-gray-100">
+      {/* Settings and User at bottom */}
+      <div className="p-3 border-t border-gray-100 space-y-1">
         <NavLink
           to="/settings"
           className={({ isActive }) => `
@@ -319,6 +323,25 @@ export function Sidebar() {
           <Settings className="w-4 h-4" />
           Settings
         </NavLink>
+
+        {/* Show logged in user info when authenticated */}
+        {isAuthenticated && isSupabaseConfigured() && (
+          <div className="pt-2 border-t border-gray-100 mt-2">
+            <div className="px-3 py-2 text-xs text-gray-500">
+              Signed in as
+            </div>
+            <div className="px-3 py-1 text-sm font-medium text-charcoal truncate">
+              {employee?.preferredName || employee?.firstName || 'User'}
+            </div>
+            <button
+              onClick={signOut}
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors mt-1"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </button>
+          </div>
+        )}
       </div>
     </aside>
   );

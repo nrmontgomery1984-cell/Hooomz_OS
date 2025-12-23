@@ -11,16 +11,21 @@ import {
   Trash2,
   Filter,
   Users,
+  Send,
+  Check,
+  Loader2,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
 import { ROLES } from '../lib/devData';
 import { getEmployees, deleteEmployee } from '../services/api';
+import { useAuth } from '../hooks/useAuth';
 
 // Contact Card Component
-function ContactCard({ employee, onDelete }) {
+function ContactCard({ employee, onDelete, onInvite }) {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [inviteStatus, setInviteStatus] = useState(null); // null | 'sending' | 'sent' | 'error'
   const roleConfig = ROLES[employee.role] || ROLES.labourer;
   const displayName = employee.preferredName || employee.firstName;
   const initials = `${employee.firstName[0]}${employee.lastName[0]}`;
@@ -29,6 +34,19 @@ function ContactCard({ employee, onDelete }) {
     // Don't navigate if clicking on phone, email, or menu
     if (e.target.closest('a') || e.target.closest('button')) return;
     navigate(`/team/${employee.id}`);
+  };
+
+  const handleInvite = async () => {
+    setInviteStatus('sending');
+    setShowMenu(false);
+    const { error } = await onInvite(employee.email);
+    if (error) {
+      setInviteStatus('error');
+      setTimeout(() => setInviteStatus(null), 3000);
+    } else {
+      setInviteStatus('sent');
+      setTimeout(() => setInviteStatus(null), 5000);
+    }
   };
 
   return (
@@ -109,6 +127,13 @@ function ContactCard({ employee, onDelete }) {
                   Edit
                 </Link>
                 <button
+                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:bg-blue-50"
+                  onClick={handleInvite}
+                >
+                  <Send className="w-4 h-4" />
+                  Send Invite
+                </button>
+                <button
                   className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
                   onClick={() => {
                     onDelete(employee.id);
@@ -125,18 +150,37 @@ function ContactCard({ employee, onDelete }) {
       </div>
 
       {/* Status indicator */}
-      {employee.status !== 'active' && (
-        <div className="mt-3 pt-3 border-t border-gray-100">
-          <span className={`text-xs px-2 py-1 rounded-full ${
-            employee.status === 'on_leave'
-              ? 'bg-amber-100 text-amber-700'
-              : employee.status === 'inactive'
-              ? 'bg-gray-100 text-gray-600'
-              : 'bg-red-100 text-red-700'
-          }`}>
-            {employee.status === 'on_leave' ? 'On Leave' :
-             employee.status === 'inactive' ? 'Inactive' : 'Terminated'}
-          </span>
+      {(employee.status !== 'active' || inviteStatus) && (
+        <div className="mt-3 pt-3 border-t border-gray-100 flex items-center gap-2">
+          {employee.status !== 'active' && (
+            <span className={`text-xs px-2 py-1 rounded-full ${
+              employee.status === 'on_leave'
+                ? 'bg-amber-100 text-amber-700'
+                : employee.status === 'inactive'
+                ? 'bg-gray-100 text-gray-600'
+                : 'bg-red-100 text-red-700'
+            }`}>
+              {employee.status === 'on_leave' ? 'On Leave' :
+               employee.status === 'inactive' ? 'Inactive' : 'Terminated'}
+            </span>
+          )}
+          {inviteStatus === 'sending' && (
+            <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 flex items-center gap-1">
+              <Loader2 className="w-3 h-3 animate-spin" />
+              Sending invite...
+            </span>
+          )}
+          {inviteStatus === 'sent' && (
+            <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+              <Check className="w-3 h-3" />
+              Invite sent!
+            </span>
+          )}
+          {inviteStatus === 'error' && (
+            <span className="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">
+              Failed to send invite
+            </span>
+          )}
         </div>
       )}
     </Card>
@@ -144,6 +188,7 @@ function ContactCard({ employee, onDelete }) {
 }
 
 export function Team() {
+  const { inviteEmployee } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [employees, setEmployees] = useState([]);
@@ -167,6 +212,11 @@ export function Team() {
     if (!error) {
       setEmployees(prev => prev.filter(e => e.id !== id));
     }
+  };
+
+  // Handle invite
+  const handleInvite = async (email) => {
+    return await inviteEmployee(email);
   };
 
   // Filter employees
@@ -282,7 +332,7 @@ export function Team() {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {roleEmployees.map(emp => (
-                    <ContactCard key={emp.id} employee={emp} onDelete={handleDelete} />
+                    <ContactCard key={emp.id} employee={emp} onDelete={handleDelete} onInvite={handleInvite} />
                   ))}
                 </div>
               </div>
@@ -293,7 +343,7 @@ export function Team() {
         // Flat list for filtered view
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredEmployees.map(emp => (
-            <ContactCard key={emp.id} employee={emp} onDelete={handleDelete} />
+            <ContactCard key={emp.id} employee={emp} onDelete={handleDelete} onInvite={handleInvite} />
           ))}
         </div>
       )}

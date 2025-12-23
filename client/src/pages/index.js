@@ -42,3 +42,7 @@ export { TimeBudgetCalculator } from './TimeBudgetCalculator';
 
 // Training
 export { FieldGuide } from './FieldGuide';
+
+// Auth
+export { Login } from './Login';
+export { SetPassword } from './SetPassword';
