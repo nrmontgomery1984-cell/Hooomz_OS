@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isRecoveryMode, setIsRecoveryMode] = useState(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -16,13 +17,20 @@ export function AuthProvider({ children }) {
 
     let mounted = true;
 
-    // Timeout fallback - ensure loading completes even if auth hangs
+    // Check if we're on a password reset/set page - if so, wait for token processing
+    const isPasswordPage = window.location.pathname.includes('password');
+    const hasTokenInUrl = window.location.hash.includes('access_token') ||
+                          window.location.hash.includes('type=recovery') ||
+                          window.location.hash.includes('type=magiclink');
+
+    // Timeout fallback - longer timeout if we're processing a token
+    const timeoutMs = hasTokenInUrl ? 10000 : 5000;
     const timeout = setTimeout(() => {
       if (mounted) {
         console.warn('Auth initialization timed out, proceeding without session');
         setLoading(false);
       }
-    }, 5000);
+    }, timeoutMs);
 
     // Get initial session
     const initAuth = async () => {
@@ -53,8 +61,30 @@ export function AuthProvider({ children }) {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
         if (!mounted) return;
+
+        console.log('Auth event:', event);
+
+        // Handle password recovery event
+        if (event === 'PASSWORD_RECOVERY') {
+          setIsRecoveryMode(true);
+          setUser(session?.user ?? null);
+          setLoading(false);
+          // Redirect to set-password page if not already there
+          if (!window.location.pathname.includes('password')) {
+            window.location.href = '/set-password';
+          }
+          return;
+        }
+
+        // Handle magic link sign in (for invites)
+        if (event === 'SIGNED_IN' && isPasswordPage) {
+          setUser(session?.user ?? null);
+          setLoading(false);
+          return;
+        }
+
         setUser(session?.user ?? null);
         if (session?.user) {
           await fetchEmployeeProfile(session.user.email);
@@ -179,6 +209,7 @@ export function AuthProvider({ children }) {
     employee,
     loading,
     isAuthenticated: !!user,
+    isRecoveryMode,
     isAdmin: employee?.role === 'administrator' || employee?.role === 'manager',
     signIn,
     signOut,
