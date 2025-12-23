@@ -2852,6 +2852,9 @@ export async function getFloorPlanStatusSummary(floorPlanId) {
 // Employee API
 // ============================================
 
+// Employees are stored in Supabase
+const USE_MOCK_EMPLOYEES = false;
+
 const EMPLOYEES_STORAGE_KEY = 'hooomz_employees';
 
 // Helper to load employees from localStorage (fallback)
@@ -2871,26 +2874,36 @@ function saveEmployeesToStorage(employees) {
 
 // GET all employees
 export async function getEmployees() {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_EMPLOYEES) {
     return { data: loadEmployeesFromStorage(), error: null };
   }
 
-  const { data, error } = await supabase
-    .from('employees')
-    .select('*')
-    .is('deleted_at', null);
+  try {
+    const { data, error } = await supabase
+      .from('employees')
+      .select('*')
+      .is('deleted_at', null);
 
-  // Sort client-side to avoid column name issues with Postgres
-  if (data) {
-    data.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    if (error) {
+      console.error('Error fetching employees:', error);
+      return { data: [], error };
+    }
+
+    // Sort client-side to avoid column name issues with Postgres
+    if (data) {
+      data.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    }
+
+    return { data: data || [], error: null };
+  } catch (err) {
+    console.error('Exception fetching employees:', err);
+    return { data: [], error: err.message };
   }
-
-  return { data, error };
 }
 
 // GET single employee by ID
 export async function getEmployee(id) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_EMPLOYEES) {
     const employees = loadEmployeesFromStorage();
     const employee = employees.find(e => e.id === id);
     return { data: employee || null, error: employee ? null : 'Not found' };
