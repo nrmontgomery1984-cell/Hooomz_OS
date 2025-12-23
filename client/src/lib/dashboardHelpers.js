@@ -276,11 +276,27 @@ function normalizePhase(phase) {
  * @returns {Object} DashboardData
  */
 export function createDashboardFromProject(project) {
-  const intake = project.intake_data || {};
-  const dashData = project.dashboard || {}; // Rich dashboard data if available
+  // Safety check - return minimal dashboard data if project is invalid
+  if (!project || typeof project !== 'object') {
+    console.warn('createDashboardFromProject called with invalid project:', project);
+    return {
+      header: { projectName: 'Unknown Project', projectType: 'renovation', address: '', phase: 'intake', daysInPhase: 0, healthStatus: 'on_track', healthReason: '' },
+      client: { client: { name: '', email: '', phone: '' }, pendingDecisions: [], daysSinceContact: 0 },
+      budget: { estimatedTotal: 0, contractValue: 0, totalSpent: 0, totalCommitted: 0, totalRemaining: 0, changeOrders: [], costsByCategory: [] },
+      schedule: { phases: [], upcomingMilestones: [] },
+      scope: { projectType: 'renovation', buildTier: 'good', rooms: [] },
+      actionItems: { blockers: [], overdueTasks: [], todayTasks: [], pendingApprovals: [], alerts: [] },
+      team: { teamMembers: [], subcontractors: [] },
+      activities: [],
+    };
+  }
 
-  // Header
-  const header = {
+  try {
+    const intake = project.intake_data || {};
+    const dashData = project.dashboard || {}; // Rich dashboard data if available
+
+    // Header
+    const header = {
     projectName: project.name,
     projectType: project.intake_type || intake.form_type || 'renovation',
     address: project.address || intake.project?.address || 'Address pending',
@@ -433,9 +449,23 @@ export function createDashboardFromProject(project) {
   dashboardData.header.healthReason = health.reason;
 
   // Generate alerts
-  dashboardData.actionItems.alerts = generateAlerts(dashboardData);
+    dashboardData.actionItems.alerts = generateAlerts(dashboardData);
 
-  return dashboardData;
+    return dashboardData;
+  } catch (error) {
+    console.error('Error creating dashboard from project:', error, project);
+    // Return minimal dashboard data on error
+    return {
+      header: { projectName: project?.name || 'Error', projectType: 'renovation', address: project?.address || '', phase: 'intake', daysInPhase: 0, healthStatus: 'on_track', healthReason: 'Dashboard error' },
+      client: { client: { name: project?.client_name || '', email: '', phone: '' }, pendingDecisions: [], daysSinceContact: 0 },
+      budget: { estimatedTotal: 0, contractValue: 0, totalSpent: 0, totalCommitted: 0, totalRemaining: 0, changeOrders: [], costsByCategory: [] },
+      schedule: { phases: [], upcomingMilestones: [] },
+      scope: { projectType: 'renovation', buildTier: 'good', rooms: [] },
+      actionItems: { blockers: [], overdueTasks: [], todayTasks: [], pendingApprovals: [], alerts: [] },
+      team: { teamMembers: [], subcontractors: [] },
+      activities: [],
+    };
+  }
 }
 
 /**

@@ -40,7 +40,7 @@ export function calculateHealthStatus(data) {
   const issues = [];
 
   // Check budget health
-  if (data.budget) {
+  if (data.budget && data.budget.contractValue > 0) {
     const budgetUsed = (data.budget.totalSpent + data.budget.totalCommitted) / data.budget.contractValue;
     if (budgetUsed >= ALERT_THRESHOLDS.budget.critical) {
       return { status: 'behind', reason: 'Budget critical - over 95% used' };

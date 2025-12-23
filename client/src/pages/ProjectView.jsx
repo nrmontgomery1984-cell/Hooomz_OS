@@ -59,23 +59,32 @@ export function ProjectView() {
       setLoading(true);
       setActivityLoading(true);
 
-      // First get project and activity in parallel
-      const [projectRes, activityRes] = await Promise.all([
-        getProject(projectId),
-        getProjectActivity(projectId),
-      ]);
+      try {
+        // First get project and activity in parallel
+        const [projectRes, activityRes] = await Promise.all([
+          getProject(projectId),
+          getProjectActivity(projectId),
+        ]);
 
-      setProject(projectRes.data);
-      setActivities(activityRes.data || []);
+        setProject(projectRes.data);
+        setActivities(activityRes.data || []);
 
-      // Then get or generate loops (needs project data to check for estimate)
-      const loopsRes = await getOrGenerateLoops(projectId, projectRes.data);
-      setLoops(loopsRes.data || []);
+        // Only load related data if project exists
+        if (projectRes.data) {
+          // Then get or generate loops (needs project data to check for estimate)
+          const loopsRes = await getOrGenerateLoops(projectId, projectRes.data);
+          setLoops(loopsRes.data || []);
 
-      setExpenses(getProjectExpenses(projectId));
-      setChangeOrders(getProjectChangeOrders(projectId));
-      setLoading(false);
-      setActivityLoading(false);
+          setExpenses(getProjectExpenses(projectId));
+          setChangeOrders(getProjectChangeOrders(projectId));
+        }
+      } catch (error) {
+        console.error('Error loading project data:', error);
+        setProject(null);
+      } finally {
+        setLoading(false);
+        setActivityLoading(false);
+      }
     }
     loadData();
   }, [projectId]);
