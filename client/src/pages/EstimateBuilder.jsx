@@ -420,6 +420,7 @@ export function EstimateBuilder() {
     try {
       const result = await updateProject(projectId, updatePayload);
       if (result.error) {
+        console.error('Save estimate error:', result.error);
         showToast(`Failed to save: ${result.error.message || result.error}`, 'error');
       } else {
         showToast('Estimate saved successfully', 'success');
@@ -428,7 +429,8 @@ export function EstimateBuilder() {
           setProject(result.data);
         }
       }
-    } catch {
+    } catch (err) {
+      console.error('Save estimate exception:', err);
       showToast('Failed to save estimate', 'error');
     }
     setSaving(false);

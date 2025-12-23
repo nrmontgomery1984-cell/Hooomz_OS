@@ -995,6 +995,9 @@ export async function updateProjectPhase(projectId, updates) {
     .select()
     .single();
 
+  if (error) {
+    console.error('Supabase updateProjectPhase error:', error);
+  }
   return { data, error };
 }
 
@@ -1032,6 +1035,9 @@ export async function updateProject(projectId, updates) {
     .select()
     .single();
 
+  if (error) {
+    console.error('Supabase updateProject error:', error, 'Updates:', updates);
+  }
   return { data, error };
 }
 
