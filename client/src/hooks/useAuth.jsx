@@ -16,6 +16,14 @@ export function AuthProvider({ children }) {
 
     let mounted = true;
 
+    // Timeout fallback - ensure loading completes even if auth hangs
+    const timeout = setTimeout(() => {
+      if (mounted) {
+        console.warn('Auth initialization timed out, proceeding without session');
+        setLoading(false);
+      }
+    }, 5000);
+
     // Get initial session
     const initAuth = async () => {
       try {
@@ -59,6 +67,7 @@ export function AuthProvider({ children }) {
 
     return () => {
       mounted = false;
+      clearTimeout(timeout);
       subscription.unsubscribe();
     };
   }, []);
