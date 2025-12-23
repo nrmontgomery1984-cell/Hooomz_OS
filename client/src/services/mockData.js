@@ -11,7 +11,15 @@ const DATA_VERSION_KEY = 'hooomz_data_version';
 
 // Check and handle data version migration
 function checkDataVersion() {
-  const storedVersion = parseInt(localStorage.getItem(DATA_VERSION_KEY) || '0', 10);
+  const storedVersionStr = localStorage.getItem(DATA_VERSION_KEY);
+
+  // If no version stored, this is a fresh install - just set the version, don't clear
+  if (storedVersionStr === null) {
+    localStorage.setItem(DATA_VERSION_KEY, DATA_VERSION.toString());
+    return;
+  }
+
+  const storedVersion = parseInt(storedVersionStr, 10);
   if (storedVersion < DATA_VERSION) {
     // Clear stale project data to force refresh with new structure
     console.log(`Upgrading data from v${storedVersion} to v${DATA_VERSION}`);
