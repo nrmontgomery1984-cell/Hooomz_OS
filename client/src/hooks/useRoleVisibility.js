@@ -13,10 +13,20 @@ export const NAV_SECTIONS = {
     description: 'Main overview and project dashboard',
     routes: ['/']
   },
-  daily: {
-    label: 'Daily',
-    description: 'Time tracking, expenses, and daily log',
-    routes: ['/time-tracker', '/expenses', '/daily-log']
+  time: {
+    label: 'Time Tracking',
+    description: 'Track hours worked on projects',
+    routes: ['/time-tracker']
+  },
+  expenses: {
+    label: 'Expenses',
+    description: 'Log and manage project expenses',
+    routes: ['/expenses']
+  },
+  dailyLog: {
+    label: 'Daily Log',
+    description: 'Daily notes and updates',
+    routes: ['/daily-log']
   },
   pipeline: {
     label: 'Pipeline',
@@ -33,10 +43,20 @@ export const NAV_SECTIONS = {
     description: 'Team member management',
     routes: ['/team']
   },
-  tools: {
-    label: 'Tools',
-    description: 'Cost catalogue, field guide, time budget',
-    routes: ['/cost-catalogue', '/field-guide', '/time-budget']
+  costCatalogue: {
+    label: 'Cost Catalogue',
+    description: 'Pricing and material costs',
+    routes: ['/cost-catalogue']
+  },
+  fieldGuide: {
+    label: 'Field Guide',
+    description: 'Training and reference materials',
+    routes: ['/field-guide']
+  },
+  timeBudget: {
+    label: 'Time Budget',
+    description: 'Project time estimation tool',
+    routes: ['/time-budget']
   },
   settings: {
     label: 'Settings',
@@ -56,11 +76,15 @@ const getDefaultVisibility = () => {
 
     defaults[role] = {
       dashboard: true, // Everyone sees dashboard
-      daily: level >= 20, // All team members (not homeowner)
+      time: level >= 20, // All team members
+      expenses: level >= 20, // All team members
+      dailyLog: level >= 20, // All team members
       pipeline: level >= 60, // Foreman and above
       production: level >= 40, // Carpenter and above
       team: level >= 80, // Manager and above
-      tools: level >= 40, // Carpenter and above
+      costCatalogue: level >= 60, // Foreman and above
+      fieldGuide: level >= 20, // All team members
+      timeBudget: level >= 60, // Foreman and above
       settings: level >= 100, // Admin only
     };
   });

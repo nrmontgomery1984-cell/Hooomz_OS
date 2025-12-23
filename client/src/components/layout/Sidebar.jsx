@@ -78,55 +78,49 @@ const checkIsActive = (to, pathname, projectPhase = null) => {
 };
 
 // Navigation organized by business phase
-// visibilityKey maps to NAV_SECTIONS in useRoleVisibility
+// visibilityKey on items maps to NAV_SECTIONS in useRoleVisibility
 const navSections = [
   {
     label: 'Overview',
-    visibilityKey: 'dashboard',
     items: [
-      { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+      { to: '/', icon: LayoutDashboard, label: 'Dashboard', visibilityKey: 'dashboard' },
     ],
   },
   {
     label: 'Daily',
-    visibilityKey: 'daily',
     items: [
-      { to: '/time-tracker', icon: Timer, label: 'Time' },
-      { to: '/expenses', icon: Receipt, label: 'Expenses' },
-      { to: '/daily-log', icon: ClipboardList, label: 'Daily Log' },
+      { to: '/time-tracker', icon: Timer, label: 'Time', visibilityKey: 'time' },
+      { to: '/expenses', icon: Receipt, label: 'Expenses', visibilityKey: 'expenses' },
+      { to: '/daily-log', icon: ClipboardList, label: 'Daily Log', visibilityKey: 'dailyLog' },
     ],
   },
   {
     label: 'Pipeline',
-    visibilityKey: 'pipeline',
     items: [
-      { to: '/sales', icon: UserPlus, label: 'Sales / Leads', badge: 'intake' },
-      { to: '/estimates', icon: Calculator, label: 'Estimates', badge: 'pricing' },
-      { to: '/contracts', icon: FileSignature, label: 'Contracts', badge: 'approval' },
+      { to: '/sales', icon: UserPlus, label: 'Sales / Leads', badge: 'intake', visibilityKey: 'pipeline' },
+      { to: '/estimates', icon: Calculator, label: 'Estimates', badge: 'pricing', visibilityKey: 'pipeline' },
+      { to: '/contracts', icon: FileSignature, label: 'Contracts', badge: 'approval', visibilityKey: 'pipeline' },
     ],
   },
   {
     label: 'Production',
-    visibilityKey: 'production',
     items: [
-      { to: '/production', icon: HardHat, label: 'In Progress', badge: 'active' },
-      { to: '/completed', icon: CheckCircle2, label: 'Completed' },
+      { to: '/production', icon: HardHat, label: 'In Progress', badge: 'active', visibilityKey: 'production' },
+      { to: '/completed', icon: CheckCircle2, label: 'Completed', visibilityKey: 'production' },
     ],
   },
   {
     label: 'People',
-    visibilityKey: 'team',
     items: [
-      { to: '/team', icon: Users, label: 'Team' },
+      { to: '/team', icon: Users, label: 'Team', visibilityKey: 'team' },
     ],
   },
   {
     label: 'Tools',
-    visibilityKey: 'tools',
     items: [
-      { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue' },
-      { to: '/field-guide', icon: GraduationCap, label: 'Field Guide' },
-      { to: '/time-budget', icon: Clock, label: 'Time Budget' },
+      { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue', visibilityKey: 'costCatalogue' },
+      { to: '/field-guide', icon: GraduationCap, label: 'Field Guide', visibilityKey: 'fieldGuide' },
+      { to: '/time-budget', icon: Clock, label: 'Time Budget', visibilityKey: 'timeBudget' },
     ],
   },
 ];
@@ -184,10 +178,13 @@ export function Sidebar() {
   const { employee, signOut, isAuthenticated } = useAuth();
   const { canSee } = useRoleVisibility();
 
-  // Filter nav sections based on role visibility
-  const visibleNavSections = navSections.filter(
-    section => canSee(section.visibilityKey)
-  );
+  // Filter nav sections - keep section if it has any visible items
+  const visibleNavSections = navSections
+    .map(section => ({
+      ...section,
+      items: section.items.filter(item => canSee(item.visibilityKey))
+    }))
+    .filter(section => section.items.length > 0);
 
   // Get current project's phase if we're on a project page
   const currentProjectPhase = (() => {
