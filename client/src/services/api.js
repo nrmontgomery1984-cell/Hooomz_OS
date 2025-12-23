@@ -2874,29 +2874,33 @@ function saveEmployeesToStorage(employees) {
 
 // GET all employees
 export async function getEmployees() {
+  console.log('[getEmployees] USE_MOCK_EMPLOYEES:', USE_MOCK_EMPLOYEES);
+
   if (!isSupabaseConfigured() || USE_MOCK_EMPLOYEES) {
     return { data: loadEmployeesFromStorage(), error: null };
   }
 
   try {
+    console.log('[getEmployees] Querying Supabase...');
     const { data, error } = await supabase
       .from('employees')
-      .select('*')
-      .is('deleted_at', null);
+      .select('*');
+
+    console.log('[getEmployees] Result:', { data, error });
 
     if (error) {
-      console.error('Error fetching employees:', error);
+      console.error('[getEmployees] Error:', error);
       return { data: [], error };
     }
 
-    // Sort client-side to avoid column name issues with Postgres
+    // Sort client-side
     if (data) {
       data.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
     }
 
     return { data: data || [], error: null };
   } catch (err) {
-    console.error('Exception fetching employees:', err);
+    console.error('[getEmployees] Exception:', err);
     return { data: [], error: err.message };
   }
 }
