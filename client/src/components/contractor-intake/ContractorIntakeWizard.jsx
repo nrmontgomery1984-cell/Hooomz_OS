@@ -75,18 +75,22 @@ export function ContractorIntakeWizard({ onComplete, onCancel }) {
   };
 
   const handleSubmit = async () => {
+    console.log('handleSubmit called');
     // Final validation
     const { isValid, errors: stepErrors } = validateContractorIntakeStep(
       'scope',
       formData
     );
+    console.log('Validation result:', { isValid, stepErrors });
 
     if (!isValid) {
       setErrors(stepErrors);
+      console.log('Validation failed, not submitting');
       return;
     }
 
     if (onComplete) {
+      console.log('Calling onComplete with formData');
       await onComplete(formData);
     }
   };

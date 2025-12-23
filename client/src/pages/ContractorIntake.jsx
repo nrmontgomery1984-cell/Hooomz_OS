@@ -15,16 +15,20 @@ export function ContractorIntake() {
 
   const handleComplete = async (formData) => {
     try {
+      console.log('Creating project with data:', formData);
       const result = await generateProjectFromContractorIntake(formData);
+      console.log('Create project result:', result);
 
       if (result.error) {
+        console.error('Create project error:', result.error);
         showToast(`Failed to create project: ${result.error}`, 'error');
         return;
       }
 
       // Navigate to the new project
       navigate(`/projects/${result.data.id}`);
-    } catch {
+    } catch (err) {
+      console.error('Create project exception:', err);
       showToast('Failed to create project. Please try again.', 'error');
     }
   };
