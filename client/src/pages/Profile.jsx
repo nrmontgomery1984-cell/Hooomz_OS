@@ -1,6 +1,7 @@
 import { User, Settings, Bell, HelpCircle, LogOut } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Card } from '../components/ui';
+import { useAuth } from '../hooks/useAuth';
 
 const menuItems = [
   { icon: User, label: 'Account Settings', href: '/settings/account' },
@@ -10,6 +11,15 @@ const menuItems = [
 ];
 
 export function Profile() {
+  const { employee, signOut } = useAuth();
+
+  const handleSignOut = () => {
+    signOut();
+  };
+
+  const displayName = employee?.preferredName || employee?.firstName || 'Demo User';
+  const displayEmail = employee?.email || 'demo@hooomz.com';
+
   return (
     <PageContainer title="Profile">
       {/* User Info */}
@@ -19,8 +29,8 @@ export function Profile() {
             <User className="w-8 h-8 text-gray-400" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-charcoal">Demo User</h2>
-            <p className="text-sm text-gray-500">demo@hooomz.com</p>
+            <h2 className="text-lg font-semibold text-charcoal">{displayName}</h2>
+            <p className="text-sm text-gray-500">{displayEmail}</p>
           </div>
         </div>
       </Card>
@@ -44,7 +54,10 @@ export function Profile() {
 
       {/* Sign Out */}
       <Card>
-        <button className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-red-500">
+        <button
+          onClick={handleSignOut}
+          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-red-500"
+        >
           <LogOut className="w-5 h-5" />
           <span className="text-sm">Sign Out</span>
         </button>
