@@ -748,18 +748,26 @@ export async function getProjectTimeSummary(projectId) {
 
 // Activity Log API - The Heartbeat
 export async function getProjectActivity(projectId, limit = 20) {
-  if (!isSupabaseConfigured()) {
+  // Use mock when projects are in localStorage mode
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     return { data: mockActivityLog[projectId] || [], error: null };
   }
 
-  const { data, error } = await supabase
-    .from('activity_log')
-    .select('*')
-    .eq('project_id', projectId)
-    .order('created_at', { ascending: false })
-    .limit(limit);
+  try {
+    const { data, error } = await supabase
+      .from('activity_log')
+      .select('*')
+      .eq('project_id', projectId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
 
-  return { data, error };
+    if (error) {
+      return { data: [], error };
+    }
+    return { data: data || [], error: null };
+  } catch (err) {
+    return { data: [], error: err.message };
+  }
 }
 
 // Create a new task
