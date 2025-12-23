@@ -42,14 +42,20 @@ export function SetPassword() {
     }
 
     setLoading(true);
-    const { error } = await updatePassword(password);
-    setLoading(false);
+    try {
+      const { error } = await updatePassword(password);
 
-    if (error) {
-      setError(error.message);
-    } else {
-      setSuccess(true);
-      setTimeout(() => navigate('/'), 2000);
+      if (error) {
+        setError(error.message);
+      } else {
+        setSuccess(true);
+        setTimeout(() => navigate('/'), 2000);
+      }
+    } catch (err) {
+      console.error('Password update error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
