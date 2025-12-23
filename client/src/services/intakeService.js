@@ -3,8 +3,8 @@ import { PROJECT_PHASES } from '../data/intakeSchema';
 import { getRoomTemplate, calculateEstimate } from '../data/intakeTemplates';
 import { mockProjects, mockLoops, mockTasks, saveProjectsToStorage } from './mockData';
 
-// Force mock mode to match api.js - ensures projects are stored consistently
-const USE_MOCK_PROJECTS = true;
+// Match api.js - use Supabase when configured, fallback to localStorage
+const USE_MOCK_PROJECTS = false;
 
 /**
  * Intake Service
