@@ -106,7 +106,7 @@ export async function getProject(id) {
 }
 
 export async function deleteProject(projectId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const index = mockProjects.findIndex(p => p.id === projectId);
     if (index === -1) {
       return { data: null, error: 'Project not found' };
@@ -149,7 +149,7 @@ export async function createProject(projectData) {
     phase_changed_at: new Date().toISOString(),
   };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Add to mock array
     mockProjects.unshift(newProject);
     // Persist to localStorage
