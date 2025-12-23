@@ -6,26 +6,49 @@ import { Logo } from '../components/ui/Logo';
 
 export function SetPassword() {
   const navigate = useNavigate();
-  const { updatePassword, user } = useAuth();
+  const { updatePassword, user, loading: authLoading, isRecoveryMode } = useAuth();
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [waitingForAuth, setWaitingForAuth] = useState(true);
 
-  // Redirect if not authenticated (user should come from email link)
+  // Check if URL has recovery token - if so, wait for auth to process it
+  const hasTokenInUrl = window.location.hash.includes('access_token') ||
+                        window.location.hash.includes('type=recovery') ||
+                        window.location.hash.includes('type=magiclink');
+
+  // Wait for auth to finish loading before deciding to redirect
   useEffect(() => {
-    if (!user && !loading) {
-      // Give a moment for auth to load
+    // If auth is still loading, wait
+    if (authLoading) {
+      return;
+    }
+
+    // If we have a token in URL, give extra time for processing
+    if (hasTokenInUrl) {
       const timer = setTimeout(() => {
-        if (!user) {
-          navigate('/login');
-        }
-      }, 2000);
+        setWaitingForAuth(false);
+      }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [user, loading, navigate]);
+
+    // If user is authenticated or in recovery mode, show the form
+    if (user || isRecoveryMode) {
+      setWaitingForAuth(false);
+      return;
+    }
+
+    // No user and no token - redirect after a short delay
+    const timer = setTimeout(() => {
+      if (!user && !isRecoveryMode) {
+        navigate('/login');
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [user, authLoading, isRecoveryMode, hasTokenInUrl, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +64,7 @@ export function SetPassword() {
       return;
     }
 
-    setLoading(true);
+    setFormLoading(true);
     try {
       const { error } = await updatePassword(password);
 
@@ -55,9 +78,26 @@ export function SetPassword() {
       console.error('Password update error:', err);
       setError('An unexpected error occurred. Please try again.');
     } finally {
-      setLoading(false);
+      setFormLoading(false);
     }
   };
+
+  // Show loading while waiting for auth to process token
+  if (waitingForAuth || authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+            <Loader2 className="w-12 h-12 text-emerald-500 mx-auto mb-4 animate-spin" />
+            <h2 className="text-xl font-semibold text-charcoal mb-2">Processing...</h2>
+            <p className="text-gray-600">
+              Please wait while we verify your link.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (success) {
     return (
@@ -134,10 +174,10 @@ export function SetPassword() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={formLoading}
               className="w-full py-2.5 bg-charcoal text-white rounded-lg hover:bg-charcoal/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+              {formLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               Set Password
             </button>
           </form>
