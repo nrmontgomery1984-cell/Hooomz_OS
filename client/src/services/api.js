@@ -2874,22 +2874,16 @@ function saveEmployeesToStorage(employees) {
 
 // GET all employees
 export async function getEmployees() {
-  console.log('[getEmployees] USE_MOCK_EMPLOYEES:', USE_MOCK_EMPLOYEES);
-
   if (!isSupabaseConfigured() || USE_MOCK_EMPLOYEES) {
     return { data: loadEmployeesFromStorage(), error: null };
   }
 
   try {
-    console.log('[getEmployees] Querying Supabase...');
     const { data, error } = await supabase
       .from('employees')
       .select('*');
 
-    console.log('[getEmployees] Result:', { data, error });
-
     if (error) {
-      console.error('[getEmployees] Error:', error);
       return { data: [], error };
     }
 
@@ -2900,7 +2894,6 @@ export async function getEmployees() {
 
     return { data: data || [], error: null };
   } catch (err) {
-    console.error('[getEmployees] Exception:', err);
     return { data: [], error: err.message };
   }
 }
