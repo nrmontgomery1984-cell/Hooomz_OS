@@ -109,13 +109,26 @@ export function AuthProvider({ children }) {
   // Sign out
   async function signOut() {
     if (!isSupabaseConfigured()) {
+      setUser(null);
+      setEmployee(null);
       return { error: null };
     }
 
-    const { error } = await supabase.auth.signOut();
-    setUser(null);
-    setEmployee(null);
-    return { error };
+    try {
+      const { error } = await supabase.auth.signOut();
+      setUser(null);
+      setEmployee(null);
+      // Force redirect to login
+      window.location.href = '/login';
+      return { error };
+    } catch (err) {
+      console.error('Sign out error:', err);
+      // Still clear local state even if Supabase fails
+      setUser(null);
+      setEmployee(null);
+      window.location.href = '/login';
+      return { error: err };
+    }
   }
 
   // Send password reset email
