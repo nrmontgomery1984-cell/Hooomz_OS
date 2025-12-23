@@ -236,8 +236,8 @@ export function ScopeStep({ data, errors, onChange }) {
 
   // Calculate running totals
   const totals = useMemo(() => {
-    return calculateInstanceTotals(instances, assemblies, ceilingHeights, null);
-  }, [instances, assemblies, ceilingHeights]);
+    return calculateInstanceTotals(instances, selectedAssemblies, ceilingHeights, null);
+  }, [instances, selectedAssemblies, ceilingHeights]);
 
   // Handle instances change
   const handleInstancesChange = (newInstances) => {
