@@ -15,9 +15,13 @@ import {
   Database,
   Trash2,
   AlertTriangle,
+  Shield,
+  RotateCcw,
 } from 'lucide-react';
 import { Card, Button, Input, TextArea } from '../components/ui';
 import { clearAllMockData, restoreMockData } from '../services/mockData';
+import { useRoleVisibility, NAV_SECTIONS } from '../hooks/useRoleVisibility';
+import { ROLES } from '../lib/devData';
 
 // Storage key for settings
 const STORAGE_KEY = 'hooomz_company_settings';
@@ -96,11 +100,18 @@ function saveSettings(settings) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 }
 
+// Roles that can be configured (internal team only)
+const CONFIGURABLE_ROLES = ['administrator', 'manager', 'foreman', 'carpenter', 'apprentice', 'labourer'];
+
 export function Settings() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [activeSection, setActiveSection] = useState('company');
   const [isSaving, setIsSaving] = useState(false);
   const [savedMessage, setSavedMessage] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('carpenter');
+
+  // Role visibility management
+  const { allVisibility, updateRoleVisibility, resetToDefaults } = useRoleVisibility();
 
   // Load settings on mount
   useEffect(() => {
@@ -136,6 +147,7 @@ export function Settings() {
     { id: 'documents', label: 'Documents', icon: FileText },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'branding', label: 'Branding', icon: Palette },
+    { id: 'permissions', label: 'Permissions', icon: Shield },
     { id: 'data', label: 'Data Management', icon: Database },
   ];
 
@@ -693,6 +705,128 @@ export function Settings() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </Card>
+          )}
+
+          {/* Permissions */}
+          {activeSection === 'permissions' && (
+            <Card className="p-6">
+              <h2 className="text-lg font-semibold text-charcoal mb-4 flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                Role Permissions
+              </h2>
+              <p className="text-sm text-gray-500 mb-6">
+                Configure which navigation sections each role can see. Changes take effect immediately.
+              </p>
+
+              {/* Role Selector */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select Role to Configure
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {CONFIGURABLE_ROLES.map((role) => {
+                    const roleConfig = ROLES[role];
+                    const isSelected = selectedRole === role;
+                    return (
+                      <button
+                        key={role}
+                        onClick={() => setSelectedRole(role)}
+                        className={`
+                          px-3 py-2 rounded-lg text-sm font-medium transition-all
+                          ${isSelected
+                            ? 'text-white shadow-md'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          }
+                        `}
+                        style={isSelected ? { backgroundColor: roleConfig.color } : {}}
+                      >
+                        {roleConfig.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Selected Role Info */}
+              {selectedRole && (
+                <div
+                  className="mb-6 p-4 rounded-lg border-2"
+                  style={{ borderColor: ROLES[selectedRole].color, backgroundColor: `${ROLES[selectedRole].color}10` }}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <span
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: ROLES[selectedRole].color }}
+                    />
+                    <span className="font-semibold text-charcoal">{ROLES[selectedRole].label}</span>
+                  </div>
+                  <p className="text-sm text-gray-600">{ROLES[selectedRole].description}</p>
+                </div>
+              )}
+
+              {/* Visibility Toggles */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold text-charcoal mb-3">Navigation Visibility</h3>
+                {Object.entries(NAV_SECTIONS).map(([sectionId, section]) => {
+                  const isVisible = allVisibility[selectedRole]?.[sectionId] ?? false;
+                  const isAdminSettings = selectedRole === 'administrator' && sectionId === 'settings';
+
+                  return (
+                    <div
+                      key={sectionId}
+                      className={`
+                        flex items-center justify-between p-3 rounded-lg border
+                        ${isVisible ? 'bg-emerald-50 border-emerald-200' : 'bg-gray-50 border-gray-200'}
+                        ${isAdminSettings ? 'opacity-50' : ''}
+                      `}
+                    >
+                      <div>
+                        <div className="font-medium text-charcoal">{section.label}</div>
+                        <div className="text-xs text-gray-500">{section.description}</div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          if (!isAdminSettings) {
+                            updateRoleVisibility(selectedRole, sectionId, !isVisible);
+                          }
+                        }}
+                        disabled={isAdminSettings}
+                        className={`
+                          relative w-12 h-6 rounded-full transition-colors
+                          ${isVisible ? 'bg-emerald-500' : 'bg-gray-300'}
+                          ${isAdminSettings ? 'cursor-not-allowed' : 'cursor-pointer'}
+                        `}
+                      >
+                        <span
+                          className={`
+                            absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform
+                            ${isVisible ? 'translate-x-7' : 'translate-x-1'}
+                          `}
+                        />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Reset to Defaults */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    if (window.confirm('Reset all role permissions to defaults?')) {
+                      resetToDefaults();
+                    }
+                  }}
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  Reset to Defaults
+                </Button>
+                <p className="text-xs text-gray-500 mt-2">
+                  This will reset visibility settings for all roles to their default values.
+                </p>
               </div>
             </Card>
           )}

@@ -29,6 +29,7 @@ import { Logo } from '../ui/Logo';
 import { ProjectSearch } from './ProjectSearch';
 import { useDevAuth } from '../../hooks/useDevAuth';
 import { useAuth } from '../../hooks/useAuth';
+import { useRoleVisibility } from '../../hooks/useRoleVisibility';
 import { ROLES } from '../../lib/devData';
 import { mockProjects } from '../../services/mockData';
 import { isSupabaseConfigured } from '../../services/supabase';
@@ -77,17 +78,18 @@ const checkIsActive = (to, pathname, projectPhase = null) => {
 };
 
 // Navigation organized by business phase
+// visibilityKey maps to NAV_SECTIONS in useRoleVisibility
 const navSections = [
   {
     label: 'Overview',
+    visibilityKey: 'dashboard',
     items: [
       { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-      // Today page hidden - reserved for field worker features
-      // { to: '/today', icon: Calendar, label: 'Today' },
     ],
   },
   {
     label: 'Daily',
+    visibilityKey: 'daily',
     items: [
       { to: '/time-tracker', icon: Timer, label: 'Time' },
       { to: '/expenses', icon: Receipt, label: 'Expenses' },
@@ -96,6 +98,7 @@ const navSections = [
   },
   {
     label: 'Pipeline',
+    visibilityKey: 'pipeline',
     items: [
       { to: '/sales', icon: UserPlus, label: 'Sales / Leads', badge: 'intake' },
       { to: '/estimates', icon: Calculator, label: 'Estimates', badge: 'pricing' },
@@ -104,6 +107,7 @@ const navSections = [
   },
   {
     label: 'Production',
+    visibilityKey: 'production',
     items: [
       { to: '/production', icon: HardHat, label: 'In Progress', badge: 'active' },
       { to: '/completed', icon: CheckCircle2, label: 'Completed' },
@@ -111,12 +115,14 @@ const navSections = [
   },
   {
     label: 'People',
+    visibilityKey: 'team',
     items: [
       { to: '/team', icon: Users, label: 'Team' },
     ],
   },
   {
     label: 'Tools',
+    visibilityKey: 'tools',
     items: [
       { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue' },
       { to: '/field-guide', icon: GraduationCap, label: 'Field Guide' },
@@ -176,6 +182,12 @@ export function Sidebar() {
   const [showPersonaDropdown, setShowPersonaDropdown] = useState(false);
   const { currentPersona, switchPersona } = useDevAuth();
   const { employee, signOut, isAuthenticated } = useAuth();
+  const { canSee } = useRoleVisibility();
+
+  // Filter nav sections based on role visibility
+  const visibleNavSections = navSections.filter(
+    section => canSee(section.visibilityKey)
+  );
 
   // Get current project's phase if we're on a project page
   const currentProjectPhase = (() => {
@@ -278,7 +290,7 @@ export function Sidebar() {
 
       {/* Navigation by sections */}
       <nav className="flex-1 p-3 overflow-y-auto">
-        {navSections.map((section) => (
+        {visibleNavSections.map((section) => (
           <div key={section.label} className="mb-6">
             <h3 className="px-3 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
               {section.label}
@@ -310,19 +322,21 @@ export function Sidebar() {
 
       {/* Settings and User at bottom */}
       <div className="p-3 border-t border-gray-100 space-y-1">
-        <NavLink
-          to="/settings"
-          className={({ isActive }) => `
-            flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors
-            ${isActive
-              ? 'bg-emerald-50 text-emerald-700 font-bold border-l-4 border-emerald-500 -ml-1 pl-4'
-              : 'text-gray-600 hover:bg-gray-50 hover:text-charcoal'
-            }
-          `}
-        >
-          <Settings className="w-4 h-4" />
-          Settings
-        </NavLink>
+        {canSee('settings') && (
+          <NavLink
+            to="/settings"
+            className={({ isActive }) => `
+              flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors
+              ${isActive
+                ? 'bg-emerald-50 text-emerald-700 font-bold border-l-4 border-emerald-500 -ml-1 pl-4'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-charcoal'
+              }
+            `}
+          >
+            <Settings className="w-4 h-4" />
+            Settings
+          </NavLink>
+        )}
 
         {/* Show logged in user info when authenticated */}
         {isAuthenticated && isSupabaseConfigured() && (

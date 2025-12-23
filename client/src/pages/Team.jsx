@@ -27,8 +27,8 @@ function ContactCard({ employee, onDelete, onInvite }) {
   const [showMenu, setShowMenu] = useState(false);
   const [inviteStatus, setInviteStatus] = useState(null); // null | 'sending' | 'sent' | 'error'
   const roleConfig = ROLES[employee.role] || ROLES.labourer;
-  const displayName = employee.preferredName || employee.firstName;
-  const initials = `${employee.firstName[0]}${employee.lastName[0]}`;
+  const displayName = employee.preferredName || employee.firstName || 'Unknown';
+  const initials = `${(employee.firstName || 'U')[0]}${(employee.lastName || '')[0] || ''}`;
 
   const handleCardClick = (e) => {
     // Don't navigate if clicking on phone, email, or menu
@@ -78,22 +78,26 @@ function ContactCard({ employee, onDelete, onInvite }) {
           </div>
 
           <div className="space-y-1 text-sm text-gray-500">
-            <a
-              href={`tel:${employee.phone}`}
-              className="flex items-center gap-2 hover:text-charcoal transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Phone className="w-3.5 h-3.5" />
-              <span>{employee.phone}</span>
-            </a>
-            <a
-              href={`mailto:${employee.email}`}
-              className="flex items-center gap-2 hover:text-charcoal transition-colors truncate"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Mail className="w-3.5 h-3.5 flex-shrink-0" />
-              <span className="truncate">{employee.email}</span>
-            </a>
+            {employee.phone && (
+              <a
+                href={`tel:${employee.phone}`}
+                className="flex items-center gap-2 hover:text-charcoal transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>{employee.phone}</span>
+              </a>
+            )}
+            {employee.email && (
+              <a
+                href={`mailto:${employee.email}`}
+                className="flex items-center gap-2 hover:text-charcoal transition-colors truncate"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Mail className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="truncate">{employee.email}</span>
+              </a>
+            )}
             {employee.address?.city && (
               <div className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5" />
