@@ -71,9 +71,19 @@ export function IntakeWizard({ initialType = null, onComplete }) {
   };
 
   const handleSubmit = async () => {
+    console.log('[IntakeWizard] handleSubmit called');
+    console.log('[IntakeWizard] formData:', formData);
+    console.log('[IntakeWizard] onComplete exists:', !!onComplete);
+
     // This will generate the project, loops, and tasks
     if (onComplete) {
-      await onComplete(formData, estimate);
+      try {
+        await onComplete(formData, estimate);
+      } catch (err) {
+        console.error('[IntakeWizard] onComplete error:', err);
+      }
+    } else {
+      console.error('[IntakeWizard] No onComplete handler!');
     }
   };
 

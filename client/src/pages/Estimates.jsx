@@ -45,7 +45,7 @@ export function Estimates() {
   const handleCreateEstimate = async (projectData) => {
     const { data, error } = await createProject({
       ...projectData,
-      status: 'estimate',
+      phase: 'estimating',
     });
 
     if (!error && data) {

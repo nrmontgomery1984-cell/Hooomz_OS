@@ -41,8 +41,7 @@ import {
 } from './mockData';
 import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
-// Use Supabase for projects when configured, fallback to mock/localStorage
-// Use localStorage until Supabase tables are properly set up
+// Use mock/localStorage for projects (Supabase RLS blocks anonymous inserts)
 const USE_MOCK_PROJECTS = true;
 
 // Projects API
@@ -72,8 +71,11 @@ export async function getProjects() {
 }
 
 export async function getProject(id) {
+  console.log('[api.getProject] id:', id, 'supabaseConfigured:', isSupabaseConfigured(), 'mockCount:', mockProjects.length);
+
   if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const project = mockProjects.find((p) => p.id === id);
+    console.log('[api.getProject] Mock mode - found:', !!project);
     if (!project) {
       return { data: null, error: 'Not found' };
     }
@@ -93,11 +95,13 @@ export async function getProject(id) {
     .eq('id', id)
     .single();
 
+  console.log('[api.getProject] Supabase result - data:', !!data, 'error:', error);
+
   // Fallback to localStorage if not found in Supabase (for migration period)
   if (error || !data) {
     const localProject = mockProjects.find((p) => p.id === id);
+    console.log('[api.getProject] Fallback to localStorage - found:', !!localProject);
     if (localProject) {
-      console.log('Project found in localStorage, not in Supabase:', id);
       return { data: localProject, error: null };
     }
   }
@@ -168,7 +172,7 @@ export async function createProject(projectData) {
 
 // Loops API
 export async function getLoops(projectId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     return { data: mockLoops[projectId] || [], error: null };
   }
 
@@ -213,7 +217,7 @@ export async function getOrGenerateLoops(projectId, project) {
 
   if (needsGeneration) {
     // Clear existing loops for this project in mock mode
-    if (!isSupabaseConfigured()) {
+    if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
       // First, delete tasks for existing loops by their actual IDs
       const existingLoopsToDelete = existingLoops || [];
       for (const loop of existingLoopsToDelete) {
@@ -258,7 +262,7 @@ export async function regenerateProjectLoops(projectId, project) {
   }
 
   // Clear existing loops for this project
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Get existing loop IDs to clear their tasks
     const existingLoops = mockLoops[projectId] || [];
     for (const loop of existingLoops) {
@@ -282,7 +286,7 @@ export async function regenerateProjectLoops(projectId, project) {
 }
 
 export async function getLoop(id) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     for (const loops of Object.values(mockLoops)) {
       const loop = loops.find((l) => l.id === id);
       if (loop) return { data: loop, error: null };
@@ -301,7 +305,7 @@ export async function getLoop(id) {
 
 // Tasks API
 export async function getTasks(loopId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     return { data: mockTasks[loopId] || [], error: null };
   }
 
@@ -315,7 +319,7 @@ export async function getTasks(loopId) {
 }
 
 export async function getTask(id) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Search all loops for the task
     for (const tasks of Object.values(mockTasks)) {
       const task = tasks.find((t) => t.id === id);
@@ -334,7 +338,7 @@ export async function getTask(id) {
 }
 
 export async function updateTask(id, updates) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     return { data: { id, ...updates }, error: null };
   }
 
@@ -349,7 +353,7 @@ export async function updateTask(id, updates) {
 }
 
 export async function updateTaskStatus(taskId, status) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Mock update
     return { data: { id: taskId, status }, error: null };
   }
@@ -369,7 +373,7 @@ export async function updateTaskStatus(taskId, status) {
 
 // Today Tasks API
 export async function getTodayTasks() {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     return { data: mockTodayTasks, error: null };
   }
 
@@ -396,7 +400,7 @@ export async function createTodayTask({ title }) {
     created_at: new Date().toISOString(),
   };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Add to mock data
     mockTodayTasks.unshift(newTask);
     return { data: newTask, error: null };
@@ -772,7 +776,7 @@ export async function getProjectActivity(projectId, limit = 20) {
 
 // Create a new task
 export async function createTask(task) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const newTask = {
       id: task.id || `t${Date.now()}`,
       ...task,
@@ -804,7 +808,7 @@ export async function createTask(task) {
 
 // Create a new loop
 export async function createLoop(loop) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const newLoop = {
       id: loop.id || `l${Date.now()}`,
       ...loop,
@@ -836,7 +840,7 @@ export async function createLoop(loop) {
 
 // Task Notes API
 export async function getTaskNotes(taskId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Return empty array for mock - notes would be stored per task
     return { data: [], error: null };
   }
@@ -851,7 +855,7 @@ export async function getTaskNotes(taskId) {
 }
 
 export async function addTaskNote(taskId, note) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const newNote = {
       id: `n${Date.now()}`,
       task_id: taskId,
@@ -876,7 +880,7 @@ export async function addTaskNote(taskId, note) {
 
 // Task Photos API
 export async function getTaskPhotos(taskId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Return empty array for mock
     return { data: [], error: null };
   }
@@ -891,7 +895,7 @@ export async function getTaskPhotos(taskId) {
 }
 
 export async function addTaskPhoto(taskId, photo) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const newPhoto = {
       id: `p${Date.now()}`,
       task_id: taskId,
@@ -916,7 +920,7 @@ export async function addTaskPhoto(taskId, photo) {
 
 // Task Time Entries API
 export async function getTaskTimeEntries(taskId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Return empty array for mock
     return { data: [], error: null };
   }
@@ -941,7 +945,7 @@ export async function getTaskTimeEntries(taskId) {
  * @param {string} [entry.actor_name] - Name of person performing action
  */
 export async function createActivityEntry(entry) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     // Mock: add to local array for demo
     const newEntry = {
       id: `a${Date.now()}`,
@@ -1014,6 +1018,9 @@ export async function updateProjectPhase(projectId, updates) {
     return { data: updatedProject, error: null };
   }
 
+  // Log what we're trying to update for debugging
+  console.log('[updateProjectPhase] Updating project:', projectId, 'with:', Object.keys(updates));
+
   const { data, error } = await supabase
     .from('projects')
     .update({
@@ -1025,8 +1032,29 @@ export async function updateProjectPhase(projectId, updates) {
     .single();
 
   if (error) {
-    console.error('Supabase updateProjectPhase error:', error);
+    console.error('[updateProjectPhase] Supabase error:', error.message, error.details, error.hint);
+    console.error('[updateProjectPhase] Full error:', JSON.stringify(error, null, 2));
+  } else {
+    console.log('[updateProjectPhase] Success, updated project:', data?.id, 'phase:', data?.phase);
   }
+
+  // Fallback to localStorage if Supabase update failed or returned no data
+  // This handles projects that were created before Supabase migration
+  if (error || !data) {
+    const projectIndex = mockProjects.findIndex(p => p.id === projectId);
+    if (projectIndex !== -1) {
+      console.log('Updating project in localStorage (not in Supabase):', projectId);
+      const updatedProject = {
+        ...mockProjects[projectIndex],
+        ...updates,
+        updated_at: new Date().toISOString(),
+      };
+      mockProjects[projectIndex] = updatedProject;
+      saveProjectsToStorage();
+      return { data: updatedProject, error: null };
+    }
+  }
+
   return { data, error };
 }
 
@@ -1067,6 +1095,24 @@ export async function updateProject(projectId, updates) {
   if (error) {
     console.error('Supabase updateProject error:', error, 'Updates:', updates);
   }
+
+  // Fallback to localStorage if Supabase update failed or returned no data
+  // This handles projects that were created before Supabase migration
+  if (error || !data) {
+    const projectIndex = mockProjects.findIndex(p => p.id === projectId);
+    if (projectIndex !== -1) {
+      console.log('Updating project in localStorage (not in Supabase):', projectId);
+      const updatedProject = {
+        ...mockProjects[projectIndex],
+        ...updates,
+        updated_at: new Date().toISOString(),
+      };
+      mockProjects[projectIndex] = updatedProject;
+      saveProjectsToStorage();
+      return { data: updatedProject, error: null };
+    }
+  }
+
   return { data, error };
 }
 
@@ -1143,9 +1189,28 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
     return { loops: [], tasks: [], error: 'No line items to convert' };
   }
 
+  // Helper to infer trade code from category/name if not set
+  const inferTradeCode = (item) => {
+    if (item.tradeCode) return item.tradeCode;
+    const text = `${item.category || ''} ${item.name || ''}`.toLowerCase();
+    const mappings = {
+      'electrical': 'EL', 'plumbing': 'PL', 'hvac': 'HV',
+      'drywall': 'DW', 'painting': 'PT', 'flooring': 'FL',
+      'tile': 'TL', 'cabinet': 'CM', 'millwork': 'CM',
+      'framing': 'FS', 'foundation': 'FN', 'roofing': 'RF',
+      'insulation': 'IA', 'demo': 'DM', 'site': 'SW',
+      'exterior': 'EF', 'finish': 'FC', 'carpentry': 'FC',
+      'stair': 'SR', 'window': 'WD', 'door': 'WD',
+    };
+    for (const [key, code] of Object.entries(mappings)) {
+      if (text.includes(key)) return code;
+    }
+    return 'GN';
+  };
+
   // Group line items by trade code to create loops
   const tradeGroups = lineItems.reduce((acc, item) => {
-    const tradeCode = item.tradeCode || 'GN';
+    const tradeCode = inferTradeCode(item);
     if (!acc[tradeCode]) {
       acc[tradeCode] = {
         tradeName: TRADE_NAMES[tradeCode] || tradeCode,
@@ -1766,7 +1831,7 @@ export async function getTaskInstances(projectId, filters = {}) {
  * Get a single task instance by ID
  */
 export async function getTaskInstance(instanceId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     for (const instances of Object.values(mockTaskInstances)) {
       const instance = instances.find(t => t.id === instanceId);
       if (instance) return { data: instance, error: null };
@@ -1907,7 +1972,7 @@ export async function createTaskInstance(projectId, taskData) {
  * Get phase checklists for a template
  */
 export async function getPhaseChecklists(templateId, phaseFilter = null) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     let checklists = defaultPhaseChecklists[templateId] || [];
     if (phaseFilter) {
       checklists = checklists.filter(c => c.phaseCode === phaseFilter);
@@ -2062,7 +2127,7 @@ export function groupTasksBySubcategory(instances, subcategories) {
  * Get all material selections for a project
  */
 export async function getMaterialSelections(projectId, filters = {}) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const projectSelections = mockMaterialSelections[projectId] || [];
 
     // Apply filters
@@ -2128,7 +2193,7 @@ export async function getMaterialSelections(projectId, filters = {}) {
  * Get a single material selection by ID
  */
 export async function getMaterialSelection(projectId, selectionId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const projectSelections = mockMaterialSelections[projectId] || [];
     const selection = projectSelections.find(s => s.id === selectionId);
     return { data: selection || null, error: selection ? null : 'Not found' };
@@ -2168,7 +2233,7 @@ export async function createMaterialSelection(projectId, selectionData) {
     updatedAt: new Date().toISOString(),
   };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     if (!mockMaterialSelections[projectId]) {
       mockMaterialSelections[projectId] = [];
     }
@@ -2205,7 +2270,7 @@ export async function createMaterialSelection(projectId, selectionData) {
  * Update a material selection
  */
 export async function updateMaterialSelection(projectId, selectionId, updates) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const projectSelections = mockMaterialSelections[projectId] || [];
     const index = projectSelections.findIndex(s => s.id === selectionId);
 
@@ -2241,7 +2306,7 @@ export async function updateMaterialSelection(projectId, selectionId, updates) {
  * Delete a material selection
  */
 export async function deleteMaterialSelection(projectId, selectionId) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const projectSelections = mockMaterialSelections[projectId] || [];
     const index = projectSelections.findIndex(s => s.id === selectionId);
 
@@ -2889,7 +2954,8 @@ export async function getEmployees() {
   try {
     const { data, error } = await supabase
       .from('employees')
-      .select('*');
+      .select('*')
+      .is('deleted_at', null);
 
     if (error) {
       return { data: [], error };
@@ -2933,7 +2999,7 @@ export async function createEmployee(employeeData) {
     updated_at: new Date().toISOString()
   };
 
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const employees = loadEmployeesFromStorage();
     employees.push(newEmployee);
     saveEmployeesToStorage(employees);
@@ -2951,7 +3017,7 @@ export async function createEmployee(employeeData) {
 
 // UPDATE employee
 export async function updateEmployee(id, updates) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const employees = loadEmployeesFromStorage();
     const index = employees.findIndex(e => e.id === id);
     if (index === -1) {
@@ -2987,7 +3053,7 @@ export async function updateEmployee(id, updates) {
 
 // DELETE employee (soft delete)
 export async function deleteEmployee(id) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
     const employees = loadEmployeesFromStorage();
     const index = employees.findIndex(e => e.id === id);
     if (index === -1) {

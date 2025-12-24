@@ -1047,9 +1047,9 @@ function generateContractorEstimate(project, intake) {
     if (lineItems.length === 0) {
       return {
         lineItems: [
-          { id: 'starter-0', category: 'Labor', name: 'Labor', description: 'Project labor costs', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
-          { id: 'starter-1', category: 'Materials', name: 'Materials', description: 'Building materials', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
-          { id: 'starter-2', category: 'Subcontractors', name: 'Subcontractor Work', description: 'Subcontracted trades', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+          { id: 'starter-0', category: 'Labor', name: 'Labor', description: 'Project labor costs', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template', tradeCode: 'GN', tradeName: 'General' },
+          { id: 'starter-1', category: 'Materials', name: 'Materials', description: 'Building materials', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template', tradeCode: 'GN', tradeName: 'General' },
+          { id: 'starter-2', category: 'Subcontractors', name: 'Subcontractor Work', description: 'Subcontracted trades', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template', tradeCode: 'GN', tradeName: 'General' },
         ],
         projectType: 'contractor',
         selectedTier: project?.build_tier || 'better',
@@ -1068,8 +1068,8 @@ function generateContractorEstimate(project, intake) {
     // Return blank estimate on any error
     return {
       lineItems: [
-        { id: 'starter-0', category: 'Labor', name: 'Labor', description: 'Project labor costs', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
-        { id: 'starter-1', category: 'Materials', name: 'Materials', description: 'Building materials', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template' },
+        { id: 'starter-0', category: 'Labor', name: 'Labor', description: 'Project labor costs', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template', tradeCode: 'GN', tradeName: 'General' },
+        { id: 'starter-1', category: 'Materials', name: 'Materials', description: 'Building materials', unit: 'lump', quantity: 1, unitPriceGood: 0, unitPriceBetter: 0, unitPriceBest: 0, source: 'template', tradeCode: 'GN', tradeName: 'General' },
       ],
       projectType: 'contractor',
       selectedTier: project?.build_tier || 'better',

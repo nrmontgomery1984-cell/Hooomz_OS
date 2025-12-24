@@ -19,11 +19,11 @@ export function Production() {
     async function loadProjects() {
       setLoading(true);
       const { data } = await getProjects();
-      // Filter to production status projects (check both status and phase for backwards compatibility)
+      // Filter to active/punch_list phase projects
       // Exclude cancelled projects
       const activeProjects = (data || []).filter(p =>
-        (p.status === 'production' || p.status === 'active' || p.phase === 'active' || p.phase === 'punch_list') &&
-        p.status !== 'cancelled' && p.phase !== 'cancelled'
+        (p.phase === 'active' || p.phase === 'punch_list') &&
+        p.phase !== 'cancelled'
       );
       setProjects(activeProjects);
       setLoading(false);

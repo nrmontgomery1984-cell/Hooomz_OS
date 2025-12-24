@@ -374,11 +374,52 @@ export function EstimateBuilder() {
     setLineItems((prev) => prev.filter((item) => item.id !== itemId));
   };
 
+  // Infer trade code from category name
+  const inferTradeCode = (category) => {
+    const categoryLower = category.toLowerCase();
+    // Map common category names to trade codes
+    const mappings = {
+      'electrical': 'EL',
+      'plumbing': 'PL',
+      'hvac': 'HV',
+      'drywall': 'DW',
+      'painting': 'PT',
+      'flooring': 'FL',
+      'tile': 'TL',
+      'cabinetry': 'CM',
+      'cabinets': 'CM',
+      'millwork': 'CM',
+      'framing': 'FS',
+      'foundation': 'FN',
+      'roofing': 'RF',
+      'insulation': 'IA',
+      'demo': 'DM',
+      'demolition': 'DM',
+      'site': 'SW',
+      'exterior': 'EF',
+      'finish': 'FC',
+      'carpentry': 'FC',
+      'stairs': 'SR',
+      'labor': 'GN',
+      'materials': 'GN',
+      'subcontractors': 'GN',
+      'general': 'GN',
+    };
+    // Check for partial matches
+    for (const [key, code] of Object.entries(mappings)) {
+      if (categoryLower.includes(key)) return code;
+    }
+    return 'GN'; // Default to General
+  };
+
   // Add custom line item
   const addLineItem = (category) => {
+    const tradeCode = inferTradeCode(category);
     const newItem = {
       id: `custom-${Date.now()}`,
       category,
+      tradeCode,
+      tradeName: category,
       name: 'New Item',
       description: '',
       unit: 'lump',

@@ -20,10 +20,9 @@ export function Sales() {
     async function loadLeads() {
       setLoading(true);
       const { data } = await getProjects();
-      // Filter to only intake status projects, exclude cancelled
+      // Filter to intake phase projects, exclude cancelled
       const intakeProjects = (data || []).filter(p =>
-        (p.status === 'intake' || p.phase === 'intake') &&
-        p.status !== 'cancelled' && p.phase !== 'cancelled'
+        p.phase === 'intake' && p.phase !== 'cancelled'
       );
       setLeads(intakeProjects);
       setLoading(false);

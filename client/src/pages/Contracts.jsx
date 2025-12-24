@@ -22,8 +22,8 @@ export function Contracts() {
       // Filter to contract phase projects (includes 'quoted' awaiting signature and 'contracted')
       // Exclude cancelled projects
       const contractProjects = (data || []).filter(p =>
-        (p.phase === 'contract' || p.phase === 'contracted' || p.phase === 'quoted') &&
-        p.status !== 'cancelled' && p.phase !== 'cancelled'
+        (p.phase === 'contracted' || p.phase === 'quoted') &&
+        p.phase !== 'cancelled'
       );
       setContracts(contractProjects);
       setLoading(false);

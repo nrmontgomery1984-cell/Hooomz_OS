@@ -3,8 +3,8 @@ import { PROJECT_PHASES } from '../data/intakeSchema';
 import { getRoomTemplate, calculateEstimate } from '../data/intakeTemplates';
 import { mockProjects, mockLoops, mockTasks, saveProjectsToStorage } from './mockData';
 
-// Use localStorage until Supabase tables are properly set up
-const USE_MOCK_PROJECTS = true;
+// Use Supabase for all project data
+const USE_MOCK_PROJECTS = false;
 
 /**
  * Intake Service
@@ -23,6 +23,10 @@ const USE_MOCK_PROJECTS = true;
  * @returns {{ data: Object|null, error: string|null }}
  */
 export async function generateProjectFromIntake(formData, estimate) {
+  console.log('[intakeService] generateProjectFromIntake called');
+  console.log('[intakeService] formData:', formData);
+  console.log('[intakeService] contact:', formData?.contact);
+
   try {
     const { contact, project, renovation, selections, notes } = formData;
 
@@ -147,7 +151,7 @@ export async function generateProjectFromIntake(formData, estimate) {
     // Map to database schema columns only
     const dbProjectData = {
       name: projectData.name,
-      status: 'intake',
+      phase: 'intake',
       address: projectData.address || null,
       description: projectData.notes || null,
       project_type: formData.form_type || 'renovation',
@@ -155,44 +159,43 @@ export async function generateProjectFromIntake(formData, estimate) {
       client_email: projectData.client_email,
       client_phone: projectData.client_phone,
       health_score: 100,
-      estimated_budget: estimate?.high || null,
+      estimate_high: estimate?.high || null,
+      estimate_low: estimate?.low || null,
+      intake_data: formData,
+      intake_type: formData.form_type,
+      build_tier: projectData.build_tier || 'better',
     };
 
-    const { data: createdProject, error: projectError } = await supabase
-      .from('projects')
-      .insert(dbProjectData)
-      .select()
-      .single();
+    console.log('[intakeService] Inserting to Supabase:', dbProjectData);
+
+    // Wrap Supabase call with timeout to prevent hanging
+    let createdProject = null;
+    let projectError = null;
+
+    try {
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Supabase timeout after 10s')), 10000)
+      );
+
+      const insertPromise = supabase
+        .from('projects')
+        .insert(dbProjectData)
+        .select()
+        .single();
+
+      const result = await Promise.race([insertPromise, timeoutPromise]);
+      createdProject = result.data;
+      projectError = result.error;
+    } catch (err) {
+      console.error('[intakeService] Supabase call failed:', err.message);
+      projectError = { message: err.message };
+    }
 
     if (projectError) {
       console.error('Project creation error:', projectError);
-      // Fall back to mock mode if Supabase fails (RLS/schema issues)
-      console.log('Falling back to mock mode...');
-      const projectId = `p${Date.now()}`;
-      const newProject = { id: projectId, ...projectData };
-      mockProjects.unshift(newProject);
-
-      // Generate loops for mock
-      const projectLoops = [];
-      let loopOrder = 1;
-      if (renovation?.room_tiers) {
-        for (const [roomType, renoTier] of Object.entries(renovation.room_tiers)) {
-          const template = getRoomTemplate(roomType, renoTier);
-          if (!template) continue;
-          const loopId = `l${Date.now()}-${loopOrder}`;
-          projectLoops.push({
-            id: loopId,
-            project_id: projectId,
-            name: template.loopName,
-            status: 'pending',
-            display_order: loopOrder++,
-          });
-        }
-      }
-      mockLoops[projectId] = projectLoops;
-      saveProjectsToStorage();
-
-      return { data: { ...newProject, loops: projectLoops }, error: null };
+      // Return the actual error so user knows what's wrong
+      const errorMsg = projectError.message || 'Failed to create project in database';
+      return { data: null, error: `Supabase error: ${errorMsg}. Check RLS policies in Supabase dashboard.` };
     }
 
     // 2. Create loops and tasks for each selected room
