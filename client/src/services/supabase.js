@@ -12,16 +12,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('[supabase.js] Supabase credentials not found. Using mock data mode.');
 }
 
-// Configure Supabase client with session persistence for "stay logged in"
+// Configure Supabase client with default auth settings (session persists by default)
 export const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,        // Keep user logged in across page refreshes
-        autoRefreshToken: true,      // Auto-refresh tokens before expiry
-        detectSessionInUrl: true,    // Handle OAuth/magic link redirects
-        storageKey: 'hooomz-auth',   // Custom storage key for auth data
-      },
-    })
+  ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
 console.log('[supabase.js] Supabase client created:', !!supabase);
