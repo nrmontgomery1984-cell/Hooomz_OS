@@ -2956,15 +2956,25 @@ export async function getEmployees() {
 
   try {
     console.log('[api.getEmployees] Fetching from Supabase...');
-    const { data, error } = await supabase
+
+    // Add timeout to prevent hanging
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Supabase query timeout after 10s')), 10000)
+    );
+
+    const queryPromise = supabase
       .from('employees')
       .select('*');
+
+    const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
 
     console.log('[api.getEmployees] Supabase response - data:', data?.length, 'error:', error);
 
     if (error) {
       console.error('[api.getEmployees] Supabase error:', error);
-      return { data: [], error };
+      // Fall back to localStorage on error
+      console.log('[api.getEmployees] Falling back to localStorage');
+      return { data: loadEmployeesFromStorage(), error: null };
     }
 
     // Filter out soft-deleted employees if deleted_at column exists
@@ -2982,7 +2992,9 @@ export async function getEmployees() {
     return { data: filteredData, error: null };
   } catch (err) {
     console.error('[api.getEmployees] Exception:', err);
-    return { data: [], error: err.message };
+    // Fall back to localStorage on timeout/error
+    console.log('[api.getEmployees] Falling back to localStorage due to error');
+    return { data: loadEmployeesFromStorage(), error: null };
   }
 }
 

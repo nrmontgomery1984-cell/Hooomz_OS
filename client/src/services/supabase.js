@@ -12,13 +12,20 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('[supabase.js] Supabase credentials not found. Using mock data mode.');
 }
 
+// Configure Supabase client for anonymous access (no auth persistence)
+// This prevents the client from hanging on auth initialization
 export const supabase = supabaseUrl && supabaseAnonKey
-  ? createClient(supabaseUrl, supabaseAnonKey)
+  ? createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+    })
   : null;
 
 console.log('[supabase.js] Supabase client created:', !!supabase);
 
 export const isSupabaseConfigured = () => {
-  console.log('[supabase.js] isSupabaseConfigured called, returning:', !!supabase);
   return !!supabase;
 };
