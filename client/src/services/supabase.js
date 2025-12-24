@@ -12,44 +12,14 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('[supabase.js] Supabase credentials not found. Using mock data mode.');
 }
 
-// Configure Supabase client with session persistence but custom storage
-// This allows "stay logged in" while preventing auth from blocking data queries
+// Configure Supabase client with session persistence
+// This allows "stay logged in" functionality
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
-        flowType: 'pkce',
-        storage: {
-          // Custom storage that doesn't block on corrupted data
-          getItem: (key) => {
-            try {
-              return localStorage.getItem(key);
-            } catch {
-              return null;
-            }
-          },
-          setItem: (key, value) => {
-            try {
-              localStorage.setItem(key, value);
-            } catch {
-              // Ignore storage errors
-            }
-          },
-          removeItem: (key) => {
-            try {
-              localStorage.removeItem(key);
-            } catch {
-              // Ignore storage errors
-            }
-          },
-        },
-      },
-      global: {
-        headers: {
-          'x-client-info': 'hooomz-os',
-        },
       },
     })
   : null;
