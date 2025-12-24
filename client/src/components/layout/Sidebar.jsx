@@ -31,8 +31,6 @@ import { useDevAuth } from '../../hooks/useDevAuth';
 import { useAuth } from '../../hooks/useAuth';
 import { useRoleVisibility } from '../../hooks/useRoleVisibility';
 import { ROLES } from '../../lib/devData';
-import { mockProjects } from '../../services/mockData';
-import { isSupabaseConfigured } from '../../services/supabase';
 
 // Map project phase to nav path
 const PHASE_TO_NAV = {
@@ -187,15 +185,8 @@ export function Sidebar() {
     .filter(section => section.items.length > 0);
 
   // Get current project's phase if we're on a project page
-  const currentProjectPhase = (() => {
-    const projectMatch = pathname.match(/\/projects\/([^/]+)/);
-    if (projectMatch) {
-      const projectId = projectMatch[1];
-      const project = mockProjects.find(p => p.id === projectId);
-      return project?.phase || null;
-    }
-    return null;
-  })();
+  // TODO: Replace with proper context/state management for project data
+  const currentProjectPhase = null;
 
   const currentConfig = getPersonaConfig(currentPersona?.role || 'administrator');
   const CurrentIcon = currentConfig.icon;

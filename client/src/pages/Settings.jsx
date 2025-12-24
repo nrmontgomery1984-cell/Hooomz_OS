@@ -19,9 +19,20 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { Card, Button, Input, TextArea } from '../components/ui';
-import { clearAllMockData, restoreMockData } from '../services/mockData';
 import { useRoleVisibility, NAV_SECTIONS } from '../hooks/useRoleVisibility';
 import { ROLES } from '../lib/devData';
+
+// Clear all local storage data (for development/reset)
+function clearAllLocalData() {
+  const keysToPreserve = ['hooomz_company_settings']; // Keep settings
+  const allKeys = Object.keys(localStorage);
+  allKeys.forEach(key => {
+    if (key.startsWith('hooomz_') && !keysToPreserve.includes(key)) {
+      localStorage.removeItem(key);
+    }
+  });
+  console.log('[Settings] Local data cleared');
+}
 
 // Storage key for settings
 const STORAGE_KEY = 'hooomz_company_settings';
@@ -857,44 +868,31 @@ export function Settings() {
                         variant="danger"
                         className="mt-4 bg-red-600 hover:bg-red-700 text-white"
                         onClick={() => {
-                          if (window.confirm('Are you sure you want to delete ALL data? This cannot be undone.')) {
+                          if (window.confirm('Are you sure you want to delete ALL local data? This cannot be undone.')) {
                             if (window.confirm('This is your last chance. Delete everything?')) {
-                              clearAllMockData();
+                              clearAllLocalData();
                               window.location.reload();
                             }
                           }
                         }}
                       >
                         <Trash2 className="w-4 h-4 mr-2" />
-                        Clear All Data
+                        Clear Local Data
                       </Button>
                     </div>
                   </div>
                 </div>
 
-                {/* Restore Demo Data */}
+                {/* Data Info */}
                 <div className="p-4 border border-blue-200 bg-blue-50 rounded-lg">
                   <div className="flex items-start gap-3">
                     <Database className="w-5 h-5 text-blue-500 mt-0.5" />
                     <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-blue-800">Restore Demo Data</h3>
+                      <h3 className="text-sm font-semibold text-blue-800">Data Storage</h3>
                       <p className="text-sm text-blue-600 mt-1">
-                        Restore the sample projects and demo data that comes with the app.
-                        Useful for testing or seeing how the app works.
+                        Your project data is stored securely in Supabase. Local storage is used
+                        for caching and preferences only.
                       </p>
-                      <Button
-                        variant="secondary"
-                        className="mt-4"
-                        onClick={() => {
-                          if (window.confirm('Restore demo projects and sample data?')) {
-                            restoreMockData();
-                            window.location.reload();
-                          }
-                        }}
-                      >
-                        <Database className="w-4 h-4 mr-2" />
-                        Restore Demo Data
-                      </Button>
                     </div>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import {
   getSubcategoriesForCategory,
   formatCategoryPath,
 } from '../data/scopeCategories';
-import { mockContacts, mockProjectContacts } from '../services/mockData';
+import { supabase } from '../services/supabase';
 
 /**
  * useScopeData - Hook for accessing cached scope categories and contacts
@@ -23,29 +23,47 @@ export function useScopeData(projectId = null) {
   // Categories are static, no need to fetch
   const categories = ALL_CATEGORIES;
 
-  // Contacts - in real app would fetch from API, here using mock
+  // Contacts - fetch from Supabase
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading contacts (would be API call in production)
-    setLoading(true);
+    async function fetchContacts() {
+      setLoading(true);
 
-    // Get contacts for this project, or all contacts if no projectId
-    let projectContactIds = [];
-    if (projectId && mockProjectContacts[projectId]) {
-      projectContactIds = mockProjectContacts[projectId];
+      try {
+        let query = supabase.from('contacts').select('*');
+
+        // If projectId provided, get contacts linked to this project
+        if (projectId) {
+          const { data: projectContacts } = await supabase
+            .from('project_contacts')
+            .select('contact_id')
+            .eq('project_id', projectId);
+
+          if (projectContacts && projectContacts.length > 0) {
+            const contactIds = projectContacts.map(pc => pc.contact_id);
+            query = query.in('id', contactIds);
+          }
+        }
+
+        const { data, error } = await query.order('name');
+
+        if (error) {
+          console.error('[useScopeData] Error fetching contacts:', error);
+          setContacts([]);
+        } else {
+          setContacts(data || []);
+        }
+      } catch (err) {
+        console.error('[useScopeData] Error:', err);
+        setContacts([]);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    const filteredContacts = projectId
-      ? mockContacts.filter(c => projectContactIds.includes(c.id))
-      : mockContacts;
-
-    // Small delay to simulate network (remove in production)
-    setTimeout(() => {
-      setContacts(filteredContacts);
-      setLoading(false);
-    }, 100);
+    fetchContacts();
   }, [projectId]);
 
   // Format categories for Select component

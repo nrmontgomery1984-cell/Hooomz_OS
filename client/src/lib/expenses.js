@@ -2,12 +2,8 @@
  * Expense Tracking - Hooomz
  *
  * Storage and utilities for tracking project expenses
- * Integrates with project-embedded expense data (labor from time entries, materials)
+ * TODO: Integrate with Supabase for expense data
  */
-
-// Import demo data sources directly to get embedded expense data
-// (mockProjects/mockTimeEntries load from localStorage which may have stale data)
-import { demoProjects, demoTimeEntries } from '../services/mockData';
 
 // Expense categories matching the cost catalogue
 export const EXPENSE_CATEGORIES = [
@@ -60,63 +56,17 @@ export function saveExpenses(expenses) {
 
 /**
  * Get expenses for a specific project
- * Merges localStorage expenses with project-embedded data (materials + labor from time entries)
+ * Returns manually added expenses from localStorage
+ * TODO: Integrate with Supabase expenses table
  */
 export function getProjectExpenses(projectId) {
   // Get manually added expenses from localStorage
   const manualExpenses = loadExpenses().filter(e => e.projectId === projectId);
 
-  // Get project-embedded expenses (material entries) from demo data
-  const project = demoProjects.find(p => p.id === projectId);
-  const embeddedMaterialExpenses = [];
-  const embeddedLaborExpenses = [];
+  // Sort by date (newest first)
+  manualExpenses.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
 
-  if (project?.expenses?.material?.entries) {
-    project.expenses.material.entries.forEach(entry => {
-      embeddedMaterialExpenses.push({
-        id: entry.id,
-        projectId: projectId,
-        category: 'materials',
-        description: entry.description,
-        vendor: entry.vendor,
-        amount: entry.amount,
-        date: entry.date,
-        invoiceNumber: entry.invoiceNumber,
-        categoryCode: entry.categoryCode,
-        status: entry.status,
-        isEmbedded: true, // Flag to identify embedded vs manual entries
-        createdAt: entry.date,
-      });
-    });
-  }
-
-  // Get labor expenses from time entries linked to this project
-  const projectTimeEntries = demoTimeEntries.filter(e => e.projectId === projectId);
-  projectTimeEntries.forEach(entry => {
-    if (entry.laborCost > 0) {
-      embeddedLaborExpenses.push({
-        id: `labor-${entry.id}`,
-        projectId: projectId,
-        category: 'labor',
-        description: entry.taskName,
-        vendor: entry.userName,
-        amount: entry.laborCost,
-        date: entry.startTime.split('T')[0],
-        durationMinutes: entry.durationMinutes,
-        hourlyRate: entry.hourlyRate,
-        categoryCode: entry.categoryCode,
-        isEmbedded: true,
-        isLabor: true,
-        createdAt: entry.startTime,
-      });
-    }
-  });
-
-  // Combine all expenses and sort by date (newest first)
-  const allExpenses = [...manualExpenses, ...embeddedMaterialExpenses, ...embeddedLaborExpenses];
-  allExpenses.sort((a, b) => new Date(b.date || b.createdAt) - new Date(a.date || a.createdAt));
-
-  return allExpenses;
+  return manualExpenses;
 }
 
 /**

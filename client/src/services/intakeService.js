@@ -1,19 +1,15 @@
-import { supabase, isSupabaseConfigured } from './supabase';
-import { PROJECT_PHASES } from '../data/intakeSchema';
-import { getRoomTemplate, calculateEstimate } from '../data/intakeTemplates';
-import { mockProjects, mockLoops, mockTasks, saveProjectsToStorage } from './mockData';
-
-// Use Supabase for all project data
-const USE_MOCK_PROJECTS = false;
-
 /**
  * Intake Service
  *
  * Handles the conversion of intake form data into:
- * - A Project record (in intake/estimate phase)
+ * - A Project record (in intake phase)
  * - Loop records for each room/scope area
  * - Task records from templates
  */
+
+import { supabase } from './supabase';
+import { createProject, createLoopsBatch, createTasksBatch } from './db';
+import { getRoomTemplate } from '../data/intakeTemplates';
 
 /**
  * Generate a full Project with Loops and Tasks from intake data
@@ -24,183 +20,48 @@ const USE_MOCK_PROJECTS = false;
  */
 export async function generateProjectFromIntake(formData, estimate) {
   console.log('[intakeService] generateProjectFromIntake called');
-  console.log('[intakeService] formData:', formData);
-  console.log('[intakeService] contact:', formData?.contact);
 
   try {
-    const { contact, project, renovation, selections, notes } = formData;
+    const { contact, project, renovation, notes } = formData;
 
-    // 1. Create the Project
+    // Build project data
     const projectData = {
       name: `${contact.full_name} - ${project.address || 'New Project'}`,
-      status: 'intake',
-      phase: PROJECT_PHASES.INTAKE,
-      progress: 0,
-      health_score: 100, // New projects start healthy
+      phase: 'intake',
+      address: project.address || null,
+      description: notes?.additional_notes || null,
+      project_type: formData.form_type || 'renovation',
 
-      // Contact info
+      // Client info
       client_name: contact.full_name,
       client_email: contact.email,
       client_phone: contact.phone,
-      preferred_contact: contact.preferred_contact,
 
-      // Project details
-      address: project.address,
-      build_tier: project.build_tier,
-      budget_range: project.budget_range,
-      target_start: project.desired_start_month,
-      target_completion: project.target_completion_month,
-      priorities: project.priorities,
-
-      // Estimate
+      // Estimates
       estimate_low: estimate?.low || null,
       estimate_high: estimate?.high || null,
-      estimate_breakdown: estimate?.breakdown || null,
 
-      // Store full intake data for reference
-      intake_data: formData,
+      // Intake metadata
       intake_type: formData.form_type,
-
-      // Notes
-      notes: notes?.additional_notes || '',
-      must_haves: notes?.must_haves?.filter(Boolean) || [],
-      pain_points: notes?.pain_points?.filter(Boolean) || [],
-      style_notes: notes?.style_notes || '',
-      inspiration_urls: notes?.inspiration_urls?.filter(Boolean) || [],
-
-      // Metadata
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      build_tier: project.build_tier || 'better',
+      intake_data: formData,
     };
 
-    // Mock mode handling - use mock when Supabase not configured OR USE_MOCK_PROJECTS is true
-    if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
-      const projectId = `p${Date.now()}`;
-      const newProject = {
-        id: projectId,
-        ...projectData,
-      };
+    console.log('[intakeService] Creating project...');
 
-      // Add to mock projects array (persists in memory)
-      mockProjects.unshift(newProject);
-
-      // Generate mock loops
-      const projectLoops = [];
-      let loopOrder = 1;
-
-      if (renovation?.room_tiers) {
-        for (const [roomType, renoTier] of Object.entries(renovation.room_tiers)) {
-          const template = getRoomTemplate(roomType, renoTier);
-          if (!template) continue;
-
-          const loopId = `l${Date.now()}-${loopOrder}`;
-          const newLoop = {
-            id: loopId,
-            project_id: projectId,
-            name: template.loopName,
-            category: template.category,
-            status: 'pending',
-            display_order: loopOrder,
-            room_type: roomType,
-            reno_tier: renoTier,
-            source: 'intake',
-            progress: 0,
-            created_at: new Date().toISOString(),
-          };
-          projectLoops.push(newLoop);
-
-          // Generate tasks for this loop
-          const loopTasks = template.defaults.map((task, index) => ({
-            id: `t${Date.now()}-${loopOrder}-${index}`,
-            loop_id: loopId,
-            project_id: projectId,
-            title: task.title,
-            category: task.category,
-            subcategory: task.subcategory || null,
-            status: 'pending',
-            display_order: index + 1,
-            source: 'template',
-            created_at: new Date().toISOString(),
-          }));
-
-          // Add tasks to mock data
-          mockTasks[loopId] = loopTasks;
-          loopOrder++;
-        }
-      }
-
-      // Add loops to mock data
-      mockLoops[projectId] = projectLoops;
-
-      // Persist to localStorage
-      saveProjectsToStorage();
-
-      console.log('Project created (mock):', newProject);
-      console.log('Loops created (mock):', projectLoops.length);
-
-      return {
-        data: {
-          ...newProject,
-          loops: projectLoops,
-        },
-        error: null,
-      };
-    }
-
-    // Real Supabase implementation
-    // Map to database schema columns only
-    const dbProjectData = {
-      name: projectData.name,
-      phase: 'intake',
-      address: projectData.address || null,
-      description: projectData.notes || null,
-      project_type: formData.form_type || 'renovation',
-      client_name: projectData.client_name,
-      client_email: projectData.client_email,
-      client_phone: projectData.client_phone,
-      health_score: 100,
-      estimate_high: estimate?.high || null,
-      estimate_low: estimate?.low || null,
-      intake_data: formData,
-      intake_type: formData.form_type,
-      build_tier: projectData.build_tier || 'better',
-    };
-
-    console.log('[intakeService] Inserting to Supabase:', dbProjectData);
-
-    // Wrap Supabase call with timeout to prevent hanging
-    let createdProject = null;
-    let projectError = null;
-
-    try {
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Supabase timeout after 10s')), 10000)
-      );
-
-      const insertPromise = supabase
-        .from('projects')
-        .insert(dbProjectData)
-        .select()
-        .single();
-
-      const result = await Promise.race([insertPromise, timeoutPromise]);
-      createdProject = result.data;
-      projectError = result.error;
-    } catch (err) {
-      console.error('[intakeService] Supabase call failed:', err.message);
-      projectError = { message: err.message };
-    }
+    // Create the project
+    const { data: createdProject, error: projectError } = await createProject(projectData);
 
     if (projectError) {
-      console.error('Project creation error:', projectError);
-      // Return the actual error so user knows what's wrong
-      const errorMsg = projectError.message || 'Failed to create project in database';
-      return { data: null, error: `Supabase error: ${errorMsg}. Check RLS policies in Supabase dashboard.` };
+      console.error('[intakeService] Project creation error:', projectError);
+      return { data: null, error: `Failed to create project: ${projectError}` };
     }
 
-    // 2. Create loops and tasks for each selected room
-    const loops = [];
-    const allTasks = [];
+    console.log('[intakeService] Project created:', createdProject.id);
+
+    // Prepare loops and tasks from room selections
+    const loopsToCreate = [];
+    const tasksByLoop = {};
     let loopOrder = 1;
 
     if (renovation?.room_tiers) {
@@ -208,81 +69,109 @@ export async function generateProjectFromIntake(formData, estimate) {
         const template = getRoomTemplate(roomType, renoTier);
         if (!template) continue;
 
-        // Create loop
-        const { data: loop, error: loopError } = await supabase
-          .from('loops')
-          .insert({
-            project_id: createdProject.id,
-            name: template.loopName,
-            category: template.category,
-            status: 'pending',
-            display_order: loopOrder,
-            room_type: roomType,
-            reno_tier: renoTier,
-            source: 'intake',
-          })
-          .select()
-          .single();
+        const loopKey = `loop-${loopOrder}`;
 
-        if (loopError) {
-          console.error('Loop creation error:', loopError);
-          continue;
-        }
-
-        loops.push(loop);
-
-        // Create tasks for this loop
-        const taskData = template.defaults.map((task, index) => ({
-          loop_id: loop.id,
+        loopsToCreate.push({
           project_id: createdProject.id,
-          title: task.title,
-          category: task.category,
-          subcategory: task.subcategory || null,
+          name: template.loopName,
+          loop_type: 'room',
+          trade_code: template.category || null,
           status: 'pending',
+          display_order: loopOrder,
+          source: 'intake',
+        });
+
+        // Prepare tasks for this loop
+        tasksByLoop[loopKey] = (template.defaults || []).map((task, index) => ({
+          title: task.title,
+          description: null,
+          status: 'pending',
+          priority: 2,
+          category_code: task.category || null,
           display_order: index + 1,
-          source: 'template',
+          source: 'intake',
         }));
-
-        const { data: tasks, error: tasksError } = await supabase
-          .from('tasks')
-          .insert(taskData)
-          .select();
-
-        if (tasksError) {
-          console.error('Tasks creation error:', tasksError);
-        } else {
-          allTasks.push(...tasks);
-        }
 
         loopOrder++;
       }
     }
 
+    console.log('[intakeService] Creating', loopsToCreate.length, 'loops...');
+
+    // Create all loops
+    let loops = [];
+    if (loopsToCreate.length > 0) {
+      const { data: createdLoops, error: loopsError } = await createLoopsBatch(loopsToCreate);
+
+      if (loopsError) {
+        console.error('[intakeService] Loops creation error:', loopsError);
+      } else {
+        loops = createdLoops || [];
+      }
+    }
+
+    // Create tasks for each loop
+    const allTasksToCreate = [];
+    loops.forEach((loop, index) => {
+      const loopKey = `loop-${index + 1}`;
+      const tasksForLoop = tasksByLoop[loopKey] || [];
+
+      for (const task of tasksForLoop) {
+        allTasksToCreate.push({
+          ...task,
+          loop_id: loop.id,
+        });
+      }
+    });
+
+    console.log('[intakeService] Creating', allTasksToCreate.length, 'tasks...');
+
+    let createdTasks = [];
+    if (allTasksToCreate.length > 0) {
+      const { data: tasks, error: tasksError } = await createTasksBatch(allTasksToCreate);
+
+      if (tasksError) {
+        console.error('[intakeService] Tasks creation error:', tasksError);
+      } else {
+        createdTasks = tasks || [];
+      }
+    }
+
     // Log activity
-    await supabase.from('activity_log').insert({
-      event_type: 'project.created_from_intake',
-      event_data: {
-        project_name: createdProject.name,
-        intake_type: formData.form_type,
-        loops_created: loops.length,
-        tasks_created: allTasks.length,
-        estimate_low: estimate?.low,
-        estimate_high: estimate?.high,
-      },
-      project_id: createdProject.id,
-      actor_name: contact.full_name,
+    try {
+      await supabase.from('activity_log').insert({
+        event_type: 'project.created_from_intake',
+        event_data: {
+          project_name: createdProject.name,
+          intake_type: formData.form_type,
+          loops_created: loops.length,
+          tasks_created: createdTasks.length,
+          estimate_low: estimate?.low,
+          estimate_high: estimate?.high,
+        },
+        project_id: createdProject.id,
+        actor_name: contact.full_name,
+      });
+    } catch (err) {
+      console.warn('[intakeService] Activity log failed:', err);
+    }
+
+    console.log('[intakeService] Complete!', {
+      loops: loops.length,
+      tasks: createdTasks.length,
     });
 
     return {
       data: {
         ...createdProject,
         loops,
-        tasks: allTasks,
+        tasks: createdTasks,
       },
       error: null,
     };
+
   } catch (err) {
-    console.error('generateProjectFromIntake error:', err);
+    console.error('[intakeService] generateProjectFromIntake error:', err);
     return { data: null, error: err.message };
   }
 }
@@ -291,11 +180,6 @@ export async function generateProjectFromIntake(formData, estimate) {
  * Update a project's phase
  */
 export async function updateProjectPhase(projectId, newPhase) {
-  if (!isSupabaseConfigured()) {
-    console.log('Phase updated (mock):', projectId, newPhase);
-    return { data: { id: projectId, phase: newPhase }, error: null };
-  }
-
   const { data, error } = await supabase
     .from('projects')
     .update({
@@ -313,13 +197,9 @@ export async function updateProjectPhase(projectId, newPhase) {
  * Get intake data for an existing project
  */
 export async function getProjectIntakeData(projectId) {
-  if (!isSupabaseConfigured()) {
-    return { data: null, error: 'Mock mode - no intake data' };
-  }
-
   const { data, error } = await supabase
     .from('projects')
-    .select('intake_data, intake_type, estimate_low, estimate_high, estimate_breakdown')
+    .select('intake_data, intake_type, estimate_low, estimate_high')
     .eq('id', projectId)
     .single();
 
@@ -332,25 +212,6 @@ export async function getProjectIntakeData(projectId) {
  */
 export async function addChangeOrder(projectId, changeOrderData) {
   const { name, description, roomType, renoTier, estimateLow, estimateHigh } = changeOrderData;
-
-  if (!isSupabaseConfigured()) {
-    const mockLoop = {
-      id: `l${Date.now()}`,
-      project_id: projectId,
-      name: name || `Change Order - ${roomType}`,
-      category: 'CO',
-      status: 'pending',
-      is_change_order: true,
-      change_order_reason: description,
-      estimate_low: estimateLow,
-      estimate_high: estimateHigh,
-      source: 'change_order',
-      created_at: new Date().toISOString(),
-    };
-
-    console.log('Change order created (mock):', mockLoop);
-    return { data: mockLoop, error: null };
-  }
 
   // Get current loop count for ordering
   const { count } = await supabase
@@ -366,15 +227,10 @@ export async function addChangeOrder(projectId, changeOrderData) {
     .insert({
       project_id: projectId,
       name: name || (template ? `Change Order - ${template.loopName}` : 'Change Order'),
-      category: template?.category || 'CO',
+      loop_type: 'change_order',
+      trade_code: template?.category || null,
       status: 'pending',
       display_order: (count || 0) + 1,
-      is_change_order: true,
-      change_order_reason: description,
-      room_type: roomType,
-      reno_tier: renoTier,
-      estimate_low: estimateLow,
-      estimate_high: estimateHigh,
       source: 'change_order',
     })
     .select()
@@ -385,14 +241,12 @@ export async function addChangeOrder(projectId, changeOrderData) {
   }
 
   // Create tasks from template if applicable
-  if (template) {
+  if (template && template.defaults) {
     const taskData = template.defaults.map((task, index) => ({
       loop_id: loop.id,
-      project_id: projectId,
       title: task.title,
-      category: task.category,
-      subcategory: task.subcategory || null,
       status: 'pending',
+      category_code: task.category || null,
       display_order: index + 1,
       source: 'change_order',
     }));
@@ -401,17 +255,21 @@ export async function addChangeOrder(projectId, changeOrderData) {
   }
 
   // Log activity
-  await supabase.from('activity_log').insert({
-    event_type: 'change_order.created',
-    event_data: {
-      loop_name: loop.name,
-      reason: description,
-      estimate_low: estimateLow,
-      estimate_high: estimateHigh,
-    },
-    project_id: projectId,
-    loop_id: loop.id,
-  });
+  try {
+    await supabase.from('activity_log').insert({
+      event_type: 'change_order.created',
+      event_data: {
+        loop_name: loop.name,
+        reason: description,
+        estimate_low: estimateLow,
+        estimate_high: estimateHigh,
+      },
+      project_id: projectId,
+      loop_id: loop.id,
+    });
+  } catch (err) {
+    console.warn('[intakeService] Activity log failed:', err);
+  }
 
   return { data: loop, error: null };
 }

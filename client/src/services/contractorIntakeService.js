@@ -1,7 +1,3 @@
-import { createProject, createLoop, createTask } from './api';
-import { getEnabledCategories } from '../data/contractorIntakeSchema';
-import { calculateScopeCosts } from '../lib/scopeCostEstimator';
-
 /**
  * Contractor Intake Service
  *
@@ -11,40 +7,14 @@ import { calculateScopeCosts } from '../lib/scopeCostEstimator';
  * Flow: Contractor Intake → Project + Loops + Tasks (all created together)
  */
 
-// Trade names for loop display
-const TRADE_NAMES = {
-  SW: 'Site Work',
-  FN: 'Foundation',
-  FR: 'Framing',
-  FS: 'Structural Framing',
-  FI: 'Interior Framing',
-  RF: 'Roofing',
-  EX: 'Exterior',
-  EE: 'Exterior Envelope',
-  WD: 'Windows & Doors',
-  IN: 'Insulation',
-  IA: 'Insulation & Air Sealing',
-  EL: 'Electrical',
-  PL: 'Plumbing',
-  HV: 'HVAC',
-  DW: 'Drywall',
-  PT: 'Painting',
-  FL: 'Flooring',
-  TL: 'Tile',
-  FC: 'Finish Carpentry',
-  CB: 'Cabinetry',
-  CM: 'Cabinetry & Millwork',
-  CT: 'Countertops',
-  FX: 'Fixtures',
-  CL: 'Cleaning & Closeout',
-  GN: 'General',
-};
-
-// Trade order for construction workflow
-const TRADE_ORDER = [
-  'SW', 'FN', 'FR', 'FS', 'FI', 'RF', 'EX', 'EE', 'WD', 'IN', 'IA',
-  'EL', 'PL', 'HV', 'DW', 'PT', 'FL', 'TL', 'FC', 'CB', 'CM', 'CT', 'FX', 'CL', 'GN'
-];
+import { createProject, createLoopsBatch, createTasksBatch } from './db';
+import { getEnabledCategories } from '../data/contractorIntakeSchema';
+import { calculateScopeCosts } from '../lib/scopeCostEstimator';
+import {
+  getTrade,
+  getTradeFromScopePrefix,
+  PROJECT_PHASES,
+} from '../lib/constants';
 
 /**
  * Generate a Project with Loops and Tasks from contractor intake data
@@ -56,12 +26,9 @@ export async function generateProjectFromContractorIntake(formData) {
   try {
     const { project, client, scope, instances } = formData;
 
-    console.log('[contractorIntakeService] formData:', formData);
+    console.log('[contractorIntakeService] Starting project generation');
     console.log('[contractorIntakeService] scope:', scope);
     console.log('[contractorIntakeService] instances:', instances);
-    if (instances?.length > 0) {
-      console.log('[contractorIntakeService] First instance:', JSON.stringify(instances[0], null, 2));
-    }
 
     // Check if using new instances format or old scope format
     const hasInstances = instances && instances.length > 0;
@@ -69,88 +36,17 @@ export async function generateProjectFromContractorIntake(formData) {
       cat.enabled && Object.values(cat.items || {}).some(item => item.qty > 0)
     );
 
-    console.log('[contractorIntakeService] hasInstances:', hasInstances, 'hasOldScope:', hasOldScope);
-
     if (!hasInstances && !hasOldScope) {
       return { data: null, error: 'No scope items selected. Please add at least one trade.' };
     }
 
-    // For the new instances format, we need to build scope-like structure from instances
+    // Build effective scope from instances or existing scope
     let effectiveScope = scope || {};
     let enabledCategories = [];
 
     if (hasInstances) {
-      // Build scope structure from instances
-      // Group instances by trade code extracted from scopeItemId (e.g., "fr-ext" -> "FR")
-      const tradeGroups = {};
-
-      // Map scopeItemId prefixes to trade codes
-      const SCOPE_ITEM_PREFIX_TO_TRADE = {
-        'sw': 'SW', // Site Work
-        'fn': 'FN', // Foundation
-        'fr': 'FR', // Framing
-        'rf': 'RF', // Roofing
-        'ex': 'EX', // Exterior
-        'wd': 'WD', // Windows & Doors
-        'in': 'IN', // Insulation
-        'el': 'EL', // Electrical
-        'pl': 'PL', // Plumbing
-        'hv': 'HV', // HVAC
-        'dw': 'DW', // Drywall
-        'pt': 'PT', // Painting
-        'fl': 'FL', // Flooring
-        'tl': 'TL', // Tile
-        'fc': 'FC', // Finish Carpentry
-        'cb': 'CB', // Cabinetry
-        'ct': 'CT', // Countertops
-        'fx': 'FX', // Fixtures
-        'cl': 'CL', // Cleaning & Closeout
-      };
-
-      // Scope item names for display
-      const SCOPE_ITEM_NAMES = {
-        'fr-ext': 'Exterior Walls',
-        'fr-int': 'Interior Walls',
-        'fr-bearing': 'Bearing Walls',
-        'fr-ceil': 'Ceiling Framing',
-        'fr-floor': 'Floor Framing',
-        'fr-truss': 'Roof Trusses',
-        'fr-roof': 'Roof Framing',
-        'fr-header': 'Headers/Beams',
-        // Add more as needed
-      };
-
-      for (const instance of instances) {
-        // Extract trade code from scopeItemId (e.g., "fr-ext" -> "fr" -> "FR")
-        const scopeItemId = instance.scopeItemId || '';
-        const prefix = scopeItemId.split('-')[0]?.toLowerCase();
-        const tradeCode = SCOPE_ITEM_PREFIX_TO_TRADE[prefix] || 'GN';
-
-        if (!tradeGroups[tradeCode]) {
-          tradeGroups[tradeCode] = {
-            enabled: true,
-            items: {},
-          };
-        }
-
-        // Add instance as a scope item
-        const itemId = instance.id || `inst-${Object.keys(tradeGroups[tradeCode].items).length}`;
-        const itemName = SCOPE_ITEM_NAMES[scopeItemId] || scopeItemId || 'Item';
-
-        tradeGroups[tradeCode].items[itemId] = {
-          qty: instance.measurement || instance.quantity || 1,
-          unit: instance.unit || 'lf', // Default to linear feet for framing
-          name: itemName,
-          level: instance.level,
-          assemblyId: instance.assemblyId,
-          notes: instance.notes || null,
-          scopeItemId: scopeItemId,
-          // Keep reference to original instance
-          instanceRef: instance,
-        };
-      }
-      effectiveScope = tradeGroups;
-      enabledCategories = Object.keys(tradeGroups);
+      effectiveScope = buildScopeFromInstances(instances);
+      enabledCategories = Object.keys(effectiveScope);
       console.log('[contractorIntakeService] Built scope from instances:', effectiveScope);
     } else {
       enabledCategories = getEnabledCategories(scope);
@@ -161,12 +57,12 @@ export async function generateProjectFromContractorIntake(formData) {
     // Calculate cost estimates
     const costEstimate = hasOldScope
       ? calculateScopeCosts(scope, project.specLevel || 'standard')
-      : { grandTotal: 0, categories: {} }; // Instances have their own cost calculation
+      : { grandTotal: 0, categories: {} };
 
-    // Build project data (matching api.js createProject expectations)
+    // Build project data
     const projectData = {
       name: project.name,
-      phase: 'estimating', // Contractor projects start in estimating phase
+      phase: 'estimate', // Contractor projects start in estimate phase
       address: project.address || null,
 
       // Client info
@@ -187,14 +83,11 @@ export async function generateProjectFromContractorIntake(formData) {
       },
     };
 
-    console.log('[contractorIntakeService] Creating project with loops...');
-    console.log('[contractorIntakeService] Enabled trades:', enabledCategories);
+    console.log('[contractorIntakeService] Creating project...');
 
     // ========================================
-    // 1. CREATE PROJECT (using api.js createProject which handles mock/Supabase)
+    // 1. CREATE PROJECT
     // ========================================
-    console.log('[contractorIntakeService] About to create project:', projectData);
-
     const { data: createdProject, error: projectError } = await createProject(projectData);
 
     if (projectError) {
@@ -207,18 +100,11 @@ export async function generateProjectFromContractorIntake(formData) {
     // ========================================
     // 2. CREATE LOOPS (one per enabled trade category)
     // ========================================
-    const createdLoops = [];
-    const createdTasks = [];
+    const loopsToCreate = [];
+    const tasksByLoop = {};
 
     // Sort enabled categories by trade order
-    const sortedCategories = [...enabledCategories].sort((a, b) => {
-      const aIndex = TRADE_ORDER.indexOf(a);
-      const bIndex = TRADE_ORDER.indexOf(b);
-      if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
-      if (aIndex === -1) return 1;
-      if (bIndex === -1) return -1;
-      return aIndex - bIndex;
-    });
+    const sortedCategories = sortCategoriesByTradeOrder(enabledCategories);
 
     let loopOrder = 1;
 
@@ -226,91 +112,104 @@ export async function generateProjectFromContractorIntake(formData) {
       const categoryData = effectiveScope[tradeCode];
       if (!categoryData || !categoryData.enabled) continue;
 
-      const loopId = `loop-${createdProject.id.slice(-8)}-${tradeCode}-${Date.now()}`;
-      const tradeName = TRADE_NAMES[tradeCode] || tradeCode;
-
-      // Count items in this category
+      const trade = getTrade(tradeCode);
       const items = categoryData.items || {};
-      const itemCount = Object.keys(items).length;
+      const itemCount = Object.keys(items).filter(k => items[k]?.qty > 0).length;
+
+      if (itemCount === 0) continue;
 
       const loop = {
-        id: loopId,
         project_id: createdProject.id,
-        name: tradeName,
-        loop_type: 'task_group',
-        category_code: tradeCode,
+        name: trade.name,
+        loop_type: 'trade',
+        trade_code: trade.code,
         status: 'pending',
         display_order: loopOrder++,
         source: 'contractor_intake',
         health_score: 0,
         health_color: 'gray',
-        task_count: itemCount,
       };
 
-      console.log('[contractorIntakeService] Creating loop:', tradeName);
-      const { data: createdLoop, error: loopError } = await createLoop(loop);
+      loopsToCreate.push(loop);
 
-      if (loopError) {
-        console.error('[contractorIntakeService] Loop create error:', loopError);
-        continue;
-      }
-
-      createdLoops.push(createdLoop || loop);
-
-      // ========================================
-      // 3. CREATE TASKS (one per scope item in this category)
-      // ========================================
+      // Prepare tasks for this loop
+      tasksByLoop[trade.code] = [];
       let taskOrder = 1;
 
       for (const [itemId, itemData] of Object.entries(items)) {
         if (!itemData || itemData.qty <= 0) continue;
 
-        const taskId = `task-${createdProject.id.slice(-8)}-${tradeCode}-${taskOrder}-${Date.now()}`;
-
-        // Build task title from item data
         const taskTitle = itemData.name || itemData.scopeItemId || itemId;
 
-        const task = {
-          id: taskId,
-          loop_id: loopId,
+        tasksByLoop[trade.code].push({
           title: taskTitle,
           description: itemData.notes || null,
           status: 'pending',
-          priority: 2, // Medium priority
-          category_code: tradeCode,
+          priority: 2,
+          category_code: trade.code,
           location: itemData.level || null,
           display_order: taskOrder++,
           source: 'contractor_intake',
-          // Quantity/measurement info
           quantity: itemData.qty || 1,
           unit: itemData.unit || null,
-          // Reference back to scope item
           scope_item_id: itemData.scopeItemId || itemId,
-        };
+        });
+      }
+    }
 
-        console.log('[contractorIntakeService] Creating task:', taskTitle);
-        const { data: createdTask, error: taskError } = await createTask(task);
+    console.log('[contractorIntakeService] Creating', loopsToCreate.length, 'loops...');
 
-        if (taskError) {
-          console.error('[contractorIntakeService] Task create error:', taskError);
-          continue;
-        }
+    // Create all loops
+    const { data: createdLoops, error: loopsError } = await createLoopsBatch(loopsToCreate);
 
-        createdTasks.push(createdTask || task);
+    if (loopsError) {
+      console.error('[contractorIntakeService] Loops create error:', loopsError);
+      // Continue with empty loops array if batch fails
+    }
+
+    const loops = createdLoops || [];
+
+    // ========================================
+    // 3. CREATE TASKS (one per scope item)
+    // ========================================
+    const allTasksToCreate = [];
+
+    for (const loop of loops) {
+      const tradeCode = loop.trade_code;
+      const tasksForLoop = tasksByLoop[tradeCode] || [];
+
+      for (const task of tasksForLoop) {
+        allTasksToCreate.push({
+          ...task,
+          loop_id: loop.id,
+        });
+      }
+    }
+
+    console.log('[contractorIntakeService] Creating', allTasksToCreate.length, 'tasks...');
+
+    let createdTasks = [];
+    if (allTasksToCreate.length > 0) {
+      const { data: tasks, error: tasksError } = await createTasksBatch(allTasksToCreate);
+
+      if (tasksError) {
+        console.error('[contractorIntakeService] Tasks create error:', tasksError);
+      } else {
+        createdTasks = tasks || [];
       }
     }
 
     console.log('[contractorIntakeService] Complete!', {
-      loops: createdLoops.length,
+      loops: loops.length,
       tasks: createdTasks.length,
     });
 
     return {
       data: {
         ...createdProject,
-        loops: createdLoops,
+        loops,
         tasks: createdTasks,
-        loopCount: createdLoops.length,
+        loopCount: loops.length,
         taskCount: createdTasks.length,
         categoryCount: enabledCategories.length,
       },
@@ -324,6 +223,69 @@ export async function generateProjectFromContractorIntake(formData) {
 }
 
 /**
+ * Build scope structure from instances array
+ * Groups instances by trade code extracted from scopeItemId
+ */
+function buildScopeFromInstances(instances) {
+  const tradeGroups = {};
+
+  // Scope item names for display
+  const SCOPE_ITEM_NAMES = {
+    'fr-ext': 'Exterior Walls',
+    'fr-int': 'Interior Walls',
+    'fr-bearing': 'Bearing Walls',
+    'fr-ceil': 'Ceiling Framing',
+    'fr-floor': 'Floor Framing',
+    'fr-truss': 'Roof Trusses',
+    'fr-roof': 'Roof Framing',
+    'fr-header': 'Headers/Beams',
+    // Add more as needed
+  };
+
+  for (const instance of instances) {
+    // Extract trade code from scopeItemId (e.g., "fr-ext" -> "fr" -> "FS")
+    const scopeItemId = instance.scopeItemId || '';
+    const prefix = scopeItemId.split('-')[0]?.toLowerCase();
+    const tradeCode = getTradeFromScopePrefix(prefix);
+
+    if (!tradeGroups[tradeCode]) {
+      tradeGroups[tradeCode] = {
+        enabled: true,
+        items: {},
+      };
+    }
+
+    // Add instance as a scope item
+    const itemId = instance.id || `inst-${Object.keys(tradeGroups[tradeCode].items).length}`;
+    const itemName = SCOPE_ITEM_NAMES[scopeItemId] || scopeItemId || 'Item';
+
+    tradeGroups[tradeCode].items[itemId] = {
+      qty: instance.measurement || instance.quantity || 1,
+      unit: instance.unit || 'lf',
+      name: itemName,
+      level: instance.level,
+      assemblyId: instance.assemblyId,
+      notes: instance.notes || null,
+      scopeItemId: scopeItemId,
+      instanceRef: instance,
+    };
+  }
+
+  return tradeGroups;
+}
+
+/**
+ * Sort trade codes by canonical construction order
+ */
+function sortCategoriesByTradeOrder(categories) {
+  return [...categories].sort((a, b) => {
+    const tradeA = getTrade(a);
+    const tradeB = getTrade(b);
+    return tradeA.order - tradeB.order;
+  });
+}
+
+/**
  * Calculate estimated project duration based on scope
  * Returns duration in weeks
  */
@@ -332,14 +294,16 @@ export function estimateProjectDuration(scope) {
 
   // Base durations per category (in days)
   const categoryDurations = {
-    SW: 3, FN: 7, FR: 10, RF: 3, EX: 5, WD: 2,
-    IN: 2, EL: 5, PL: 5, HV: 5, DW: 10,
-    PT: 7, FL: 5, TL: 5, FC: 5, CB: 3, CT: 2, FX: 2, CL: 2,
+    SW: 3, DM: 2, FN: 7, FS: 10, FI: 5, RF: 3, EE: 5, WD: 2,
+    IA: 2, EL: 5, PL: 5, HV: 5, DW: 10,
+    PT: 7, FL: 5, TL: 5, FC: 5, CM: 3, CT: 2, SR: 3, FX: 2, EF: 3, CL: 2, GN: 1,
   };
 
   let totalDays = 0;
   for (const code of enabledCategories) {
-    totalDays += categoryDurations[code] || 3;
+    // Resolve any legacy codes
+    const trade = getTrade(code);
+    totalDays += categoryDurations[trade.code] || 3;
   }
 
   // Convert to weeks (round up)
@@ -353,9 +317,11 @@ export function canRecalculateEstimate(project) {
   if (!project) return false;
   if (project.contract_signed) return false;
   if (!project.intake_data?.scope) return false;
+
   // Block if project is in production or later phases
-  const blockedPhases = ['active', 'punch_list', 'complete', 'cancelled'];
-  if (blockedPhases.includes(project.phase)) return false;
+  const phase = PROJECT_PHASES[project.phase];
+  if (!phase?.allowsLoopEdits) return false;
+
   return true;
 }
 
@@ -369,8 +335,7 @@ export function canRecalculateEstimate(project) {
  */
 export async function recalculateProjectEstimate(projectId, notes = '') {
   // For now, return an error since we need to implement this with Supabase
-  // This is a placeholder to prevent import errors
-  console.warn('[contractorIntakeService] recalculateProjectEstimate not yet implemented for Supabase');
+  console.warn('[contractorIntakeService] recalculateProjectEstimate not yet implemented');
   return {
     data: null,
     error: 'Estimate recalculation not yet implemented. Please edit the estimate manually.',
