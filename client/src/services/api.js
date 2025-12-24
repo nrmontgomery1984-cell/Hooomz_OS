@@ -2925,8 +2925,8 @@ export async function getFloorPlanStatusSummary(floorPlanId) {
 // Employee API
 // ============================================
 
-// Use mock/localStorage for employees (Supabase RLS blocks anonymous access)
-const USE_MOCK_EMPLOYEES = true;
+// Use Supabase for employees (production data)
+const USE_MOCK_EMPLOYEES = false;
 
 const EMPLOYEES_STORAGE_KEY = 'hooomz_employees';
 
