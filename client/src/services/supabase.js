@@ -12,14 +12,15 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('[supabase.js] Supabase credentials not found. Using mock data mode.');
 }
 
-// Configure Supabase client with session persistence
-// This allows "stay logged in" functionality
+// Configure Supabase client
+// Note: persistSession disabled to prevent auth from blocking data queries
+// Users will need to log in each session, but data loading will be reliable
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
       },
     })
   : null;
