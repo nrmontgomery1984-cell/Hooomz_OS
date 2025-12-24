@@ -1,4 +1,4 @@
-import { createProject } from './api';
+import { createProject, createLoop, createTask } from './api';
 import { getEnabledCategories } from '../data/contractorIntakeSchema';
 import { calculateScopeCosts } from '../lib/scopeCostEstimator';
 
@@ -11,9 +11,40 @@ import { calculateScopeCosts } from '../lib/scopeCostEstimator';
  * Flow: Contractor Intake → Project + Loops + Tasks (all created together)
  */
 
-// Trade names for loop display (will be used when loops are re-enabled)
-// const TRADE_NAMES = { SW: 'Site Work', FN: 'Foundation', FR: 'Framing', ... };
-// const TRADE_ORDER = ['SW', 'FN', 'FR', 'RF', 'EX', 'WD', 'IN', 'EL', 'PL', 'HV', 'DW', 'PT', 'FL', 'TL', 'FC', 'CB', 'CT', 'FX', 'CL'];
+// Trade names for loop display
+const TRADE_NAMES = {
+  SW: 'Site Work',
+  FN: 'Foundation',
+  FR: 'Framing',
+  FS: 'Structural Framing',
+  FI: 'Interior Framing',
+  RF: 'Roofing',
+  EX: 'Exterior',
+  EE: 'Exterior Envelope',
+  WD: 'Windows & Doors',
+  IN: 'Insulation',
+  IA: 'Insulation & Air Sealing',
+  EL: 'Electrical',
+  PL: 'Plumbing',
+  HV: 'HVAC',
+  DW: 'Drywall',
+  PT: 'Painting',
+  FL: 'Flooring',
+  TL: 'Tile',
+  FC: 'Finish Carpentry',
+  CB: 'Cabinetry',
+  CM: 'Cabinetry & Millwork',
+  CT: 'Countertops',
+  FX: 'Fixtures',
+  CL: 'Cleaning & Closeout',
+  GN: 'General',
+};
+
+// Trade order for construction workflow
+const TRADE_ORDER = [
+  'SW', 'FN', 'FR', 'FS', 'FI', 'RF', 'EX', 'EE', 'WD', 'IN', 'IA',
+  'EL', 'PL', 'HV', 'DW', 'PT', 'FL', 'TL', 'FC', 'CB', 'CM', 'CT', 'FX', 'CL', 'GN'
+];
 
 /**
  * Generate a Project with Loops and Tasks from contractor intake data
@@ -173,17 +204,114 @@ export async function generateProjectFromContractorIntake(formData) {
 
     console.log('[contractorIntakeService] Project created:', createdProject.id);
 
-    // Skip loops/tasks/activity for now - just return the project
-    // TODO: Re-enable loops creation once Supabase RLS is configured
-    console.log('[contractorIntakeService] Complete! Skipping loops/tasks for now.');
+    // ========================================
+    // 2. CREATE LOOPS (one per enabled trade category)
+    // ========================================
+    const createdLoops = [];
+    const createdTasks = [];
+
+    // Sort enabled categories by trade order
+    const sortedCategories = [...enabledCategories].sort((a, b) => {
+      const aIndex = TRADE_ORDER.indexOf(a);
+      const bIndex = TRADE_ORDER.indexOf(b);
+      if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+      return aIndex - bIndex;
+    });
+
+    let loopOrder = 1;
+
+    for (const tradeCode of sortedCategories) {
+      const categoryData = effectiveScope[tradeCode];
+      if (!categoryData || !categoryData.enabled) continue;
+
+      const loopId = `loop-${createdProject.id.slice(-8)}-${tradeCode}-${Date.now()}`;
+      const tradeName = TRADE_NAMES[tradeCode] || tradeCode;
+
+      // Count items in this category
+      const items = categoryData.items || {};
+      const itemCount = Object.keys(items).length;
+
+      const loop = {
+        id: loopId,
+        project_id: createdProject.id,
+        name: tradeName,
+        loop_type: 'task_group',
+        category_code: tradeCode,
+        status: 'pending',
+        display_order: loopOrder++,
+        source: 'contractor_intake',
+        health_score: 0,
+        health_color: 'gray',
+        task_count: itemCount,
+      };
+
+      console.log('[contractorIntakeService] Creating loop:', tradeName);
+      const { data: createdLoop, error: loopError } = await createLoop(loop);
+
+      if (loopError) {
+        console.error('[contractorIntakeService] Loop create error:', loopError);
+        continue;
+      }
+
+      createdLoops.push(createdLoop || loop);
+
+      // ========================================
+      // 3. CREATE TASKS (one per scope item in this category)
+      // ========================================
+      let taskOrder = 1;
+
+      for (const [itemId, itemData] of Object.entries(items)) {
+        if (!itemData || itemData.qty <= 0) continue;
+
+        const taskId = `task-${createdProject.id.slice(-8)}-${tradeCode}-${taskOrder}-${Date.now()}`;
+
+        // Build task title from item data
+        const taskTitle = itemData.name || itemData.scopeItemId || itemId;
+
+        const task = {
+          id: taskId,
+          loop_id: loopId,
+          title: taskTitle,
+          description: itemData.notes || null,
+          status: 'pending',
+          priority: 2, // Medium priority
+          category_code: tradeCode,
+          location: itemData.level || null,
+          display_order: taskOrder++,
+          source: 'contractor_intake',
+          // Quantity/measurement info
+          quantity: itemData.qty || 1,
+          unit: itemData.unit || null,
+          // Reference back to scope item
+          scope_item_id: itemData.scopeItemId || itemId,
+        };
+
+        console.log('[contractorIntakeService] Creating task:', taskTitle);
+        const { data: createdTask, error: taskError } = await createTask(task);
+
+        if (taskError) {
+          console.error('[contractorIntakeService] Task create error:', taskError);
+          continue;
+        }
+
+        createdTasks.push(createdTask || task);
+      }
+    }
+
+    console.log('[contractorIntakeService] Complete!', {
+      loops: createdLoops.length,
+      tasks: createdTasks.length,
+    });
 
     return {
       data: {
         ...createdProject,
-        loops: [],
-        tasks: [],
-        loopCount: 0,
-        taskCount: 0,
+        loops: createdLoops,
+        tasks: createdTasks,
+        loopCount: createdLoops.length,
+        taskCount: createdTasks.length,
         categoryCount: enabledCategories.length,
       },
       error: null,
