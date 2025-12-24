@@ -41,8 +41,8 @@ import {
 } from './mockData';
 import { getChecklistForTask, getFieldGuideModules } from '../data/taskChecklists';
 
-// Use mock/localStorage for projects (Supabase RLS blocks anonymous inserts)
-const USE_MOCK_PROJECTS = true;
+// Use Supabase for projects (RLS policies allow anonymous access)
+const USE_MOCK_PROJECTS = false;
 
 // Projects API
 export async function getProjects() {
@@ -2947,27 +2947,41 @@ function saveEmployeesToStorage(employees) {
 
 // GET all employees
 export async function getEmployees() {
+  console.log('[api.getEmployees] Called, USE_MOCK_EMPLOYEES:', USE_MOCK_EMPLOYEES, 'supabaseConfigured:', isSupabaseConfigured());
+
   if (!isSupabaseConfigured() || USE_MOCK_EMPLOYEES) {
+    console.log('[api.getEmployees] Using mock data');
     return { data: loadEmployeesFromStorage(), error: null };
   }
 
   try {
+    console.log('[api.getEmployees] Fetching from Supabase...');
     const { data, error } = await supabase
       .from('employees')
-      .select('*')
-      .is('deleted_at', null);
+      .select('*');
+
+    console.log('[api.getEmployees] Supabase response - data:', data?.length, 'error:', error);
 
     if (error) {
+      console.error('[api.getEmployees] Supabase error:', error);
       return { data: [], error };
     }
 
-    // Sort client-side
-    if (data) {
-      data.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    // Filter out soft-deleted employees if deleted_at column exists
+    let filteredData = data || [];
+    if (filteredData.length > 0 && 'deleted_at' in filteredData[0]) {
+      filteredData = filteredData.filter(emp => !emp.deleted_at);
     }
 
-    return { data: data || [], error: null };
+    // Sort client-side
+    if (filteredData.length > 0) {
+      filteredData.sort((a, b) => (a.lastName || a.last_name || '').localeCompare(b.lastName || b.last_name || ''));
+    }
+
+    console.log('[api.getEmployees] Returning', filteredData.length, 'employees');
+    return { data: filteredData, error: null };
   } catch (err) {
+    console.error('[api.getEmployees] Exception:', err);
     return { data: [], error: err.message };
   }
 }
