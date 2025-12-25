@@ -123,7 +123,7 @@ export function AuthProvider({ children }) {
   }
 
   // Sign in with email/password
-  async function signIn(email, password) {
+  async function signIn({ email, password }) {
     if (!isSupabaseConfigured()) {
       return { error: { message: 'Auth not configured' } };
     }
