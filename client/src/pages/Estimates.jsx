@@ -11,7 +11,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { PageContainer } from '../components/layout';
-import { useToast } from '../components/ui';
+import { Card, useToast } from '../components/ui';
 import { getProjects, createProject, deleteProject } from '../services/api';
 import {
   ROOM_TYPES,
@@ -54,13 +54,12 @@ export function Estimates() {
     }
   };
 
-  const totalLow = estimates.reduce((sum, e) => sum + (e.estimate_low || 0), 0);
   const totalHigh = estimates.reduce((sum, e) => sum + (e.estimate_high || 0), 0);
 
   return (
     <PageContainer
       title="Estimates"
-      subtitle={`${estimates.length} active`}
+      subtitle="Active estimates and pricing"
       action={
         <button
           onClick={() => setShowNewEstimate(true)}
@@ -70,34 +69,58 @@ export function Estimates() {
         </button>
       }
     >
-      {/* Stats row */}
-      {estimates.length > 0 && (
-        <div className="bg-green-50 rounded-xl p-4 mb-4">
-          <p className="text-xs text-green-600 font-medium">Pipeline Value</p>
-          <p className="text-xl font-bold text-green-700">
-            ${totalLow.toLocaleString()} - ${totalHigh.toLocaleString()}
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <Card className="p-3">
+          <p className="text-xs text-gray-500 mb-1">Active Estimates</p>
+          <p className="text-2xl font-bold text-charcoal">{estimates.length}</p>
+        </Card>
+        <Card className="p-3">
+          <p className="text-xs text-gray-500 mb-1">Pipeline Value</p>
+          <p className="text-lg font-bold text-green-700">
+            ${totalHigh.toLocaleString()}
           </p>
+        </Card>
+      </div>
+
+      {/* Workflow explanation */}
+      <Card className="p-4 mb-6 bg-amber-50 border-amber-100">
+        <div className="flex items-start gap-3">
+          <Calculator className="w-5 h-5 text-amber-600 mt-0.5" />
+          <div>
+            <p className="font-medium text-charcoal mb-1">Estimate Phase</p>
+            <p className="text-sm text-gray-600">
+              Build detailed scope and pricing. Once approved by the customer,
+              projects move to the Contract phase for signature.
+            </p>
+          </div>
         </div>
-      )}
+      </Card>
+
+      {/* Section Header */}
+      <h3 className="text-sm font-semibold text-gray-700 mb-3">Active Estimates</h3>
 
       {/* List */}
       {loading ? (
         <div className="space-y-3">
           {[1, 2].map((i) => (
-            <div key={i} className="bg-gray-100 rounded-xl h-20 animate-pulse" />
+            <div key={i} className="bg-gray-100 rounded-lg h-24 animate-pulse" />
           ))}
         </div>
       ) : estimates.length === 0 ? (
-        <div className="text-center py-12">
-          <Calculator className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+        <Card className="p-8 text-center">
+          <Calculator className="w-10 h-10 text-gray-300 mx-auto mb-3" />
           <p className="text-gray-500 mb-2">No estimates yet</p>
+          <p className="text-sm text-gray-400 mb-4">
+            Create an estimate to start building scope and pricing
+          </p>
           <button
             onClick={() => setShowNewEstimate(true)}
             className="text-charcoal font-medium underline"
           >
             Create your first estimate
           </button>
-        </div>
+        </Card>
       ) : (
         <div className="space-y-3">
           {estimates.map((project) => (
@@ -147,10 +170,10 @@ function EstimateCard({ project, onDelete }) {
 
   return (
     <Link to={`/projects/${project.id}`}>
-      <div className="bg-white border border-gray-200 rounded-xl p-4 active:bg-gray-50">
-        <div className="flex items-center justify-between">
+      <Card className="p-4 hover:border-gray-300 transition-colors">
+        <div className="flex items-start justify-between mb-2">
           <div className="min-w-0 flex-1">
-            <p className="font-semibold text-charcoal truncate">{project.name}</p>
+            <h4 className="font-medium text-charcoal truncate">{project.name}</h4>
             <p className="text-sm text-gray-500">{project.client_name}</p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0 ml-2">
@@ -161,19 +184,30 @@ function EstimateCard({ project, onDelete }) {
             >
               <Trash2 className="w-4 h-4" />
             </button>
-            <ChevronRight className="w-5 h-5 text-gray-400" />
+            <span className="text-xs px-2 py-1 rounded-full bg-amber-100 text-amber-700">
+              Estimating
+            </span>
           </div>
         </div>
 
+        {/* Estimate Value */}
         {project.estimate_high && (
-          <div className="mt-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-green-600">
+          <div className="flex items-center justify-between mb-3 p-2 bg-gray-50 rounded">
+            <span className="text-sm text-gray-600">Estimate Range</span>
+            <span className="text-sm font-bold text-charcoal">
               ${project.estimate_low?.toLocaleString()} - ${project.estimate_high.toLocaleString()}
             </span>
-            <span className="text-xs text-gray-400">{days}d ago</span>
           </div>
         )}
-      </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+          <span className="text-xs text-gray-400">{days}d ago</span>
+          <span className="flex items-center gap-1 text-xs text-blue-600">
+            View Estimate <ChevronRight className="w-3 h-3" />
+          </span>
+        </div>
+      </Card>
     </Link>
   );
 }

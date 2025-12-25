@@ -77,26 +77,18 @@ CREATE TRIGGER update_change_orders_timestamp
   BEFORE UPDATE ON change_orders
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
--- Create employees table if not exists (for team members)
-CREATE TABLE IF NOT EXISTS employees (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES users(id) ON DELETE SET NULL,
-  first_name VARCHAR(100) NOT NULL,
-  last_name VARCHAR(100) NOT NULL,
-  email VARCHAR(255),
-  phone VARCHAR(50),
-  role VARCHAR(50) DEFAULT 'labourer',
-  hourly_rate NUMERIC,
-  is_active BOOLEAN DEFAULT true,
-  avatar_url TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-  deleted_at TIMESTAMPTZ
-);
+-- Update employees table if it exists (add missing columns)
+-- Note: employees table may already exist from initial schema
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS user_id UUID;
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS first_name VARCHAR(100);
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS last_name VARCHAR(100);
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS role VARCHAR(50) DEFAULT 'labourer';
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS hourly_rate NUMERIC;
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT true;
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS avatar_url TEXT;
+ALTER TABLE employees ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
 
--- Create index on employees
-CREATE INDEX IF NOT EXISTS idx_employees_organization ON employees(organization_id);
+-- Create index on employees role (if not exists)
 CREATE INDEX IF NOT EXISTS idx_employees_role ON employees(role);
 
 -- Enable RLS on employees
