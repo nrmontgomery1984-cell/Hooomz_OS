@@ -31,6 +31,7 @@ import { useDevAuth } from '../../hooks/useDevAuth';
 import { useAuth } from '../../hooks/useAuth';
 import { useRoleVisibility } from '../../hooks/useRoleVisibility';
 import { ROLES } from '../../lib/devData';
+import { isSupabaseConfigured } from '../../services/supabase';
 
 // Map project phase to nav path
 const PHASE_TO_NAV = {
