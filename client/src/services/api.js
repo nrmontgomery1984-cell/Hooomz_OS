@@ -2945,6 +2945,30 @@ function saveEmployeesToStorage(employees) {
   localStorage.setItem(EMPLOYEES_STORAGE_KEY, JSON.stringify(employees));
 }
 
+// Transform employee data from snake_case (DB) to camelCase (UI)
+function transformEmployeeFromDb(emp) {
+  return {
+    id: emp.id,
+    firstName: emp.first_name || emp.name?.split(' ')[0] || '',
+    lastName: emp.last_name || emp.name?.split(' ').slice(1).join(' ') || '',
+    preferredName: emp.preferred_name || null,
+    name: emp.name || `${emp.first_name || ''} ${emp.last_name || ''}`.trim(),
+    email: emp.email,
+    phone: emp.phone,
+    role: emp.role || 'labourer',
+    hourlyRate: emp.hourly_rate,
+    isActive: emp.is_active !== false,
+    userId: emp.user_id,
+    avatarUrl: emp.avatar_url,
+    skills: emp.skills || [],
+    notes: emp.notes,
+    address: emp.address || {},
+    status: emp.is_active !== false ? 'active' : 'inactive',
+    createdAt: emp.created_at,
+    updatedAt: emp.updated_at,
+  };
+}
+
 // GET all employees
 export async function getEmployees() {
   console.log('[api.getEmployees] Called, USE_MOCK_EMPLOYEES:', USE_MOCK_EMPLOYEES, 'supabaseConfigured:', isSupabaseConfigured());
@@ -2977,19 +3001,23 @@ export async function getEmployees() {
       return { data: loadEmployeesFromStorage(), error: null };
     }
 
-    // Filter out soft-deleted employees if deleted_at column exists
+    // Filter out soft-deleted employees
     let filteredData = data || [];
     if (filteredData.length > 0 && 'deleted_at' in filteredData[0]) {
       filteredData = filteredData.filter(emp => !emp.deleted_at);
     }
 
-    // Sort client-side
-    if (filteredData.length > 0) {
-      filteredData.sort((a, b) => (a.lastName || a.last_name || '').localeCompare(b.lastName || b.last_name || ''));
-    }
+    // Filter out inactive employees
+    filteredData = filteredData.filter(emp => emp.is_active !== false);
 
-    console.log('[api.getEmployees] Returning', filteredData.length, 'employees');
-    return { data: filteredData, error: null };
+    // Transform from snake_case to camelCase for UI
+    const transformedData = filteredData.map(transformEmployeeFromDb);
+
+    // Sort by lastName
+    transformedData.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+
+    console.log('[api.getEmployees] Returning', transformedData.length, 'employees');
+    return { data: transformedData, error: null };
   } catch (err) {
     console.error('[api.getEmployees] Exception:', err);
     // Fall back to localStorage on timeout/error
@@ -3012,7 +3040,12 @@ export async function getEmployee(id) {
     .eq('id', id)
     .single();
 
-  return { data, error };
+  if (error) {
+    return { data: null, error };
+  }
+
+  // Transform from snake_case to camelCase for UI
+  return { data: data ? transformEmployeeFromDb(data) : null, error: null };
 }
 
 // CREATE employee
