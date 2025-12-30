@@ -9,6 +9,7 @@ import { ActivityFeed, AddActivityModal } from '../components/activity';
 import { AddExpenseModal, ExpenseList, ExpenseSummary } from '../components/expenses';
 import { EstimatePanel } from '../components/estimates';
 import { useDashboardFromData, usePhaseTransition } from '../hooks';
+import { useCurrentProject } from '../contexts/ProjectContext';
 import {
   getProject,
   getOrGenerateLoops,
@@ -22,6 +23,7 @@ import { getProjectChangeOrders } from '../lib/changeOrders';
 export function ProjectView() {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const { setProject: setGlobalProject, clearProject } = useCurrentProject();
   const [project, setProject] = useState(null);
   const [loops, setLoops] = useState([]);
   const [activities, setActivities] = useState([]);
@@ -53,6 +55,20 @@ export function ProjectView() {
   };
 
   const phaseTransition = usePhaseTransition(project, handleProjectUpdate);
+
+  // Update global project context when project data loads
+  useEffect(() => {
+    if (project) {
+      setGlobalProject(project);
+    }
+  }, [project, setGlobalProject]);
+
+  // Clear global project context when leaving the page
+  useEffect(() => {
+    return () => {
+      clearProject();
+    };
+  }, [clearProject]);
 
   useEffect(() => {
     async function loadData() {
@@ -283,7 +299,6 @@ export function ProjectView() {
         >
           <List className="w-4 h-4 flex-shrink-0" />
           <span className="hidden sm:inline">Loops</span>
-          <span className="text-xs">({loops.length})</span>
         </button>
         <button
           onClick={() => setActiveTab('activity')}

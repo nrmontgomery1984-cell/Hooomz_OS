@@ -17,7 +17,6 @@ import {
   Home,
   Zap,
   ChevronDown,
-  Clock,
   Shield,
   Briefcase,
   Hammer,
@@ -30,6 +29,7 @@ import { ProjectSearch } from './ProjectSearch';
 import { useDevAuth } from '../../hooks/useDevAuth';
 import { useAuth } from '../../hooks/useAuth';
 import { useRoleVisibility } from '../../hooks/useRoleVisibility';
+import { useCurrentProjectSafe } from '../../contexts/ProjectContext';
 import { ROLES } from '../../lib/devData';
 import { isSupabaseConfigured } from '../../services/supabase';
 
@@ -37,9 +37,13 @@ import { isSupabaseConfigured } from '../../services/supabase';
 const PHASE_TO_NAV = {
   intake: '/sales',
   estimating: '/estimates',
+  estimate: '/estimates',
+  quoted: '/estimates',
   approval: '/estimates',
   contracted: '/contracts',
+  contract: '/contracts',
   active: '/production',
+  punch_list: '/production',
   complete: '/completed',
 };
 
@@ -117,9 +121,9 @@ const navSections = [
   {
     label: 'Tools',
     items: [
+      { to: '/toolbox', icon: Hammer, label: 'Toolbox', visibilityKey: 'toolbox' },
       { to: '/cost-catalogue', icon: BookOpen, label: 'Cost Catalogue', visibilityKey: 'costCatalogue' },
       { to: '/field-guide', icon: GraduationCap, label: 'Field Guide', visibilityKey: 'fieldGuide' },
-      { to: '/time-budget', icon: Clock, label: 'Time Budget', visibilityKey: 'timeBudget' },
     ],
   },
 ];
@@ -176,6 +180,7 @@ export function Sidebar() {
   const { currentPersona, switchPersona } = useDevAuth();
   const { employee, signOut, isAuthenticated } = useAuth();
   const { canSee } = useRoleVisibility();
+  const { currentPhase } = useCurrentProjectSafe();
 
   // Filter nav sections - keep section if it has any visible items
   const visibleNavSections = navSections
@@ -185,9 +190,8 @@ export function Sidebar() {
     }))
     .filter(section => section.items.length > 0);
 
-  // Get current project's phase if we're on a project page
-  // TODO: Replace with proper context/state management for project data
-  const currentProjectPhase = null;
+  // Get current project's phase from context (set by ProjectView)
+  const currentProjectPhase = currentPhase;
 
   const currentConfig = getPersonaConfig(currentPersona?.role || 'administrator');
   const CurrentIcon = currentConfig.icon;

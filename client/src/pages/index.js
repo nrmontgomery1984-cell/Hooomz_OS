@@ -40,6 +40,9 @@ export { CostCatalogue } from './CostCatalogue';
 export { Settings } from './Settings';
 export { TimeBudgetCalculator } from './TimeBudgetCalculator';
 
+// Toolbox (Calculator Suite)
+export { Toolbox, WindowDoorFramingPage, CutListPage } from './toolbox';
+
 // Training
 export { FieldGuide } from './FieldGuide';
 

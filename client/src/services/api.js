@@ -186,103 +186,158 @@ export async function getLoops(projectId) {
 }
 
 /**
- * Get loops for a project, generating them from estimate if needed
- * This ensures that projects with estimate line items always have loops
- * that match their actual scope of work
+ * Get loops for a project, generating them from scope data if needed
+ *
+ * Priority order for scope data:
+ * 1. Existing loops from contractor_intake (already match scope perfectly)
+ * 2. Existing loops from estimate generation
+ * 3. Generate from intake_data.instances (contractor intake scope)
+ * 4. Generate from intake_data.scope (legacy contractor format)
+ * 5. Generate from estimate_line_items (fallback for homeowner intake)
  */
 export async function getOrGenerateLoops(projectId, project) {
   // Get existing loops
   const { data: existingLoops, error } = await getLoops(projectId);
   if (error) return { data: null, error };
 
-  // Check if we should generate loops from estimate
   const intakeData = project?.intake_data || {};
-  const lineItems = intakeData.estimate_line_items || project?.estimate_line_items;
-  const buildTier = intakeData.build_tier || project?.build_tier || 'better';
 
-  // Check if existing loops are from estimate (have source: 'estimate')
+  // Check sources for loops
+  const hasContractorIntakeLoops = existingLoops?.some(loop => loop.source === 'contractor_intake');
   const hasEstimateLoops = existingLoops?.some(loop => loop.source === 'estimate');
+  const hasValidLoops = existingLoops?.length > 0 && (hasContractorIntakeLoops || hasEstimateLoops);
 
-  // Check if existing loops are stale mock data (have source: 'intake' but project has estimate)
-  const hasStaleMockLoops = existingLoops?.length > 0 &&
-    existingLoops.every(loop => loop.source === 'intake' || !loop.source) &&
-    lineItems?.length > 0;
-
-  // Regenerate if:
-  // 1. Project has estimate line items AND
-  // 2. Either no loops exist, OR loops are stale mock data (not from estimate)
-  const needsGeneration = lineItems?.length > 0 && (
-    !existingLoops?.length || !hasEstimateLoops || hasStaleMockLoops
-  );
-
-  if (needsGeneration) {
-    // Clear existing loops for this project in mock mode
-    if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
-      // First, delete tasks for existing loops by their actual IDs
-      const existingLoopsToDelete = existingLoops || [];
-      for (const loop of existingLoopsToDelete) {
-        delete mockTasks[loop.id];
-      }
-      // Then clear the loops array for this project
-      mockLoops[projectId] = [];
-      // Also clear task tracker instances so they get regenerated from new loops
-      delete mockTaskInstances[projectId];
-      saveProjectsToStorage();
-      saveTaskTrackerToStorage();
-    }
-
-    // Generate new loops from estimate
-    const { loops, tasks, error: genError } = await generateScopeFromEstimate(
-      projectId,
-      lineItems,
-      buildTier
-    );
-
-    if (genError) {
-      return { data: [], error: null };
-    }
-
-    return { data: loops, error: null };
+  // If we have valid loops from contractor intake or estimate, use them
+  if (hasValidLoops) {
+    return { data: existingLoops, error: null };
   }
 
-  return { data: existingLoops || [], error: null };
-}
-
-/**
- * Regenerate loops for a project from its estimate
- * Clears existing loops and creates new ones from estimate line items
- */
-export async function regenerateProjectLoops(projectId, project) {
-  const intakeData = project?.intake_data || {};
+  // Check available scope data sources
+  const instances = intakeData.instances || project?.instances;
+  const scope = intakeData.scope;
   const lineItems = intakeData.estimate_line_items || project?.estimate_line_items;
-  const buildTier = intakeData.build_tier || project?.build_tier || 'better';
+  const buildTier = intakeData.build_tier || intakeData.project?.specLevel || project?.build_tier || 'better';
 
-  if (!lineItems || lineItems.length === 0) {
-    return { loops: [], tasks: [], error: 'No estimate line items to generate from' };
+  // Determine the best scope source
+  let scopeSource = null;
+  if (instances?.length > 0) {
+    scopeSource = 'instances';
+  } else if (scope && Object.keys(scope).length > 0) {
+    scopeSource = 'scope';
+  } else if (lineItems?.length > 0) {
+    scopeSource = 'estimate';
   }
 
-  // Clear existing loops for this project
+  // If no scope data, return empty (or existing stale loops)
+  if (!scopeSource) {
+    return { data: existingLoops || [], error: null };
+  }
+
+  // Check if existing loops are stale mock data (no source or old intake source)
+  const hasStaleMockLoops = existingLoops?.length > 0 &&
+    existingLoops.every(loop => loop.source === 'intake' || !loop.source);
+
+  // Only regenerate if no valid loops exist or we have stale mock data
+  const needsGeneration = !existingLoops?.length || hasStaleMockLoops;
+
+  if (!needsGeneration) {
+    return { data: existingLoops || [], error: null };
+  }
+
+  // Clear existing loops for this project in mock mode
   if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
-    // Get existing loop IDs to clear their tasks
-    const existingLoops = mockLoops[projectId] || [];
-    for (const loop of existingLoops) {
+    const existingLoopsToDelete = existingLoops || [];
+    for (const loop of existingLoopsToDelete) {
       delete mockTasks[loop.id];
     }
     mockLoops[projectId] = [];
-    // Also clear task tracker instances so they get regenerated from new loops
     delete mockTaskInstances[projectId];
     saveProjectsToStorage();
     saveTaskTrackerToStorage();
   }
 
-  // Generate new loops from estimate
-  const { loops, tasks, error } = await generateScopeFromEstimate(
-    projectId,
-    lineItems,
-    buildTier
-  );
+  // Generate loops based on best available scope source
+  if (scopeSource === 'instances') {
+    const { loops, tasks, error: genError } = await generateScopeFromInstances(
+      projectId,
+      instances,
+      buildTier
+    );
+    if (genError) {
+      return { data: [], error: null };
+    }
+    return { data: loops, error: null };
+  } else if (scopeSource === 'scope') {
+    const { loops, tasks, error: genError } = await generateScopeFromContractorScope(
+      projectId,
+      scope,
+      buildTier
+    );
+    if (genError) {
+      return { data: [], error: null };
+    }
+    return { data: loops, error: null };
+  } else {
+    // Fall back to estimate line items
+    const { loops, tasks, error: genError } = await generateScopeFromEstimate(
+      projectId,
+      lineItems,
+      buildTier
+    );
+    if (genError) {
+      return { data: [], error: null };
+    }
+    return { data: loops, error: null };
+  }
+}
 
-  return { loops, tasks, error };
+/**
+ * Regenerate loops for a project from its scope data
+ * Clears existing loops and creates new ones from the best available scope source
+ *
+ * Priority: instances > scope > estimate_line_items
+ */
+export async function regenerateProjectLoops(projectId, project) {
+  const intakeData = project?.intake_data || {};
+  const instances = intakeData.instances || project?.instances;
+  const scope = intakeData.scope;
+  const lineItems = intakeData.estimate_line_items || project?.estimate_line_items;
+  const buildTier = intakeData.build_tier || intakeData.project?.specLevel || project?.build_tier || 'better';
+
+  // Determine best scope source
+  let scopeSource = null;
+  if (instances?.length > 0) {
+    scopeSource = 'instances';
+  } else if (scope && Object.keys(scope).length > 0) {
+    scopeSource = 'scope';
+  } else if (lineItems?.length > 0) {
+    scopeSource = 'estimate';
+  }
+
+  if (!scopeSource) {
+    return { loops: [], tasks: [], error: 'No scope data to generate from' };
+  }
+
+  // Clear existing loops for this project
+  if (!isSupabaseConfigured() || USE_MOCK_PROJECTS) {
+    const existingLoops = mockLoops[projectId] || [];
+    for (const loop of existingLoops) {
+      delete mockTasks[loop.id];
+    }
+    mockLoops[projectId] = [];
+    delete mockTaskInstances[projectId];
+    saveProjectsToStorage();
+    saveTaskTrackerToStorage();
+  }
+
+  // Generate new loops from best available source
+  if (scopeSource === 'instances') {
+    return generateScopeFromInstances(projectId, instances, buildTier);
+  } else if (scopeSource === 'scope') {
+    return generateScopeFromContractorScope(projectId, scope, buildTier);
+  } else {
+    return generateScopeFromEstimate(projectId, lineItems, buildTier);
+  }
 }
 
 export async function getLoop(id) {
@@ -1315,6 +1370,255 @@ export async function generateScopeFromEstimate(projectId, lineItems, selectedTi
 }
 
 /**
+ * Generate loops and tasks from contractor intake instances
+ * Instances contain the actual scope items with room/location context
+ *
+ * @param {string} projectId - Project ID
+ * @param {Array} instances - Contractor intake instances
+ * @param {string} buildTier - Selected build tier
+ * @returns {Object} Created loops and tasks
+ */
+export async function generateScopeFromInstances(projectId, instances, buildTier = 'better') {
+  if (!instances || instances.length === 0) {
+    return { loops: [], tasks: [], error: 'No instances to convert' };
+  }
+
+  // Scope item names for display
+  const SCOPE_ITEM_NAMES = {
+    'fr-ext': 'Exterior Walls',
+    'fr-int': 'Interior Walls',
+    'fr-bearing': 'Bearing Walls',
+    'fr-ceil': 'Ceiling Framing',
+    'fr-floor': 'Floor Framing',
+    'fr-truss': 'Roof Trusses',
+    'fr-roof': 'Roof Framing',
+    'fr-header': 'Headers/Beams',
+    'el-rough': 'Electrical Rough-In',
+    'el-finish': 'Electrical Finish',
+    'pl-rough': 'Plumbing Rough-In',
+    'pl-finish': 'Plumbing Finish',
+    'hv-rough': 'HVAC Rough-In',
+    'hv-finish': 'HVAC Finish',
+    'dw-hang': 'Drywall Hang',
+    'dw-tape': 'Drywall Tape & Mud',
+    'pt-prime': 'Prime Coat',
+    'pt-finish': 'Finish Paint',
+    'fl-install': 'Flooring Install',
+    'tl-install': 'Tile Install',
+  };
+
+  // Map scope item prefix to trade code
+  const prefixToTrade = {
+    'fr': 'FS', 'el': 'EL', 'pl': 'PL', 'hv': 'HV',
+    'dw': 'DW', 'pt': 'PT', 'fl': 'FL', 'tl': 'TL',
+    'fc': 'FC', 'cm': 'CM', 'dm': 'DM', 'rf': 'RF',
+    'ia': 'IA', 'ee': 'EE', 'sr': 'SR', 'fn': 'FN',
+    'sw': 'SW', 'ef': 'EF', 'fz': 'FZ',
+  };
+
+  // Group instances by trade code
+  const tradeGroups = {};
+
+  for (const instance of instances) {
+    const scopeItemId = instance.scopeItemId || '';
+    const prefix = scopeItemId.split('-')[0]?.toLowerCase();
+    const tradeCode = prefixToTrade[prefix] || 'GN';
+
+    if (!tradeGroups[tradeCode]) {
+      tradeGroups[tradeCode] = {
+        tradeName: TRADE_NAMES[tradeCode] || tradeCode,
+        items: [],
+      };
+    }
+
+    // Build a descriptive name with location context
+    const itemName = SCOPE_ITEM_NAMES[scopeItemId] || scopeItemId || 'Item';
+    const location = instance.level || instance.room || instance.location;
+    const displayName = location && location !== itemName
+      ? `${itemName} - ${location}`
+      : itemName;
+
+    tradeGroups[tradeCode].items.push({
+      ...instance,
+      displayName,
+      itemName,
+      location,
+    });
+  }
+
+  // Sort trades by construction order
+  const sortedTrades = Object.keys(tradeGroups).sort((a, b) => {
+    const aIndex = TRADE_ORDER.indexOf(a);
+    const bIndex = TRADE_ORDER.indexOf(b);
+    if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
+  const createdLoops = [];
+  const createdTasks = [];
+  let loopOrder = 1;
+
+  // Create a loop for each trade
+  for (const tradeCode of sortedTrades) {
+    const group = tradeGroups[tradeCode];
+    const loopId = `loop-${projectId.slice(-8)}-${tradeCode}-${Date.now()}`;
+
+    const loop = {
+      id: loopId,
+      project_id: projectId,
+      name: group.tradeName,
+      loop_type: 'trade',
+      category_code: tradeCode,
+      status: 'pending',
+      display_order: loopOrder++,
+      source: 'contractor_intake',
+      health_score: 0,
+      health_color: 'gray',
+      task_count: group.items.length,
+    };
+
+    const { data: createdLoop, error: loopError } = await createLoop(loop);
+    if (loopError) continue;
+    createdLoops.push(createdLoop || loop);
+
+    // Create tasks for each instance in this trade
+    let taskOrder = 1;
+    for (const item of group.items) {
+      const task = {
+        id: `task-${projectId.slice(-8)}-${tradeCode}-${taskOrder}-${Date.now()}`,
+        loop_id: loopId,
+        title: item.displayName,
+        description: item.notes || null,
+        status: 'pending',
+        priority: 2,
+        category_code: tradeCode,
+        location: item.location || null,
+        display_order: taskOrder++,
+        source: 'contractor_intake',
+        quantity: item.measurement || item.quantity || 1,
+        unit: item.unit || null,
+        scope_item_id: item.scopeItemId,
+        instance_id: item.id,
+      };
+
+      const { data: createdTask, error: taskError } = await createTask(task);
+      if (taskError) continue;
+      createdTasks.push(createdTask || task);
+    }
+  }
+
+  return {
+    loops: createdLoops,
+    tasks: createdTasks,
+    error: null,
+  };
+}
+
+/**
+ * Generate loops and tasks from contractor scope object (legacy format)
+ * Scope is organized by trade category with enabled flags and item quantities
+ *
+ * @param {string} projectId - Project ID
+ * @param {Object} scope - Contractor scope object { tradeCode: { enabled, items: {} } }
+ * @param {string} buildTier - Selected build tier
+ * @returns {Object} Created loops and tasks
+ */
+export async function generateScopeFromContractorScope(projectId, scope, buildTier = 'better') {
+  if (!scope || Object.keys(scope).length === 0) {
+    return { loops: [], tasks: [], error: 'No scope to convert' };
+  }
+
+  // Get enabled categories with items
+  const enabledCategories = Object.keys(scope).filter(code => {
+    const cat = scope[code];
+    if (!cat?.enabled) return false;
+    const items = cat.items || {};
+    return Object.values(items).some(item => item?.qty > 0);
+  });
+
+  if (enabledCategories.length === 0) {
+    return { loops: [], tasks: [], error: 'No enabled scope items' };
+  }
+
+  // Sort by trade order
+  const sortedCategories = enabledCategories.sort((a, b) => {
+    const aIndex = TRADE_ORDER.indexOf(a);
+    const bIndex = TRADE_ORDER.indexOf(b);
+    if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
+  const createdLoops = [];
+  const createdTasks = [];
+  let loopOrder = 1;
+
+  for (const tradeCode of sortedCategories) {
+    const categoryData = scope[tradeCode];
+    const items = categoryData.items || {};
+    const loopId = `loop-${projectId.slice(-8)}-${tradeCode}-${Date.now()}`;
+
+    const loop = {
+      id: loopId,
+      project_id: projectId,
+      name: TRADE_NAMES[tradeCode] || tradeCode,
+      loop_type: 'trade',
+      category_code: tradeCode,
+      status: 'pending',
+      display_order: loopOrder++,
+      source: 'contractor_intake',
+      health_score: 0,
+      health_color: 'gray',
+    };
+
+    const { data: createdLoop, error: loopError } = await createLoop(loop);
+    if (loopError) continue;
+    createdLoops.push(createdLoop || loop);
+
+    // Create tasks for each scope item
+    let taskOrder = 1;
+    for (const [itemId, itemData] of Object.entries(items)) {
+      if (!itemData || itemData.qty <= 0) continue;
+
+      const taskTitle = itemData.name || itemData.scopeItemId || itemId;
+      const location = itemData.level || itemData.room || null;
+      const displayTitle = location && location !== taskTitle
+        ? `${taskTitle} - ${location}`
+        : taskTitle;
+
+      const task = {
+        id: `task-${projectId.slice(-8)}-${tradeCode}-${taskOrder}-${Date.now()}`,
+        loop_id: loopId,
+        title: displayTitle,
+        description: itemData.notes || null,
+        status: 'pending',
+        priority: 2,
+        category_code: tradeCode,
+        location: location,
+        display_order: taskOrder++,
+        source: 'contractor_intake',
+        quantity: itemData.qty || 1,
+        unit: itemData.unit || null,
+        scope_item_id: itemData.scopeItemId || itemId,
+      };
+
+      const { data: createdTask, error: taskError } = await createTask(task);
+      if (taskError) continue;
+      createdTasks.push(createdTask || task);
+    }
+  }
+
+  return {
+    loops: createdLoops,
+    tasks: createdTasks,
+    error: null,
+  };
+}
+
+/**
  * Start production - transitions project from contracted to in_progress
  * and generates production scope from estimate if not already done
  *
@@ -1712,35 +2016,113 @@ function convertLoopTasksToInstances(projectId, loops, tasksMap) {
 }
 
 /**
+ * Convert loops and their tasks from DB to task instances
+ * Fetches tasks from Supabase for each loop
+ */
+async function convertLoopTasksToInstancesFromDB(projectId, loops) {
+  const instances = [];
+  let priority = 1;
+
+  for (const loop of loops) {
+    // Fetch tasks for this loop from DB
+    const { data: loopTasks } = await getTasks(loop.id);
+    const tasks = loopTasks || [];
+
+    if (tasks.length > 0) {
+      // Convert actual tasks from the loop
+      for (const task of tasks) {
+        instances.push({
+          id: task.id,
+          projectId,
+          templateId: null,
+          categoryCode: task.category_code || loop.category_code,
+          subcategoryCode: task.subcategory_code || null,
+          stageCode: 'ST-RI',
+          locationId: null,
+          locationPath: task.location || null,
+          name: task.title || task.name,
+          description: task.description || '',
+          status: task.status || 'pending',
+          priority: priority++,
+          assignedTo: task.assigned_to || null,
+          dueDate: task.due_date || null,
+          estimatedHours: task.estimated_hours || 0,
+          actualHours: task.actual_hours || 0,
+          source: task.source || loop.source || 'contractor_intake',
+          budgetedAmount: task.budgeted_amount || 0,
+          quantity: task.quantity || 1,
+          loopId: loop.id,
+          loopName: loop.name,
+        });
+      }
+    } else {
+      // No tasks in this loop - create a placeholder from the loop itself
+      instances.push({
+        id: `inst-${loop.id}`,
+        projectId,
+        templateId: null,
+        categoryCode: loop.category_code,
+        subcategoryCode: null,
+        stageCode: 'ST-RI',
+        locationId: null,
+        locationPath: null,
+        name: loop.name,
+        description: `${loop.name} scope`,
+        status: loop.status || 'pending',
+        priority: priority++,
+        assignedTo: null,
+        dueDate: null,
+        estimatedHours: 0,
+        actualHours: 0,
+        source: loop.source || 'contractor_intake',
+        budgetedAmount: loop.budgeted_amount || 0,
+        quantity: loop.task_count || 1,
+        loopId: loop.id,
+        loopName: loop.name,
+      });
+    }
+  }
+
+  return instances;
+}
+
+/**
  * Get task instances for a project with optional filtering
  */
 export async function getTaskInstances(projectId, filters = {}) {
+  // Always fetch loops from the proper source (Supabase if configured, otherwise mockLoops)
+  const { data: projectLoops } = await getLoops(projectId);
+  const loopsArray = projectLoops || [];
+
   if (!isSupabaseConfigured() || USE_MOCK_TASK_TRACKER) {
-    // First check for estimate-generated loops/tasks - these take priority
-    const projectLoops = mockLoops[projectId] || [];
-    const hasEstimateLoops = projectLoops.some(loop => loop.source === 'estimate');
+    // Check for scope-generated loops (from estimate or contractor intake)
+    const hasScopeLoops = loopsArray.some(loop =>
+      loop.source === 'estimate' || loop.source === 'contractor_intake'
+    );
 
     let instances;
 
-    // If we have estimate-based loops, ALWAYS use those (ignore cached mockTaskInstances)
-    if (hasEstimateLoops && projectLoops.length > 0) {
-      // Check if existing instances are from estimate or stale mock data
+    // If we have scope-based loops, use those (ignore cached mockTaskInstances)
+    if (hasScopeLoops && loopsArray.length > 0) {
+      // Check if existing instances are from scope or stale mock data
       const existingInstances = mockTaskInstances[projectId] || [];
-      const existingAreFromEstimate = existingInstances.some(inst => inst.source === 'estimate');
+      const existingAreFromScope = existingInstances.some(inst =>
+        inst.source === 'estimate' || inst.source === 'contractor_intake'
+      );
 
       // Also check if the existing instances match the current loops
       // (in case loops were regenerated but instances weren't)
       const existingLoopIds = new Set(existingInstances.map(inst => inst.loopId).filter(Boolean));
-      const currentLoopIds = new Set(projectLoops.map(loop => loop.id));
+      const currentLoopIds = new Set(loopsArray.map(loop => loop.id));
       const loopsMatch = currentLoopIds.size > 0 &&
         [...currentLoopIds].every(id => existingLoopIds.has(id));
 
       // Regenerate from loops if:
       // 1. No existing instances, OR
-      // 2. Existing instances aren't from estimate, OR
+      // 2. Existing instances aren't from scope, OR
       // 3. Loop IDs don't match (loops were regenerated)
-      if (!existingAreFromEstimate || existingInstances.length === 0 || !loopsMatch) {
-        instances = convertLoopTasksToInstances(projectId, projectLoops, mockTasks);
+      if (!existingAreFromScope || existingInstances.length === 0 || !loopsMatch) {
+        instances = await convertLoopTasksToInstancesFromDB(projectId, loopsArray);
         // Store these instances so updates persist
         if (instances.length > 0) {
           mockTaskInstances[projectId] = instances;
@@ -1749,9 +2131,9 @@ export async function getTaskInstances(projectId, filters = {}) {
       } else {
         instances = existingInstances;
       }
-    } else if (projectLoops.length > 0) {
-      // Non-estimate loops exist, convert them
-      instances = convertLoopTasksToInstances(projectId, projectLoops, mockTasks);
+    } else if (loopsArray.length > 0) {
+      // Non-scope loops exist, convert them
+      instances = await convertLoopTasksToInstancesFromDB(projectId, loopsArray);
     } else {
       // No loops at all - check for existing instances or generate defaults
       instances = mockTaskInstances[projectId];
@@ -2087,14 +2469,27 @@ export function groupTasksByCategory(instances, categories) {
 export function groupTasksBySubcategory(instances, subcategories) {
   const grouped = {};
 
-  // Group instances
+  // Group instances by subcategory, or by location if no subcategory
   instances.forEach(inst => {
     const subcat = subcategories.find(s => s.id === inst.subcategoryId);
-    const key = subcat?.id || 'uncategorized';
+
+    // Determine grouping key and name
+    let key, groupName;
+    if (subcat) {
+      key = subcat.id;
+      groupName = subcat.name;
+    } else if (inst.locationName || inst.location) {
+      // Group by location if no subcategory
+      key = `loc-${inst.locationId || inst.location || 'other'}`;
+      groupName = inst.locationName || inst.location || 'Other';
+    } else {
+      key = 'uncategorized';
+      groupName = 'Other';
+    }
 
     if (!grouped[key]) {
       grouped[key] = {
-        subcategory: subcat || { id: 'uncategorized', name: 'Other', displayOrder: 999 },
+        subcategory: subcat || { id: key, name: groupName, displayOrder: subcat?.displayOrder || 999 },
         instances: [],
         status: 'gray',
         completedCount: 0,

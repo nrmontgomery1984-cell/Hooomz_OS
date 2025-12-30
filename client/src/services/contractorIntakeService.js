@@ -175,7 +175,8 @@ export async function generateProjectFromContractorIntake(formData) {
     const allTasksToCreate = [];
 
     for (const loop of loops) {
-      const tradeCode = loop.trade_code;
+      // trade_code may be mapped to category_code by createLoopsBatch
+      const tradeCode = loop.trade_code || loop.category_code;
       const tasksForLoop = tasksByLoop[tradeCode] || [];
 
       for (const task of tasksForLoop) {

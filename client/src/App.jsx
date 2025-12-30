@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppLayout } from './components/layout';
 import { ProtectedRoute, PublicRoute } from './components/auth/ProtectedRoute';
 import { AuthProvider } from './hooks/useAuth';
+import { ProjectProvider } from './contexts/ProjectContext';
 import {
   Dashboard,
   Today,
@@ -30,6 +31,9 @@ import {
   Settings,
   FieldGuide,
   TimeBudgetCalculator,
+  Toolbox,
+  WindowDoorFramingPage,
+  CutListPage,
   Login,
   SetPassword,
 } from './pages';
@@ -37,7 +41,8 @@ import {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <ProjectProvider>
+        <BrowserRouter>
         <Routes>
           {/* Auth routes - no layout */}
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
@@ -96,11 +101,17 @@ function App() {
           <Route path="/time-budget" element={<TimeBudgetCalculator />} />
           <Route path="/settings" element={<Settings />} />
 
+          {/* Toolbox (Calculator Suite) */}
+          <Route path="/toolbox" element={<Toolbox />} />
+          <Route path="/toolbox/window-door-framing" element={<WindowDoorFramingPage />} />
+          <Route path="/toolbox/cut-list" element={<CutListPage />} />
+
           {/* Training */}
           <Route path="/field-guide" element={<FieldGuide />} />
         </Route>
         </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ProjectProvider>
     </AuthProvider>
   );
 }

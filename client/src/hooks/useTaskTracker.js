@@ -80,11 +80,21 @@ export function useTaskTracker(projectId) {
         setPhases(phasesRes.data || []);
         setLocations(locationsRes.data || []);
         setContacts(contactsRes.data || []);
-        setInstances(instancesRes.data || []);
+
+        // Enrich instances with location names for better grouping display
+        const locationMap = new Map((locationsRes.data || []).map(loc => [loc.id, loc]));
+        const enrichedInstances = (instancesRes.data || []).map(inst => {
+          const location = locationMap.get(inst.locationId);
+          return {
+            ...inst,
+            locationName: location?.name || inst.locationName || null,
+          };
+        });
+        setInstances(enrichedInstances);
 
         // Auto-expand categories that have in-progress or blocked tasks
         const toExpand = {};
-        (instancesRes.data || []).forEach(inst => {
+        enrichedInstances.forEach(inst => {
           if (inst.status === 'in_progress' || inst.status === 'blocked') {
             toExpand[inst.categoryCode] = true;
           }

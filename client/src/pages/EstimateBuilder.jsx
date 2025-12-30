@@ -137,12 +137,18 @@ export function EstimateBuilder() {
     async function loadProject() {
       setLoading(true);
 
-      // Load catalogue data
-      const catalogue = loadCatalogueData();
-      setCatalogueData(catalogue);
+      try {
+        // Load catalogue data
+        const catalogue = loadCatalogueData();
+        setCatalogueData(catalogue);
 
-      const { data, error } = await getProject(projectId);
-      if (data) {
+        const { data, error } = await getProject(projectId);
+        if (error) {
+          console.error('[EstimateBuilder] Error loading project:', error);
+          setLoading(false);
+          return;
+        }
+        if (data) {
         // Auto-transition from intake to estimating phase when entering EstimateBuilder
         if (data.phase === 'intake') {
           const { data: updatedProject } = await updateProjectPhase(projectId, {
@@ -224,8 +230,12 @@ export function EstimateBuilder() {
           categories[item.category] = true;
         });
         setExpandedCategories(categories);
+        }
+      } catch (err) {
+        console.error('[EstimateBuilder] Error in loadProject:', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     loadProject();
   }, [projectId]);
