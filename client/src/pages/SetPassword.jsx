@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, AlertCircle, Loader2, CheckCircle } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
+import { supabase } from '../services/supabase';
 
 export function SetPassword() {
   const navigate = useNavigate();
@@ -14,50 +15,83 @@ export function SetPassword() {
   const [formLoading, setFormLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [ready, setReady] = useState(false);
+  const [sessionChecked, setSessionChecked] = useState(false);
 
   // Check if URL has recovery token - if so, wait for auth to process it
   const hasTokenInUrl = window.location.hash.includes('access_token') ||
                         window.location.hash.includes('type=recovery') ||
                         window.location.hash.includes('type=magiclink');
 
-  // Wait for auth to finish loading, then show form or redirect
+  // On mount, check for session or wait for token processing
   useEffect(() => {
-    // If auth is still loading, wait
-    if (authLoading) {
-      return;
-    }
+    let mounted = true;
 
-    // If we have a token in URL, wait for it to be processed then show form
-    if (hasTokenInUrl) {
-      // Token in URL means we should show the form once auth processes it
+    const checkSession = async () => {
+      // If we have a token in URL, Supabase should auto-process it
+      // Give it time to process, then check for session
+      if (hasTokenInUrl) {
+        // Wait for Supabase to process the URL token
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      }
+
+      // Check if we have a valid session
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (mounted) {
+          if (session) {
+            setReady(true);
+          } else if (hasTokenInUrl) {
+            // Token in URL but no session - token may be expired or invalid
+            setError('This link has expired or is invalid. Please request a new password reset.');
+          }
+          setSessionChecked(true);
+        }
+      } else {
+        if (mounted) {
+          setError('Authentication service not available');
+          setSessionChecked(true);
+        }
+      }
+    };
+
+    checkSession();
+
+    return () => {
+      mounted = false;
+    };
+  }, [hasTokenInUrl]);
+
+  // Also react to auth state changes
+  useEffect(() => {
+    if (authLoading) return;
+
+    if (isRecoveryMode || user) {
+      setReady(true);
+    }
+  }, [authLoading, isRecoveryMode, user]);
+
+  // Redirect to login if no session and no token after check
+  useEffect(() => {
+    if (sessionChecked && !ready && !hasTokenInUrl && !error) {
       const timer = setTimeout(() => {
-        setReady(true);
+        navigate('/login');
       }, 2000);
       return () => clearTimeout(timer);
     }
-
-    // If in recovery mode (set by auth when PASSWORD_RECOVERY event fires), show form
-    if (isRecoveryMode) {
-      setReady(true);
-      return;
-    }
-
-    // If user is authenticated (from magic link/invite), show form to set password
-    if (user) {
-      setReady(true);
-      return;
-    }
-
-    // No user, no token, no recovery mode - redirect to login
-    const timer = setTimeout(() => {
-      navigate('/login');
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [authLoading, hasTokenInUrl, isRecoveryMode, user, navigate]);
+  }, [sessionChecked, ready, hasTokenInUrl, error, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    // Verify we have a session before attempting password update
+    if (supabase) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        setError('Auth session missing! Please use the link from your email again.');
+        return;
+      }
+    }
 
     if (password.length < 8) {
       setError('Password must be at least 8 characters');
@@ -88,7 +122,7 @@ export function SetPassword() {
   };
 
   // Show loading while waiting for auth to process token
-  if (!ready || authLoading) {
+  if ((!sessionChecked || authLoading) && !error) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-md">
