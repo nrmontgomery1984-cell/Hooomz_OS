@@ -13,14 +13,12 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // Configure Supabase client
-// Note: persistSession disabled to prevent auth from blocking data queries
-// Users will need to log in each session, but data loading will be reliable
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
       },
     })
   : null;

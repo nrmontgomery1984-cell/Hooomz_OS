@@ -123,9 +123,17 @@ export function AuthProvider({ children }) {
   }
 
   // Sign in with email/password
-  async function signIn({ email, password }) {
+  async function signIn(credentials) {
     if (!isSupabaseConfigured()) {
       return { error: { message: 'Auth not configured' } };
+    }
+
+    // Ensure we're passing strings to Supabase
+    const email = String(credentials?.email || '').trim();
+    const password = String(credentials?.password || '');
+
+    if (!email || !password) {
+      return { error: { message: 'Email and password are required' } };
     }
 
     const { data, error } = await supabase.auth.signInWithPassword({
