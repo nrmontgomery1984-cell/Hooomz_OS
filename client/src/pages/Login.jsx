@@ -3,13 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
+import { supabase } from '../services/supabase';
 
 const REMEMBER_EMAIL_KEY = 'hooomz-remember-email';
 
 export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { signIn, resetPassword } = useAuth();
+  const { resetPassword } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,10 +37,10 @@ export function Login() {
     setLoading(true);
 
     if (mode === 'forgot') {
-      const { error } = await resetPassword(email);
+      const { error: resetError } = await resetPassword(email);
       setLoading(false);
-      if (error) {
-        setError(error.message);
+      if (resetError) {
+        setError(resetError.message);
       } else {
         setResetSent(true);
       }
@@ -53,13 +54,27 @@ export function Login() {
       localStorage.removeItem(REMEMBER_EMAIL_KEY);
     }
 
-    const { error } = await signIn({ email, password });
-    setLoading(false);
+    // Call Supabase directly with explicit string values
+    const emailStr = String(email).trim();
+    const passwordStr = String(password);
 
-    if (error) {
-      setError(error.message);
-    } else {
-      navigate(from, { replace: true });
+    try {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: emailStr,
+        password: passwordStr,
+      });
+
+      setLoading(false);
+
+      if (signInError) {
+        setError(signInError.message);
+      } else {
+        navigate(from, { replace: true });
+      }
+    } catch (err) {
+      console.error('[Login] Unexpected error:', err);
+      setLoading(false);
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
