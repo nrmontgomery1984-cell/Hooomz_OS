@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
@@ -8,7 +8,6 @@ import { supabase } from '../services/supabase';
 const REMEMBER_EMAIL_KEY = 'hooomz-remember-email';
 
 export function Login() {
-  const navigate = useNavigate();
   const location = useLocation();
   const { resetPassword } = useAuth();
 
@@ -95,8 +94,9 @@ export function Login() {
             access_token: data.access_token,
             refresh_token: data.refresh_token,
           });
+          // Force full page reload to ensure auth state is properly detected
+          window.location.href = from;
         }
-        navigate(from, { replace: true });
       }
     } catch (err) {
       console.error('[Login] Unexpected error:', err);
