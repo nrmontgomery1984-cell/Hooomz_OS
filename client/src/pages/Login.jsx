@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
-import { supabase } from '../services/supabase';
 
 const REMEMBER_EMAIL_KEY = 'hooomz-remember-email';
 
 export function Login() {
-  const location = useLocation();
   const { resetPassword } = useAuth();
 
   const [email, setEmail] = useState('');
@@ -18,8 +15,6 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState('login'); // 'login' or 'forgot'
   const [resetSent, setResetSent] = useState(false);
-
-  const from = location.state?.from?.pathname || '/';
 
   // Load remembered email on mount
   useEffect(() => {
@@ -88,24 +83,16 @@ export function Login() {
       if (!response.ok || data.error) {
         setError(data.error_description || data.error || 'Login failed');
       } else {
-        // Set the session manually
+        // Login succeeded - redirect immediately
+        // The SIGNED_IN event is already fired by Supabase internally
         if (data.access_token) {
-          console.log('[Login] Setting session and redirecting to:', from);
-          try {
-            const { error: sessionError } = await supabase.auth.setSession({
-              access_token: data.access_token,
-              refresh_token: data.refresh_token,
-            });
-            if (sessionError) {
-              console.error('[Login] Session set error:', sessionError);
-            }
-          } catch (sessionErr) {
-            console.error('[Login] Session set exception:', sessionErr);
-          }
-          console.log('[Login] Redirecting now...');
-          // Force full page reload to ensure auth state is properly detected
+          console.log('[Login] Success! Redirecting to dashboard...');
+          // Store tokens in localStorage for Supabase to pick up on reload
+          localStorage.setItem('sb-access-token', data.access_token);
+          localStorage.setItem('sb-refresh-token', data.refresh_token);
+          // Force full page reload
           window.location.href = '/';
-          return; // Prevent any further execution
+          return;
         }
       }
     } catch (err) {
