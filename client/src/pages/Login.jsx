@@ -90,12 +90,15 @@ export function Login() {
       } else {
         // Set the session manually
         if (data.access_token) {
+          console.log('[Login] Setting session and redirecting to:', from);
           await supabase.auth.setSession({
             access_token: data.access_token,
             refresh_token: data.refresh_token,
           });
+          console.log('[Login] Session set, now redirecting...');
           // Force full page reload to ensure auth state is properly detected
-          window.location.href = from;
+          window.location.replace(from);
+          return; // Prevent any further execution
         }
       }
     } catch (err) {
