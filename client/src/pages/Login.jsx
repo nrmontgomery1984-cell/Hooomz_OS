@@ -91,13 +91,20 @@ export function Login() {
         // Set the session manually
         if (data.access_token) {
           console.log('[Login] Setting session and redirecting to:', from);
-          await supabase.auth.setSession({
-            access_token: data.access_token,
-            refresh_token: data.refresh_token,
-          });
-          console.log('[Login] Session set, now redirecting...');
+          try {
+            const { error: sessionError } = await supabase.auth.setSession({
+              access_token: data.access_token,
+              refresh_token: data.refresh_token,
+            });
+            if (sessionError) {
+              console.error('[Login] Session set error:', sessionError);
+            }
+          } catch (sessionErr) {
+            console.error('[Login] Session set exception:', sessionErr);
+          }
+          console.log('[Login] Redirecting now...');
           // Force full page reload to ensure auth state is properly detected
-          window.location.replace(from);
+          window.location.href = '/';
           return; // Prevent any further execution
         }
       }
