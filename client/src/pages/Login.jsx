@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
+import { supabase } from '../services/supabase';
 
 const REMEMBER_EMAIL_KEY = 'hooomz-remember-email';
 
@@ -58,12 +59,6 @@ export function Login() {
       password: String(password),
     };
 
-    console.log('[Login] Credentials:', {
-      email: credentials.email,
-      passwordLength: credentials.password.length,
-      bodyPreview: JSON.stringify(credentials)
-    });
-
     try {
       // Make a direct fetch call to bypass any potential issues with the Supabase client
       const response = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
@@ -76,24 +71,21 @@ export function Login() {
       });
 
       const data = await response.json();
-      console.log('[Login] Response:', { status: response.status, hasError: !!data.error });
-
       setLoading(false);
 
       if (!response.ok || data.error) {
         setError(data.error_description || data.error || 'Login failed');
-      } else {
-        // Login succeeded - redirect immediately
-        // The SIGNED_IN event is already fired by Supabase internally
-        if (data.access_token) {
-          console.log('[Login] Success! Redirecting to dashboard...');
-          // Store tokens in localStorage for Supabase to pick up on reload
-          localStorage.setItem('sb-access-token', data.access_token);
-          localStorage.setItem('sb-refresh-token', data.refresh_token);
-          // Force full page reload
-          window.location.href = '/';
-          return;
-        }
+      } else if (data.access_token) {
+        // Set session with timeout fallback (setSession can hang)
+        await Promise.race([
+          supabase.auth.setSession({
+            access_token: data.access_token,
+            refresh_token: data.refresh_token,
+          }),
+          new Promise(resolve => setTimeout(resolve, 2000))
+        ]);
+        window.location.href = '/';
+        return;
       }
     } catch (err) {
       console.error('[Login] Unexpected error:', err);
