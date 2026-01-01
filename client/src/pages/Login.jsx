@@ -54,21 +54,48 @@ export function Login() {
       localStorage.removeItem(REMEMBER_EMAIL_KEY);
     }
 
-    // Call Supabase directly with explicit string values
-    const emailStr = String(email).trim();
-    const passwordStr = String(password);
+    // Get Supabase URL and key from the client
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+    // Create a plain object with string values
+    const credentials = {
+      email: String(email).trim(),
+      password: String(password),
+    };
+
+    console.log('[Login] Credentials:', {
+      email: credentials.email,
+      passwordLength: credentials.password.length,
+      bodyPreview: JSON.stringify(credentials)
+    });
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: emailStr,
-        password: passwordStr,
+      // Make a direct fetch call to bypass any potential issues with the Supabase client
+      const response = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseKey,
+        },
+        body: JSON.stringify(credentials),
       });
+
+      const data = await response.json();
+      console.log('[Login] Response:', { status: response.status, hasError: !!data.error });
 
       setLoading(false);
 
-      if (signInError) {
-        setError(signInError.message);
+      if (!response.ok || data.error) {
+        setError(data.error_description || data.error || 'Login failed');
       } else {
+        // Set the session manually
+        if (data.access_token) {
+          await supabase.auth.setSession({
+            access_token: data.access_token,
+            refresh_token: data.refresh_token,
+          });
+        }
         navigate(from, { replace: true });
       }
     } catch (err) {
