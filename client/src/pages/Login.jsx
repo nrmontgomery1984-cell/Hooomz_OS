@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
-import { supabase } from '../services/supabase';
 
 const REMEMBER_EMAIL_KEY = 'hooomz-remember-email';
 
@@ -76,14 +75,21 @@ export function Login() {
       if (!response.ok || data.error) {
         setError(data.error_description || data.error || 'Login failed');
       } else if (data.access_token) {
-        // Set session with timeout fallback (setSession can hang)
-        await Promise.race([
-          supabase.auth.setSession({
-            access_token: data.access_token,
-            refresh_token: data.refresh_token,
-          }),
-          new Promise(resolve => setTimeout(resolve, 2000))
-        ]);
+        // Store session in localStorage with Supabase's expected key format
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const projectRef = supabaseUrl.match(/https:\/\/([^.]+)/)?.[1] || 'default';
+        const storageKey = `sb-${projectRef}-auth-token`;
+
+        const sessionData = {
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          expires_in: data.expires_in,
+          expires_at: data.expires_at,
+          token_type: data.token_type,
+          user: data.user,
+        };
+
+        localStorage.setItem(storageKey, JSON.stringify(sessionData));
         window.location.href = '/';
         return;
       }
