@@ -3342,14 +3342,18 @@ function saveEmployeesToStorage(employees) {
 
 // Transform employee data from snake_case (DB) to camelCase (UI)
 function transformEmployeeFromDb(emp) {
+  if (!emp) return null;
+  const nameParts = (emp.name || '').split(' ');
+  const firstName = emp.first_name || nameParts[0] || 'Unknown';
+  const lastName = emp.last_name || nameParts.slice(1).join(' ') || '';
   return {
     id: emp.id,
-    firstName: emp.first_name || emp.name?.split(' ')[0] || '',
-    lastName: emp.last_name || emp.name?.split(' ').slice(1).join(' ') || '',
+    firstName,
+    lastName,
     preferredName: emp.preferred_name || null,
-    name: emp.name || `${emp.first_name || ''} ${emp.last_name || ''}`.trim(),
-    email: emp.email,
-    phone: emp.phone,
+    name: emp.name || `${firstName} ${lastName}`.trim(),
+    email: emp.email || '',
+    phone: emp.phone || '',
     role: emp.role || 'labourer',
     hourlyRate: emp.hourly_rate,
     isActive: emp.is_active !== false,
@@ -3406,10 +3410,10 @@ export async function getEmployees() {
     filteredData = filteredData.filter(emp => emp.is_active !== false);
 
     // Transform from snake_case to camelCase for UI
-    const transformedData = filteredData.map(transformEmployeeFromDb);
+    const transformedData = filteredData.map(transformEmployeeFromDb).filter(Boolean);
 
     // Sort by lastName
-    transformedData.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+    transformedData.sort((a, b) => (a?.lastName || '').localeCompare(b?.lastName || ''));
 
     console.log('[api.getEmployees] Returning', transformedData.length, 'employees');
     return { data: transformedData, error: null };
