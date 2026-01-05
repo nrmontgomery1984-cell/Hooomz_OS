@@ -109,15 +109,26 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    const { data, error } = await supabase
-      .from('employees')
-      .select('*')
-      .eq('email', email)
-      .is('deleted_at', null)
-      .single();
+    try {
+      // Add timeout to prevent hanging on RLS issues
+      const queryPromise = supabase
+        .from('employees')
+        .select('*')
+        .eq('email', email)
+        .is('deleted_at', null)
+        .single();
 
-    if (!error && data) {
-      setEmployee(data);
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Employee query timeout')), 3000)
+      );
+
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
+
+      if (!error && data) {
+        setEmployee(data);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch employee profile:', err.message);
     }
     setLoading(false);
   }
