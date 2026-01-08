@@ -8,5 +8,6 @@ export { Input, DateInput, TextArea } from './Input';
 export { Select, MultiSelect } from './Select';
 export { Logo } from './Logo';
 export { Modal } from './Modal';
+export { ConfirmDialog, AlertDialog } from './ConfirmDialog';
 export { AddressInput } from './AddressInput';
 export { ToastProvider, useToast } from './Toast';

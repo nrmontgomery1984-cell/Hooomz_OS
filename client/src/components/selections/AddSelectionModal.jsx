@@ -12,11 +12,11 @@ export function AddSelectionModal({
   prefilled,
   onAdd,
   onUpdate,
-  categories,
-  statuses,
-  phases,
-  trades,
-  rooms,
+  categories = [],
+  statuses = [],
+  phases = [],
+  trades = [],
+  rooms = [],
 }) {
   const isEditing = !!selection;
 

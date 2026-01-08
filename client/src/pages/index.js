@@ -1,6 +1,5 @@
 // Overview
 export { Dashboard } from './Dashboard';
-export { Today } from './Today';
 
 // Pipeline phases
 export { Sales } from './Sales';

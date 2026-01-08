@@ -1,5 +1,6 @@
 // Mock data for development without Supabase
 // Two sample projects generated from customer intake forms
+import { logger } from '../utils/logger';
 
 // =============================================================================
 // LOCAL STORAGE PERSISTENCE
@@ -22,7 +23,7 @@ function checkDataVersion() {
   const storedVersion = parseInt(storedVersionStr, 10);
   if (storedVersion < DATA_VERSION) {
     // Clear stale project data to force refresh with new structure
-    console.log(`Upgrading data from v${storedVersion} to v${DATA_VERSION}`);
+    logger.info(`Upgrading data from v${storedVersion} to v${DATA_VERSION}`);
     localStorage.removeItem('hooomz_mock_projects');
     localStorage.removeItem('hooomz_time_entries');
     localStorage.setItem(DATA_VERSION_KEY, DATA_VERSION.toString());
@@ -44,6 +45,7 @@ const STORAGE_KEYS = {
   materialSelections: 'hooomz_material_selections',
   floorPlans: 'hooomz_floor_plans',
   floorPlanElements: 'hooomz_floor_plan_elements',
+  activityLog: 'hooomz_activity_log',
   dataCleared: 'hooomz_data_cleared', // Marker to prevent defaults from loading
 };
 
@@ -63,7 +65,7 @@ function loadFromStorage(key, defaultValue) {
       return Array.isArray(defaultValue) ? [] : (typeof defaultValue === 'object' && defaultValue !== null ? {} : defaultValue);
     }
   } catch (e) {
-    console.error(`Error loading ${key} from localStorage:`, e);
+    logger.error(`Error loading ${key} from localStorage`, e);
   }
   return defaultValue;
 }
@@ -93,7 +95,7 @@ function loadTaskInstancesFromStorage(key, defaultValue) {
       return {};
     }
   } catch (e) {
-    console.error(`Error loading ${key} from localStorage:`, e);
+    logger.error(`Error loading task instances from localStorage`, e);
   }
   return defaultValue;
 }
@@ -104,7 +106,7 @@ export function saveProjectsToStorage() {
     localStorage.setItem(STORAGE_KEYS.loops, JSON.stringify(mockLoops));
     localStorage.setItem(STORAGE_KEYS.tasks, JSON.stringify(mockTasks));
   } catch (e) {
-    console.error('Error saving mock data to localStorage:', e);
+    logger.error('Error saving mock data to localStorage', e);
   }
 }
 
@@ -146,10 +148,10 @@ export function clearAllMockData() {
       mockTaskTemplates.length = 0;
     }
 
-    console.log('All mock data cleared successfully');
+    logger.info('All mock data cleared successfully');
     return true;
   } catch (e) {
-    console.error('Error clearing mock data:', e);
+    logger.error('Error clearing mock data', e);
     return false;
   }
 }
@@ -165,10 +167,10 @@ export function restoreMockData() {
         localStorage.removeItem(key);
       }
     });
-    console.log('Mock data will be restored on next page reload');
+    logger.info('Mock data will be restored on next page reload');
     return true;
   } catch (e) {
-    console.error('Error restoring mock data:', e);
+    logger.error('Error restoring mock data', e);
     return false;
   }
 }
@@ -1858,7 +1860,7 @@ export function saveTimeEntriesToStorage() {
     localStorage.setItem(STORAGE_KEYS.timeEntries, JSON.stringify(mockTimeEntries));
     localStorage.setItem(STORAGE_KEYS.activeTimeEntry, JSON.stringify(mockActiveTimeEntry));
   } catch (e) {
-    console.error('Error saving time entries to localStorage:', e);
+    logger.error('Error saving time entries to localStorage', e);
   }
 }
 
@@ -1979,7 +1981,7 @@ export const mockProjectContacts = {
 // ACTIVITY LOG
 // =============================================================================
 
-export const mockActivityLog = {
+const defaultActivityLog = {
   'proj-nc-001': [
     {
       id: 'a1',
@@ -2305,6 +2307,18 @@ export const mockActivityLog = {
     },
   ],
 };
+
+// Load and export activity log
+export const mockActivityLog = loadFromStorage(STORAGE_KEYS.activityLog, defaultActivityLog);
+
+// Save function for Activity Log
+export function saveActivityLogToStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEYS.activityLog, JSON.stringify(mockActivityLog));
+  } catch (e) {
+    logger.error('Error saving Activity Log to localStorage', e);
+  }
+}
 
 // =============================================================================
 // TASK TRACKER - THREE AXIS MODEL DATA
@@ -3093,7 +3107,7 @@ export function saveTaskTrackerToStorage() {
     localStorage.setItem(STORAGE_KEYS.taskTrackerInstances, JSON.stringify(mockTaskInstances));
     localStorage.setItem(STORAGE_KEYS.taskTrackerLocations, JSON.stringify(mockTaskTrackerLocations));
   } catch (e) {
-    console.error('Error saving Task Tracker data to localStorage:', e);
+    logger.error('Error saving Task Tracker data to localStorage', e);
   }
 }
 
@@ -3462,7 +3476,7 @@ export function saveMaterialSelectionsToStorage() {
   try {
     localStorage.setItem(STORAGE_KEYS.materialSelections, JSON.stringify(mockMaterialSelections));
   } catch (e) {
-    console.error('Error saving Material Selections to localStorage:', e);
+    logger.error('Error saving Material Selections to localStorage', e);
   }
 }
 
@@ -4026,7 +4040,7 @@ export function saveFloorPlansToStorage() {
   try {
     localStorage.setItem(STORAGE_KEYS.floorPlans, JSON.stringify(mockFloorPlans));
   } catch (e) {
-    console.error('Error saving Floor Plans to localStorage:', e);
+    logger.error('Error saving Floor Plans to localStorage', e);
   }
 }
 
@@ -4034,6 +4048,6 @@ export function saveFloorPlanElementsToStorage() {
   try {
     localStorage.setItem(STORAGE_KEYS.floorPlanElements, JSON.stringify(mockFloorPlanElements));
   } catch (e) {
-    console.error('Error saving Floor Plan Elements to localStorage:', e);
+    logger.error('Error saving Floor Plan Elements to localStorage', e);
   }
 }

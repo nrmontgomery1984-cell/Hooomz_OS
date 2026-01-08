@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { Logo } from '../components/ui/Logo';
+import { logger } from '../utils/logger';
 
 const REMEMBER_EMAIL_KEY = 'hooomz-remember-email';
 
 export function Login() {
-  const { resetPassword } = useAuth();
+  const navigate = useNavigate();
+  const { signIn, resetPassword, user, loading: authLoading } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +18,13 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState('login'); // 'login' or 'forgot'
   const [resetSent, setResetSent] = useState(false);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate('/', { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   // Load remembered email on mount
   useEffect(() => {
@@ -48,53 +58,20 @@ export function Login() {
       localStorage.removeItem(REMEMBER_EMAIL_KEY);
     }
 
-    // Get Supabase URL and key from the client
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-    // Create a plain object with string values
-    const credentials = {
-      email: String(email).trim(),
-      password: String(password),
-    };
-
     try {
-      // Make a direct fetch call to bypass any potential issues with the Supabase client
-      const response = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': supabaseKey,
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      const data = await response.json();
+      // Use the proper auth flow through the Supabase client
+      const { error: signInError } = await signIn(email.trim(), password);
       setLoading(false);
 
-      if (!response.ok || data.error) {
-        setError(data.error_description || data.error || 'Login failed');
-      } else if (data.access_token) {
-        // Store session in localStorage with Supabase's expected key format
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        const projectRef = supabaseUrl.match(/https:\/\/([^.]+)/)?.[1] || 'default';
-        const storageKey = `sb-${projectRef}-auth-token`;
-
-        const sessionData = {
-          access_token: data.access_token,
-          refresh_token: data.refresh_token,
-          expires_in: data.expires_in,
-          expires_at: data.expires_at,
-          token_type: data.token_type,
-          user: data.user,
-        };
-
-        localStorage.setItem(storageKey, JSON.stringify(sessionData));
-        window.location.href = '/';
-        return;
+      if (signInError) {
+        logger.error('Login failed', signInError);
+        setError(signInError.message || 'Login failed. Please check your credentials.');
+      } else {
+        // Navigate using React Router (SPA navigation)
+        navigate('/', { replace: true });
       }
     } catch (err) {
-      console.error('[Login] Unexpected error:', err);
+      logger.error('Unexpected login error', err);
       setLoading(false);
       setError('An unexpected error occurred. Please try again.');
     }
@@ -164,6 +141,7 @@ export function Login() {
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="you@example.com"
                   required
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -183,6 +161,7 @@ export function Login() {
                       className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                       placeholder="Enter your password"
                       required
+                      autoComplete="current-password"
                     />
                   </div>
                 </div>

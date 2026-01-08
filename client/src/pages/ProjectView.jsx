@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Calculator, Package, Layers, Eye, EyeOff, Map, FileText } from 'lucide-react';
+import { Plus, MoreHorizontal, LayoutDashboard, List, DollarSign, Package, Layers, Eye, EyeOff, Map, FileText } from 'lucide-react';
 import { PageContainer } from '../components/layout';
 import { Button } from '../components/ui';
 import { ProjectDashboard, PhaseTransitionModal, AddChangeOrderModal, ChangeOrderDetailModal, DocumentChecklist } from '../components/dashboard';
 import { AddLoopModal, LoopsView } from '../components/loops';
 import { ActivityFeed, AddActivityModal } from '../components/activity';
 import { AddExpenseModal, ExpenseList, ExpenseSummary } from '../components/expenses';
-import { EstimatePanel } from '../components/estimates';
 import { useDashboardFromData, usePhaseTransition } from '../hooks';
 import { useCurrentProject } from '../contexts/ProjectContext';
 import {
@@ -164,9 +163,17 @@ export function ProjectView() {
   };
 
   const handleAddActivity = async (entry) => {
-    const { data } = await createActivityEntry(entry);
-    if (data) {
-      setActivities((prev) => [data, ...prev]);
+    console.log('[handleAddActivity] Input entry:', entry);
+    const result = await createActivityEntry(entry);
+    console.log('[handleAddActivity] createActivityEntry result:', result);
+    if (result.data) {
+      console.log('[handleAddActivity] Adding to activities state:', result.data);
+      setActivities((prev) => {
+        console.log('[handleAddActivity] Previous activities count:', prev.length);
+        return [result.data, ...prev];
+      });
+    } else {
+      console.log('[handleAddActivity] No data returned!');
     }
   };
 
@@ -320,17 +327,6 @@ export function ProjectView() {
         >
           <DollarSign className="w-4 h-4 flex-shrink-0" />
           <span className="hidden sm:inline">Expenses</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('estimate')}
-          className={`flex items-center justify-center gap-1 px-2 lg:px-3 py-3 text-sm font-medium border-b-2 transition-colors ${
-            activeTab === 'estimate'
-              ? 'border-charcoal text-charcoal'
-              : 'border-transparent text-gray-500 active:text-charcoal'
-          }`}
-        >
-          <Calculator className="w-4 h-4 flex-shrink-0" />
-          <span className="hidden sm:inline">Estimate</span>
         </button>
         <button
           onClick={() => navigate(`/projects/${projectId}/selections`)}
@@ -491,21 +487,6 @@ export function ProjectView() {
         </>
       )}
 
-      {/* Estimate View */}
-      {activeTab === 'estimate' && (
-        <>
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold text-charcoal">Cost Estimate</h2>
-            <p className="text-sm text-gray-500">
-              Calculated from scope and Cost Catalogue rates
-            </p>
-          </div>
-          <EstimatePanel
-            project={project}
-            onProjectUpdate={setProject}
-          />
-        </>
-      )}
 
       {/* Documents View */}
       {activeTab === 'documents' && (

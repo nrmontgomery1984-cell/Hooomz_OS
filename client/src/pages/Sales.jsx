@@ -4,6 +4,8 @@ import { Plus, UserPlus, ArrowRight, Phone, Mail, Calendar, HardHat, Home, X, Tr
 import { PageContainer } from '../components/layout';
 import { Card, Button } from '../components/ui';
 import { getProjects, deleteProject } from '../services/api';
+import { useConfirmDialog } from '../hooks/useConfirmDialog';
+import { useToast } from '../components/ui';
 
 /**
  * Sales / Leads Page
@@ -172,16 +174,25 @@ export function Sales() {
 function LeadCard({ lead, onDelete }) {
   const intakeData = lead.intake_data || {};
   const contact = intakeData.contact || {};
+  const { confirm } = useConfirmDialog();
+  const { showToast } = useToast();
 
   const handleDelete = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (window.confirm(`Delete "${lead.client_name || 'this lead'}"? This cannot be undone.`)) {
+    const confirmed = await confirm({
+      title: 'Delete Lead',
+      message: `Delete "${lead.client_name || 'this lead'}"? This cannot be undone.`,
+      confirmText: 'Delete',
+      variant: 'danger',
+    });
+    if (confirmed) {
       const { error } = await deleteProject(lead.id);
       if (error) {
-        alert('Failed to delete');
+        showToast('Failed to delete lead', 'error');
       } else if (onDelete) {
         onDelete(lead.id);
+        showToast('Lead deleted', 'success');
       }
     }
   };

@@ -62,8 +62,8 @@ export function Selections() {
       setRefData(ref);
 
       // Load project rooms
-      const projectRooms = getProjectRooms(projectId);
-      setRooms(projectRooms);
+      const { data: projectRooms } = await getProjectRooms(projectId);
+      setRooms(projectRooms || []);
 
       // Load project info
       const { data: projData } = await getProject(projectId);
@@ -74,8 +74,8 @@ export function Selections() {
       setSelections(data || []);
 
       // Load suggested selections based on tasks
-      const suggestedItems = getSuggestedSelections(projectId);
-      setSuggestions(suggestedItems);
+      const { data: suggestedItems } = await getSuggestedSelections(projectId);
+      setSuggestions(suggestedItems || []);
 
       setLoading(false);
     }

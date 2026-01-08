@@ -609,7 +609,7 @@ function FilterModal({ isOpen, onClose, filters, onFiltersChange, categoryOption
 
 export function ActivityFeed({ activities, loading, emptyMessage = 'No activity yet', projectId }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [timeRange, setTimeRange] = useState('week');
+  const [timeRange, setTimeRange] = useState('all');
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filters, setFilters] = useState({
     selectedTypes: [...ALL_ACTIVITY_TYPES],
@@ -634,20 +634,25 @@ export function ActivityFeed({ activities, loading, emptyMessage = 'No activity 
       if (range && range.days !== null) {
         const eventDate = new Date(event.created_at);
         const now = new Date();
-        const cutoff = new Date(now);
 
         if (range.days === 0) {
-          // Today: start of day
-          cutoff.setHours(0, 0, 0, 0);
+          // Today: compare dates only (ignore time), in local timezone
+          const eventLocalDate = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+          const todayLocalDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          if (eventLocalDate.getTime() !== todayLocalDate.getTime()) return false;
         } else {
+          // Other ranges: check if within N days
+          const cutoff = new Date(now);
           cutoff.setDate(now.getDate() - range.days);
+          cutoff.setHours(0, 0, 0, 0);
+          if (eventDate < cutoff) return false;
         }
-
-        if (eventDate < cutoff) return false;
       }
 
-      // Activity type filter
-      if (filters.selectedTypes.length > 0 && !filters.selectedTypes.includes(event.event_type)) {
+      // Activity type filter - only filter if types are selected AND event type is a known type
+      // Unknown types always pass through (don't filter out new/custom event types)
+      const isKnownType = ALL_ACTIVITY_TYPES.includes(event.event_type);
+      if (isKnownType && filters.selectedTypes.length > 0 && !filters.selectedTypes.includes(event.event_type)) {
         return false;
       }
 

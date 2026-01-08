@@ -1,5 +1,6 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../services/supabase';
+import { logger } from '../utils/logger';
 
 const AuthContext = createContext(null);
 
@@ -8,6 +9,37 @@ export function AuthProvider({ children }) {
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isRecoveryMode, setIsRecoveryMode] = useState(false);
+
+  // Fetch employee profile linked to auth user
+  const fetchEmployeeProfile = useCallback(async (email) => {
+    if (!email) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Add timeout to prevent hanging on RLS issues
+      const queryPromise = supabase
+        .from('employees')
+        .select('*')
+        .eq('email', email)
+        .is('deleted_at', null)
+        .single();
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Employee query timeout')), 3000)
+      );
+
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
+
+      if (!error && data) {
+        setEmployee(data);
+      }
+    } catch (err) {
+      logger.warn('Failed to fetch employee profile', { message: err.message });
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) {
@@ -27,7 +59,7 @@ export function AuthProvider({ children }) {
     const timeoutMs = hasTokenInUrl ? 10000 : 5000;
     const timeout = setTimeout(() => {
       if (mounted) {
-        console.warn('Auth initialization timed out, proceeding without session');
+        logger.warn('Auth initialization timed out, proceeding without session');
         setLoading(false);
       }
     }, timeoutMs);
@@ -38,7 +70,7 @@ export function AuthProvider({ children }) {
         const { data: { session }, error } = await supabase.auth.getSession();
 
         if (error) {
-          console.error('Error getting session:', error);
+          logger.error('Error getting session', error);
           if (mounted) setLoading(false);
           return;
         }
@@ -52,7 +84,7 @@ export function AuthProvider({ children }) {
           }
         }
       } catch (err) {
-        console.error('Error initializing auth:', err);
+        logger.error('Error initializing auth', err);
         if (mounted) setLoading(false);
       }
     };
@@ -64,17 +96,13 @@ export function AuthProvider({ children }) {
       async (event, session) => {
         if (!mounted) return;
 
-        console.log('Auth event:', event);
+        logger.debug('Auth event', { event });
 
         // Handle password recovery event
         if (event === 'PASSWORD_RECOVERY') {
           setIsRecoveryMode(true);
           setUser(session?.user ?? null);
           setLoading(false);
-          // Redirect to set-password page if not already there
-          if (!window.location.pathname.includes('password')) {
-            window.location.href = '/set-password';
-          }
           return;
         }
 
@@ -100,66 +128,40 @@ export function AuthProvider({ children }) {
       clearTimeout(timeout);
       subscription.unsubscribe();
     };
-  }, []);
-
-  // Fetch employee profile linked to auth user
-  async function fetchEmployeeProfile(email) {
-    if (!email) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Add timeout to prevent hanging on RLS issues
-      const queryPromise = supabase
-        .from('employees')
-        .select('*')
-        .eq('email', email)
-        .is('deleted_at', null)
-        .single();
-
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Employee query timeout')), 3000)
-      );
-
-      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
-
-      if (!error && data) {
-        setEmployee(data);
-      }
-    } catch (err) {
-      console.warn('Failed to fetch employee profile:', err.message);
-    }
-    setLoading(false);
-  }
+  }, [fetchEmployeeProfile]);
 
   // Sign in with email/password
-  async function signIn(credentials) {
+  async function signIn(email, password) {
     if (!isSupabaseConfigured()) {
       return { error: { message: 'Auth not configured' } };
     }
 
-    // Ensure we're passing strings to Supabase
-    const email = String(credentials?.email || '').trim();
-    const password = String(credentials?.password || '');
+    // Handle both (email, password) and ({email, password}) signatures
+    let emailStr, passwordStr;
+    if (typeof email === 'object' && email !== null) {
+      emailStr = String(email.email || '').trim();
+      passwordStr = String(email.password || '');
+    } else {
+      emailStr = String(email || '').trim();
+      passwordStr = String(password || '');
+    }
 
-    if (!email || !password) {
+    if (!emailStr || !passwordStr) {
       return { error: { message: 'Email and password are required' } };
     }
 
     const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+      email: emailStr,
+      password: passwordStr,
     });
 
     return { data, error };
   }
 
-  // Sign out
+  // Sign out - returns a promise that resolves after sign out
+  // Note: Caller should handle navigation using React Router
   async function signOut() {
-    console.log('signOut called, supabase configured:', isSupabaseConfigured());
-
-    // Always clear local state first
+    // Clear local state first
     setUser(null);
     setEmployee(null);
 
@@ -167,12 +169,10 @@ export function AuthProvider({ children }) {
       try {
         await supabase.auth.signOut();
       } catch (err) {
-        console.error('Sign out error:', err);
+        logger.error('Sign out error', err);
       }
     }
 
-    // Always redirect to login, regardless of Supabase status
-    window.location.href = '/login';
     return { error: null };
   }
 

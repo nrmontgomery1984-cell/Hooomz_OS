@@ -1,5 +1,6 @@
-import { useState, useEffect, createContext, useContext, useCallback } from 'react';
+import { useState, useEffect, createContext, useContext, useCallback, useRef } from 'react';
 import { CheckCircle, AlertCircle, Info, X } from 'lucide-react';
+import { logger } from '../../utils/logger';
 
 /**
  * Toast notification system
@@ -12,19 +13,37 @@ const ToastContext = createContext(null);
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
+  const timeoutsRef = useRef(new Map());
+
+  // Clean up all timeouts on unmount
+  useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    return () => {
+      timeouts.forEach(timeout => clearTimeout(timeout));
+      timeouts.clear();
+    };
+  }, []);
 
   const showToast = useCallback((message, type = 'info', duration = 3000) => {
-    const id = Date.now();
+    const id = Date.now() + Math.random();
     setToasts(prev => [...prev, { id, message, type }]);
 
     if (duration > 0) {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         setToasts(prev => prev.filter(t => t.id !== id));
+        timeoutsRef.current.delete(id);
       }, duration);
+      timeoutsRef.current.set(id, timeout);
     }
   }, []);
 
   const dismissToast = useCallback((id) => {
+    // Clear the timeout if it exists
+    const timeout = timeoutsRef.current.get(id);
+    if (timeout) {
+      clearTimeout(timeout);
+      timeoutsRef.current.delete(id);
+    }
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
@@ -41,7 +60,7 @@ export function useToast() {
   if (!context) {
     // Return a no-op if not wrapped in provider (graceful degradation)
     return {
-      showToast: (message, type) => console.log(`[Toast ${type}]: ${message}`),
+      showToast: (message, type) => logger.info(`Toast [${type}]: ${message}`),
       dismissToast: () => {},
     };
   }
@@ -83,6 +102,7 @@ function Toast({ message, type, onDismiss }) {
       <button
         onClick={onDismiss}
         className="p-1 hover:bg-gray-200 rounded transition-colors"
+        aria-label="Dismiss"
       >
         <X className="w-4 h-4 text-gray-400" />
       </button>

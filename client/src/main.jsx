@@ -6,6 +6,8 @@ import App from './App.jsx'
 import { DevAuthProvider } from './contexts/DevAuthContext'
 import { DevBorder } from './components/dev'
 import { ToastProvider } from './components/ui'
+import { ConfirmDialogProvider } from './hooks/useConfirmDialog'
+import { logger } from './utils/logger'
 
 // Load Google Maps Places API for address autocomplete
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -21,12 +23,12 @@ if (GOOGLE_MAPS_API_KEY && GOOGLE_MAPS_API_KEY !== 'your_google_maps_api_key') {
 if ('serviceWorker' in navigator) {
   registerSW({
     onNeedRefresh() {
-      if (confirm('New content available. Reload?')) {
-        window.location.reload()
-      }
+      // This will be handled by the ConfirmDialogProvider once mounted
+      // For now, use a simple notification approach
+      logger.info('New content available - please refresh')
     },
     onOfflineReady() {
-      console.log('App ready to work offline')
+      logger.debug('App ready to work offline')
     },
   })
 }
@@ -39,11 +41,12 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <DevAuthProvider>
       <ToastProvider>
-        <DevBorder>
-          <App />
-        </DevBorder>
+        <ConfirmDialogProvider>
+          <DevBorder>
+            <App />
+          </DevBorder>
+        </ConfirmDialogProvider>
       </ToastProvider>
     </DevAuthProvider>
   </StrictMode>,
 )
-// Cache bust 1766167706

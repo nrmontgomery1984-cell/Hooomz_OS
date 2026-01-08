@@ -5,7 +5,6 @@ import { AuthProvider } from './hooks/useAuth';
 import { ProjectProvider } from './contexts/ProjectContext';
 import {
   Dashboard,
-  Today,
   Sales,
   Estimates,
   Contracts,
@@ -61,8 +60,6 @@ function App() {
         <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
           {/* Overview */}
           <Route path="/" element={<Dashboard />} />
-          {/* Today page hidden - reserved for field worker features */}
-          {/* <Route path="/today" element={<Today />} /> */}
 
           {/* Pipeline - Pre-Contract */}
           <Route path="/sales" element={<Sales />} />

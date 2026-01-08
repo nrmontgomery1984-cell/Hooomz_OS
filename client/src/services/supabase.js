@@ -1,15 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '../utils/logger';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Debug logging at module init
-console.log('[supabase.js] Module initializing...');
-console.log('[supabase.js] VITE_SUPABASE_URL:', supabaseUrl ? `${supabaseUrl.substring(0, 30)}...` : 'NOT SET');
-console.log('[supabase.js] VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? `${supabaseAnonKey.substring(0, 20)}...` : 'NOT SET');
+// Only log in development, and don't expose credentials
+if (import.meta.env.DEV) {
+  logger.debug('Supabase module initializing', {
+    urlConfigured: !!supabaseUrl,
+    keyConfigured: !!supabaseAnonKey,
+  });
+}
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('[supabase.js] Supabase credentials not found. Using mock data mode.');
+  logger.warn('Supabase credentials not found - using mock data mode');
 }
 
 // Configure Supabase client
@@ -22,8 +26,6 @@ export const supabase = supabaseUrl && supabaseAnonKey
       },
     })
   : null;
-
-console.log('[supabase.js] Supabase client created:', !!supabase);
 
 export const isSupabaseConfigured = () => {
   return !!supabase;

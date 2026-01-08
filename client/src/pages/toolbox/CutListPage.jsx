@@ -9,11 +9,15 @@ import {
   Download,
   ChevronDown,
   ChevronUp,
+  Check,
+  Square,
+  CheckSquare,
 } from 'lucide-react';
 import { Card, Button } from '../../components/ui';
 
 // Same storage key as WindowDoorFraming calculator
 const CUT_LIST_STORAGE_KEY = 'hooomz_framing_cut_list';
+const CUT_COMPLETED_STORAGE_KEY = 'hooomz_cut_completed';
 
 // Load saved cut list from localStorage
 function loadSavedCutList() {
@@ -28,6 +32,21 @@ function loadSavedCutList() {
 // Save cut list to localStorage
 function saveCutListToStorage(list) {
   localStorage.setItem(CUT_LIST_STORAGE_KEY, JSON.stringify(list));
+}
+
+// Load completed items from localStorage
+function loadCompletedItems() {
+  try {
+    const saved = localStorage.getItem(CUT_COMPLETED_STORAGE_KEY);
+    return saved ? JSON.parse(saved) : {};
+  } catch {
+    return {};
+  }
+}
+
+// Save completed items to localStorage
+function saveCompletedItems(completed) {
+  localStorage.setItem(CUT_COMPLETED_STORAGE_KEY, JSON.stringify(completed));
 }
 
 // Common lumber materials
@@ -53,6 +72,9 @@ export function CutListPage() {
   // Manual items (separate from calculator-generated openings)
   const [manualItems, setManualItems] = useState([]);
   const [showAddManual, setShowAddManual] = useState(false);
+
+  // Completed items tracking (keyed by material-length)
+  const [completedItems, setCompletedItems] = useState(() => loadCompletedItems());
 
   // New manual item form
   const [newItem, setNewItem] = useState({
@@ -140,7 +162,29 @@ export function CutListPage() {
       setSavedOpenings([]);
       setManualItems([]);
       saveCutListToStorage([]);
+      setCompletedItems({});
+      saveCompletedItems({});
     }
+  };
+
+  // Toggle item completion
+  const toggleCompleted = (key) => {
+    setCompletedItems(prev => {
+      const updated = { ...prev };
+      if (updated[key]) {
+        delete updated[key];
+      } else {
+        updated[key] = true;
+      }
+      saveCompletedItems(updated);
+      return updated;
+    });
+  };
+
+  // Clear all completed items
+  const clearCompleted = () => {
+    setCompletedItems({});
+    saveCompletedItems({});
   };
 
   // Copy consolidated list to clipboard
@@ -163,6 +207,8 @@ export function CutListPage() {
   };
 
   const totalItems = consolidatedList.reduce((sum, item) => sum + item.qty, 0);
+  const completedCount = Object.keys(completedItems).length;
+  const remainingCount = consolidatedList.length - completedCount;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -176,6 +222,9 @@ export function CutListPage() {
             <h1 className="text-lg font-semibold text-charcoal">Cut List</h1>
             <p className="text-xs text-gray-500">
               {savedOpenings.length} openings • {manualItems.length} manual • {totalItems} total pieces
+              {completedCount > 0 && (
+                <span className="text-green-600 ml-2">• {completedCount} cut</span>
+              )}
             </p>
           </div>
           <ClipboardList className="w-5 h-5 text-gray-400" />
@@ -215,14 +264,34 @@ export function CutListPage() {
                   {expandedOpening === idx && (
                     <div className="border-t border-gray-100 px-3 py-2 bg-gray-50">
                       <div className="space-y-1 mb-2">
-                        {opening.items.map((item, itemIdx) => (
-                          <div key={itemIdx} className="flex justify-between text-xs">
-                            <span className="text-gray-600">{item.name}</span>
-                            <span className="font-mono text-gray-700">
-                              {item.qty}× {item.length} ({item.material})
-                            </span>
-                          </div>
-                        ))}
+                        {opening.items.map((item, itemIdx) => {
+                          const itemKey = `${item.material}-${item.length}`;
+                          const isItemCompleted = completedItems[itemKey];
+                          return (
+                            <div
+                              key={itemIdx}
+                              className={`flex items-center justify-between text-xs py-1.5 px-2 rounded cursor-pointer transition-colors ${isItemCompleted ? 'bg-green-100' : 'hover:bg-gray-100'}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleCompleted(itemKey);
+                              }}
+                            >
+                              <div className="flex items-center gap-2">
+                                {isItemCompleted ? (
+                                  <CheckSquare className="w-4 h-4 text-green-600 flex-shrink-0" />
+                                ) : (
+                                  <Square className="w-4 h-4 text-gray-300 flex-shrink-0" />
+                                )}
+                                <span className={isItemCompleted ? 'text-green-700 line-through' : 'text-gray-600'}>
+                                  {item.name}
+                                </span>
+                              </div>
+                              <span className={`font-mono ${isItemCompleted ? 'text-green-600 line-through' : 'text-gray-700'}`}>
+                                {item.qty}× {item.length} ({item.material})
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                       <button
                         onClick={() => removeOpening(idx)}
@@ -370,6 +439,7 @@ export function CutListPage() {
               <table className="w-full text-sm">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th className="w-10 px-2 py-2"></th>
                     <th className="text-left px-3 py-2 text-xs font-medium text-gray-500 uppercase">Material</th>
                     <th className="text-right px-3 py-2 text-xs font-medium text-gray-500 uppercase">Length</th>
                     <th className="text-center px-3 py-2 text-xs font-medium text-gray-500 uppercase">Qty</th>
@@ -377,28 +447,59 @@ export function CutListPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {consolidatedList.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-gray-50">
-                      <td className="px-3 py-2 font-medium text-charcoal">{item.material}</td>
-                      <td className="px-3 py-2 text-right font-mono">{item.length}</td>
-                      <td className="px-3 py-2 text-center">{item.qty}</td>
-                      <td className="px-3 py-2 text-gray-500 text-xs">
-                        {item.sources.join(', ')}
-                      </td>
-                    </tr>
-                  ))}
+                  {consolidatedList.map((item, idx) => {
+                    const key = `${item.material}-${item.length}`;
+                    const isCompleted = completedItems[key];
+                    return (
+                      <tr
+                        key={idx}
+                        className={`hover:bg-gray-50 cursor-pointer transition-colors ${isCompleted ? 'bg-green-50' : ''}`}
+                        onClick={() => toggleCompleted(key)}
+                      >
+                        <td className="px-2 py-2 text-center">
+                          {isCompleted ? (
+                            <CheckSquare className="w-5 h-5 text-green-600 mx-auto" />
+                          ) : (
+                            <Square className="w-5 h-5 text-gray-300 mx-auto" />
+                          )}
+                        </td>
+                        <td className={`px-3 py-2 font-medium ${isCompleted ? 'text-green-700 line-through' : 'text-charcoal'}`}>
+                          {item.material}
+                        </td>
+                        <td className={`px-3 py-2 text-right font-mono ${isCompleted ? 'text-green-600 line-through' : ''}`}>
+                          {item.length}
+                        </td>
+                        <td className={`px-3 py-2 text-center ${isCompleted ? 'text-green-600' : ''}`}>
+                          {item.qty}
+                        </td>
+                        <td className={`px-3 py-2 text-xs ${isCompleted ? 'text-green-500' : 'text-gray-500'}`}>
+                          {item.sources.join(', ')}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
 
             {/* Actions */}
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-              <button
-                onClick={clearAll}
-                className="text-xs text-red-500 hover:text-red-700"
-              >
-                Clear All
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={clearAll}
+                  className="text-xs text-red-500 hover:text-red-700"
+                >
+                  Clear All
+                </button>
+                {completedCount > 0 && (
+                  <button
+                    onClick={clearCompleted}
+                    className="text-xs text-gray-500 hover:text-gray-700"
+                  >
+                    Reset Checkmarks
+                  </button>
+                )}
+              </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" onClick={handleCopy}>
                   <Copy className="w-4 h-4 mr-1" />
