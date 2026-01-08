@@ -18,6 +18,7 @@ import { Card, Button } from '../../components/ui';
 // Same storage key as WindowDoorFraming calculator
 const CUT_LIST_STORAGE_KEY = 'hooomz_framing_cut_list';
 const CUT_COMPLETED_STORAGE_KEY = 'hooomz_cut_completed';
+// v2 - checkbox feature
 
 // Load saved cut list from localStorage
 function loadSavedCutList() {
