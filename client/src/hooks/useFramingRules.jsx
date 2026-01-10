@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './useAuth';
-import { useAuth as useAuthContext } from '../contexts/AuthContext';
 import {
   getEffectiveFramingRules,
   saveFramingRulesToDatabase,
@@ -17,23 +16,19 @@ import {
  * - Rules history
  */
 export function useFramingRules() {
-  const { employee } = useAuth();
-  const { profile } = useAuthContext();
+  const { employee, user } = useAuth();
   const [rules, setRules] = useState(DEFAULT_FRAMING_RULES);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
 
-  // Determine if user is admin
-  // Check both employee role (for employees) and profile role (for org members)
+  // Determine if user is admin (check employee role)
   const isAdmin =
     employee?.role === 'administrator' ||
-    employee?.role === 'manager' ||
-    profile?.role === 'owner' ||
-    profile?.role === 'admin';
+    employee?.role === 'manager';
 
-  const organizationId = profile?.organization_id;
-  const userId = profile?.id;
+  const organizationId = employee?.organization_id;
+  const userId = user?.id;
 
   // Load rules from database on mount
   useEffect(() => {
