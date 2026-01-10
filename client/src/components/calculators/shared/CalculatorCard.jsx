@@ -13,24 +13,28 @@ export function CalculatorCard({
   icon: Icon,
   description,
   children,
+  headerActions,
   className = '',
 }) {
   return (
     <Card className={`calculator-card p-4 ${className}`}>
       {/* Header */}
       <div className="border-b border-gray-100 pb-4 mb-4">
-        <div className="flex items-center gap-3">
-          {Icon && (
-            <div className="p-2 bg-gray-100 rounded-lg">
-              <Icon className="w-5 h-5 text-charcoal" />
-            </div>
-          )}
-          <div>
-            <h2 className="text-lg font-semibold text-charcoal">{title}</h2>
-            {description && (
-              <p className="text-sm text-gray-500 mt-0.5">{description}</p>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            {Icon && (
+              <div className="p-2 bg-gray-100 rounded-lg">
+                <Icon className="w-5 h-5 text-charcoal" />
+              </div>
             )}
+            <div>
+              <h2 className="text-lg font-semibold text-charcoal">{title}</h2>
+              {description && (
+                <p className="text-sm text-gray-500 mt-0.5">{description}</p>
+              )}
+            </div>
           </div>
+          {headerActions && <div>{headerActions}</div>}
         </div>
       </div>
 

@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Frame, Copy, ChevronDown, ChevronUp, Info, Plus, List } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { Frame, Copy, ChevronDown, ChevronUp, Info, Plus, List, Settings } from 'lucide-react';
 import {
   CalculatorCard,
   InputSection,
@@ -17,6 +17,8 @@ import {
   getLumberDimension,
 } from '../../../lib/calculators/fractionUtils';
 import { Button } from '../../ui';
+import { useFramingRules } from '../../../hooks/useFramingRules';
+import { AdminRulesEditor } from './AdminRulesEditor';
 
 /**
  * Window & Door Opening Framing Calculator
@@ -486,12 +488,27 @@ function saveCutListToStorage(list) {
 }
 
 export function WindowDoorFraming() {
-  // Input state
-  const [inputs, setInputs] = useState(DEFAULTS);
+  // Load framing rules (from DB or defaults)
+  const {
+    rules,
+    isAdmin,
+    saveAsUniversalDefaults,
+    applyOneTimeRules,
+    isLoading: rulesLoading,
+  } = useFramingRules();
+
+  // Input state (initialized from rules)
+  const [inputs, setInputs] = useState(rules);
+  const [showAdminEditor, setShowAdminEditor] = useState(false);
 
   // Saved cut list (persisted across sessions)
   const [savedCutList, setSavedCutList] = useState(() => loadSavedCutList());
   const [showSavedList, setShowSavedList] = useState(false);
+
+  // Update inputs when rules change
+  useEffect(() => {
+    setInputs(rules);
+  }, [rules]);
 
   // Update a single input
   const updateInput = (field, value) => {
@@ -785,11 +802,24 @@ export function WindowDoorFraming() {
   };
 
   return (
-    <CalculatorCard
-      title="Window & Door Framing"
-      icon={Frame}
-      description="Generate cut list for rough opening framing"
-    >
+    <>
+      <CalculatorCard
+        title="Window & Door Framing"
+        icon={Frame}
+        description="Generate cut list for rough opening framing"
+        headerActions={
+          isAdmin && (
+            <button
+              onClick={() => setShowAdminEditor(true)}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:text-charcoal hover:bg-gray-100 rounded-lg transition-colors"
+              title="Edit default calculation rules"
+            >
+              <Settings className="w-4 h-4" />
+              Edit Defaults
+            </button>
+          )
+        }
+      >
       {/* Opening Type & Dimensions */}
       <InputSection title="Opening">
         <InputRow>
@@ -1067,6 +1097,24 @@ export function WindowDoorFraming() {
         </>
       )}
     </CalculatorCard>
+
+    {/* Admin Rules Editor Modal */}
+    <AdminRulesEditor
+      isOpen={showAdminEditor}
+      onClose={() => setShowAdminEditor(false)}
+      currentRules={inputs}
+      onApplyOneTime={(newRules) => {
+        setInputs(newRules);
+      }}
+      onSaveUniversal={async (newRules, ruleName, description) => {
+        const result = await saveAsUniversalDefaults(newRules, ruleName, description);
+        if (result.error) {
+          throw result.error;
+        }
+      }}
+      isAdmin={isAdmin}
+    />
+    </>
   );
 }
 
