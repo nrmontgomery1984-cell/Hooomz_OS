@@ -37,11 +37,13 @@ CREATE TABLE IF NOT EXISTS framing_calculation_rules (
   created_by UUID REFERENCES profiles(id),
   updated_by UUID REFERENCES profiles(id),
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW(),
-
-  -- Only one active rule set per organization
-  UNIQUE(organization_id, is_active) WHERE is_active = true
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Only one active rule set per organization (using partial unique index)
+CREATE UNIQUE INDEX idx_framing_rules_org_active
+  ON framing_calculation_rules(organization_id)
+  WHERE is_active = true;
 
 -- Indexes for performance
 CREATE INDEX idx_framing_rules_org ON framing_calculation_rules(organization_id);
