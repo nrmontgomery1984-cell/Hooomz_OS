@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './useAuth';
+import { useAuth as useAuthContext } from '../contexts/AuthContext';
 import {
   getEffectiveFramingRules,
   saveFramingRulesToDatabase,
@@ -16,7 +17,8 @@ import {
  * - Rules history
  */
 export function useFramingRules() {
-  const { employee, profile } = useAuth();
+  const { employee } = useAuth();
+  const { profile } = useAuthContext();
   const [rules, setRules] = useState(DEFAULT_FRAMING_RULES);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
